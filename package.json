@@ -4,9 +4,13 @@
   "description": "awtk on nodejs",
   "main": "awtk.js",
   "scripts": {
-    "config": "./node_modules/.bin/node-gyp configure",
-    "build": "./node_modules/.bin/node-gyp --verbose build",
+    "config": "node-gyp configure",
+    "build": "node-gyp --verbose build",
     "clean": "rm -rf build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zlgopen/awtk-nodejs"
   },
   "keywords": [
     "awtk"
