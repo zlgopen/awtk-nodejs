@@ -19,7 +19,7 @@ public:
     argv[0] = Nan::New((double)((int64_t)(data)));
     v8::Local<v8::Value> jret = Nan::MakeCallback(
         Nan::GetCurrentContext()->Global(), Nan::New(this->fn), 1, argv);
-    ret = (ret_t)(jret->Int32Value());
+    ret = (ret_t)(jret.As<v8::Integer>()->Value());
 
     return ret;
   }
@@ -211,8 +211,8 @@ static void wrap_awtk_init(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
     ret = (ret_t)tk_init(w, h, APP_SIMULATOR, app_name, NULL);
     assets_init();
     tk_ext_widgets_init();
+    main_loop()->running = TRUE;
     system_info_set_default_font(system_info(), "default_full");
-
     jsvalue_free_str(ctx, app_name);
 
     v8::Local<v8::Int32> jret = Nan::New((int32_t)(ret));
@@ -228,7 +228,6 @@ wrap_awtk_main_loop_step(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
   bool_t ret = FALSE;
   main_loop_t *loop = main_loop();
 
-  loop->running = TRUE;
   if (loop != NULL) {
     main_loop_step(loop);
 

@@ -169,16 +169,11 @@ static void wrap_event_t_get_prop_target(const Nan::FunctionCallbackInfo<v8::Val
 }
 
 ret_t event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_event_cast)->GetFunction());
-  ctx->Set(Nan::New("event_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_event_create)->GetFunction());
-  ctx->Set(Nan::New("event_t_get_prop_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_event_t_get_prop_type)->GetFunction());
-  ctx->Set(Nan::New("event_t_get_prop_time").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_event_t_get_prop_time)->GetFunction());
-  ctx->Set(Nan::New("event_t_get_prop_target").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_event_t_get_prop_target)->GetFunction());
+  Nan::Export(ctx, "event_cast", wrap_event_cast);
+  Nan::Export(ctx, "event_create", wrap_event_create);
+  Nan::Export(ctx, "event_t_get_prop_type", wrap_event_t_get_prop_type);
+  Nan::Export(ctx, "event_t_get_prop_time", wrap_event_t_get_prop_time);
+  Nan::Export(ctx, "event_t_get_prop_target", wrap_event_t_get_prop_target);
 
  return RET_OK;
 }
@@ -273,20 +268,13 @@ static void wrap_rect_t_get_prop_h(const Nan::FunctionCallbackInfo<v8::Value>& a
 }
 
 ret_t rect_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("rect_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rect_create)->GetFunction());
-  ctx->Set(Nan::New("rect_set").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rect_set)->GetFunction());
-  ctx->Set(Nan::New("rect_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rect_cast)->GetFunction());
-  ctx->Set(Nan::New("rect_t_get_prop_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rect_t_get_prop_x)->GetFunction());
-  ctx->Set(Nan::New("rect_t_get_prop_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rect_t_get_prop_y)->GetFunction());
-  ctx->Set(Nan::New("rect_t_get_prop_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rect_t_get_prop_w)->GetFunction());
-  ctx->Set(Nan::New("rect_t_get_prop_h").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rect_t_get_prop_h)->GetFunction());
+  Nan::Export(ctx, "rect_create", wrap_rect_create);
+  Nan::Export(ctx, "rect_set", wrap_rect_set);
+  Nan::Export(ctx, "rect_cast", wrap_rect_cast);
+  Nan::Export(ctx, "rect_t_get_prop_x", wrap_rect_t_get_prop_x);
+  Nan::Export(ctx, "rect_t_get_prop_y", wrap_rect_t_get_prop_y);
+  Nan::Export(ctx, "rect_t_get_prop_w", wrap_rect_t_get_prop_w);
+  Nan::Export(ctx, "rect_t_get_prop_h", wrap_rect_t_get_prop_h);
 
  return RET_OK;
 }
@@ -416,24 +404,15 @@ static void wrap_emitter_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 }
 
 ret_t emitter_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("emitter_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_create)->GetFunction());
-  ctx->Set(Nan::New("emitter_dispatch").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_dispatch)->GetFunction());
-  ctx->Set(Nan::New("emitter_dispatch_simple_event").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_dispatch_simple_event)->GetFunction());
-  ctx->Set(Nan::New("emitter_on").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_on)->GetFunction());
-  ctx->Set(Nan::New("emitter_off").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_off)->GetFunction());
-  ctx->Set(Nan::New("emitter_enable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_enable)->GetFunction());
-  ctx->Set(Nan::New("emitter_disable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_disable)->GetFunction());
-  ctx->Set(Nan::New("emitter_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_size)->GetFunction());
-  ctx->Set(Nan::New("emitter_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_emitter_cast)->GetFunction());
+  Nan::Export(ctx, "emitter_create", wrap_emitter_create);
+  Nan::Export(ctx, "emitter_dispatch", wrap_emitter_dispatch);
+  Nan::Export(ctx, "emitter_dispatch_simple_event", wrap_emitter_dispatch_simple_event);
+  Nan::Export(ctx, "emitter_on", wrap_emitter_on);
+  Nan::Export(ctx, "emitter_off", wrap_emitter_off);
+  Nan::Export(ctx, "emitter_enable", wrap_emitter_enable);
+  Nan::Export(ctx, "emitter_disable", wrap_emitter_disable);
+  Nan::Export(ctx, "emitter_size", wrap_emitter_size);
+  Nan::Export(ctx, "emitter_cast", wrap_emitter_cast);
 
  return RET_OK;
 }
@@ -545,24 +524,15 @@ static void wrap_bitmap_t_get_prop_name(const Nan::FunctionCallbackInfo<v8::Valu
 }
 
 ret_t bitmap_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("bitmap_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_create)->GetFunction());
-  ctx->Set(Nan::New("bitmap_create_ex").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_create_ex)->GetFunction());
-  ctx->Set(Nan::New("bitmap_get_bpp").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_get_bpp)->GetFunction());
-  ctx->Set(Nan::New("bitmap_t_get_prop_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_t_get_prop_w)->GetFunction());
-  ctx->Set(Nan::New("bitmap_t_get_prop_h").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_t_get_prop_h)->GetFunction());
-  ctx->Set(Nan::New("bitmap_t_get_prop_line_length").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_t_get_prop_line_length)->GetFunction());
-  ctx->Set(Nan::New("bitmap_t_get_prop_flags").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_t_get_prop_flags)->GetFunction());
-  ctx->Set(Nan::New("bitmap_t_get_prop_format").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_t_get_prop_format)->GetFunction());
-  ctx->Set(Nan::New("bitmap_t_get_prop_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_bitmap_t_get_prop_name)->GetFunction());
+  Nan::Export(ctx, "bitmap_create", wrap_bitmap_create);
+  Nan::Export(ctx, "bitmap_create_ex", wrap_bitmap_create_ex);
+  Nan::Export(ctx, "bitmap_get_bpp", wrap_bitmap_get_bpp);
+  Nan::Export(ctx, "bitmap_t_get_prop_w", wrap_bitmap_t_get_prop_w);
+  Nan::Export(ctx, "bitmap_t_get_prop_h", wrap_bitmap_t_get_prop_h);
+  Nan::Export(ctx, "bitmap_t_get_prop_line_length", wrap_bitmap_t_get_prop_line_length);
+  Nan::Export(ctx, "bitmap_t_get_prop_flags", wrap_bitmap_t_get_prop_flags);
+  Nan::Export(ctx, "bitmap_t_get_prop_format", wrap_bitmap_t_get_prop_format);
+  Nan::Export(ctx, "bitmap_t_get_prop_name", wrap_bitmap_t_get_prop_name);
 
  return RET_OK;
 }
@@ -1033,70 +1003,38 @@ static void wrap_value_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t value_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("value_set_bool").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_bool)->GetFunction());
-  ctx->Set(Nan::New("value_bool").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_bool)->GetFunction());
-  ctx->Set(Nan::New("value_set_int8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_int8)->GetFunction());
-  ctx->Set(Nan::New("value_int8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_int8)->GetFunction());
-  ctx->Set(Nan::New("value_set_uint8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_uint8)->GetFunction());
-  ctx->Set(Nan::New("value_uint8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_uint8)->GetFunction());
-  ctx->Set(Nan::New("value_set_int16").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_int16)->GetFunction());
-  ctx->Set(Nan::New("value_int16").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_int16)->GetFunction());
-  ctx->Set(Nan::New("value_set_uint16").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_uint16)->GetFunction());
-  ctx->Set(Nan::New("value_uint16").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_uint16)->GetFunction());
-  ctx->Set(Nan::New("value_set_int32").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_int32)->GetFunction());
-  ctx->Set(Nan::New("value_int32").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_int32)->GetFunction());
-  ctx->Set(Nan::New("value_set_uint32").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_uint32)->GetFunction());
-  ctx->Set(Nan::New("value_set_int64").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_int64)->GetFunction());
-  ctx->Set(Nan::New("value_int64").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_int64)->GetFunction());
-  ctx->Set(Nan::New("value_set_uint64").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_uint64)->GetFunction());
-  ctx->Set(Nan::New("value_uint64").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_uint64)->GetFunction());
-  ctx->Set(Nan::New("value_set_float").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_float)->GetFunction());
-  ctx->Set(Nan::New("value_float32").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_float32)->GetFunction());
-  ctx->Set(Nan::New("value_set_double").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_double)->GetFunction());
-  ctx->Set(Nan::New("value_double").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_double)->GetFunction());
-  ctx->Set(Nan::New("value_dup_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_dup_str)->GetFunction());
-  ctx->Set(Nan::New("value_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_str)->GetFunction());
-  ctx->Set(Nan::New("value_is_null").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_is_null)->GetFunction());
-  ctx->Set(Nan::New("value_set_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_int)->GetFunction());
-  ctx->Set(Nan::New("value_set_object").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_object)->GetFunction());
-  ctx->Set(Nan::New("value_object").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_object)->GetFunction());
-  ctx->Set(Nan::New("value_set_token").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_set_token)->GetFunction());
-  ctx->Set(Nan::New("value_token").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_token)->GetFunction());
-  ctx->Set(Nan::New("value_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_create)->GetFunction());
-  ctx->Set(Nan::New("value_reset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_reset)->GetFunction());
-  ctx->Set(Nan::New("value_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_value_cast)->GetFunction());
+  Nan::Export(ctx, "value_set_bool", wrap_value_set_bool);
+  Nan::Export(ctx, "value_bool", wrap_value_bool);
+  Nan::Export(ctx, "value_set_int8", wrap_value_set_int8);
+  Nan::Export(ctx, "value_int8", wrap_value_int8);
+  Nan::Export(ctx, "value_set_uint8", wrap_value_set_uint8);
+  Nan::Export(ctx, "value_uint8", wrap_value_uint8);
+  Nan::Export(ctx, "value_set_int16", wrap_value_set_int16);
+  Nan::Export(ctx, "value_int16", wrap_value_int16);
+  Nan::Export(ctx, "value_set_uint16", wrap_value_set_uint16);
+  Nan::Export(ctx, "value_uint16", wrap_value_uint16);
+  Nan::Export(ctx, "value_set_int32", wrap_value_set_int32);
+  Nan::Export(ctx, "value_int32", wrap_value_int32);
+  Nan::Export(ctx, "value_set_uint32", wrap_value_set_uint32);
+  Nan::Export(ctx, "value_set_int64", wrap_value_set_int64);
+  Nan::Export(ctx, "value_int64", wrap_value_int64);
+  Nan::Export(ctx, "value_set_uint64", wrap_value_set_uint64);
+  Nan::Export(ctx, "value_uint64", wrap_value_uint64);
+  Nan::Export(ctx, "value_set_float", wrap_value_set_float);
+  Nan::Export(ctx, "value_float32", wrap_value_float32);
+  Nan::Export(ctx, "value_set_double", wrap_value_set_double);
+  Nan::Export(ctx, "value_double", wrap_value_double);
+  Nan::Export(ctx, "value_dup_str", wrap_value_dup_str);
+  Nan::Export(ctx, "value_str", wrap_value_str);
+  Nan::Export(ctx, "value_is_null", wrap_value_is_null);
+  Nan::Export(ctx, "value_set_int", wrap_value_set_int);
+  Nan::Export(ctx, "value_set_object", wrap_value_set_object);
+  Nan::Export(ctx, "value_object", wrap_value_object);
+  Nan::Export(ctx, "value_set_token", wrap_value_set_token);
+  Nan::Export(ctx, "value_token", wrap_value_token);
+  Nan::Export(ctx, "value_create", wrap_value_create);
+  Nan::Export(ctx, "value_reset", wrap_value_reset);
+  Nan::Export(ctx, "value_cast", wrap_value_cast);
 
  return RET_OK;
 }
@@ -1667,76 +1605,41 @@ static void wrap_object_t_get_prop_name(const Nan::FunctionCallbackInfo<v8::Valu
 }
 
 ret_t object_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("object_ref").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_ref)->GetFunction());
-  ctx->Set(Nan::New("object_get_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_type)->GetFunction());
-  ctx->Set(Nan::New("object_get_desc").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_desc)->GetFunction());
-  ctx->Set(Nan::New("object_get_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_size)->GetFunction());
-  ctx->Set(Nan::New("object_is_collection").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_is_collection)->GetFunction());
-  ctx->Set(Nan::New("object_set_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_set_name)->GetFunction());
-  ctx->Set(Nan::New("object_compare").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_compare)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_str)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_pointer").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_pointer)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_object").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_object)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_int)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_bool").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_bool)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_float").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_float)->GetFunction());
-  ctx->Set(Nan::New("object_remove_prop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_remove_prop)->GetFunction());
-  ctx->Set(Nan::New("object_set_prop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_set_prop)->GetFunction());
-  ctx->Set(Nan::New("object_set_prop_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_set_prop_str)->GetFunction());
-  ctx->Set(Nan::New("object_set_prop_object").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_set_prop_object)->GetFunction());
-  ctx->Set(Nan::New("object_set_prop_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_set_prop_int)->GetFunction());
-  ctx->Set(Nan::New("object_set_prop_bool").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_set_prop_bool)->GetFunction());
-  ctx->Set(Nan::New("object_set_prop_float").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_set_prop_float)->GetFunction());
-  ctx->Set(Nan::New("object_copy_prop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_copy_prop)->GetFunction());
-  ctx->Set(Nan::New("object_has_prop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_has_prop)->GetFunction());
-  ctx->Set(Nan::New("object_eval").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_eval)->GetFunction());
-  ctx->Set(Nan::New("object_can_exec").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_can_exec)->GetFunction());
-  ctx->Set(Nan::New("object_exec").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_exec)->GetFunction());
-  ctx->Set(Nan::New("object_notify_changed").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_notify_changed)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_str_by_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_str_by_path)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_pointer_by_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_pointer_by_path)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_object_by_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_object_by_path)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_int_by_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_int_by_path)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_bool_by_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_bool_by_path)->GetFunction());
-  ctx->Set(Nan::New("object_get_prop_float_by_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_get_prop_float_by_path)->GetFunction());
-  ctx->Set(Nan::New("object_t_get_prop_ref_count").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_t_get_prop_ref_count)->GetFunction());
-  ctx->Set(Nan::New("object_t_get_prop_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_t_get_prop_name)->GetFunction());
+  Nan::Export(ctx, "object_ref", wrap_object_ref);
+  Nan::Export(ctx, "object_get_type", wrap_object_get_type);
+  Nan::Export(ctx, "object_get_desc", wrap_object_get_desc);
+  Nan::Export(ctx, "object_get_size", wrap_object_get_size);
+  Nan::Export(ctx, "object_is_collection", wrap_object_is_collection);
+  Nan::Export(ctx, "object_set_name", wrap_object_set_name);
+  Nan::Export(ctx, "object_compare", wrap_object_compare);
+  Nan::Export(ctx, "object_get_prop", wrap_object_get_prop);
+  Nan::Export(ctx, "object_get_prop_str", wrap_object_get_prop_str);
+  Nan::Export(ctx, "object_get_prop_pointer", wrap_object_get_prop_pointer);
+  Nan::Export(ctx, "object_get_prop_object", wrap_object_get_prop_object);
+  Nan::Export(ctx, "object_get_prop_int", wrap_object_get_prop_int);
+  Nan::Export(ctx, "object_get_prop_bool", wrap_object_get_prop_bool);
+  Nan::Export(ctx, "object_get_prop_float", wrap_object_get_prop_float);
+  Nan::Export(ctx, "object_remove_prop", wrap_object_remove_prop);
+  Nan::Export(ctx, "object_set_prop", wrap_object_set_prop);
+  Nan::Export(ctx, "object_set_prop_str", wrap_object_set_prop_str);
+  Nan::Export(ctx, "object_set_prop_object", wrap_object_set_prop_object);
+  Nan::Export(ctx, "object_set_prop_int", wrap_object_set_prop_int);
+  Nan::Export(ctx, "object_set_prop_bool", wrap_object_set_prop_bool);
+  Nan::Export(ctx, "object_set_prop_float", wrap_object_set_prop_float);
+  Nan::Export(ctx, "object_copy_prop", wrap_object_copy_prop);
+  Nan::Export(ctx, "object_has_prop", wrap_object_has_prop);
+  Nan::Export(ctx, "object_eval", wrap_object_eval);
+  Nan::Export(ctx, "object_can_exec", wrap_object_can_exec);
+  Nan::Export(ctx, "object_exec", wrap_object_exec);
+  Nan::Export(ctx, "object_notify_changed", wrap_object_notify_changed);
+  Nan::Export(ctx, "object_get_prop_str_by_path", wrap_object_get_prop_str_by_path);
+  Nan::Export(ctx, "object_get_prop_pointer_by_path", wrap_object_get_prop_pointer_by_path);
+  Nan::Export(ctx, "object_get_prop_object_by_path", wrap_object_get_prop_object_by_path);
+  Nan::Export(ctx, "object_get_prop_int_by_path", wrap_object_get_prop_int_by_path);
+  Nan::Export(ctx, "object_get_prop_bool_by_path", wrap_object_get_prop_bool_by_path);
+  Nan::Export(ctx, "object_get_prop_float_by_path", wrap_object_get_prop_float_by_path);
+  Nan::Export(ctx, "object_t_get_prop_ref_count", wrap_object_t_get_prop_ref_count);
+  Nan::Export(ctx, "object_t_get_prop_name", wrap_object_t_get_prop_name);
 
  return RET_OK;
 }
@@ -1827,18 +1730,12 @@ static void wrap_tk_is_pointer_pressed(const Nan::FunctionCallbackInfo<v8::Value
 }
 
 ret_t global_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("tk_init").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tk_init)->GetFunction());
-  ctx->Set(Nan::New("tk_run").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tk_run)->GetFunction());
-  ctx->Set(Nan::New("tk_quit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tk_quit)->GetFunction());
-  ctx->Set(Nan::New("tk_get_pointer_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tk_get_pointer_x)->GetFunction());
-  ctx->Set(Nan::New("tk_get_pointer_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tk_get_pointer_y)->GetFunction());
-  ctx->Set(Nan::New("tk_is_pointer_pressed").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tk_is_pointer_pressed)->GetFunction());
+  Nan::Export(ctx, "tk_init", wrap_tk_init);
+  Nan::Export(ctx, "tk_run", wrap_tk_run);
+  Nan::Export(ctx, "tk_quit", wrap_tk_quit);
+  Nan::Export(ctx, "tk_get_pointer_x", wrap_tk_get_pointer_x);
+  Nan::Export(ctx, "tk_get_pointer_y", wrap_tk_get_pointer_y);
+  Nan::Export(ctx, "tk_is_pointer_pressed", wrap_tk_is_pointer_pressed);
 
  return RET_OK;
 }
@@ -1892,18 +1789,12 @@ static void get_DIALOG_QUIT_OTHER(const Nan::FunctionCallbackInfo<v8::Value>& ar
 }
 
 ret_t dialog_quit_code_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("DIALOG_QUIT_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_DIALOG_QUIT_NONE)->GetFunction());
-  ctx->Set(Nan::New("DIALOG_QUIT_OK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_DIALOG_QUIT_OK)->GetFunction());
-  ctx->Set(Nan::New("DIALOG_QUIT_YES").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_DIALOG_QUIT_YES)->GetFunction());
-  ctx->Set(Nan::New("DIALOG_QUIT_CANCEL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_DIALOG_QUIT_CANCEL)->GetFunction());
-  ctx->Set(Nan::New("DIALOG_QUIT_NO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_DIALOG_QUIT_NO)->GetFunction());
-  ctx->Set(Nan::New("DIALOG_QUIT_OTHER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_DIALOG_QUIT_OTHER)->GetFunction());
+  Nan::Export(ctx, "DIALOG_QUIT_NONE", get_DIALOG_QUIT_NONE);
+  Nan::Export(ctx, "DIALOG_QUIT_OK", get_DIALOG_QUIT_OK);
+  Nan::Export(ctx, "DIALOG_QUIT_YES", get_DIALOG_QUIT_YES);
+  Nan::Export(ctx, "DIALOG_QUIT_CANCEL", get_DIALOG_QUIT_CANCEL);
+  Nan::Export(ctx, "DIALOG_QUIT_NO", get_DIALOG_QUIT_NO);
+  Nan::Export(ctx, "DIALOG_QUIT_OTHER", get_DIALOG_QUIT_OTHER);
 
  return RET_OK;
 }
@@ -2517,158 +2408,82 @@ static void get_EVT_DESTROY(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t event_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("EVT_POINTER_DOWN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_DOWN)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_DOWN_BEFORE_CHILDREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_DOWN_BEFORE_CHILDREN)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_MOVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_MOVE)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_MOVE_BEFORE_CHILDREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_MOVE_BEFORE_CHILDREN)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_UP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_UP)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_UP_BEFORE_CHILDREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_UP_BEFORE_CHILDREN)->GetFunction());
-  ctx->Set(Nan::New("EVT_WHEEL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WHEEL)->GetFunction());
-  ctx->Set(Nan::New("EVT_WHEEL_BEFORE_CHILDREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WHEEL_BEFORE_CHILDREN)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_DOWN_ABORT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_DOWN_ABORT)->GetFunction());
-  ctx->Set(Nan::New("EVT_CONTEXT_MENU").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_CONTEXT_MENU)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_ENTER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_ENTER)->GetFunction());
-  ctx->Set(Nan::New("EVT_POINTER_LEAVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_POINTER_LEAVE)->GetFunction());
-  ctx->Set(Nan::New("EVT_LONG_PRESS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_LONG_PRESS)->GetFunction());
-  ctx->Set(Nan::New("EVT_CLICK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_CLICK)->GetFunction());
-  ctx->Set(Nan::New("EVT_FOCUS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_FOCUS)->GetFunction());
-  ctx->Set(Nan::New("EVT_BLUR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_BLUR)->GetFunction());
-  ctx->Set(Nan::New("EVT_KEY_DOWN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_KEY_DOWN)->GetFunction());
-  ctx->Set(Nan::New("EVT_KEY_DOWN_BEFORE_CHILDREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_KEY_DOWN_BEFORE_CHILDREN)->GetFunction());
-  ctx->Set(Nan::New("EVT_KEY_REPEAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_KEY_REPEAT)->GetFunction());
-  ctx->Set(Nan::New("EVT_KEY_UP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_KEY_UP)->GetFunction());
-  ctx->Set(Nan::New("EVT_KEY_UP_BEFORE_CHILDREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_KEY_UP_BEFORE_CHILDREN)->GetFunction());
-  ctx->Set(Nan::New("EVT_WILL_MOVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WILL_MOVE)->GetFunction());
-  ctx->Set(Nan::New("EVT_MOVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_MOVE)->GetFunction());
-  ctx->Set(Nan::New("EVT_WILL_RESIZE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WILL_RESIZE)->GetFunction());
-  ctx->Set(Nan::New("EVT_RESIZE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_RESIZE)->GetFunction());
-  ctx->Set(Nan::New("EVT_WILL_MOVE_RESIZE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WILL_MOVE_RESIZE)->GetFunction());
-  ctx->Set(Nan::New("EVT_MOVE_RESIZE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_MOVE_RESIZE)->GetFunction());
-  ctx->Set(Nan::New("EVT_VALUE_WILL_CHANGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_VALUE_WILL_CHANGE)->GetFunction());
-  ctx->Set(Nan::New("EVT_VALUE_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_VALUE_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_VALUE_CHANGING").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_VALUE_CHANGING)->GetFunction());
-  ctx->Set(Nan::New("EVT_PAINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_PAINT)->GetFunction());
-  ctx->Set(Nan::New("EVT_BEFORE_PAINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_BEFORE_PAINT)->GetFunction());
-  ctx->Set(Nan::New("EVT_AFTER_PAINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_AFTER_PAINT)->GetFunction());
-  ctx->Set(Nan::New("EVT_PAINT_DONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_PAINT_DONE)->GetFunction());
-  ctx->Set(Nan::New("EVT_LOCALE_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_LOCALE_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_ANIM_START").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ANIM_START)->GetFunction());
-  ctx->Set(Nan::New("EVT_ANIM_STOP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ANIM_STOP)->GetFunction());
-  ctx->Set(Nan::New("EVT_ANIM_PAUSE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ANIM_PAUSE)->GetFunction());
-  ctx->Set(Nan::New("EVT_ANIM_ONCE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ANIM_ONCE)->GetFunction());
-  ctx->Set(Nan::New("EVT_ANIM_END").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ANIM_END)->GetFunction());
-  ctx->Set(Nan::New("EVT_WINDOW_LOAD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WINDOW_LOAD)->GetFunction());
-  ctx->Set(Nan::New("EVT_WIDGET_LOAD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WIDGET_LOAD)->GetFunction());
-  ctx->Set(Nan::New("EVT_WINDOW_WILL_OPEN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WINDOW_WILL_OPEN)->GetFunction());
-  ctx->Set(Nan::New("EVT_WINDOW_OPEN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WINDOW_OPEN)->GetFunction());
-  ctx->Set(Nan::New("EVT_WINDOW_TO_BACKGROUND").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WINDOW_TO_BACKGROUND)->GetFunction());
-  ctx->Set(Nan::New("EVT_WINDOW_TO_FOREGROUND").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WINDOW_TO_FOREGROUND)->GetFunction());
-  ctx->Set(Nan::New("EVT_WINDOW_CLOSE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WINDOW_CLOSE)->GetFunction());
-  ctx->Set(Nan::New("EVT_REQUEST_CLOSE_WINDOW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_REQUEST_CLOSE_WINDOW)->GetFunction());
-  ctx->Set(Nan::New("EVT_TOP_WINDOW_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_TOP_WINDOW_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_IM_COMMIT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_IM_COMMIT)->GetFunction());
-  ctx->Set(Nan::New("EVT_IM_SHOW_CANDIDATES").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_IM_SHOW_CANDIDATES)->GetFunction());
-  ctx->Set(Nan::New("EVT_IM_ACTION").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_IM_ACTION)->GetFunction());
-  ctx->Set(Nan::New("EVT_IM_ACTION_INFO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_IM_ACTION_INFO)->GetFunction());
-  ctx->Set(Nan::New("EVT_DRAG_START").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_DRAG_START)->GetFunction());
-  ctx->Set(Nan::New("EVT_DRAG").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_DRAG)->GetFunction());
-  ctx->Set(Nan::New("EVT_DRAG_END").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_DRAG_END)->GetFunction());
-  ctx->Set(Nan::New("EVT_SCREEN_SAVER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_SCREEN_SAVER)->GetFunction());
-  ctx->Set(Nan::New("EVT_LOW_MEMORY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_LOW_MEMORY)->GetFunction());
-  ctx->Set(Nan::New("EVT_OUT_OF_MEMORY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_OUT_OF_MEMORY)->GetFunction());
-  ctx->Set(Nan::New("EVT_ORIENTATION_WILL_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ORIENTATION_WILL_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_ORIENTATION_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ORIENTATION_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_WIDGET_CREATED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WIDGET_CREATED)->GetFunction());
-  ctx->Set(Nan::New("EVT_REQUEST_QUIT_APP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_REQUEST_QUIT_APP)->GetFunction());
-  ctx->Set(Nan::New("EVT_THEME_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_THEME_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_WIDGET_ADD_CHILD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WIDGET_ADD_CHILD)->GetFunction());
-  ctx->Set(Nan::New("EVT_WIDGET_REMOVE_CHILD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_WIDGET_REMOVE_CHILD)->GetFunction());
-  ctx->Set(Nan::New("EVT_REQ_START").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_REQ_START)->GetFunction());
-  ctx->Set(Nan::New("EVT_USER_START").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_USER_START)->GetFunction());
-  ctx->Set(Nan::New("EVT_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_NONE)->GetFunction());
-  ctx->Set(Nan::New("EVT_PROP_WILL_CHANGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_PROP_WILL_CHANGE)->GetFunction());
-  ctx->Set(Nan::New("EVT_PROP_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_PROP_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_ITEMS_WILL_CHANGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ITEMS_WILL_CHANGE)->GetFunction());
-  ctx->Set(Nan::New("EVT_ITEMS_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_ITEMS_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_PROPS_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_PROPS_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("EVT_PROGRESS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_PROGRESS)->GetFunction());
-  ctx->Set(Nan::New("EVT_DESTROY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EVT_DESTROY)->GetFunction());
+  Nan::Export(ctx, "EVT_POINTER_DOWN", get_EVT_POINTER_DOWN);
+  Nan::Export(ctx, "EVT_POINTER_DOWN_BEFORE_CHILDREN", get_EVT_POINTER_DOWN_BEFORE_CHILDREN);
+  Nan::Export(ctx, "EVT_POINTER_MOVE", get_EVT_POINTER_MOVE);
+  Nan::Export(ctx, "EVT_POINTER_MOVE_BEFORE_CHILDREN", get_EVT_POINTER_MOVE_BEFORE_CHILDREN);
+  Nan::Export(ctx, "EVT_POINTER_UP", get_EVT_POINTER_UP);
+  Nan::Export(ctx, "EVT_POINTER_UP_BEFORE_CHILDREN", get_EVT_POINTER_UP_BEFORE_CHILDREN);
+  Nan::Export(ctx, "EVT_WHEEL", get_EVT_WHEEL);
+  Nan::Export(ctx, "EVT_WHEEL_BEFORE_CHILDREN", get_EVT_WHEEL_BEFORE_CHILDREN);
+  Nan::Export(ctx, "EVT_POINTER_DOWN_ABORT", get_EVT_POINTER_DOWN_ABORT);
+  Nan::Export(ctx, "EVT_CONTEXT_MENU", get_EVT_CONTEXT_MENU);
+  Nan::Export(ctx, "EVT_POINTER_ENTER", get_EVT_POINTER_ENTER);
+  Nan::Export(ctx, "EVT_POINTER_LEAVE", get_EVT_POINTER_LEAVE);
+  Nan::Export(ctx, "EVT_LONG_PRESS", get_EVT_LONG_PRESS);
+  Nan::Export(ctx, "EVT_CLICK", get_EVT_CLICK);
+  Nan::Export(ctx, "EVT_FOCUS", get_EVT_FOCUS);
+  Nan::Export(ctx, "EVT_BLUR", get_EVT_BLUR);
+  Nan::Export(ctx, "EVT_KEY_DOWN", get_EVT_KEY_DOWN);
+  Nan::Export(ctx, "EVT_KEY_DOWN_BEFORE_CHILDREN", get_EVT_KEY_DOWN_BEFORE_CHILDREN);
+  Nan::Export(ctx, "EVT_KEY_REPEAT", get_EVT_KEY_REPEAT);
+  Nan::Export(ctx, "EVT_KEY_UP", get_EVT_KEY_UP);
+  Nan::Export(ctx, "EVT_KEY_UP_BEFORE_CHILDREN", get_EVT_KEY_UP_BEFORE_CHILDREN);
+  Nan::Export(ctx, "EVT_WILL_MOVE", get_EVT_WILL_MOVE);
+  Nan::Export(ctx, "EVT_MOVE", get_EVT_MOVE);
+  Nan::Export(ctx, "EVT_WILL_RESIZE", get_EVT_WILL_RESIZE);
+  Nan::Export(ctx, "EVT_RESIZE", get_EVT_RESIZE);
+  Nan::Export(ctx, "EVT_WILL_MOVE_RESIZE", get_EVT_WILL_MOVE_RESIZE);
+  Nan::Export(ctx, "EVT_MOVE_RESIZE", get_EVT_MOVE_RESIZE);
+  Nan::Export(ctx, "EVT_VALUE_WILL_CHANGE", get_EVT_VALUE_WILL_CHANGE);
+  Nan::Export(ctx, "EVT_VALUE_CHANGED", get_EVT_VALUE_CHANGED);
+  Nan::Export(ctx, "EVT_VALUE_CHANGING", get_EVT_VALUE_CHANGING);
+  Nan::Export(ctx, "EVT_PAINT", get_EVT_PAINT);
+  Nan::Export(ctx, "EVT_BEFORE_PAINT", get_EVT_BEFORE_PAINT);
+  Nan::Export(ctx, "EVT_AFTER_PAINT", get_EVT_AFTER_PAINT);
+  Nan::Export(ctx, "EVT_PAINT_DONE", get_EVT_PAINT_DONE);
+  Nan::Export(ctx, "EVT_LOCALE_CHANGED", get_EVT_LOCALE_CHANGED);
+  Nan::Export(ctx, "EVT_ANIM_START", get_EVT_ANIM_START);
+  Nan::Export(ctx, "EVT_ANIM_STOP", get_EVT_ANIM_STOP);
+  Nan::Export(ctx, "EVT_ANIM_PAUSE", get_EVT_ANIM_PAUSE);
+  Nan::Export(ctx, "EVT_ANIM_ONCE", get_EVT_ANIM_ONCE);
+  Nan::Export(ctx, "EVT_ANIM_END", get_EVT_ANIM_END);
+  Nan::Export(ctx, "EVT_WINDOW_LOAD", get_EVT_WINDOW_LOAD);
+  Nan::Export(ctx, "EVT_WIDGET_LOAD", get_EVT_WIDGET_LOAD);
+  Nan::Export(ctx, "EVT_WINDOW_WILL_OPEN", get_EVT_WINDOW_WILL_OPEN);
+  Nan::Export(ctx, "EVT_WINDOW_OPEN", get_EVT_WINDOW_OPEN);
+  Nan::Export(ctx, "EVT_WINDOW_TO_BACKGROUND", get_EVT_WINDOW_TO_BACKGROUND);
+  Nan::Export(ctx, "EVT_WINDOW_TO_FOREGROUND", get_EVT_WINDOW_TO_FOREGROUND);
+  Nan::Export(ctx, "EVT_WINDOW_CLOSE", get_EVT_WINDOW_CLOSE);
+  Nan::Export(ctx, "EVT_REQUEST_CLOSE_WINDOW", get_EVT_REQUEST_CLOSE_WINDOW);
+  Nan::Export(ctx, "EVT_TOP_WINDOW_CHANGED", get_EVT_TOP_WINDOW_CHANGED);
+  Nan::Export(ctx, "EVT_IM_COMMIT", get_EVT_IM_COMMIT);
+  Nan::Export(ctx, "EVT_IM_SHOW_CANDIDATES", get_EVT_IM_SHOW_CANDIDATES);
+  Nan::Export(ctx, "EVT_IM_ACTION", get_EVT_IM_ACTION);
+  Nan::Export(ctx, "EVT_IM_ACTION_INFO", get_EVT_IM_ACTION_INFO);
+  Nan::Export(ctx, "EVT_DRAG_START", get_EVT_DRAG_START);
+  Nan::Export(ctx, "EVT_DRAG", get_EVT_DRAG);
+  Nan::Export(ctx, "EVT_DRAG_END", get_EVT_DRAG_END);
+  Nan::Export(ctx, "EVT_SCREEN_SAVER", get_EVT_SCREEN_SAVER);
+  Nan::Export(ctx, "EVT_LOW_MEMORY", get_EVT_LOW_MEMORY);
+  Nan::Export(ctx, "EVT_OUT_OF_MEMORY", get_EVT_OUT_OF_MEMORY);
+  Nan::Export(ctx, "EVT_ORIENTATION_WILL_CHANGED", get_EVT_ORIENTATION_WILL_CHANGED);
+  Nan::Export(ctx, "EVT_ORIENTATION_CHANGED", get_EVT_ORIENTATION_CHANGED);
+  Nan::Export(ctx, "EVT_WIDGET_CREATED", get_EVT_WIDGET_CREATED);
+  Nan::Export(ctx, "EVT_REQUEST_QUIT_APP", get_EVT_REQUEST_QUIT_APP);
+  Nan::Export(ctx, "EVT_THEME_CHANGED", get_EVT_THEME_CHANGED);
+  Nan::Export(ctx, "EVT_WIDGET_ADD_CHILD", get_EVT_WIDGET_ADD_CHILD);
+  Nan::Export(ctx, "EVT_WIDGET_REMOVE_CHILD", get_EVT_WIDGET_REMOVE_CHILD);
+  Nan::Export(ctx, "EVT_REQ_START", get_EVT_REQ_START);
+  Nan::Export(ctx, "EVT_USER_START", get_EVT_USER_START);
+  Nan::Export(ctx, "EVT_NONE", get_EVT_NONE);
+  Nan::Export(ctx, "EVT_PROP_WILL_CHANGE", get_EVT_PROP_WILL_CHANGE);
+  Nan::Export(ctx, "EVT_PROP_CHANGED", get_EVT_PROP_CHANGED);
+  Nan::Export(ctx, "EVT_ITEMS_WILL_CHANGE", get_EVT_ITEMS_WILL_CHANGE);
+  Nan::Export(ctx, "EVT_ITEMS_CHANGED", get_EVT_ITEMS_CHANGED);
+  Nan::Export(ctx, "EVT_PROPS_CHANGED", get_EVT_PROPS_CHANGED);
+  Nan::Export(ctx, "EVT_PROGRESS", get_EVT_PROGRESS);
+  Nan::Export(ctx, "EVT_DESTROY", get_EVT_DESTROY);
 
  return RET_OK;
 }
@@ -2705,10 +2520,8 @@ static void wrap_font_manager_unload_all(const Nan::FunctionCallbackInfo<v8::Val
 }
 
 ret_t font_manager_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("font_manager_unload_font").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_font_manager_unload_font)->GetFunction());
-  ctx->Set(Nan::New("font_manager_unload_all").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_font_manager_unload_all)->GetFunction());
+  Nan::Export(ctx, "font_manager_unload_font", wrap_font_manager_unload_font);
+  Nan::Export(ctx, "font_manager_unload_all", wrap_font_manager_unload_all);
 
  return RET_OK;
 }
@@ -2738,12 +2551,9 @@ static void get_GLYPH_FMT_RGBA(const Nan::FunctionCallbackInfo<v8::Value>& argv)
 }
 
 ret_t glyph_format_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("GLYPH_FMT_ALPHA").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_GLYPH_FMT_ALPHA)->GetFunction());
-  ctx->Set(Nan::New("GLYPH_FMT_MONO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_GLYPH_FMT_MONO)->GetFunction());
-  ctx->Set(Nan::New("GLYPH_FMT_RGBA").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_GLYPH_FMT_RGBA)->GetFunction());
+  Nan::Export(ctx, "GLYPH_FMT_ALPHA", get_GLYPH_FMT_ALPHA);
+  Nan::Export(ctx, "GLYPH_FMT_MONO", get_GLYPH_FMT_MONO);
+  Nan::Export(ctx, "GLYPH_FMT_RGBA", get_GLYPH_FMT_RGBA);
 
  return RET_OK;
 }
@@ -2763,10 +2573,8 @@ static void wrap_idle_remove(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t idle_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("idle_add").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_idle_add)->GetFunction());
-  ctx->Set(Nan::New("idle_remove").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_idle_remove)->GetFunction());
+  Nan::Export(ctx, "idle_add", wrap_idle_add);
+  Nan::Export(ctx, "idle_remove", wrap_idle_remove);
 
  return RET_OK;
 }
@@ -2802,10 +2610,8 @@ static void wrap_image_manager_get_bitmap(const Nan::FunctionCallbackInfo<v8::Va
 }
 
 ret_t image_manager_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("image_manager").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_manager)->GetFunction());
-  ctx->Set(Nan::New("image_manager_get_bitmap").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_manager_get_bitmap)->GetFunction());
+  Nan::Export(ctx, "image_manager", wrap_image_manager);
+  Nan::Export(ctx, "image_manager_get_bitmap", wrap_image_manager_get_bitmap);
 
  return RET_OK;
 }
@@ -2899,28 +2705,17 @@ static void get_INPUT_CUSTOM_PASSWORD(const Nan::FunctionCallbackInfo<v8::Value>
 }
 
 ret_t input_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("INPUT_TEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_TEXT)->GetFunction());
-  ctx->Set(Nan::New("INPUT_INT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_INT)->GetFunction());
-  ctx->Set(Nan::New("INPUT_UINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_UINT)->GetFunction());
-  ctx->Set(Nan::New("INPUT_HEX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_HEX)->GetFunction());
-  ctx->Set(Nan::New("INPUT_FLOAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_FLOAT)->GetFunction());
-  ctx->Set(Nan::New("INPUT_UFLOAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_UFLOAT)->GetFunction());
-  ctx->Set(Nan::New("INPUT_EMAIL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_EMAIL)->GetFunction());
-  ctx->Set(Nan::New("INPUT_PASSWORD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_PASSWORD)->GetFunction());
-  ctx->Set(Nan::New("INPUT_PHONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_PHONE)->GetFunction());
-  ctx->Set(Nan::New("INPUT_CUSTOM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_CUSTOM)->GetFunction());
-  ctx->Set(Nan::New("INPUT_CUSTOM_PASSWORD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INPUT_CUSTOM_PASSWORD)->GetFunction());
+  Nan::Export(ctx, "INPUT_TEXT", get_INPUT_TEXT);
+  Nan::Export(ctx, "INPUT_INT", get_INPUT_INT);
+  Nan::Export(ctx, "INPUT_UINT", get_INPUT_UINT);
+  Nan::Export(ctx, "INPUT_HEX", get_INPUT_HEX);
+  Nan::Export(ctx, "INPUT_FLOAT", get_INPUT_FLOAT);
+  Nan::Export(ctx, "INPUT_UFLOAT", get_INPUT_UFLOAT);
+  Nan::Export(ctx, "INPUT_EMAIL", get_INPUT_EMAIL);
+  Nan::Export(ctx, "INPUT_PASSWORD", get_INPUT_PASSWORD);
+  Nan::Export(ctx, "INPUT_PHONE", get_INPUT_PHONE);
+  Nan::Export(ctx, "INPUT_CUSTOM", get_INPUT_CUSTOM);
+  Nan::Export(ctx, "INPUT_CUSTOM_PASSWORD", get_INPUT_CUSTOM_PASSWORD);
 
  return RET_OK;
 }
@@ -3094,48 +2889,27 @@ static void get_VALUE_TYPE_TOKEN(const Nan::FunctionCallbackInfo<v8::Value>& arg
 }
 
 ret_t value_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("VALUE_TYPE_INVALID").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_INVALID)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_BOOL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_BOOL)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_INT8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_INT8)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_UINT8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_UINT8)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_INT16").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_INT16)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_UINT16").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_UINT16)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_INT32").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_INT32)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_UINT32").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_UINT32)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_INT64").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_INT64)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_UINT64").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_UINT64)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_POINTER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_POINTER)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_FLOAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_FLOAT)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_FLOAT32").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_FLOAT32)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_DOUBLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_DOUBLE)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_STRING").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_STRING)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_WSTRING").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_WSTRING)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_OBJECT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_OBJECT)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_SIZED_STRING").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_SIZED_STRING)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_BINARY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_BINARY)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_UBJSON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_UBJSON)->GetFunction());
-  ctx->Set(Nan::New("VALUE_TYPE_TOKEN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_VALUE_TYPE_TOKEN)->GetFunction());
+  Nan::Export(ctx, "VALUE_TYPE_INVALID", get_VALUE_TYPE_INVALID);
+  Nan::Export(ctx, "VALUE_TYPE_BOOL", get_VALUE_TYPE_BOOL);
+  Nan::Export(ctx, "VALUE_TYPE_INT8", get_VALUE_TYPE_INT8);
+  Nan::Export(ctx, "VALUE_TYPE_UINT8", get_VALUE_TYPE_UINT8);
+  Nan::Export(ctx, "VALUE_TYPE_INT16", get_VALUE_TYPE_INT16);
+  Nan::Export(ctx, "VALUE_TYPE_UINT16", get_VALUE_TYPE_UINT16);
+  Nan::Export(ctx, "VALUE_TYPE_INT32", get_VALUE_TYPE_INT32);
+  Nan::Export(ctx, "VALUE_TYPE_UINT32", get_VALUE_TYPE_UINT32);
+  Nan::Export(ctx, "VALUE_TYPE_INT64", get_VALUE_TYPE_INT64);
+  Nan::Export(ctx, "VALUE_TYPE_UINT64", get_VALUE_TYPE_UINT64);
+  Nan::Export(ctx, "VALUE_TYPE_POINTER", get_VALUE_TYPE_POINTER);
+  Nan::Export(ctx, "VALUE_TYPE_FLOAT", get_VALUE_TYPE_FLOAT);
+  Nan::Export(ctx, "VALUE_TYPE_FLOAT32", get_VALUE_TYPE_FLOAT32);
+  Nan::Export(ctx, "VALUE_TYPE_DOUBLE", get_VALUE_TYPE_DOUBLE);
+  Nan::Export(ctx, "VALUE_TYPE_STRING", get_VALUE_TYPE_STRING);
+  Nan::Export(ctx, "VALUE_TYPE_WSTRING", get_VALUE_TYPE_WSTRING);
+  Nan::Export(ctx, "VALUE_TYPE_OBJECT", get_VALUE_TYPE_OBJECT);
+  Nan::Export(ctx, "VALUE_TYPE_SIZED_STRING", get_VALUE_TYPE_SIZED_STRING);
+  Nan::Export(ctx, "VALUE_TYPE_BINARY", get_VALUE_TYPE_BINARY);
+  Nan::Export(ctx, "VALUE_TYPE_UBJSON", get_VALUE_TYPE_UBJSON);
+  Nan::Export(ctx, "VALUE_TYPE_TOKEN", get_VALUE_TYPE_TOKEN);
 
  return RET_OK;
 }
@@ -3185,12 +2959,9 @@ static void wrap_input_method(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 }
 
 ret_t input_method_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("input_method_commit_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_input_method_commit_text)->GetFunction());
-  ctx->Set(Nan::New("input_method_dispatch_key").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_input_method_dispatch_key)->GetFunction());
-  ctx->Set(Nan::New("input_method").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_input_method)->GetFunction());
+  Nan::Export(ctx, "input_method_commit_text", wrap_input_method_commit_text);
+  Nan::Export(ctx, "input_method_dispatch_key", wrap_input_method_dispatch_key);
+  Nan::Export(ctx, "input_method", wrap_input_method);
 
  return RET_OK;
 }
@@ -4244,268 +4015,137 @@ static void get_TK_KEY_CANCEL(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 }
 
 ret_t key_code_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("TK_KEY_RETURN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RETURN)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_ESCAPE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_ESCAPE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_BACKSPACE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_BACKSPACE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_TAB").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_TAB)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_SPACE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_SPACE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_EXCLAIM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_EXCLAIM)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_QUOTEDBL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_QUOTEDBL)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_HASH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_HASH)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_PERCENT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_PERCENT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_DOLLAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_DOLLAR)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_AMPERSAND").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_AMPERSAND)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_QUOTE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_QUOTE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LEFTPAREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LEFTPAREN)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_RIGHTPAREN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RIGHTPAREN)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_ASTERISK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_ASTERISK)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_PLUS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_PLUS)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_COMMA").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_COMMA)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_MINUS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_MINUS)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_PERIOD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_PERIOD)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_SLASH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_SLASH)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_0").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_0)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_1").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_1)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_2").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_2)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_3").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_3)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_4").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_4)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_5").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_5)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_6").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_6)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_7").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_7)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_8)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_9").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_9)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_COLON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_COLON)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_SEMICOLON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_SEMICOLON)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LESS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LESS)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_EQUAL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_EQUAL)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_GREATER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_GREATER)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_QUESTION").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_QUESTION)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_AT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_AT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LEFTBRACKET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LEFTBRACKET)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_BACKSLASH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_BACKSLASH)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_RIGHTBRACKET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RIGHTBRACKET)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_CARET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_CARET)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_UNDERSCORE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_UNDERSCORE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_BACKQUOTE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_BACKQUOTE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_a").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_a)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_b").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_b)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_c").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_c)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_d").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_d)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_e").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_e)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_f").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_f)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_g").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_g)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_h").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_h)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_i").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_i)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_j").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_j)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_k").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_k)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_l").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_l)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_m").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_m)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_n").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_n)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_o").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_o)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_p").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_p)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_q").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_q)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_r").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_r)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_s").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_s)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_t").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_t)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_u").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_u)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_v").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_v)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_w)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_x)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_y)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_z").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_z)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_A").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_A)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_B").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_B)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_C").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_C)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_D").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_D)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_E").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_E)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_G").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_G)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_H)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_I").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_I)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_J").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_J)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_K").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_K)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_L").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_L)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_M").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_M)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_N").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_N)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_O").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_O)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_P").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_P)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_Q").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_Q)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_R").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_R)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_S").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_S)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_T").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_T)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_U").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_U)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_V").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_V)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_W").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_W)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_X").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_X)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_Y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_Y)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_Z").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_Z)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_DOT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_DOT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_DELETE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_DELETE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LEFTBRACE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LEFTBRACE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_RIGHTBRACE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RIGHTBRACE)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LSHIFT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LSHIFT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_RSHIFT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RSHIFT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LCTRL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LCTRL)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_RCTRL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RCTRL)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LALT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LALT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_RALT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RALT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_CAPSLOCK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_CAPSLOCK)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_HOME").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_HOME)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_END").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_END)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_INSERT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_INSERT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_UP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_UP)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_DOWN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_DOWN)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_LEFT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_LEFT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_RIGHT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_RIGHT)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_PAGEUP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_PAGEUP)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_PAGEDOWN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_PAGEDOWN)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F1").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F1)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F2").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F2)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F3").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F3)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F4").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F4)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F5").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F5)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F6").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F6)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F7").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F7)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F8)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F9").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F9)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F10").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F10)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F11").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F11)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_F12").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_F12)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_MENU").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_MENU)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_COMMAND").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_COMMAND)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_BACK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_BACK)->GetFunction());
-  ctx->Set(Nan::New("TK_KEY_CANCEL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_TK_KEY_CANCEL)->GetFunction());
+  Nan::Export(ctx, "TK_KEY_RETURN", get_TK_KEY_RETURN);
+  Nan::Export(ctx, "TK_KEY_ESCAPE", get_TK_KEY_ESCAPE);
+  Nan::Export(ctx, "TK_KEY_BACKSPACE", get_TK_KEY_BACKSPACE);
+  Nan::Export(ctx, "TK_KEY_TAB", get_TK_KEY_TAB);
+  Nan::Export(ctx, "TK_KEY_SPACE", get_TK_KEY_SPACE);
+  Nan::Export(ctx, "TK_KEY_EXCLAIM", get_TK_KEY_EXCLAIM);
+  Nan::Export(ctx, "TK_KEY_QUOTEDBL", get_TK_KEY_QUOTEDBL);
+  Nan::Export(ctx, "TK_KEY_HASH", get_TK_KEY_HASH);
+  Nan::Export(ctx, "TK_KEY_PERCENT", get_TK_KEY_PERCENT);
+  Nan::Export(ctx, "TK_KEY_DOLLAR", get_TK_KEY_DOLLAR);
+  Nan::Export(ctx, "TK_KEY_AMPERSAND", get_TK_KEY_AMPERSAND);
+  Nan::Export(ctx, "TK_KEY_QUOTE", get_TK_KEY_QUOTE);
+  Nan::Export(ctx, "TK_KEY_LEFTPAREN", get_TK_KEY_LEFTPAREN);
+  Nan::Export(ctx, "TK_KEY_RIGHTPAREN", get_TK_KEY_RIGHTPAREN);
+  Nan::Export(ctx, "TK_KEY_ASTERISK", get_TK_KEY_ASTERISK);
+  Nan::Export(ctx, "TK_KEY_PLUS", get_TK_KEY_PLUS);
+  Nan::Export(ctx, "TK_KEY_COMMA", get_TK_KEY_COMMA);
+  Nan::Export(ctx, "TK_KEY_MINUS", get_TK_KEY_MINUS);
+  Nan::Export(ctx, "TK_KEY_PERIOD", get_TK_KEY_PERIOD);
+  Nan::Export(ctx, "TK_KEY_SLASH", get_TK_KEY_SLASH);
+  Nan::Export(ctx, "TK_KEY_0", get_TK_KEY_0);
+  Nan::Export(ctx, "TK_KEY_1", get_TK_KEY_1);
+  Nan::Export(ctx, "TK_KEY_2", get_TK_KEY_2);
+  Nan::Export(ctx, "TK_KEY_3", get_TK_KEY_3);
+  Nan::Export(ctx, "TK_KEY_4", get_TK_KEY_4);
+  Nan::Export(ctx, "TK_KEY_5", get_TK_KEY_5);
+  Nan::Export(ctx, "TK_KEY_6", get_TK_KEY_6);
+  Nan::Export(ctx, "TK_KEY_7", get_TK_KEY_7);
+  Nan::Export(ctx, "TK_KEY_8", get_TK_KEY_8);
+  Nan::Export(ctx, "TK_KEY_9", get_TK_KEY_9);
+  Nan::Export(ctx, "TK_KEY_COLON", get_TK_KEY_COLON);
+  Nan::Export(ctx, "TK_KEY_SEMICOLON", get_TK_KEY_SEMICOLON);
+  Nan::Export(ctx, "TK_KEY_LESS", get_TK_KEY_LESS);
+  Nan::Export(ctx, "TK_KEY_EQUAL", get_TK_KEY_EQUAL);
+  Nan::Export(ctx, "TK_KEY_GREATER", get_TK_KEY_GREATER);
+  Nan::Export(ctx, "TK_KEY_QUESTION", get_TK_KEY_QUESTION);
+  Nan::Export(ctx, "TK_KEY_AT", get_TK_KEY_AT);
+  Nan::Export(ctx, "TK_KEY_LEFTBRACKET", get_TK_KEY_LEFTBRACKET);
+  Nan::Export(ctx, "TK_KEY_BACKSLASH", get_TK_KEY_BACKSLASH);
+  Nan::Export(ctx, "TK_KEY_RIGHTBRACKET", get_TK_KEY_RIGHTBRACKET);
+  Nan::Export(ctx, "TK_KEY_CARET", get_TK_KEY_CARET);
+  Nan::Export(ctx, "TK_KEY_UNDERSCORE", get_TK_KEY_UNDERSCORE);
+  Nan::Export(ctx, "TK_KEY_BACKQUOTE", get_TK_KEY_BACKQUOTE);
+  Nan::Export(ctx, "TK_KEY_a", get_TK_KEY_a);
+  Nan::Export(ctx, "TK_KEY_b", get_TK_KEY_b);
+  Nan::Export(ctx, "TK_KEY_c", get_TK_KEY_c);
+  Nan::Export(ctx, "TK_KEY_d", get_TK_KEY_d);
+  Nan::Export(ctx, "TK_KEY_e", get_TK_KEY_e);
+  Nan::Export(ctx, "TK_KEY_f", get_TK_KEY_f);
+  Nan::Export(ctx, "TK_KEY_g", get_TK_KEY_g);
+  Nan::Export(ctx, "TK_KEY_h", get_TK_KEY_h);
+  Nan::Export(ctx, "TK_KEY_i", get_TK_KEY_i);
+  Nan::Export(ctx, "TK_KEY_j", get_TK_KEY_j);
+  Nan::Export(ctx, "TK_KEY_k", get_TK_KEY_k);
+  Nan::Export(ctx, "TK_KEY_l", get_TK_KEY_l);
+  Nan::Export(ctx, "TK_KEY_m", get_TK_KEY_m);
+  Nan::Export(ctx, "TK_KEY_n", get_TK_KEY_n);
+  Nan::Export(ctx, "TK_KEY_o", get_TK_KEY_o);
+  Nan::Export(ctx, "TK_KEY_p", get_TK_KEY_p);
+  Nan::Export(ctx, "TK_KEY_q", get_TK_KEY_q);
+  Nan::Export(ctx, "TK_KEY_r", get_TK_KEY_r);
+  Nan::Export(ctx, "TK_KEY_s", get_TK_KEY_s);
+  Nan::Export(ctx, "TK_KEY_t", get_TK_KEY_t);
+  Nan::Export(ctx, "TK_KEY_u", get_TK_KEY_u);
+  Nan::Export(ctx, "TK_KEY_v", get_TK_KEY_v);
+  Nan::Export(ctx, "TK_KEY_w", get_TK_KEY_w);
+  Nan::Export(ctx, "TK_KEY_x", get_TK_KEY_x);
+  Nan::Export(ctx, "TK_KEY_y", get_TK_KEY_y);
+  Nan::Export(ctx, "TK_KEY_z", get_TK_KEY_z);
+  Nan::Export(ctx, "TK_KEY_A", get_TK_KEY_A);
+  Nan::Export(ctx, "TK_KEY_B", get_TK_KEY_B);
+  Nan::Export(ctx, "TK_KEY_C", get_TK_KEY_C);
+  Nan::Export(ctx, "TK_KEY_D", get_TK_KEY_D);
+  Nan::Export(ctx, "TK_KEY_E", get_TK_KEY_E);
+  Nan::Export(ctx, "TK_KEY_F", get_TK_KEY_F);
+  Nan::Export(ctx, "TK_KEY_G", get_TK_KEY_G);
+  Nan::Export(ctx, "TK_KEY_H", get_TK_KEY_H);
+  Nan::Export(ctx, "TK_KEY_I", get_TK_KEY_I);
+  Nan::Export(ctx, "TK_KEY_J", get_TK_KEY_J);
+  Nan::Export(ctx, "TK_KEY_K", get_TK_KEY_K);
+  Nan::Export(ctx, "TK_KEY_L", get_TK_KEY_L);
+  Nan::Export(ctx, "TK_KEY_M", get_TK_KEY_M);
+  Nan::Export(ctx, "TK_KEY_N", get_TK_KEY_N);
+  Nan::Export(ctx, "TK_KEY_O", get_TK_KEY_O);
+  Nan::Export(ctx, "TK_KEY_P", get_TK_KEY_P);
+  Nan::Export(ctx, "TK_KEY_Q", get_TK_KEY_Q);
+  Nan::Export(ctx, "TK_KEY_R", get_TK_KEY_R);
+  Nan::Export(ctx, "TK_KEY_S", get_TK_KEY_S);
+  Nan::Export(ctx, "TK_KEY_T", get_TK_KEY_T);
+  Nan::Export(ctx, "TK_KEY_U", get_TK_KEY_U);
+  Nan::Export(ctx, "TK_KEY_V", get_TK_KEY_V);
+  Nan::Export(ctx, "TK_KEY_W", get_TK_KEY_W);
+  Nan::Export(ctx, "TK_KEY_X", get_TK_KEY_X);
+  Nan::Export(ctx, "TK_KEY_Y", get_TK_KEY_Y);
+  Nan::Export(ctx, "TK_KEY_Z", get_TK_KEY_Z);
+  Nan::Export(ctx, "TK_KEY_DOT", get_TK_KEY_DOT);
+  Nan::Export(ctx, "TK_KEY_DELETE", get_TK_KEY_DELETE);
+  Nan::Export(ctx, "TK_KEY_LEFTBRACE", get_TK_KEY_LEFTBRACE);
+  Nan::Export(ctx, "TK_KEY_RIGHTBRACE", get_TK_KEY_RIGHTBRACE);
+  Nan::Export(ctx, "TK_KEY_LSHIFT", get_TK_KEY_LSHIFT);
+  Nan::Export(ctx, "TK_KEY_RSHIFT", get_TK_KEY_RSHIFT);
+  Nan::Export(ctx, "TK_KEY_LCTRL", get_TK_KEY_LCTRL);
+  Nan::Export(ctx, "TK_KEY_RCTRL", get_TK_KEY_RCTRL);
+  Nan::Export(ctx, "TK_KEY_LALT", get_TK_KEY_LALT);
+  Nan::Export(ctx, "TK_KEY_RALT", get_TK_KEY_RALT);
+  Nan::Export(ctx, "TK_KEY_CAPSLOCK", get_TK_KEY_CAPSLOCK);
+  Nan::Export(ctx, "TK_KEY_HOME", get_TK_KEY_HOME);
+  Nan::Export(ctx, "TK_KEY_END", get_TK_KEY_END);
+  Nan::Export(ctx, "TK_KEY_INSERT", get_TK_KEY_INSERT);
+  Nan::Export(ctx, "TK_KEY_UP", get_TK_KEY_UP);
+  Nan::Export(ctx, "TK_KEY_DOWN", get_TK_KEY_DOWN);
+  Nan::Export(ctx, "TK_KEY_LEFT", get_TK_KEY_LEFT);
+  Nan::Export(ctx, "TK_KEY_RIGHT", get_TK_KEY_RIGHT);
+  Nan::Export(ctx, "TK_KEY_PAGEUP", get_TK_KEY_PAGEUP);
+  Nan::Export(ctx, "TK_KEY_PAGEDOWN", get_TK_KEY_PAGEDOWN);
+  Nan::Export(ctx, "TK_KEY_F1", get_TK_KEY_F1);
+  Nan::Export(ctx, "TK_KEY_F2", get_TK_KEY_F2);
+  Nan::Export(ctx, "TK_KEY_F3", get_TK_KEY_F3);
+  Nan::Export(ctx, "TK_KEY_F4", get_TK_KEY_F4);
+  Nan::Export(ctx, "TK_KEY_F5", get_TK_KEY_F5);
+  Nan::Export(ctx, "TK_KEY_F6", get_TK_KEY_F6);
+  Nan::Export(ctx, "TK_KEY_F7", get_TK_KEY_F7);
+  Nan::Export(ctx, "TK_KEY_F8", get_TK_KEY_F8);
+  Nan::Export(ctx, "TK_KEY_F9", get_TK_KEY_F9);
+  Nan::Export(ctx, "TK_KEY_F10", get_TK_KEY_F10);
+  Nan::Export(ctx, "TK_KEY_F11", get_TK_KEY_F11);
+  Nan::Export(ctx, "TK_KEY_F12", get_TK_KEY_F12);
+  Nan::Export(ctx, "TK_KEY_MENU", get_TK_KEY_MENU);
+  Nan::Export(ctx, "TK_KEY_COMMAND", get_TK_KEY_COMMAND);
+  Nan::Export(ctx, "TK_KEY_BACK", get_TK_KEY_BACK);
+  Nan::Export(ctx, "TK_KEY_CANCEL", get_TK_KEY_CANCEL);
 
  return RET_OK;
 }
@@ -4575,14 +4215,10 @@ static void wrap_locale_info_off(const Nan::FunctionCallbackInfo<v8::Value>& arg
 }
 
 ret_t locale_info_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("locale_info").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_locale_info)->GetFunction());
-  ctx->Set(Nan::New("locale_info_tr").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_locale_info_tr)->GetFunction());
-  ctx->Set(Nan::New("locale_info_change").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_locale_info_change)->GetFunction());
-  ctx->Set(Nan::New("locale_info_off").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_locale_info_off)->GetFunction());
+  Nan::Export(ctx, "locale_info", wrap_locale_info);
+  Nan::Export(ctx, "locale_info_tr", wrap_locale_info_tr);
+  Nan::Export(ctx, "locale_info_change", wrap_locale_info_change);
+  Nan::Export(ctx, "locale_info_off", wrap_locale_info_off);
 
  return RET_OK;
 }
@@ -4860,74 +4496,40 @@ static void get_STYLE_ID_SELF_LAYOUT(const Nan::FunctionCallbackInfo<v8::Value>&
 }
 
 ret_t style_id_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("STYLE_ID_BG_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_BG_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_FG_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_FG_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_MASK_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_MASK_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_FONT_NAME").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_FONT_NAME)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_FONT_SIZE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_FONT_SIZE)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_FONT_STYLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_FONT_STYLE)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_TEXT_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_TEXT_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_TIPS_TEXT_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_TIPS_TEXT_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_TEXT_ALIGN_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_TEXT_ALIGN_H)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_TEXT_ALIGN_V").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_TEXT_ALIGN_V)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_BORDER_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_BORDER_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_BORDER_WIDTH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_BORDER_WIDTH)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_BORDER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_BORDER)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_BG_IMAGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_BG_IMAGE)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_BG_IMAGE_DRAW_TYPE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_BG_IMAGE_DRAW_TYPE)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_ICON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_ICON)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_FG_IMAGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_FG_IMAGE)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_FG_IMAGE_DRAW_TYPE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_FG_IMAGE_DRAW_TYPE)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_SPACER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_SPACER)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_MARGIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_MARGIN)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_MARGIN_LEFT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_MARGIN_LEFT)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_MARGIN_RIGHT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_MARGIN_RIGHT)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_MARGIN_TOP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_MARGIN_TOP)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_MARGIN_BOTTOM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_MARGIN_BOTTOM)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_ICON_AT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_ICON_AT)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_ACTIVE_ICON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_ACTIVE_ICON)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_X_OFFSET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_X_OFFSET)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_Y_OFFSET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_Y_OFFSET)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_SELECTED_BG_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_SELECTED_BG_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_SELECTED_FG_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_SELECTED_FG_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_SELECTED_TEXT_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_SELECTED_TEXT_COLOR)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_ROUND_RADIUS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_ROUND_RADIUS)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_CHILDREN_LAYOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_CHILDREN_LAYOUT)->GetFunction());
-  ctx->Set(Nan::New("STYLE_ID_SELF_LAYOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_STYLE_ID_SELF_LAYOUT)->GetFunction());
+  Nan::Export(ctx, "STYLE_ID_BG_COLOR", get_STYLE_ID_BG_COLOR);
+  Nan::Export(ctx, "STYLE_ID_FG_COLOR", get_STYLE_ID_FG_COLOR);
+  Nan::Export(ctx, "STYLE_ID_MASK_COLOR", get_STYLE_ID_MASK_COLOR);
+  Nan::Export(ctx, "STYLE_ID_FONT_NAME", get_STYLE_ID_FONT_NAME);
+  Nan::Export(ctx, "STYLE_ID_FONT_SIZE", get_STYLE_ID_FONT_SIZE);
+  Nan::Export(ctx, "STYLE_ID_FONT_STYLE", get_STYLE_ID_FONT_STYLE);
+  Nan::Export(ctx, "STYLE_ID_TEXT_COLOR", get_STYLE_ID_TEXT_COLOR);
+  Nan::Export(ctx, "STYLE_ID_TIPS_TEXT_COLOR", get_STYLE_ID_TIPS_TEXT_COLOR);
+  Nan::Export(ctx, "STYLE_ID_TEXT_ALIGN_H", get_STYLE_ID_TEXT_ALIGN_H);
+  Nan::Export(ctx, "STYLE_ID_TEXT_ALIGN_V", get_STYLE_ID_TEXT_ALIGN_V);
+  Nan::Export(ctx, "STYLE_ID_BORDER_COLOR", get_STYLE_ID_BORDER_COLOR);
+  Nan::Export(ctx, "STYLE_ID_BORDER_WIDTH", get_STYLE_ID_BORDER_WIDTH);
+  Nan::Export(ctx, "STYLE_ID_BORDER", get_STYLE_ID_BORDER);
+  Nan::Export(ctx, "STYLE_ID_BG_IMAGE", get_STYLE_ID_BG_IMAGE);
+  Nan::Export(ctx, "STYLE_ID_BG_IMAGE_DRAW_TYPE", get_STYLE_ID_BG_IMAGE_DRAW_TYPE);
+  Nan::Export(ctx, "STYLE_ID_ICON", get_STYLE_ID_ICON);
+  Nan::Export(ctx, "STYLE_ID_FG_IMAGE", get_STYLE_ID_FG_IMAGE);
+  Nan::Export(ctx, "STYLE_ID_FG_IMAGE_DRAW_TYPE", get_STYLE_ID_FG_IMAGE_DRAW_TYPE);
+  Nan::Export(ctx, "STYLE_ID_SPACER", get_STYLE_ID_SPACER);
+  Nan::Export(ctx, "STYLE_ID_MARGIN", get_STYLE_ID_MARGIN);
+  Nan::Export(ctx, "STYLE_ID_MARGIN_LEFT", get_STYLE_ID_MARGIN_LEFT);
+  Nan::Export(ctx, "STYLE_ID_MARGIN_RIGHT", get_STYLE_ID_MARGIN_RIGHT);
+  Nan::Export(ctx, "STYLE_ID_MARGIN_TOP", get_STYLE_ID_MARGIN_TOP);
+  Nan::Export(ctx, "STYLE_ID_MARGIN_BOTTOM", get_STYLE_ID_MARGIN_BOTTOM);
+  Nan::Export(ctx, "STYLE_ID_ICON_AT", get_STYLE_ID_ICON_AT);
+  Nan::Export(ctx, "STYLE_ID_ACTIVE_ICON", get_STYLE_ID_ACTIVE_ICON);
+  Nan::Export(ctx, "STYLE_ID_X_OFFSET", get_STYLE_ID_X_OFFSET);
+  Nan::Export(ctx, "STYLE_ID_Y_OFFSET", get_STYLE_ID_Y_OFFSET);
+  Nan::Export(ctx, "STYLE_ID_SELECTED_BG_COLOR", get_STYLE_ID_SELECTED_BG_COLOR);
+  Nan::Export(ctx, "STYLE_ID_SELECTED_FG_COLOR", get_STYLE_ID_SELECTED_FG_COLOR);
+  Nan::Export(ctx, "STYLE_ID_SELECTED_TEXT_COLOR", get_STYLE_ID_SELECTED_TEXT_COLOR);
+  Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS", get_STYLE_ID_ROUND_RADIUS);
+  Nan::Export(ctx, "STYLE_ID_CHILDREN_LAYOUT", get_STYLE_ID_CHILDREN_LAYOUT);
+  Nan::Export(ctx, "STYLE_ID_SELF_LAYOUT", get_STYLE_ID_SELF_LAYOUT);
 
  return RET_OK;
 }
@@ -5032,18 +4634,12 @@ static void wrap_style_is_mutable(const Nan::FunctionCallbackInfo<v8::Value>& ar
 }
 
 ret_t style_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("style_notify_widget_state_changed").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_notify_widget_state_changed)->GetFunction());
-  ctx->Set(Nan::New("style_is_valid").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_is_valid)->GetFunction());
-  ctx->Set(Nan::New("style_get_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_get_int)->GetFunction());
-  ctx->Set(Nan::New("style_get_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_get_str)->GetFunction());
-  ctx->Set(Nan::New("style_set").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_set)->GetFunction());
-  ctx->Set(Nan::New("style_is_mutable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_is_mutable)->GetFunction());
+  Nan::Export(ctx, "style_notify_widget_state_changed", wrap_style_notify_widget_state_changed);
+  Nan::Export(ctx, "style_is_valid", wrap_style_is_valid);
+  Nan::Export(ctx, "style_get_int", wrap_style_get_int);
+  Nan::Export(ctx, "style_get_str", wrap_style_get_str);
+  Nan::Export(ctx, "style_set", wrap_style_set);
+  Nan::Export(ctx, "style_is_mutable", wrap_style_is_mutable);
 
  return RET_OK;
 }
@@ -5062,8 +4658,7 @@ static void wrap_theme(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t theme_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("theme").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_theme)->GetFunction());
+  Nan::Export(ctx, "theme", wrap_theme);
 
  return RET_OK;
 }
@@ -5112,14 +4707,10 @@ static void wrap_timer_modify(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 }
 
 ret_t timer_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("timer_add").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_add)->GetFunction());
-  ctx->Set(Nan::New("timer_remove").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_remove)->GetFunction());
-  ctx->Set(Nan::New("timer_reset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_reset)->GetFunction());
-  ctx->Set(Nan::New("timer_modify").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_modify)->GetFunction());
+  Nan::Export(ctx, "timer_add", wrap_timer_add);
+  Nan::Export(ctx, "timer_remove", wrap_timer_remove);
+  Nan::Export(ctx, "timer_reset", wrap_timer_reset);
+  Nan::Export(ctx, "timer_modify", wrap_timer_modify);
 
  return RET_OK;
 }
@@ -5157,14 +4748,10 @@ static void get_ALIGN_V_BOTTOM(const Nan::FunctionCallbackInfo<v8::Value>& argv)
 }
 
 ret_t align_v_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("ALIGN_V_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_V_NONE)->GetFunction());
-  ctx->Set(Nan::New("ALIGN_V_MIDDLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_V_MIDDLE)->GetFunction());
-  ctx->Set(Nan::New("ALIGN_V_TOP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_V_TOP)->GetFunction());
-  ctx->Set(Nan::New("ALIGN_V_BOTTOM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_V_BOTTOM)->GetFunction());
+  Nan::Export(ctx, "ALIGN_V_NONE", get_ALIGN_V_NONE);
+  Nan::Export(ctx, "ALIGN_V_MIDDLE", get_ALIGN_V_MIDDLE);
+  Nan::Export(ctx, "ALIGN_V_TOP", get_ALIGN_V_TOP);
+  Nan::Export(ctx, "ALIGN_V_BOTTOM", get_ALIGN_V_BOTTOM);
 
  return RET_OK;
 }
@@ -5202,14 +4789,10 @@ static void get_ALIGN_H_RIGHT(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 }
 
 ret_t align_h_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("ALIGN_H_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_H_NONE)->GetFunction());
-  ctx->Set(Nan::New("ALIGN_H_CENTER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_H_CENTER)->GetFunction());
-  ctx->Set(Nan::New("ALIGN_H_LEFT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_H_LEFT)->GetFunction());
-  ctx->Set(Nan::New("ALIGN_H_RIGHT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ALIGN_H_RIGHT)->GetFunction());
+  Nan::Export(ctx, "ALIGN_H_NONE", get_ALIGN_H_NONE);
+  Nan::Export(ctx, "ALIGN_H_CENTER", get_ALIGN_H_CENTER);
+  Nan::Export(ctx, "ALIGN_H_LEFT", get_ALIGN_H_LEFT);
+  Nan::Export(ctx, "ALIGN_H_RIGHT", get_ALIGN_H_RIGHT);
 
  return RET_OK;
 }
@@ -5239,12 +4822,9 @@ static void get_APP_DESKTOP(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t app_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("APP_MOBILE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_APP_MOBILE)->GetFunction());
-  ctx->Set(Nan::New("APP_SIMULATOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_APP_SIMULATOR)->GetFunction());
-  ctx->Set(Nan::New("APP_DESKTOP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_APP_DESKTOP)->GetFunction());
+  Nan::Export(ctx, "APP_MOBILE", get_APP_MOBILE);
+  Nan::Export(ctx, "APP_SIMULATOR", get_APP_SIMULATOR);
+  Nan::Export(ctx, "APP_DESKTOP", get_APP_DESKTOP);
 
  return RET_OK;
 }
@@ -5338,28 +4918,17 @@ static void get_BITMAP_FMT_MONO(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t bitmap_format_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("BITMAP_FMT_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_NONE)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_RGBA8888").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_RGBA8888)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_ABGR8888").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_ABGR8888)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_BGRA8888").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_BGRA8888)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_ARGB8888").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_ARGB8888)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_RGB565").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_RGB565)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_BGR565").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_BGR565)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_RGB888").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_RGB888)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_BGR888").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_BGR888)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_GRAY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_GRAY)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FMT_MONO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FMT_MONO)->GetFunction());
+  Nan::Export(ctx, "BITMAP_FMT_NONE", get_BITMAP_FMT_NONE);
+  Nan::Export(ctx, "BITMAP_FMT_RGBA8888", get_BITMAP_FMT_RGBA8888);
+  Nan::Export(ctx, "BITMAP_FMT_ABGR8888", get_BITMAP_FMT_ABGR8888);
+  Nan::Export(ctx, "BITMAP_FMT_BGRA8888", get_BITMAP_FMT_BGRA8888);
+  Nan::Export(ctx, "BITMAP_FMT_ARGB8888", get_BITMAP_FMT_ARGB8888);
+  Nan::Export(ctx, "BITMAP_FMT_RGB565", get_BITMAP_FMT_RGB565);
+  Nan::Export(ctx, "BITMAP_FMT_BGR565", get_BITMAP_FMT_BGR565);
+  Nan::Export(ctx, "BITMAP_FMT_RGB888", get_BITMAP_FMT_RGB888);
+  Nan::Export(ctx, "BITMAP_FMT_BGR888", get_BITMAP_FMT_BGR888);
+  Nan::Export(ctx, "BITMAP_FMT_GRAY", get_BITMAP_FMT_GRAY);
+  Nan::Export(ctx, "BITMAP_FMT_MONO", get_BITMAP_FMT_MONO);
 
  return RET_OK;
 }
@@ -5413,18 +4982,12 @@ static void get_BITMAP_FLAG_PREMULTI_ALPHA(const Nan::FunctionCallbackInfo<v8::V
 }
 
 ret_t bitmap_flag_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("BITMAP_FLAG_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FLAG_NONE)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FLAG_OPAQUE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FLAG_OPAQUE)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FLAG_IMMUTABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FLAG_IMMUTABLE)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FLAG_TEXTURE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FLAG_TEXTURE)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FLAG_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FLAG_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("BITMAP_FLAG_PREMULTI_ALPHA").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_BITMAP_FLAG_PREMULTI_ALPHA)->GetFunction());
+  Nan::Export(ctx, "BITMAP_FLAG_NONE", get_BITMAP_FLAG_NONE);
+  Nan::Export(ctx, "BITMAP_FLAG_OPAQUE", get_BITMAP_FLAG_OPAQUE);
+  Nan::Export(ctx, "BITMAP_FLAG_IMMUTABLE", get_BITMAP_FLAG_IMMUTABLE);
+  Nan::Export(ctx, "BITMAP_FLAG_TEXTURE", get_BITMAP_FLAG_TEXTURE);
+  Nan::Export(ctx, "BITMAP_FLAG_CHANGED", get_BITMAP_FLAG_CHANGED);
+  Nan::Export(ctx, "BITMAP_FLAG_PREMULTI_ALPHA", get_BITMAP_FLAG_PREMULTI_ALPHA);
 
  return RET_OK;
 }
@@ -6276,118 +5839,62 @@ static void wrap_vgcanvas_t_get_prop_text_baseline(const Nan::FunctionCallbackIn
 }
 
 ret_t vgcanvas_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("vgcanvas_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_cast)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_flush").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_flush)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_begin_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_begin_path)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_move_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_move_to)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_line_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_line_to)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_quad_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_quad_to)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_bezier_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_bezier_to)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_arc_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_arc_to)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_arc").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_arc)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_is_point_in_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_is_point_in_path)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_rect)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_rounded_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_rounded_rect)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_ellipse").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_ellipse)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_close_path").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_close_path)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_path_winding").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_path_winding)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_rotate").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_rotate)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_scale)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_translate").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_translate)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_transform").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_transform)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_transform").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_transform)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_clip_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_clip_rect)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_fill").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_fill)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_stroke").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_stroke)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_paint").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_paint)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_font").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_font)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_font_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_font_size)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_text_align").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_text_align)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_text_baseline").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_text_baseline)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_fill_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_fill_text)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_measure_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_measure_text)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_draw_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_draw_image)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_draw_icon").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_draw_icon)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_antialias").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_antialias)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_global_alpha").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_global_alpha)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_line_width").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_line_width)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_fill_color_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_fill_color_str)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_stroke_color_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_stroke_color_str)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_line_cap").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_line_cap)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_line_join").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_line_join)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_set_miter_limit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_set_miter_limit)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_save").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_save)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_restore").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_restore)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_w)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_h").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_h)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_stride").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_stride)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_ratio").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_ratio)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_anti_alias").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_anti_alias)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_line_width").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_line_width)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_global_alpha").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_global_alpha)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_miter_limit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_miter_limit)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_line_cap").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_line_cap)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_line_join").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_line_join)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_font").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_font)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_font_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_font_size)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_text_align").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_text_align)->GetFunction());
-  ctx->Set(Nan::New("vgcanvas_t_get_prop_text_baseline").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_vgcanvas_t_get_prop_text_baseline)->GetFunction());
+  Nan::Export(ctx, "vgcanvas_cast", wrap_vgcanvas_cast);
+  Nan::Export(ctx, "vgcanvas_flush", wrap_vgcanvas_flush);
+  Nan::Export(ctx, "vgcanvas_begin_path", wrap_vgcanvas_begin_path);
+  Nan::Export(ctx, "vgcanvas_move_to", wrap_vgcanvas_move_to);
+  Nan::Export(ctx, "vgcanvas_line_to", wrap_vgcanvas_line_to);
+  Nan::Export(ctx, "vgcanvas_quad_to", wrap_vgcanvas_quad_to);
+  Nan::Export(ctx, "vgcanvas_bezier_to", wrap_vgcanvas_bezier_to);
+  Nan::Export(ctx, "vgcanvas_arc_to", wrap_vgcanvas_arc_to);
+  Nan::Export(ctx, "vgcanvas_arc", wrap_vgcanvas_arc);
+  Nan::Export(ctx, "vgcanvas_is_point_in_path", wrap_vgcanvas_is_point_in_path);
+  Nan::Export(ctx, "vgcanvas_rect", wrap_vgcanvas_rect);
+  Nan::Export(ctx, "vgcanvas_rounded_rect", wrap_vgcanvas_rounded_rect);
+  Nan::Export(ctx, "vgcanvas_ellipse", wrap_vgcanvas_ellipse);
+  Nan::Export(ctx, "vgcanvas_close_path", wrap_vgcanvas_close_path);
+  Nan::Export(ctx, "vgcanvas_path_winding", wrap_vgcanvas_path_winding);
+  Nan::Export(ctx, "vgcanvas_rotate", wrap_vgcanvas_rotate);
+  Nan::Export(ctx, "vgcanvas_scale", wrap_vgcanvas_scale);
+  Nan::Export(ctx, "vgcanvas_translate", wrap_vgcanvas_translate);
+  Nan::Export(ctx, "vgcanvas_transform", wrap_vgcanvas_transform);
+  Nan::Export(ctx, "vgcanvas_set_transform", wrap_vgcanvas_set_transform);
+  Nan::Export(ctx, "vgcanvas_clip_rect", wrap_vgcanvas_clip_rect);
+  Nan::Export(ctx, "vgcanvas_fill", wrap_vgcanvas_fill);
+  Nan::Export(ctx, "vgcanvas_stroke", wrap_vgcanvas_stroke);
+  Nan::Export(ctx, "vgcanvas_paint", wrap_vgcanvas_paint);
+  Nan::Export(ctx, "vgcanvas_set_font", wrap_vgcanvas_set_font);
+  Nan::Export(ctx, "vgcanvas_set_font_size", wrap_vgcanvas_set_font_size);
+  Nan::Export(ctx, "vgcanvas_set_text_align", wrap_vgcanvas_set_text_align);
+  Nan::Export(ctx, "vgcanvas_set_text_baseline", wrap_vgcanvas_set_text_baseline);
+  Nan::Export(ctx, "vgcanvas_fill_text", wrap_vgcanvas_fill_text);
+  Nan::Export(ctx, "vgcanvas_measure_text", wrap_vgcanvas_measure_text);
+  Nan::Export(ctx, "vgcanvas_draw_image", wrap_vgcanvas_draw_image);
+  Nan::Export(ctx, "vgcanvas_draw_icon", wrap_vgcanvas_draw_icon);
+  Nan::Export(ctx, "vgcanvas_set_antialias", wrap_vgcanvas_set_antialias);
+  Nan::Export(ctx, "vgcanvas_set_global_alpha", wrap_vgcanvas_set_global_alpha);
+  Nan::Export(ctx, "vgcanvas_set_line_width", wrap_vgcanvas_set_line_width);
+  Nan::Export(ctx, "vgcanvas_set_fill_color_str", wrap_vgcanvas_set_fill_color_str);
+  Nan::Export(ctx, "vgcanvas_set_stroke_color_str", wrap_vgcanvas_set_stroke_color_str);
+  Nan::Export(ctx, "vgcanvas_set_line_cap", wrap_vgcanvas_set_line_cap);
+  Nan::Export(ctx, "vgcanvas_set_line_join", wrap_vgcanvas_set_line_join);
+  Nan::Export(ctx, "vgcanvas_set_miter_limit", wrap_vgcanvas_set_miter_limit);
+  Nan::Export(ctx, "vgcanvas_save", wrap_vgcanvas_save);
+  Nan::Export(ctx, "vgcanvas_restore", wrap_vgcanvas_restore);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_w", wrap_vgcanvas_t_get_prop_w);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_h", wrap_vgcanvas_t_get_prop_h);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_stride", wrap_vgcanvas_t_get_prop_stride);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_ratio", wrap_vgcanvas_t_get_prop_ratio);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_anti_alias", wrap_vgcanvas_t_get_prop_anti_alias);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_line_width", wrap_vgcanvas_t_get_prop_line_width);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_global_alpha", wrap_vgcanvas_t_get_prop_global_alpha);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_miter_limit", wrap_vgcanvas_t_get_prop_miter_limit);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_line_cap", wrap_vgcanvas_t_get_prop_line_cap);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_line_join", wrap_vgcanvas_t_get_prop_line_join);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_font", wrap_vgcanvas_t_get_prop_font);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_font_size", wrap_vgcanvas_t_get_prop_font_size);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_text_align", wrap_vgcanvas_t_get_prop_text_align);
+  Nan::Export(ctx, "vgcanvas_t_get_prop_text_baseline", wrap_vgcanvas_t_get_prop_text_baseline);
 
  return RET_OK;
 }
@@ -7393,256 +6900,131 @@ static void get_WIDGET_PROP_MOVE_FOCUS_RIGHT_KEY(const Nan::FunctionCallbackInfo
 }
 
 ret_t widget_prop_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("WIDGET_PROP_EXEC").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_EXEC)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_X").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_X)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_Y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_Y)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_W").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_W)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_H)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CANVAS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CANVAS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LOCALIZE_OPTIONS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LOCALIZE_OPTIONS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_NATIVE_WINDOW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_NATIVE_WINDOW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_HIGHLIGHT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_HIGHLIGHT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_BAR_SIZE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_BAR_SIZE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_OPACITY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_OPACITY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MIN_W").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MIN_W)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MAX_W").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MAX_W)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CHILDREN_LAYOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CHILDREN_LAYOUT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LAYOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LAYOUT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SELF_LAYOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SELF_LAYOUT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LAYOUT_W").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LAYOUT_W)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LAYOUT_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LAYOUT_H)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_VIRTUAL_W").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_VIRTUAL_W)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_VIRTUAL_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_VIRTUAL_H)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_NAME").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_NAME)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_TYPE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_TYPE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CLOSABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CLOSABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CURSOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CURSOR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_VALUE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_VALUE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LENGTH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LENGTH)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_TEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_TEXT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_TR_TEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_TR_TEXT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_STYLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_STYLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ENABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ENABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FEEDBACK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FEEDBACK)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FLOATING").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FLOATING)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MARGIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MARGIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SPACING").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SPACING)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LEFT_MARGIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LEFT_MARGIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_RIGHT_MARGIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_RIGHT_MARGIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_TOP_MARGIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_TOP_MARGIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_BOTTOM_MARGIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_BOTTOM_MARGIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_STEP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_STEP)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_VISIBLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_VISIBLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SENSITIVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SENSITIVE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ANIMATION").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ANIMATION)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ANIM_HINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ANIM_HINT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FULLSCREEN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FULLSCREEN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_OPEN_ANIM_HINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_OPEN_ANIM_HINT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CLOSE_ANIM_HINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CLOSE_ANIM_HINT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_TIPS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_TIPS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_INPUT_TYPE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_INPUT_TYPE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_READONLY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_READONLY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_PASSWORD_VISIBLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_PASSWORD_VISIBLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ACTIVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ACTIVE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_VERTICAL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_VERTICAL)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SHOW_TEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SHOW_TEXT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_XOFFSET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_XOFFSET)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_YOFFSET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_YOFFSET)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ALIGN_V").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ALIGN_V)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ALIGN_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ALIGN_H)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_AUTO_PLAY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_AUTO_PLAY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LOOP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LOOP)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_AUTO_FIX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_AUTO_FIX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SELECT_NONE_WHEN_FOCUSED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SELECT_NONE_WHEN_FOCUSED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_OPEN_IM_WHEN_FOCUSED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_OPEN_IM_WHEN_FOCUSED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_X_MIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_X_MIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_X_MAX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_X_MAX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_Y_MIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_Y_MIN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_Y_MAX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_Y_MAX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MAX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MAX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_GRAB_KEYS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_GRAB_KEYS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ROW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ROW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_STATE_FOR_STYLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_STATE_FOR_STYLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_THEME").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_THEME)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_STAGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_STAGE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_IMAGE_MANAGER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_IMAGE_MANAGER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ASSETS_MANAGER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ASSETS_MANAGER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LOCALE_INFO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LOCALE_INFO)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FONT_MANAGER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FONT_MANAGER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_THEME_OBJ").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_THEME_OBJ)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_DEFAULT_THEME_OBJ").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_DEFAULT_THEME_OBJ)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ITEM_WIDTH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ITEM_WIDTH)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ITEM_HEIGHT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ITEM_HEIGHT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_DEFAULT_ITEM_HEIGHT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_DEFAULT_ITEM_HEIGHT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_XSLIDABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_XSLIDABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_YSLIDABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_YSLIDABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_REPEAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_REPEAT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ENABLE_LONG_PRESS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ENABLE_LONG_PRESS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ANIMATABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ANIMATABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_AUTO_HIDE_SCROLL_BAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_AUTO_HIDE_SCROLL_BAR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_IMAGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_IMAGE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FORMAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FORMAT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_DRAW_TYPE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_DRAW_TYPE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SELECTABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SELECTABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CLICKABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CLICKABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SCALE_X").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SCALE_X)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SCALE_Y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SCALE_Y)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ANCHOR_X").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ANCHOR_X)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ANCHOR_Y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ANCHOR_Y)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ROTATION").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ROTATION)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_COMPACT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_COMPACT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SCROLLABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SCROLLABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ICON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ICON)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_OPTIONS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_OPTIONS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SELECTED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SELECTED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CHECKED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CHECKED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_ACTIVE_ICON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_ACTIVE_ICON)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LOAD_UI").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LOAD_UI)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_OPEN_WINDOW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_OPEN_WINDOW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_SELECTED_INDEX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_SELECTED_INDEX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CLOSE_WHEN_CLICK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CLOSE_WHEN_CLICK)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_CLOSE_WHEN_CLICK_OUTSIDE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_CLOSE_WHEN_CLICK_OUTSIDE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_LINE_GAP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_LINE_GAP)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_BG_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_BG_COLOR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_BORDER_COLOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_BORDER_COLOR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_DELAY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_DELAY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_IS_KEYBOARD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_IS_KEYBOARD)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FOCUSED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FOCUSED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FOCUS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FOCUS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_FOCUSABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_FOCUSABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_WITH_FOCUS_STATE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_WITH_FOCUS_STATE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MOVE_FOCUS_PREV_KEY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MOVE_FOCUS_PREV_KEY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MOVE_FOCUS_NEXT_KEY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MOVE_FOCUS_NEXT_KEY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MOVE_FOCUS_UP_KEY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MOVE_FOCUS_UP_KEY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MOVE_FOCUS_DOWN_KEY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MOVE_FOCUS_DOWN_KEY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MOVE_FOCUS_LEFT_KEY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MOVE_FOCUS_LEFT_KEY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_PROP_MOVE_FOCUS_RIGHT_KEY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_PROP_MOVE_FOCUS_RIGHT_KEY)->GetFunction());
+  Nan::Export(ctx, "WIDGET_PROP_EXEC", get_WIDGET_PROP_EXEC);
+  Nan::Export(ctx, "WIDGET_PROP_X", get_WIDGET_PROP_X);
+  Nan::Export(ctx, "WIDGET_PROP_Y", get_WIDGET_PROP_Y);
+  Nan::Export(ctx, "WIDGET_PROP_W", get_WIDGET_PROP_W);
+  Nan::Export(ctx, "WIDGET_PROP_H", get_WIDGET_PROP_H);
+  Nan::Export(ctx, "WIDGET_PROP_CANVAS", get_WIDGET_PROP_CANVAS);
+  Nan::Export(ctx, "WIDGET_PROP_LOCALIZE_OPTIONS", get_WIDGET_PROP_LOCALIZE_OPTIONS);
+  Nan::Export(ctx, "WIDGET_PROP_NATIVE_WINDOW", get_WIDGET_PROP_NATIVE_WINDOW);
+  Nan::Export(ctx, "WIDGET_PROP_HIGHLIGHT", get_WIDGET_PROP_HIGHLIGHT);
+  Nan::Export(ctx, "WIDGET_PROP_BAR_SIZE", get_WIDGET_PROP_BAR_SIZE);
+  Nan::Export(ctx, "WIDGET_PROP_OPACITY", get_WIDGET_PROP_OPACITY);
+  Nan::Export(ctx, "WIDGET_PROP_MIN_W", get_WIDGET_PROP_MIN_W);
+  Nan::Export(ctx, "WIDGET_PROP_MAX_W", get_WIDGET_PROP_MAX_W);
+  Nan::Export(ctx, "WIDGET_PROP_CHILDREN_LAYOUT", get_WIDGET_PROP_CHILDREN_LAYOUT);
+  Nan::Export(ctx, "WIDGET_PROP_LAYOUT", get_WIDGET_PROP_LAYOUT);
+  Nan::Export(ctx, "WIDGET_PROP_SELF_LAYOUT", get_WIDGET_PROP_SELF_LAYOUT);
+  Nan::Export(ctx, "WIDGET_PROP_LAYOUT_W", get_WIDGET_PROP_LAYOUT_W);
+  Nan::Export(ctx, "WIDGET_PROP_LAYOUT_H", get_WIDGET_PROP_LAYOUT_H);
+  Nan::Export(ctx, "WIDGET_PROP_VIRTUAL_W", get_WIDGET_PROP_VIRTUAL_W);
+  Nan::Export(ctx, "WIDGET_PROP_VIRTUAL_H", get_WIDGET_PROP_VIRTUAL_H);
+  Nan::Export(ctx, "WIDGET_PROP_NAME", get_WIDGET_PROP_NAME);
+  Nan::Export(ctx, "WIDGET_PROP_TYPE", get_WIDGET_PROP_TYPE);
+  Nan::Export(ctx, "WIDGET_PROP_CLOSABLE", get_WIDGET_PROP_CLOSABLE);
+  Nan::Export(ctx, "WIDGET_PROP_CURSOR", get_WIDGET_PROP_CURSOR);
+  Nan::Export(ctx, "WIDGET_PROP_VALUE", get_WIDGET_PROP_VALUE);
+  Nan::Export(ctx, "WIDGET_PROP_LENGTH", get_WIDGET_PROP_LENGTH);
+  Nan::Export(ctx, "WIDGET_PROP_TEXT", get_WIDGET_PROP_TEXT);
+  Nan::Export(ctx, "WIDGET_PROP_TR_TEXT", get_WIDGET_PROP_TR_TEXT);
+  Nan::Export(ctx, "WIDGET_PROP_STYLE", get_WIDGET_PROP_STYLE);
+  Nan::Export(ctx, "WIDGET_PROP_ENABLE", get_WIDGET_PROP_ENABLE);
+  Nan::Export(ctx, "WIDGET_PROP_FEEDBACK", get_WIDGET_PROP_FEEDBACK);
+  Nan::Export(ctx, "WIDGET_PROP_FLOATING", get_WIDGET_PROP_FLOATING);
+  Nan::Export(ctx, "WIDGET_PROP_MARGIN", get_WIDGET_PROP_MARGIN);
+  Nan::Export(ctx, "WIDGET_PROP_SPACING", get_WIDGET_PROP_SPACING);
+  Nan::Export(ctx, "WIDGET_PROP_LEFT_MARGIN", get_WIDGET_PROP_LEFT_MARGIN);
+  Nan::Export(ctx, "WIDGET_PROP_RIGHT_MARGIN", get_WIDGET_PROP_RIGHT_MARGIN);
+  Nan::Export(ctx, "WIDGET_PROP_TOP_MARGIN", get_WIDGET_PROP_TOP_MARGIN);
+  Nan::Export(ctx, "WIDGET_PROP_BOTTOM_MARGIN", get_WIDGET_PROP_BOTTOM_MARGIN);
+  Nan::Export(ctx, "WIDGET_PROP_STEP", get_WIDGET_PROP_STEP);
+  Nan::Export(ctx, "WIDGET_PROP_VISIBLE", get_WIDGET_PROP_VISIBLE);
+  Nan::Export(ctx, "WIDGET_PROP_SENSITIVE", get_WIDGET_PROP_SENSITIVE);
+  Nan::Export(ctx, "WIDGET_PROP_ANIMATION", get_WIDGET_PROP_ANIMATION);
+  Nan::Export(ctx, "WIDGET_PROP_ANIM_HINT", get_WIDGET_PROP_ANIM_HINT);
+  Nan::Export(ctx, "WIDGET_PROP_FULLSCREEN", get_WIDGET_PROP_FULLSCREEN);
+  Nan::Export(ctx, "WIDGET_PROP_OPEN_ANIM_HINT", get_WIDGET_PROP_OPEN_ANIM_HINT);
+  Nan::Export(ctx, "WIDGET_PROP_CLOSE_ANIM_HINT", get_WIDGET_PROP_CLOSE_ANIM_HINT);
+  Nan::Export(ctx, "WIDGET_PROP_MIN", get_WIDGET_PROP_MIN);
+  Nan::Export(ctx, "WIDGET_PROP_TIPS", get_WIDGET_PROP_TIPS);
+  Nan::Export(ctx, "WIDGET_PROP_INPUT_TYPE", get_WIDGET_PROP_INPUT_TYPE);
+  Nan::Export(ctx, "WIDGET_PROP_READONLY", get_WIDGET_PROP_READONLY);
+  Nan::Export(ctx, "WIDGET_PROP_PASSWORD_VISIBLE", get_WIDGET_PROP_PASSWORD_VISIBLE);
+  Nan::Export(ctx, "WIDGET_PROP_ACTIVE", get_WIDGET_PROP_ACTIVE);
+  Nan::Export(ctx, "WIDGET_PROP_VERTICAL", get_WIDGET_PROP_VERTICAL);
+  Nan::Export(ctx, "WIDGET_PROP_SHOW_TEXT", get_WIDGET_PROP_SHOW_TEXT);
+  Nan::Export(ctx, "WIDGET_PROP_XOFFSET", get_WIDGET_PROP_XOFFSET);
+  Nan::Export(ctx, "WIDGET_PROP_YOFFSET", get_WIDGET_PROP_YOFFSET);
+  Nan::Export(ctx, "WIDGET_PROP_ALIGN_V", get_WIDGET_PROP_ALIGN_V);
+  Nan::Export(ctx, "WIDGET_PROP_ALIGN_H", get_WIDGET_PROP_ALIGN_H);
+  Nan::Export(ctx, "WIDGET_PROP_AUTO_PLAY", get_WIDGET_PROP_AUTO_PLAY);
+  Nan::Export(ctx, "WIDGET_PROP_LOOP", get_WIDGET_PROP_LOOP);
+  Nan::Export(ctx, "WIDGET_PROP_AUTO_FIX", get_WIDGET_PROP_AUTO_FIX);
+  Nan::Export(ctx, "WIDGET_PROP_SELECT_NONE_WHEN_FOCUSED", get_WIDGET_PROP_SELECT_NONE_WHEN_FOCUSED);
+  Nan::Export(ctx, "WIDGET_PROP_OPEN_IM_WHEN_FOCUSED", get_WIDGET_PROP_OPEN_IM_WHEN_FOCUSED);
+  Nan::Export(ctx, "WIDGET_PROP_X_MIN", get_WIDGET_PROP_X_MIN);
+  Nan::Export(ctx, "WIDGET_PROP_X_MAX", get_WIDGET_PROP_X_MAX);
+  Nan::Export(ctx, "WIDGET_PROP_Y_MIN", get_WIDGET_PROP_Y_MIN);
+  Nan::Export(ctx, "WIDGET_PROP_Y_MAX", get_WIDGET_PROP_Y_MAX);
+  Nan::Export(ctx, "WIDGET_PROP_MAX", get_WIDGET_PROP_MAX);
+  Nan::Export(ctx, "WIDGET_PROP_GRAB_KEYS", get_WIDGET_PROP_GRAB_KEYS);
+  Nan::Export(ctx, "WIDGET_PROP_ROW", get_WIDGET_PROP_ROW);
+  Nan::Export(ctx, "WIDGET_PROP_STATE_FOR_STYLE", get_WIDGET_PROP_STATE_FOR_STYLE);
+  Nan::Export(ctx, "WIDGET_PROP_THEME", get_WIDGET_PROP_THEME);
+  Nan::Export(ctx, "WIDGET_PROP_STAGE", get_WIDGET_PROP_STAGE);
+  Nan::Export(ctx, "WIDGET_PROP_IMAGE_MANAGER", get_WIDGET_PROP_IMAGE_MANAGER);
+  Nan::Export(ctx, "WIDGET_PROP_ASSETS_MANAGER", get_WIDGET_PROP_ASSETS_MANAGER);
+  Nan::Export(ctx, "WIDGET_PROP_LOCALE_INFO", get_WIDGET_PROP_LOCALE_INFO);
+  Nan::Export(ctx, "WIDGET_PROP_FONT_MANAGER", get_WIDGET_PROP_FONT_MANAGER);
+  Nan::Export(ctx, "WIDGET_PROP_THEME_OBJ", get_WIDGET_PROP_THEME_OBJ);
+  Nan::Export(ctx, "WIDGET_PROP_DEFAULT_THEME_OBJ", get_WIDGET_PROP_DEFAULT_THEME_OBJ);
+  Nan::Export(ctx, "WIDGET_PROP_ITEM_WIDTH", get_WIDGET_PROP_ITEM_WIDTH);
+  Nan::Export(ctx, "WIDGET_PROP_ITEM_HEIGHT", get_WIDGET_PROP_ITEM_HEIGHT);
+  Nan::Export(ctx, "WIDGET_PROP_DEFAULT_ITEM_HEIGHT", get_WIDGET_PROP_DEFAULT_ITEM_HEIGHT);
+  Nan::Export(ctx, "WIDGET_PROP_XSLIDABLE", get_WIDGET_PROP_XSLIDABLE);
+  Nan::Export(ctx, "WIDGET_PROP_YSLIDABLE", get_WIDGET_PROP_YSLIDABLE);
+  Nan::Export(ctx, "WIDGET_PROP_REPEAT", get_WIDGET_PROP_REPEAT);
+  Nan::Export(ctx, "WIDGET_PROP_ENABLE_LONG_PRESS", get_WIDGET_PROP_ENABLE_LONG_PRESS);
+  Nan::Export(ctx, "WIDGET_PROP_ANIMATABLE", get_WIDGET_PROP_ANIMATABLE);
+  Nan::Export(ctx, "WIDGET_PROP_AUTO_HIDE_SCROLL_BAR", get_WIDGET_PROP_AUTO_HIDE_SCROLL_BAR);
+  Nan::Export(ctx, "WIDGET_PROP_IMAGE", get_WIDGET_PROP_IMAGE);
+  Nan::Export(ctx, "WIDGET_PROP_FORMAT", get_WIDGET_PROP_FORMAT);
+  Nan::Export(ctx, "WIDGET_PROP_DRAW_TYPE", get_WIDGET_PROP_DRAW_TYPE);
+  Nan::Export(ctx, "WIDGET_PROP_SELECTABLE", get_WIDGET_PROP_SELECTABLE);
+  Nan::Export(ctx, "WIDGET_PROP_CLICKABLE", get_WIDGET_PROP_CLICKABLE);
+  Nan::Export(ctx, "WIDGET_PROP_SCALE_X", get_WIDGET_PROP_SCALE_X);
+  Nan::Export(ctx, "WIDGET_PROP_SCALE_Y", get_WIDGET_PROP_SCALE_Y);
+  Nan::Export(ctx, "WIDGET_PROP_ANCHOR_X", get_WIDGET_PROP_ANCHOR_X);
+  Nan::Export(ctx, "WIDGET_PROP_ANCHOR_Y", get_WIDGET_PROP_ANCHOR_Y);
+  Nan::Export(ctx, "WIDGET_PROP_ROTATION", get_WIDGET_PROP_ROTATION);
+  Nan::Export(ctx, "WIDGET_PROP_COMPACT", get_WIDGET_PROP_COMPACT);
+  Nan::Export(ctx, "WIDGET_PROP_SCROLLABLE", get_WIDGET_PROP_SCROLLABLE);
+  Nan::Export(ctx, "WIDGET_PROP_ICON", get_WIDGET_PROP_ICON);
+  Nan::Export(ctx, "WIDGET_PROP_OPTIONS", get_WIDGET_PROP_OPTIONS);
+  Nan::Export(ctx, "WIDGET_PROP_SELECTED", get_WIDGET_PROP_SELECTED);
+  Nan::Export(ctx, "WIDGET_PROP_CHECKED", get_WIDGET_PROP_CHECKED);
+  Nan::Export(ctx, "WIDGET_PROP_ACTIVE_ICON", get_WIDGET_PROP_ACTIVE_ICON);
+  Nan::Export(ctx, "WIDGET_PROP_LOAD_UI", get_WIDGET_PROP_LOAD_UI);
+  Nan::Export(ctx, "WIDGET_PROP_OPEN_WINDOW", get_WIDGET_PROP_OPEN_WINDOW);
+  Nan::Export(ctx, "WIDGET_PROP_SELECTED_INDEX", get_WIDGET_PROP_SELECTED_INDEX);
+  Nan::Export(ctx, "WIDGET_PROP_CLOSE_WHEN_CLICK", get_WIDGET_PROP_CLOSE_WHEN_CLICK);
+  Nan::Export(ctx, "WIDGET_PROP_CLOSE_WHEN_CLICK_OUTSIDE", get_WIDGET_PROP_CLOSE_WHEN_CLICK_OUTSIDE);
+  Nan::Export(ctx, "WIDGET_PROP_LINE_GAP", get_WIDGET_PROP_LINE_GAP);
+  Nan::Export(ctx, "WIDGET_PROP_BG_COLOR", get_WIDGET_PROP_BG_COLOR);
+  Nan::Export(ctx, "WIDGET_PROP_BORDER_COLOR", get_WIDGET_PROP_BORDER_COLOR);
+  Nan::Export(ctx, "WIDGET_PROP_DELAY", get_WIDGET_PROP_DELAY);
+  Nan::Export(ctx, "WIDGET_PROP_IS_KEYBOARD", get_WIDGET_PROP_IS_KEYBOARD);
+  Nan::Export(ctx, "WIDGET_PROP_FOCUSED", get_WIDGET_PROP_FOCUSED);
+  Nan::Export(ctx, "WIDGET_PROP_FOCUS", get_WIDGET_PROP_FOCUS);
+  Nan::Export(ctx, "WIDGET_PROP_FOCUSABLE", get_WIDGET_PROP_FOCUSABLE);
+  Nan::Export(ctx, "WIDGET_PROP_WITH_FOCUS_STATE", get_WIDGET_PROP_WITH_FOCUS_STATE);
+  Nan::Export(ctx, "WIDGET_PROP_MOVE_FOCUS_PREV_KEY", get_WIDGET_PROP_MOVE_FOCUS_PREV_KEY);
+  Nan::Export(ctx, "WIDGET_PROP_MOVE_FOCUS_NEXT_KEY", get_WIDGET_PROP_MOVE_FOCUS_NEXT_KEY);
+  Nan::Export(ctx, "WIDGET_PROP_MOVE_FOCUS_UP_KEY", get_WIDGET_PROP_MOVE_FOCUS_UP_KEY);
+  Nan::Export(ctx, "WIDGET_PROP_MOVE_FOCUS_DOWN_KEY", get_WIDGET_PROP_MOVE_FOCUS_DOWN_KEY);
+  Nan::Export(ctx, "WIDGET_PROP_MOVE_FOCUS_LEFT_KEY", get_WIDGET_PROP_MOVE_FOCUS_LEFT_KEY);
+  Nan::Export(ctx, "WIDGET_PROP_MOVE_FOCUS_RIGHT_KEY", get_WIDGET_PROP_MOVE_FOCUS_RIGHT_KEY);
 
  return RET_OK;
 }
@@ -8088,116 +7470,61 @@ static void get_WIDGET_TYPE_CALIBRATION_WIN(const Nan::FunctionCallbackInfo<v8::
 }
 
 ret_t widget_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("WIDGET_TYPE_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_NONE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_WINDOW_MANAGER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_WINDOW_MANAGER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_NORMAL_WINDOW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_NORMAL_WINDOW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_OVERLAY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_OVERLAY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_TOOL_BAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_TOOL_BAR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_DIALOG").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_DIALOG)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_POPUP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_POPUP)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SYSTEM_BAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SYSTEM_BAR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SYSTEM_BAR_BOTTOM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SYSTEM_BAR_BOTTOM)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SPRITE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SPRITE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_KEYBOARD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_KEYBOARD)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_DND").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_DND)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_LABEL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_LABEL)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_BUTTON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_BUTTON)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_IMAGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_IMAGE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_EDIT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_EDIT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_PROGRESS_BAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_PROGRESS_BAR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_GROUP_BOX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_GROUP_BOX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_CHECK_BUTTON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_CHECK_BUTTON)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_RADIO_BUTTON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_RADIO_BUTTON)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_DIALOG_TITLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_DIALOG_TITLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_DIALOG_CLIENT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_DIALOG_CLIENT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SLIDER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SLIDER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_VIEW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_VIEW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_COMBO_BOX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_COMBO_BOX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_COMBO_BOX_ITEM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_COMBO_BOX_ITEM)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SLIDE_VIEW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SLIDE_VIEW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SLIDE_INDICATOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SLIDE_INDICATOR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SLIDE_INDICATOR_ARC").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SLIDE_INDICATOR_ARC)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_PAGES").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_PAGES)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_TAB_BUTTON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_TAB_BUTTON)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_TAB_CONTROL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_TAB_CONTROL)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_TAB_BUTTON_GROUP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_TAB_BUTTON_GROUP)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_BUTTON_GROUP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_BUTTON_GROUP)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_CANDIDATES").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_CANDIDATES)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SPIN_BOX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SPIN_BOX)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_DRAGGER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_DRAGGER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SCROLL_BAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SCROLL_BAR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SCROLL_BAR_DESKTOP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SCROLL_BAR_DESKTOP)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SCROLL_BAR_MOBILE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SCROLL_BAR_MOBILE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_SCROLL_VIEW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_SCROLL_VIEW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_LIST_VIEW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_LIST_VIEW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_LIST_VIEW_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_LIST_VIEW_H)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_LIST_ITEM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_LIST_ITEM)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_COLOR_PICKER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_COLOR_PICKER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_COLOR_COMPONENT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_COLOR_COMPONENT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_COLOR_TILE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_COLOR_TILE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_CLIP_VIEW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_CLIP_VIEW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_RICH_TEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_RICH_TEXT)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_APP_BAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_APP_BAR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_GRID").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_GRID)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_GRID_ITEM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_GRID_ITEM)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_ROW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_ROW)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_COLUMN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_COLUMN)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_TYPE_CALIBRATION_WIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_TYPE_CALIBRATION_WIN)->GetFunction());
+  Nan::Export(ctx, "WIDGET_TYPE_NONE", get_WIDGET_TYPE_NONE);
+  Nan::Export(ctx, "WIDGET_TYPE_WINDOW_MANAGER", get_WIDGET_TYPE_WINDOW_MANAGER);
+  Nan::Export(ctx, "WIDGET_TYPE_NORMAL_WINDOW", get_WIDGET_TYPE_NORMAL_WINDOW);
+  Nan::Export(ctx, "WIDGET_TYPE_OVERLAY", get_WIDGET_TYPE_OVERLAY);
+  Nan::Export(ctx, "WIDGET_TYPE_TOOL_BAR", get_WIDGET_TYPE_TOOL_BAR);
+  Nan::Export(ctx, "WIDGET_TYPE_DIALOG", get_WIDGET_TYPE_DIALOG);
+  Nan::Export(ctx, "WIDGET_TYPE_POPUP", get_WIDGET_TYPE_POPUP);
+  Nan::Export(ctx, "WIDGET_TYPE_SYSTEM_BAR", get_WIDGET_TYPE_SYSTEM_BAR);
+  Nan::Export(ctx, "WIDGET_TYPE_SYSTEM_BAR_BOTTOM", get_WIDGET_TYPE_SYSTEM_BAR_BOTTOM);
+  Nan::Export(ctx, "WIDGET_TYPE_SPRITE", get_WIDGET_TYPE_SPRITE);
+  Nan::Export(ctx, "WIDGET_TYPE_KEYBOARD", get_WIDGET_TYPE_KEYBOARD);
+  Nan::Export(ctx, "WIDGET_TYPE_DND", get_WIDGET_TYPE_DND);
+  Nan::Export(ctx, "WIDGET_TYPE_LABEL", get_WIDGET_TYPE_LABEL);
+  Nan::Export(ctx, "WIDGET_TYPE_BUTTON", get_WIDGET_TYPE_BUTTON);
+  Nan::Export(ctx, "WIDGET_TYPE_IMAGE", get_WIDGET_TYPE_IMAGE);
+  Nan::Export(ctx, "WIDGET_TYPE_EDIT", get_WIDGET_TYPE_EDIT);
+  Nan::Export(ctx, "WIDGET_TYPE_PROGRESS_BAR", get_WIDGET_TYPE_PROGRESS_BAR);
+  Nan::Export(ctx, "WIDGET_TYPE_GROUP_BOX", get_WIDGET_TYPE_GROUP_BOX);
+  Nan::Export(ctx, "WIDGET_TYPE_CHECK_BUTTON", get_WIDGET_TYPE_CHECK_BUTTON);
+  Nan::Export(ctx, "WIDGET_TYPE_RADIO_BUTTON", get_WIDGET_TYPE_RADIO_BUTTON);
+  Nan::Export(ctx, "WIDGET_TYPE_DIALOG_TITLE", get_WIDGET_TYPE_DIALOG_TITLE);
+  Nan::Export(ctx, "WIDGET_TYPE_DIALOG_CLIENT", get_WIDGET_TYPE_DIALOG_CLIENT);
+  Nan::Export(ctx, "WIDGET_TYPE_SLIDER", get_WIDGET_TYPE_SLIDER);
+  Nan::Export(ctx, "WIDGET_TYPE_VIEW", get_WIDGET_TYPE_VIEW);
+  Nan::Export(ctx, "WIDGET_TYPE_COMBO_BOX", get_WIDGET_TYPE_COMBO_BOX);
+  Nan::Export(ctx, "WIDGET_TYPE_COMBO_BOX_ITEM", get_WIDGET_TYPE_COMBO_BOX_ITEM);
+  Nan::Export(ctx, "WIDGET_TYPE_SLIDE_VIEW", get_WIDGET_TYPE_SLIDE_VIEW);
+  Nan::Export(ctx, "WIDGET_TYPE_SLIDE_INDICATOR", get_WIDGET_TYPE_SLIDE_INDICATOR);
+  Nan::Export(ctx, "WIDGET_TYPE_SLIDE_INDICATOR_ARC", get_WIDGET_TYPE_SLIDE_INDICATOR_ARC);
+  Nan::Export(ctx, "WIDGET_TYPE_PAGES", get_WIDGET_TYPE_PAGES);
+  Nan::Export(ctx, "WIDGET_TYPE_TAB_BUTTON", get_WIDGET_TYPE_TAB_BUTTON);
+  Nan::Export(ctx, "WIDGET_TYPE_TAB_CONTROL", get_WIDGET_TYPE_TAB_CONTROL);
+  Nan::Export(ctx, "WIDGET_TYPE_TAB_BUTTON_GROUP", get_WIDGET_TYPE_TAB_BUTTON_GROUP);
+  Nan::Export(ctx, "WIDGET_TYPE_BUTTON_GROUP", get_WIDGET_TYPE_BUTTON_GROUP);
+  Nan::Export(ctx, "WIDGET_TYPE_CANDIDATES", get_WIDGET_TYPE_CANDIDATES);
+  Nan::Export(ctx, "WIDGET_TYPE_SPIN_BOX", get_WIDGET_TYPE_SPIN_BOX);
+  Nan::Export(ctx, "WIDGET_TYPE_DRAGGER", get_WIDGET_TYPE_DRAGGER);
+  Nan::Export(ctx, "WIDGET_TYPE_SCROLL_BAR", get_WIDGET_TYPE_SCROLL_BAR);
+  Nan::Export(ctx, "WIDGET_TYPE_SCROLL_BAR_DESKTOP", get_WIDGET_TYPE_SCROLL_BAR_DESKTOP);
+  Nan::Export(ctx, "WIDGET_TYPE_SCROLL_BAR_MOBILE", get_WIDGET_TYPE_SCROLL_BAR_MOBILE);
+  Nan::Export(ctx, "WIDGET_TYPE_SCROLL_VIEW", get_WIDGET_TYPE_SCROLL_VIEW);
+  Nan::Export(ctx, "WIDGET_TYPE_LIST_VIEW", get_WIDGET_TYPE_LIST_VIEW);
+  Nan::Export(ctx, "WIDGET_TYPE_LIST_VIEW_H", get_WIDGET_TYPE_LIST_VIEW_H);
+  Nan::Export(ctx, "WIDGET_TYPE_LIST_ITEM", get_WIDGET_TYPE_LIST_ITEM);
+  Nan::Export(ctx, "WIDGET_TYPE_COLOR_PICKER", get_WIDGET_TYPE_COLOR_PICKER);
+  Nan::Export(ctx, "WIDGET_TYPE_COLOR_COMPONENT", get_WIDGET_TYPE_COLOR_COMPONENT);
+  Nan::Export(ctx, "WIDGET_TYPE_COLOR_TILE", get_WIDGET_TYPE_COLOR_TILE);
+  Nan::Export(ctx, "WIDGET_TYPE_CLIP_VIEW", get_WIDGET_TYPE_CLIP_VIEW);
+  Nan::Export(ctx, "WIDGET_TYPE_RICH_TEXT", get_WIDGET_TYPE_RICH_TEXT);
+  Nan::Export(ctx, "WIDGET_TYPE_APP_BAR", get_WIDGET_TYPE_APP_BAR);
+  Nan::Export(ctx, "WIDGET_TYPE_GRID", get_WIDGET_TYPE_GRID);
+  Nan::Export(ctx, "WIDGET_TYPE_GRID_ITEM", get_WIDGET_TYPE_GRID_ITEM);
+  Nan::Export(ctx, "WIDGET_TYPE_ROW", get_WIDGET_TYPE_ROW);
+  Nan::Export(ctx, "WIDGET_TYPE_COLUMN", get_WIDGET_TYPE_COLUMN);
+  Nan::Export(ctx, "WIDGET_TYPE_CALIBRATION_WIN", get_WIDGET_TYPE_CALIBRATION_WIN);
 
  return RET_OK;
 }
@@ -8235,14 +7562,10 @@ static void get_WINDOW_STAGE_CLOSED(const Nan::FunctionCallbackInfo<v8::Value>& 
 }
 
 ret_t window_stage_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("WINDOW_STAGE_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WINDOW_STAGE_NONE)->GetFunction());
-  ctx->Set(Nan::New("WINDOW_STAGE_CREATED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WINDOW_STAGE_CREATED)->GetFunction());
-  ctx->Set(Nan::New("WINDOW_STAGE_OPENED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WINDOW_STAGE_OPENED)->GetFunction());
-  ctx->Set(Nan::New("WINDOW_STAGE_CLOSED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WINDOW_STAGE_CLOSED)->GetFunction());
+  Nan::Export(ctx, "WINDOW_STAGE_NONE", get_WINDOW_STAGE_NONE);
+  Nan::Export(ctx, "WINDOW_STAGE_CREATED", get_WINDOW_STAGE_CREATED);
+  Nan::Export(ctx, "WINDOW_STAGE_OPENED", get_WINDOW_STAGE_OPENED);
+  Nan::Export(ctx, "WINDOW_STAGE_CLOSED", get_WINDOW_STAGE_CLOSED);
 
  return RET_OK;
 }
@@ -8272,12 +7595,9 @@ static void get_WINDOW_CLOSABLE_CONFIRM(const Nan::FunctionCallbackInfo<v8::Valu
 }
 
 ret_t window_closable_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("WINDOW_CLOSABLE_YES").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WINDOW_CLOSABLE_YES)->GetFunction());
-  ctx->Set(Nan::New("WINDOW_CLOSABLE_NO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WINDOW_CLOSABLE_NO)->GetFunction());
-  ctx->Set(Nan::New("WINDOW_CLOSABLE_CONFIRM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WINDOW_CLOSABLE_CONFIRM)->GetFunction());
+  Nan::Export(ctx, "WINDOW_CLOSABLE_YES", get_WINDOW_CLOSABLE_YES);
+  Nan::Export(ctx, "WINDOW_CLOSABLE_NO", get_WINDOW_CLOSABLE_NO);
+  Nan::Export(ctx, "WINDOW_CLOSABLE_CONFIRM", get_WINDOW_CLOSABLE_CONFIRM);
 
  return RET_OK;
 }
@@ -8443,46 +7763,26 @@ static void get_WIDGET_STATE_FOCUSED_OF_ACTIVE(const Nan::FunctionCallbackInfo<v
 }
 
 ret_t widget_state_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("WIDGET_STATE_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_NONE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_NORMAL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_NORMAL)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_PRESSED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_PRESSED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_OVER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_OVER)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_DISABLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_DISABLE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_FOCUSED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_FOCUSED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_CHECKED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_CHECKED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_UNCHECKED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_UNCHECKED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_EMPTY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_EMPTY)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_EMPTY_FOCUS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_EMPTY_FOCUS)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_ERROR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_ERROR)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_SELECTED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_SELECTED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_NORMAL_OF_CHECKED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_NORMAL_OF_CHECKED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_PRESSED_OF_CHECKED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_PRESSED_OF_CHECKED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_OVER_OF_CHECKED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_OVER_OF_CHECKED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_FOCUSED_OF_CHECKED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_FOCUSED_OF_CHECKED)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_NORMAL_OF_ACTIVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_NORMAL_OF_ACTIVE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_PRESSED_OF_ACTIVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_PRESSED_OF_ACTIVE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_OVER_OF_ACTIVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_OVER_OF_ACTIVE)->GetFunction());
-  ctx->Set(Nan::New("WIDGET_STATE_FOCUSED_OF_ACTIVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_WIDGET_STATE_FOCUSED_OF_ACTIVE)->GetFunction());
+  Nan::Export(ctx, "WIDGET_STATE_NONE", get_WIDGET_STATE_NONE);
+  Nan::Export(ctx, "WIDGET_STATE_NORMAL", get_WIDGET_STATE_NORMAL);
+  Nan::Export(ctx, "WIDGET_STATE_PRESSED", get_WIDGET_STATE_PRESSED);
+  Nan::Export(ctx, "WIDGET_STATE_OVER", get_WIDGET_STATE_OVER);
+  Nan::Export(ctx, "WIDGET_STATE_DISABLE", get_WIDGET_STATE_DISABLE);
+  Nan::Export(ctx, "WIDGET_STATE_FOCUSED", get_WIDGET_STATE_FOCUSED);
+  Nan::Export(ctx, "WIDGET_STATE_CHECKED", get_WIDGET_STATE_CHECKED);
+  Nan::Export(ctx, "WIDGET_STATE_UNCHECKED", get_WIDGET_STATE_UNCHECKED);
+  Nan::Export(ctx, "WIDGET_STATE_EMPTY", get_WIDGET_STATE_EMPTY);
+  Nan::Export(ctx, "WIDGET_STATE_EMPTY_FOCUS", get_WIDGET_STATE_EMPTY_FOCUS);
+  Nan::Export(ctx, "WIDGET_STATE_ERROR", get_WIDGET_STATE_ERROR);
+  Nan::Export(ctx, "WIDGET_STATE_SELECTED", get_WIDGET_STATE_SELECTED);
+  Nan::Export(ctx, "WIDGET_STATE_NORMAL_OF_CHECKED", get_WIDGET_STATE_NORMAL_OF_CHECKED);
+  Nan::Export(ctx, "WIDGET_STATE_PRESSED_OF_CHECKED", get_WIDGET_STATE_PRESSED_OF_CHECKED);
+  Nan::Export(ctx, "WIDGET_STATE_OVER_OF_CHECKED", get_WIDGET_STATE_OVER_OF_CHECKED);
+  Nan::Export(ctx, "WIDGET_STATE_FOCUSED_OF_CHECKED", get_WIDGET_STATE_FOCUSED_OF_CHECKED);
+  Nan::Export(ctx, "WIDGET_STATE_NORMAL_OF_ACTIVE", get_WIDGET_STATE_NORMAL_OF_ACTIVE);
+  Nan::Export(ctx, "WIDGET_STATE_PRESSED_OF_ACTIVE", get_WIDGET_STATE_PRESSED_OF_ACTIVE);
+  Nan::Export(ctx, "WIDGET_STATE_OVER_OF_ACTIVE", get_WIDGET_STATE_OVER_OF_ACTIVE);
+  Nan::Export(ctx, "WIDGET_STATE_FOCUSED_OF_ACTIVE", get_WIDGET_STATE_FOCUSED_OF_ACTIVE);
 
  return RET_OK;
 }
@@ -9859,198 +9159,102 @@ static void wrap_widget_t_get_prop_parent(const Nan::FunctionCallbackInfo<v8::Va
 }
 
 ret_t widget_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("widget_count_children").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_count_children)->GetFunction());
-  ctx->Set(Nan::New("widget_get_child").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_child)->GetFunction());
-  ctx->Set(Nan::New("widget_index_of").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_index_of)->GetFunction());
-  ctx->Set(Nan::New("widget_close_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_close_window)->GetFunction());
-  ctx->Set(Nan::New("widget_move").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_move)->GetFunction());
-  ctx->Set(Nan::New("widget_resize").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_resize)->GetFunction());
-  ctx->Set(Nan::New("widget_move_resize").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_move_resize)->GetFunction());
-  ctx->Set(Nan::New("widget_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_value)->GetFunction());
-  ctx->Set(Nan::New("widget_animate_value_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_animate_value_to)->GetFunction());
-  ctx->Set(Nan::New("widget_add_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_add_value)->GetFunction());
-  ctx->Set(Nan::New("widget_use_style").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_use_style)->GetFunction());
-  ctx->Set(Nan::New("widget_set_text_utf8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_text_utf8)->GetFunction());
-  ctx->Set(Nan::New("widget_set_tr_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_tr_text)->GetFunction());
-  ctx->Set(Nan::New("widget_get_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_value)->GetFunction());
-  ctx->Set(Nan::New("widget_get_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_text)->GetFunction());
-  ctx->Set(Nan::New("widget_set_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_name)->GetFunction());
-  ctx->Set(Nan::New("widget_set_theme").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_theme)->GetFunction());
-  ctx->Set(Nan::New("widget_set_pointer_cursor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_pointer_cursor)->GetFunction());
-  ctx->Set(Nan::New("widget_set_animation").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_animation)->GetFunction());
-  ctx->Set(Nan::New("widget_create_animator").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_create_animator)->GetFunction());
-  ctx->Set(Nan::New("widget_start_animator").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_start_animator)->GetFunction());
-  ctx->Set(Nan::New("widget_set_animator_time_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_animator_time_scale)->GetFunction());
-  ctx->Set(Nan::New("widget_pause_animator").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_pause_animator)->GetFunction());
-  ctx->Set(Nan::New("widget_stop_animator").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_stop_animator)->GetFunction());
-  ctx->Set(Nan::New("widget_destroy_animator").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_destroy_animator)->GetFunction());
-  ctx->Set(Nan::New("widget_set_enable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_enable)->GetFunction());
-  ctx->Set(Nan::New("widget_set_feedback").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_feedback)->GetFunction());
-  ctx->Set(Nan::New("widget_set_floating").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_floating)->GetFunction());
-  ctx->Set(Nan::New("widget_set_focused").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_focused)->GetFunction());
-  ctx->Set(Nan::New("widget_set_focusable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_focusable)->GetFunction());
-  ctx->Set(Nan::New("widget_set_state").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_state)->GetFunction());
-  ctx->Set(Nan::New("widget_set_opacity").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_opacity)->GetFunction());
-  ctx->Set(Nan::New("widget_destroy_children").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_destroy_children)->GetFunction());
-  ctx->Set(Nan::New("widget_add_child").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_add_child)->GetFunction());
-  ctx->Set(Nan::New("widget_remove_child").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_remove_child)->GetFunction());
-  ctx->Set(Nan::New("widget_insert_child").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_insert_child)->GetFunction());
-  ctx->Set(Nan::New("widget_restack").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_restack)->GetFunction());
-  ctx->Set(Nan::New("widget_child").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_child)->GetFunction());
-  ctx->Set(Nan::New("widget_lookup").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_lookup)->GetFunction());
-  ctx->Set(Nan::New("widget_lookup_by_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_lookup_by_type)->GetFunction());
-  ctx->Set(Nan::New("widget_set_visible").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_visible)->GetFunction());
-  ctx->Set(Nan::New("widget_set_visible_only").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_visible_only)->GetFunction());
-  ctx->Set(Nan::New("widget_set_sensitive").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_sensitive)->GetFunction());
-  ctx->Set(Nan::New("widget_on").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_on)->GetFunction());
-  ctx->Set(Nan::New("widget_off").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_off)->GetFunction());
-  ctx->Set(Nan::New("widget_invalidate_force").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_invalidate_force)->GetFunction());
-  ctx->Set(Nan::New("widget_set_prop_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_prop_str)->GetFunction());
-  ctx->Set(Nan::New("widget_get_prop_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_prop_str)->GetFunction());
-  ctx->Set(Nan::New("widget_set_prop_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_prop_int)->GetFunction());
-  ctx->Set(Nan::New("widget_get_prop_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_prop_int)->GetFunction());
-  ctx->Set(Nan::New("widget_set_prop_bool").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_prop_bool)->GetFunction());
-  ctx->Set(Nan::New("widget_get_prop_bool").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_prop_bool)->GetFunction());
-  ctx->Set(Nan::New("widget_is_window_opened").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_window_opened)->GetFunction());
-  ctx->Set(Nan::New("widget_is_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_window)->GetFunction());
-  ctx->Set(Nan::New("widget_is_designing_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_designing_window)->GetFunction());
-  ctx->Set(Nan::New("widget_is_window_manager").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_window_manager)->GetFunction());
-  ctx->Set(Nan::New("widget_foreach").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_foreach)->GetFunction());
-  ctx->Set(Nan::New("widget_get_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_window)->GetFunction());
-  ctx->Set(Nan::New("widget_get_window_manager").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_window_manager)->GetFunction());
-  ctx->Set(Nan::New("widget_get_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_get_type)->GetFunction());
-  ctx->Set(Nan::New("widget_clone").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_clone)->GetFunction());
-  ctx->Set(Nan::New("widget_equal").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_equal)->GetFunction());
-  ctx->Set(Nan::New("widget_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_cast)->GetFunction());
-  ctx->Set(Nan::New("widget_destroy").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_destroy)->GetFunction());
-  ctx->Set(Nan::New("widget_unref").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_unref)->GetFunction());
-  ctx->Set(Nan::New("widget_is_system_bar").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_system_bar)->GetFunction());
-  ctx->Set(Nan::New("widget_is_normal_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_normal_window)->GetFunction());
-  ctx->Set(Nan::New("widget_is_dialog").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_dialog)->GetFunction());
-  ctx->Set(Nan::New("widget_is_popup").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_is_popup)->GetFunction());
-  ctx->Set(Nan::New("widget_layout").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_layout)->GetFunction());
-  ctx->Set(Nan::New("widget_set_self_layout").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_self_layout)->GetFunction());
-  ctx->Set(Nan::New("widget_set_children_layout").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_children_layout)->GetFunction());
-  ctx->Set(Nan::New("widget_set_self_layout_params").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_self_layout_params)->GetFunction());
-  ctx->Set(Nan::New("widget_set_style_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_style_int)->GetFunction());
-  ctx->Set(Nan::New("widget_set_style_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_style_str)->GetFunction());
-  ctx->Set(Nan::New("widget_set_style_color").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_set_style_color)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_x)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_y)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_w)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_h").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_h)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_name)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_tr_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_tr_text)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_style").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_style)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_animation").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_animation)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_enable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_enable)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_feedback").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_feedback)->GetFunction());
-  ctx->Set(Nan::New("widget_t_set_prop_visible").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_set_prop_visible)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_visible").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_visible)->GetFunction());
-  ctx->Set(Nan::New("widget_t_set_prop_sensitive").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_set_prop_sensitive)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_sensitive").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_sensitive)->GetFunction());
-  ctx->Set(Nan::New("widget_t_set_prop_focusable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_set_prop_focusable)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_focusable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_focusable)->GetFunction());
-  ctx->Set(Nan::New("widget_t_set_prop_with_focus_state").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_set_prop_with_focus_state)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_with_focus_state").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_with_focus_state)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_floating").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_floating)->GetFunction());
-  ctx->Set(Nan::New("widget_t_get_prop_parent").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_widget_t_get_prop_parent)->GetFunction());
+  Nan::Export(ctx, "widget_count_children", wrap_widget_count_children);
+  Nan::Export(ctx, "widget_get_child", wrap_widget_get_child);
+  Nan::Export(ctx, "widget_index_of", wrap_widget_index_of);
+  Nan::Export(ctx, "widget_close_window", wrap_widget_close_window);
+  Nan::Export(ctx, "widget_move", wrap_widget_move);
+  Nan::Export(ctx, "widget_resize", wrap_widget_resize);
+  Nan::Export(ctx, "widget_move_resize", wrap_widget_move_resize);
+  Nan::Export(ctx, "widget_set_value", wrap_widget_set_value);
+  Nan::Export(ctx, "widget_animate_value_to", wrap_widget_animate_value_to);
+  Nan::Export(ctx, "widget_add_value", wrap_widget_add_value);
+  Nan::Export(ctx, "widget_use_style", wrap_widget_use_style);
+  Nan::Export(ctx, "widget_set_text_utf8", wrap_widget_set_text_utf8);
+  Nan::Export(ctx, "widget_set_tr_text", wrap_widget_set_tr_text);
+  Nan::Export(ctx, "widget_get_value", wrap_widget_get_value);
+  Nan::Export(ctx, "widget_get_text", wrap_widget_get_text);
+  Nan::Export(ctx, "widget_set_name", wrap_widget_set_name);
+  Nan::Export(ctx, "widget_set_theme", wrap_widget_set_theme);
+  Nan::Export(ctx, "widget_set_pointer_cursor", wrap_widget_set_pointer_cursor);
+  Nan::Export(ctx, "widget_set_animation", wrap_widget_set_animation);
+  Nan::Export(ctx, "widget_create_animator", wrap_widget_create_animator);
+  Nan::Export(ctx, "widget_start_animator", wrap_widget_start_animator);
+  Nan::Export(ctx, "widget_set_animator_time_scale", wrap_widget_set_animator_time_scale);
+  Nan::Export(ctx, "widget_pause_animator", wrap_widget_pause_animator);
+  Nan::Export(ctx, "widget_stop_animator", wrap_widget_stop_animator);
+  Nan::Export(ctx, "widget_destroy_animator", wrap_widget_destroy_animator);
+  Nan::Export(ctx, "widget_set_enable", wrap_widget_set_enable);
+  Nan::Export(ctx, "widget_set_feedback", wrap_widget_set_feedback);
+  Nan::Export(ctx, "widget_set_floating", wrap_widget_set_floating);
+  Nan::Export(ctx, "widget_set_focused", wrap_widget_set_focused);
+  Nan::Export(ctx, "widget_set_focusable", wrap_widget_set_focusable);
+  Nan::Export(ctx, "widget_set_state", wrap_widget_set_state);
+  Nan::Export(ctx, "widget_set_opacity", wrap_widget_set_opacity);
+  Nan::Export(ctx, "widget_destroy_children", wrap_widget_destroy_children);
+  Nan::Export(ctx, "widget_add_child", wrap_widget_add_child);
+  Nan::Export(ctx, "widget_remove_child", wrap_widget_remove_child);
+  Nan::Export(ctx, "widget_insert_child", wrap_widget_insert_child);
+  Nan::Export(ctx, "widget_restack", wrap_widget_restack);
+  Nan::Export(ctx, "widget_child", wrap_widget_child);
+  Nan::Export(ctx, "widget_lookup", wrap_widget_lookup);
+  Nan::Export(ctx, "widget_lookup_by_type", wrap_widget_lookup_by_type);
+  Nan::Export(ctx, "widget_set_visible", wrap_widget_set_visible);
+  Nan::Export(ctx, "widget_set_visible_only", wrap_widget_set_visible_only);
+  Nan::Export(ctx, "widget_set_sensitive", wrap_widget_set_sensitive);
+  Nan::Export(ctx, "widget_on", wrap_widget_on);
+  Nan::Export(ctx, "widget_off", wrap_widget_off);
+  Nan::Export(ctx, "widget_invalidate_force", wrap_widget_invalidate_force);
+  Nan::Export(ctx, "widget_set_prop_str", wrap_widget_set_prop_str);
+  Nan::Export(ctx, "widget_get_prop_str", wrap_widget_get_prop_str);
+  Nan::Export(ctx, "widget_set_prop_int", wrap_widget_set_prop_int);
+  Nan::Export(ctx, "widget_get_prop_int", wrap_widget_get_prop_int);
+  Nan::Export(ctx, "widget_set_prop_bool", wrap_widget_set_prop_bool);
+  Nan::Export(ctx, "widget_get_prop_bool", wrap_widget_get_prop_bool);
+  Nan::Export(ctx, "widget_is_window_opened", wrap_widget_is_window_opened);
+  Nan::Export(ctx, "widget_is_window", wrap_widget_is_window);
+  Nan::Export(ctx, "widget_is_designing_window", wrap_widget_is_designing_window);
+  Nan::Export(ctx, "widget_is_window_manager", wrap_widget_is_window_manager);
+  Nan::Export(ctx, "widget_foreach", wrap_widget_foreach);
+  Nan::Export(ctx, "widget_get_window", wrap_widget_get_window);
+  Nan::Export(ctx, "widget_get_window_manager", wrap_widget_get_window_manager);
+  Nan::Export(ctx, "widget_get_type", wrap_widget_get_type);
+  Nan::Export(ctx, "widget_clone", wrap_widget_clone);
+  Nan::Export(ctx, "widget_equal", wrap_widget_equal);
+  Nan::Export(ctx, "widget_cast", wrap_widget_cast);
+  Nan::Export(ctx, "widget_destroy", wrap_widget_destroy);
+  Nan::Export(ctx, "widget_unref", wrap_widget_unref);
+  Nan::Export(ctx, "widget_is_system_bar", wrap_widget_is_system_bar);
+  Nan::Export(ctx, "widget_is_normal_window", wrap_widget_is_normal_window);
+  Nan::Export(ctx, "widget_is_dialog", wrap_widget_is_dialog);
+  Nan::Export(ctx, "widget_is_popup", wrap_widget_is_popup);
+  Nan::Export(ctx, "widget_layout", wrap_widget_layout);
+  Nan::Export(ctx, "widget_set_self_layout", wrap_widget_set_self_layout);
+  Nan::Export(ctx, "widget_set_children_layout", wrap_widget_set_children_layout);
+  Nan::Export(ctx, "widget_set_self_layout_params", wrap_widget_set_self_layout_params);
+  Nan::Export(ctx, "widget_set_style_int", wrap_widget_set_style_int);
+  Nan::Export(ctx, "widget_set_style_str", wrap_widget_set_style_str);
+  Nan::Export(ctx, "widget_set_style_color", wrap_widget_set_style_color);
+  Nan::Export(ctx, "widget_t_get_prop_x", wrap_widget_t_get_prop_x);
+  Nan::Export(ctx, "widget_t_get_prop_y", wrap_widget_t_get_prop_y);
+  Nan::Export(ctx, "widget_t_get_prop_w", wrap_widget_t_get_prop_w);
+  Nan::Export(ctx, "widget_t_get_prop_h", wrap_widget_t_get_prop_h);
+  Nan::Export(ctx, "widget_t_get_prop_name", wrap_widget_t_get_prop_name);
+  Nan::Export(ctx, "widget_t_get_prop_tr_text", wrap_widget_t_get_prop_tr_text);
+  Nan::Export(ctx, "widget_t_get_prop_style", wrap_widget_t_get_prop_style);
+  Nan::Export(ctx, "widget_t_get_prop_animation", wrap_widget_t_get_prop_animation);
+  Nan::Export(ctx, "widget_t_get_prop_enable", wrap_widget_t_get_prop_enable);
+  Nan::Export(ctx, "widget_t_get_prop_feedback", wrap_widget_t_get_prop_feedback);
+  Nan::Export(ctx, "widget_t_set_prop_visible", wrap_widget_t_set_prop_visible);
+  Nan::Export(ctx, "widget_t_get_prop_visible", wrap_widget_t_get_prop_visible);
+  Nan::Export(ctx, "widget_t_set_prop_sensitive", wrap_widget_t_set_prop_sensitive);
+  Nan::Export(ctx, "widget_t_get_prop_sensitive", wrap_widget_t_get_prop_sensitive);
+  Nan::Export(ctx, "widget_t_set_prop_focusable", wrap_widget_t_set_prop_focusable);
+  Nan::Export(ctx, "widget_t_get_prop_focusable", wrap_widget_t_get_prop_focusable);
+  Nan::Export(ctx, "widget_t_set_prop_with_focus_state", wrap_widget_t_set_prop_with_focus_state);
+  Nan::Export(ctx, "widget_t_get_prop_with_focus_state", wrap_widget_t_get_prop_with_focus_state);
+  Nan::Export(ctx, "widget_t_get_prop_floating", wrap_widget_t_get_prop_floating);
+  Nan::Export(ctx, "widget_t_get_prop_parent", wrap_widget_t_get_prop_parent);
 
  return RET_OK;
 }
@@ -10224,48 +9428,27 @@ static void get_RET_EOS(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t ret_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("RET_OK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_OK)->GetFunction());
-  ctx->Set(Nan::New("RET_OOM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_OOM)->GetFunction());
-  ctx->Set(Nan::New("RET_FAIL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_FAIL)->GetFunction());
-  ctx->Set(Nan::New("RET_NOT_IMPL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_NOT_IMPL)->GetFunction());
-  ctx->Set(Nan::New("RET_QUIT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_QUIT)->GetFunction());
-  ctx->Set(Nan::New("RET_FOUND").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_FOUND)->GetFunction());
-  ctx->Set(Nan::New("RET_BUSY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_BUSY)->GetFunction());
-  ctx->Set(Nan::New("RET_REMOVE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_REMOVE)->GetFunction());
-  ctx->Set(Nan::New("RET_REPEAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_REPEAT)->GetFunction());
-  ctx->Set(Nan::New("RET_NOT_FOUND").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_NOT_FOUND)->GetFunction());
-  ctx->Set(Nan::New("RET_DONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_DONE)->GetFunction());
-  ctx->Set(Nan::New("RET_STOP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_STOP)->GetFunction());
-  ctx->Set(Nan::New("RET_SKIP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_SKIP)->GetFunction());
-  ctx->Set(Nan::New("RET_CONTINUE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_CONTINUE)->GetFunction());
-  ctx->Set(Nan::New("RET_OBJECT_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_OBJECT_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("RET_ITEMS_CHANGED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_ITEMS_CHANGED)->GetFunction());
-  ctx->Set(Nan::New("RET_BAD_PARAMS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_BAD_PARAMS)->GetFunction());
-  ctx->Set(Nan::New("RET_TIMEOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_TIMEOUT)->GetFunction());
-  ctx->Set(Nan::New("RET_CRC").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_CRC)->GetFunction());
-  ctx->Set(Nan::New("RET_IO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_IO)->GetFunction());
-  ctx->Set(Nan::New("RET_EOS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_RET_EOS)->GetFunction());
+  Nan::Export(ctx, "RET_OK", get_RET_OK);
+  Nan::Export(ctx, "RET_OOM", get_RET_OOM);
+  Nan::Export(ctx, "RET_FAIL", get_RET_FAIL);
+  Nan::Export(ctx, "RET_NOT_IMPL", get_RET_NOT_IMPL);
+  Nan::Export(ctx, "RET_QUIT", get_RET_QUIT);
+  Nan::Export(ctx, "RET_FOUND", get_RET_FOUND);
+  Nan::Export(ctx, "RET_BUSY", get_RET_BUSY);
+  Nan::Export(ctx, "RET_REMOVE", get_RET_REMOVE);
+  Nan::Export(ctx, "RET_REPEAT", get_RET_REPEAT);
+  Nan::Export(ctx, "RET_NOT_FOUND", get_RET_NOT_FOUND);
+  Nan::Export(ctx, "RET_DONE", get_RET_DONE);
+  Nan::Export(ctx, "RET_STOP", get_RET_STOP);
+  Nan::Export(ctx, "RET_SKIP", get_RET_SKIP);
+  Nan::Export(ctx, "RET_CONTINUE", get_RET_CONTINUE);
+  Nan::Export(ctx, "RET_OBJECT_CHANGED", get_RET_OBJECT_CHANGED);
+  Nan::Export(ctx, "RET_ITEMS_CHANGED", get_RET_ITEMS_CHANGED);
+  Nan::Export(ctx, "RET_BAD_PARAMS", get_RET_BAD_PARAMS);
+  Nan::Export(ctx, "RET_TIMEOUT", get_RET_TIMEOUT);
+  Nan::Export(ctx, "RET_CRC", get_RET_CRC);
+  Nan::Export(ctx, "RET_IO", get_RET_IO);
+  Nan::Export(ctx, "RET_EOS", get_RET_EOS);
 
  return RET_OK;
 }
@@ -10302,10 +9485,8 @@ static void wrap_time_now_ms(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t time_now_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("time_now_s").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_now_s)->GetFunction());
-  ctx->Set(Nan::New("time_now_ms").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_now_ms)->GetFunction());
+  Nan::Export(ctx, "time_now_s", wrap_time_now_s);
+  Nan::Export(ctx, "time_now_ms", wrap_time_now_ms);
 
  return RET_OK;
 }
@@ -10447,40 +9628,23 @@ static void get_IMAGE_DRAW_PATCH3_Y_SCALE_X(const Nan::FunctionCallbackInfo<v8::
 }
 
 ret_t image_draw_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("IMAGE_DRAW_DEFAULT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_DEFAULT)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_CENTER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_CENTER)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_ICON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_ICON)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_SCALE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_SCALE)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_SCALE_AUTO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_SCALE_AUTO)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_SCALE_DOWN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_SCALE_DOWN)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_SCALE_W").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_SCALE_W)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_SCALE_H").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_SCALE_H)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_REPEAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_REPEAT)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_REPEAT_X").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_REPEAT_X)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_REPEAT_Y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_REPEAT_Y)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_REPEAT_Y_INVERSE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_REPEAT_Y_INVERSE)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_PATCH9").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_PATCH9)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_PATCH3_X").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_PATCH3_X)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_PATCH3_Y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_PATCH3_Y)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_PATCH3_X_SCALE_Y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_PATCH3_X_SCALE_Y)->GetFunction());
-  ctx->Set(Nan::New("IMAGE_DRAW_PATCH3_Y_SCALE_X").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_IMAGE_DRAW_PATCH3_Y_SCALE_X)->GetFunction());
+  Nan::Export(ctx, "IMAGE_DRAW_DEFAULT", get_IMAGE_DRAW_DEFAULT);
+  Nan::Export(ctx, "IMAGE_DRAW_CENTER", get_IMAGE_DRAW_CENTER);
+  Nan::Export(ctx, "IMAGE_DRAW_ICON", get_IMAGE_DRAW_ICON);
+  Nan::Export(ctx, "IMAGE_DRAW_SCALE", get_IMAGE_DRAW_SCALE);
+  Nan::Export(ctx, "IMAGE_DRAW_SCALE_AUTO", get_IMAGE_DRAW_SCALE_AUTO);
+  Nan::Export(ctx, "IMAGE_DRAW_SCALE_DOWN", get_IMAGE_DRAW_SCALE_DOWN);
+  Nan::Export(ctx, "IMAGE_DRAW_SCALE_W", get_IMAGE_DRAW_SCALE_W);
+  Nan::Export(ctx, "IMAGE_DRAW_SCALE_H", get_IMAGE_DRAW_SCALE_H);
+  Nan::Export(ctx, "IMAGE_DRAW_REPEAT", get_IMAGE_DRAW_REPEAT);
+  Nan::Export(ctx, "IMAGE_DRAW_REPEAT_X", get_IMAGE_DRAW_REPEAT_X);
+  Nan::Export(ctx, "IMAGE_DRAW_REPEAT_Y", get_IMAGE_DRAW_REPEAT_Y);
+  Nan::Export(ctx, "IMAGE_DRAW_REPEAT_Y_INVERSE", get_IMAGE_DRAW_REPEAT_Y_INVERSE);
+  Nan::Export(ctx, "IMAGE_DRAW_PATCH9", get_IMAGE_DRAW_PATCH9);
+  Nan::Export(ctx, "IMAGE_DRAW_PATCH3_X", get_IMAGE_DRAW_PATCH3_X);
+  Nan::Export(ctx, "IMAGE_DRAW_PATCH3_Y", get_IMAGE_DRAW_PATCH3_Y);
+  Nan::Export(ctx, "IMAGE_DRAW_PATCH3_X_SCALE_Y", get_IMAGE_DRAW_PATCH3_X_SCALE_Y);
+  Nan::Export(ctx, "IMAGE_DRAW_PATCH3_Y_SCALE_X", get_IMAGE_DRAW_PATCH3_Y_SCALE_X);
 
  return RET_OK;
 }
@@ -10938,66 +10102,36 @@ static void wrap_canvas_t_get_prop_global_alpha(const Nan::FunctionCallbackInfo<
 }
 
 ret_t canvas_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("canvas_get_width").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_get_width)->GetFunction());
-  ctx->Set(Nan::New("canvas_get_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_get_height)->GetFunction());
-  ctx->Set(Nan::New("canvas_get_clip_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_get_clip_rect)->GetFunction());
-  ctx->Set(Nan::New("canvas_set_clip_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_set_clip_rect)->GetFunction());
-  ctx->Set(Nan::New("canvas_set_clip_rect_ex").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_set_clip_rect_ex)->GetFunction());
-  ctx->Set(Nan::New("canvas_set_fill_color_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_set_fill_color_str)->GetFunction());
-  ctx->Set(Nan::New("canvas_set_text_color_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_set_text_color_str)->GetFunction());
-  ctx->Set(Nan::New("canvas_set_stroke_color_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_set_stroke_color_str)->GetFunction());
-  ctx->Set(Nan::New("canvas_set_global_alpha").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_set_global_alpha)->GetFunction());
-  ctx->Set(Nan::New("canvas_translate").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_translate)->GetFunction());
-  ctx->Set(Nan::New("canvas_untranslate").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_untranslate)->GetFunction());
-  ctx->Set(Nan::New("canvas_draw_vline").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_draw_vline)->GetFunction());
-  ctx->Set(Nan::New("canvas_draw_hline").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_draw_hline)->GetFunction());
-  ctx->Set(Nan::New("canvas_fill_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_fill_rect)->GetFunction());
-  ctx->Set(Nan::New("canvas_stroke_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_stroke_rect)->GetFunction());
-  ctx->Set(Nan::New("canvas_set_font").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_set_font)->GetFunction());
-  ctx->Set(Nan::New("canvas_measure_utf8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_measure_utf8)->GetFunction());
-  ctx->Set(Nan::New("canvas_draw_utf8").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_draw_utf8)->GetFunction());
-  ctx->Set(Nan::New("canvas_draw_utf8_in_rect").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_draw_utf8_in_rect)->GetFunction());
-  ctx->Set(Nan::New("canvas_draw_icon").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_draw_icon)->GetFunction());
-  ctx->Set(Nan::New("canvas_draw_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_draw_image)->GetFunction());
-  ctx->Set(Nan::New("canvas_draw_image_ex").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_draw_image_ex)->GetFunction());
-  ctx->Set(Nan::New("canvas_get_vgcanvas").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_get_vgcanvas)->GetFunction());
-  ctx->Set(Nan::New("canvas_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_cast)->GetFunction());
-  ctx->Set(Nan::New("canvas_reset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_reset)->GetFunction());
-  ctx->Set(Nan::New("canvas_t_get_prop_ox").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_t_get_prop_ox)->GetFunction());
-  ctx->Set(Nan::New("canvas_t_get_prop_oy").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_t_get_prop_oy)->GetFunction());
-  ctx->Set(Nan::New("canvas_t_get_prop_font_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_t_get_prop_font_name)->GetFunction());
-  ctx->Set(Nan::New("canvas_t_get_prop_font_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_t_get_prop_font_size)->GetFunction());
-  ctx->Set(Nan::New("canvas_t_get_prop_global_alpha").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_t_get_prop_global_alpha)->GetFunction());
+  Nan::Export(ctx, "canvas_get_width", wrap_canvas_get_width);
+  Nan::Export(ctx, "canvas_get_height", wrap_canvas_get_height);
+  Nan::Export(ctx, "canvas_get_clip_rect", wrap_canvas_get_clip_rect);
+  Nan::Export(ctx, "canvas_set_clip_rect", wrap_canvas_set_clip_rect);
+  Nan::Export(ctx, "canvas_set_clip_rect_ex", wrap_canvas_set_clip_rect_ex);
+  Nan::Export(ctx, "canvas_set_fill_color_str", wrap_canvas_set_fill_color_str);
+  Nan::Export(ctx, "canvas_set_text_color_str", wrap_canvas_set_text_color_str);
+  Nan::Export(ctx, "canvas_set_stroke_color_str", wrap_canvas_set_stroke_color_str);
+  Nan::Export(ctx, "canvas_set_global_alpha", wrap_canvas_set_global_alpha);
+  Nan::Export(ctx, "canvas_translate", wrap_canvas_translate);
+  Nan::Export(ctx, "canvas_untranslate", wrap_canvas_untranslate);
+  Nan::Export(ctx, "canvas_draw_vline", wrap_canvas_draw_vline);
+  Nan::Export(ctx, "canvas_draw_hline", wrap_canvas_draw_hline);
+  Nan::Export(ctx, "canvas_fill_rect", wrap_canvas_fill_rect);
+  Nan::Export(ctx, "canvas_stroke_rect", wrap_canvas_stroke_rect);
+  Nan::Export(ctx, "canvas_set_font", wrap_canvas_set_font);
+  Nan::Export(ctx, "canvas_measure_utf8", wrap_canvas_measure_utf8);
+  Nan::Export(ctx, "canvas_draw_utf8", wrap_canvas_draw_utf8);
+  Nan::Export(ctx, "canvas_draw_utf8_in_rect", wrap_canvas_draw_utf8_in_rect);
+  Nan::Export(ctx, "canvas_draw_icon", wrap_canvas_draw_icon);
+  Nan::Export(ctx, "canvas_draw_image", wrap_canvas_draw_image);
+  Nan::Export(ctx, "canvas_draw_image_ex", wrap_canvas_draw_image_ex);
+  Nan::Export(ctx, "canvas_get_vgcanvas", wrap_canvas_get_vgcanvas);
+  Nan::Export(ctx, "canvas_cast", wrap_canvas_cast);
+  Nan::Export(ctx, "canvas_reset", wrap_canvas_reset);
+  Nan::Export(ctx, "canvas_t_get_prop_ox", wrap_canvas_t_get_prop_ox);
+  Nan::Export(ctx, "canvas_t_get_prop_oy", wrap_canvas_t_get_prop_oy);
+  Nan::Export(ctx, "canvas_t_get_prop_font_name", wrap_canvas_t_get_prop_font_name);
+  Nan::Export(ctx, "canvas_t_get_prop_font_size", wrap_canvas_t_get_prop_font_size);
+  Nan::Export(ctx, "canvas_t_get_prop_global_alpha", wrap_canvas_t_get_prop_global_alpha);
 
  return RET_OK;
 }
@@ -11087,18 +10221,12 @@ static void wrap_named_value_t_get_prop_name(const Nan::FunctionCallbackInfo<v8:
 }
 
 ret_t named_value_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("named_value_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_named_value_create)->GetFunction());
-  ctx->Set(Nan::New("named_value_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_named_value_cast)->GetFunction());
-  ctx->Set(Nan::New("named_value_set_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_named_value_set_name)->GetFunction());
-  ctx->Set(Nan::New("named_value_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_named_value_set_value)->GetFunction());
-  ctx->Set(Nan::New("named_value_get_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_named_value_get_value)->GetFunction());
-  ctx->Set(Nan::New("named_value_t_get_prop_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_named_value_t_get_prop_name)->GetFunction());
+  Nan::Export(ctx, "named_value_create", wrap_named_value_create);
+  Nan::Export(ctx, "named_value_cast", wrap_named_value_cast);
+  Nan::Export(ctx, "named_value_set_name", wrap_named_value_set_name);
+  Nan::Export(ctx, "named_value_set_value", wrap_named_value_set_value);
+  Nan::Export(ctx, "named_value_get_value", wrap_named_value_get_value);
+  Nan::Export(ctx, "named_value_t_get_prop_name", wrap_named_value_t_get_prop_name);
 
  return RET_OK;
 }
@@ -11920,210 +11048,108 @@ static void get_MIME_TYPE_VIDEO_X_MSVIDEO(const Nan::FunctionCallbackInfo<v8::Va
 }
 
 ret_t MIME_TYPE_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_ENVOY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_ENVOY)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_FRACTALS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_FRACTALS)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_FUTURESPLASH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_FUTURESPLASH)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_HTA").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_HTA)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_JSON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_JSON)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_UBJSON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_UBJSON)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_MAC_BINHEX40").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_MAC_BINHEX40)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_MSWORD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_MSWORD)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_OCTET_STREAM").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_OCTET_STREAM)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_ODA").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_ODA)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_OLESCRIPT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_OLESCRIPT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_PDF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_PDF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_PICS_RULES").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_PICS_RULES)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_PKCS10").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_PKCS10)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_PKIX_CRL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_PKIX_CRL)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_POSTSCRIPT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_POSTSCRIPT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_RTF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_RTF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_EXCEL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_EXCEL)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_OUTLOOK").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_OUTLOOK)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_PKICERTSTORE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_PKICERTSTORE)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_PKISECCAT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_PKISECCAT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_PKISTL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_PKISTL)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_POWERPOINT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_POWERPOINT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_PROJECT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_PROJECT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_VND_MS_WORKS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_VND_MS_WORKS)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_WINHLP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_WINHLP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_BCPIO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_BCPIO)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_CDF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_CDF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_COMPRESS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_COMPRESS)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_COMPRESSED").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_COMPRESSED)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_CPIO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_CPIO)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_CSH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_CSH)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_DIRECTOR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_DIRECTOR)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_DVI").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_DVI)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_GTAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_GTAR)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_GZIP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_GZIP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_HDF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_HDF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_IPHONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_IPHONE)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_JAVASCRIPT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_JAVASCRIPT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_LATEX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_LATEX)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSACCESS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSACCESS)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSCARDFILE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSCARDFILE)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSCLIP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSCLIP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSDOWNLOAD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSDOWNLOAD)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSMEDIAVIEW").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSMEDIAVIEW)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSMETAFILE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSMETAFILE)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSMONEY").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSMONEY)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSPUBLISHER").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSPUBLISHER)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSSCHEDULE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSSCHEDULE)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSTERMINAL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSTERMINAL)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_MSWRITE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_MSWRITE)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_NETCDF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_NETCDF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_PERFMON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_PERFMON)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_PKCS12").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_PKCS12)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_SH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_SH)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_SHAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_SHAR)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_SHOCKWAVE_FLASH").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_SHOCKWAVE_FLASH)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_STUFFIT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_STUFFIT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_SV4CPIO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_SV4CPIO)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_SV4CRC").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_SV4CRC)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_TAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_TAR)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_TCL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_TCL)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_TEX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_TEX)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_TEXINFO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_TEXINFO)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_TROFF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_TROFF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_X_USTAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_X_USTAR)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_APPLICATION_ZIP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_APPLICATION_ZIP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_AUDIO_BASIC").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_AUDIO_BASIC)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_AUDIO_MID").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_AUDIO_MID)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_AUDIO_MPEG").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_AUDIO_MPEG)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_AUDIO_X_AIFF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_AUDIO_X_AIFF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_AUDIO_X_MPEGURL").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_AUDIO_X_MPEGURL)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_AUDIO_X_WAV").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_AUDIO_X_WAV)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_BMP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_BMP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_CIS_COD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_CIS_COD)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_GIF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_GIF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_IEF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_IEF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_JPEG").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_JPEG)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_PIPEG").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_PIPEG)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_SVG_XML").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_SVG_XML)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_TIFF").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_TIFF)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_X_CMX").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_X_CMX)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_X_ICON").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_X_ICON)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_X_RGB").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_X_RGB)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_X_XBITMAP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_X_XBITMAP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_X_XPIXMAP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_X_XPIXMAP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_IMAGE_X_XWINDOWDUMP").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_IMAGE_X_XWINDOWDUMP)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_MESSAGE_RFC822").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_MESSAGE_RFC822)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_CSS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_CSS)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_H323").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_H323)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_HTML").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_HTML)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_IULS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_IULS)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_PLAIN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_PLAIN)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_RICHTEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_RICHTEXT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_SCRIPTLET").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_SCRIPTLET)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_WEBVIEWHTML").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_WEBVIEWHTML)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_X_COMPONENT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_X_COMPONENT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_X_SETEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_X_SETEXT)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_TEXT_X_VCARD").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_TEXT_X_VCARD)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_VIDEO_MPEG").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_VIDEO_MPEG)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_VIDEO_QUICKTIME").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_VIDEO_QUICKTIME)->GetFunction());
-  ctx->Set(Nan::New("MIME_TYPE_VIDEO_X_MSVIDEO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_MIME_TYPE_VIDEO_X_MSVIDEO)->GetFunction());
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_ENVOY", get_MIME_TYPE_APPLICATION_ENVOY);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_FRACTALS", get_MIME_TYPE_APPLICATION_FRACTALS);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_FUTURESPLASH", get_MIME_TYPE_APPLICATION_FUTURESPLASH);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_HTA", get_MIME_TYPE_APPLICATION_HTA);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_JSON", get_MIME_TYPE_APPLICATION_JSON);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_UBJSON", get_MIME_TYPE_APPLICATION_UBJSON);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_MAC_BINHEX40", get_MIME_TYPE_APPLICATION_MAC_BINHEX40);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_MSWORD", get_MIME_TYPE_APPLICATION_MSWORD);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_OCTET_STREAM", get_MIME_TYPE_APPLICATION_OCTET_STREAM);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_ODA", get_MIME_TYPE_APPLICATION_ODA);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_OLESCRIPT", get_MIME_TYPE_APPLICATION_OLESCRIPT);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_PDF", get_MIME_TYPE_APPLICATION_PDF);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_PICS_RULES", get_MIME_TYPE_APPLICATION_PICS_RULES);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_PKCS10", get_MIME_TYPE_APPLICATION_PKCS10);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_PKIX_CRL", get_MIME_TYPE_APPLICATION_PKIX_CRL);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_POSTSCRIPT", get_MIME_TYPE_APPLICATION_POSTSCRIPT);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_RTF", get_MIME_TYPE_APPLICATION_RTF);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_EXCEL", get_MIME_TYPE_APPLICATION_VND_MS_EXCEL);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_OUTLOOK", get_MIME_TYPE_APPLICATION_VND_MS_OUTLOOK);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_PKICERTSTORE", get_MIME_TYPE_APPLICATION_VND_MS_PKICERTSTORE);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_PKISECCAT", get_MIME_TYPE_APPLICATION_VND_MS_PKISECCAT);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_PKISTL", get_MIME_TYPE_APPLICATION_VND_MS_PKISTL);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_POWERPOINT", get_MIME_TYPE_APPLICATION_VND_MS_POWERPOINT);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_PROJECT", get_MIME_TYPE_APPLICATION_VND_MS_PROJECT);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_VND_MS_WORKS", get_MIME_TYPE_APPLICATION_VND_MS_WORKS);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_WINHLP", get_MIME_TYPE_APPLICATION_WINHLP);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_BCPIO", get_MIME_TYPE_APPLICATION_X_BCPIO);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_CDF", get_MIME_TYPE_APPLICATION_X_CDF);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_COMPRESS", get_MIME_TYPE_APPLICATION_X_COMPRESS);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_COMPRESSED", get_MIME_TYPE_APPLICATION_X_COMPRESSED);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_CPIO", get_MIME_TYPE_APPLICATION_X_CPIO);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_CSH", get_MIME_TYPE_APPLICATION_X_CSH);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_DIRECTOR", get_MIME_TYPE_APPLICATION_X_DIRECTOR);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_DVI", get_MIME_TYPE_APPLICATION_X_DVI);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_GTAR", get_MIME_TYPE_APPLICATION_X_GTAR);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_GZIP", get_MIME_TYPE_APPLICATION_X_GZIP);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_HDF", get_MIME_TYPE_APPLICATION_X_HDF);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_IPHONE", get_MIME_TYPE_APPLICATION_X_IPHONE);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_JAVASCRIPT", get_MIME_TYPE_APPLICATION_X_JAVASCRIPT);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_LATEX", get_MIME_TYPE_APPLICATION_X_LATEX);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSACCESS", get_MIME_TYPE_APPLICATION_X_MSACCESS);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSCARDFILE", get_MIME_TYPE_APPLICATION_X_MSCARDFILE);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSCLIP", get_MIME_TYPE_APPLICATION_X_MSCLIP);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSDOWNLOAD", get_MIME_TYPE_APPLICATION_X_MSDOWNLOAD);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSMEDIAVIEW", get_MIME_TYPE_APPLICATION_X_MSMEDIAVIEW);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSMETAFILE", get_MIME_TYPE_APPLICATION_X_MSMETAFILE);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSMONEY", get_MIME_TYPE_APPLICATION_X_MSMONEY);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSPUBLISHER", get_MIME_TYPE_APPLICATION_X_MSPUBLISHER);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSSCHEDULE", get_MIME_TYPE_APPLICATION_X_MSSCHEDULE);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSTERMINAL", get_MIME_TYPE_APPLICATION_X_MSTERMINAL);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_MSWRITE", get_MIME_TYPE_APPLICATION_X_MSWRITE);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_NETCDF", get_MIME_TYPE_APPLICATION_X_NETCDF);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_PERFMON", get_MIME_TYPE_APPLICATION_X_PERFMON);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_PKCS12", get_MIME_TYPE_APPLICATION_X_PKCS12);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_SH", get_MIME_TYPE_APPLICATION_X_SH);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_SHAR", get_MIME_TYPE_APPLICATION_X_SHAR);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_SHOCKWAVE_FLASH", get_MIME_TYPE_APPLICATION_X_SHOCKWAVE_FLASH);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_STUFFIT", get_MIME_TYPE_APPLICATION_X_STUFFIT);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_SV4CPIO", get_MIME_TYPE_APPLICATION_X_SV4CPIO);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_SV4CRC", get_MIME_TYPE_APPLICATION_X_SV4CRC);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_TAR", get_MIME_TYPE_APPLICATION_X_TAR);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_TCL", get_MIME_TYPE_APPLICATION_X_TCL);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_TEX", get_MIME_TYPE_APPLICATION_X_TEX);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_TEXINFO", get_MIME_TYPE_APPLICATION_X_TEXINFO);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_TROFF", get_MIME_TYPE_APPLICATION_X_TROFF);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_X_USTAR", get_MIME_TYPE_APPLICATION_X_USTAR);
+  Nan::Export(ctx, "MIME_TYPE_APPLICATION_ZIP", get_MIME_TYPE_APPLICATION_ZIP);
+  Nan::Export(ctx, "MIME_TYPE_AUDIO_BASIC", get_MIME_TYPE_AUDIO_BASIC);
+  Nan::Export(ctx, "MIME_TYPE_AUDIO_MID", get_MIME_TYPE_AUDIO_MID);
+  Nan::Export(ctx, "MIME_TYPE_AUDIO_MPEG", get_MIME_TYPE_AUDIO_MPEG);
+  Nan::Export(ctx, "MIME_TYPE_AUDIO_X_AIFF", get_MIME_TYPE_AUDIO_X_AIFF);
+  Nan::Export(ctx, "MIME_TYPE_AUDIO_X_MPEGURL", get_MIME_TYPE_AUDIO_X_MPEGURL);
+  Nan::Export(ctx, "MIME_TYPE_AUDIO_X_WAV", get_MIME_TYPE_AUDIO_X_WAV);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_BMP", get_MIME_TYPE_IMAGE_BMP);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_CIS_COD", get_MIME_TYPE_IMAGE_CIS_COD);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_GIF", get_MIME_TYPE_IMAGE_GIF);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_IEF", get_MIME_TYPE_IMAGE_IEF);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_JPEG", get_MIME_TYPE_IMAGE_JPEG);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_PIPEG", get_MIME_TYPE_IMAGE_PIPEG);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_SVG_XML", get_MIME_TYPE_IMAGE_SVG_XML);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_TIFF", get_MIME_TYPE_IMAGE_TIFF);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_X_CMX", get_MIME_TYPE_IMAGE_X_CMX);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_X_ICON", get_MIME_TYPE_IMAGE_X_ICON);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_X_RGB", get_MIME_TYPE_IMAGE_X_RGB);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_X_XBITMAP", get_MIME_TYPE_IMAGE_X_XBITMAP);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_X_XPIXMAP", get_MIME_TYPE_IMAGE_X_XPIXMAP);
+  Nan::Export(ctx, "MIME_TYPE_IMAGE_X_XWINDOWDUMP", get_MIME_TYPE_IMAGE_X_XWINDOWDUMP);
+  Nan::Export(ctx, "MIME_TYPE_MESSAGE_RFC822", get_MIME_TYPE_MESSAGE_RFC822);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_CSS", get_MIME_TYPE_TEXT_CSS);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_H323", get_MIME_TYPE_TEXT_H323);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_HTML", get_MIME_TYPE_TEXT_HTML);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_IULS", get_MIME_TYPE_TEXT_IULS);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_PLAIN", get_MIME_TYPE_TEXT_PLAIN);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_RICHTEXT", get_MIME_TYPE_TEXT_RICHTEXT);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_SCRIPTLET", get_MIME_TYPE_TEXT_SCRIPTLET);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_WEBVIEWHTML", get_MIME_TYPE_TEXT_WEBVIEWHTML);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_X_COMPONENT", get_MIME_TYPE_TEXT_X_COMPONENT);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_X_SETEXT", get_MIME_TYPE_TEXT_X_SETEXT);
+  Nan::Export(ctx, "MIME_TYPE_TEXT_X_VCARD", get_MIME_TYPE_TEXT_X_VCARD);
+  Nan::Export(ctx, "MIME_TYPE_VIDEO_MPEG", get_MIME_TYPE_VIDEO_MPEG);
+  Nan::Export(ctx, "MIME_TYPE_VIDEO_QUICKTIME", get_MIME_TYPE_VIDEO_QUICKTIME);
+  Nan::Export(ctx, "MIME_TYPE_VIDEO_X_MSVIDEO", get_MIME_TYPE_VIDEO_X_MSVIDEO);
 
  return RET_OK;
 }
@@ -12174,16 +11200,11 @@ static void get_INDICATOR_DEFAULT_PAINT_STROKE_RECT(const Nan::FunctionCallbackI
 }
 
 ret_t indicator_default_paint_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("INDICATOR_DEFAULT_PAINT_AUTO").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INDICATOR_DEFAULT_PAINT_AUTO)->GetFunction());
-  ctx->Set(Nan::New("INDICATOR_DEFAULT_PAINT_FILL_DOT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INDICATOR_DEFAULT_PAINT_FILL_DOT)->GetFunction());
-  ctx->Set(Nan::New("INDICATOR_DEFAULT_PAINT_STROKE_DOT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INDICATOR_DEFAULT_PAINT_STROKE_DOT)->GetFunction());
-  ctx->Set(Nan::New("INDICATOR_DEFAULT_PAINT_FILL_RECT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INDICATOR_DEFAULT_PAINT_FILL_RECT)->GetFunction());
-  ctx->Set(Nan::New("INDICATOR_DEFAULT_PAINT_STROKE_RECT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_INDICATOR_DEFAULT_PAINT_STROKE_RECT)->GetFunction());
+  Nan::Export(ctx, "INDICATOR_DEFAULT_PAINT_AUTO", get_INDICATOR_DEFAULT_PAINT_AUTO);
+  Nan::Export(ctx, "INDICATOR_DEFAULT_PAINT_FILL_DOT", get_INDICATOR_DEFAULT_PAINT_FILL_DOT);
+  Nan::Export(ctx, "INDICATOR_DEFAULT_PAINT_STROKE_DOT", get_INDICATOR_DEFAULT_PAINT_STROKE_DOT);
+  Nan::Export(ctx, "INDICATOR_DEFAULT_PAINT_FILL_RECT", get_INDICATOR_DEFAULT_PAINT_FILL_RECT);
+  Nan::Export(ctx, "INDICATOR_DEFAULT_PAINT_STROKE_RECT", get_INDICATOR_DEFAULT_PAINT_STROKE_RECT);
 
  return RET_OK;
 }
@@ -12205,10 +11226,8 @@ static void get_CLIP_BOARD_DATA_TYPE_TEXT(const Nan::FunctionCallbackInfo<v8::Va
 }
 
 ret_t clip_board_data_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("CLIP_BOARD_DATA_TYPE_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_CLIP_BOARD_DATA_TYPE_NONE)->GetFunction());
-  ctx->Set(Nan::New("CLIP_BOARD_DATA_TYPE_TEXT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_CLIP_BOARD_DATA_TYPE_TEXT)->GetFunction());
+  Nan::Export(ctx, "CLIP_BOARD_DATA_TYPE_NONE", get_CLIP_BOARD_DATA_TYPE_NONE);
+  Nan::Export(ctx, "CLIP_BOARD_DATA_TYPE_TEXT", get_CLIP_BOARD_DATA_TYPE_TEXT);
 
  return RET_OK;
 }
@@ -12244,10 +11263,8 @@ static void wrap_clip_board_get_text(const Nan::FunctionCallbackInfo<v8::Value>&
 }
 
 ret_t clip_board_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("clip_board_set_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_clip_board_set_text)->GetFunction());
-  ctx->Set(Nan::New("clip_board_get_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_clip_board_get_text)->GetFunction());
+  Nan::Export(ctx, "clip_board_set_text", wrap_clip_board_set_text);
+  Nan::Export(ctx, "clip_board_get_text", wrap_clip_board_get_text);
 
  return RET_OK;
 }
@@ -12445,54 +11462,30 @@ static void get_EASING_BOUNCE_INOUT(const Nan::FunctionCallbackInfo<v8::Value>& 
 }
 
 ret_t easing_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("EASING_LINEAR").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_LINEAR)->GetFunction());
-  ctx->Set(Nan::New("EASING_QUADRATIC_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_QUADRATIC_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_QUADRATIC_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_QUADRATIC_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_QUADRATIC_INOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_QUADRATIC_INOUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_CUBIC_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_CUBIC_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_CUBIC_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_CUBIC_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_SIN_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_SIN_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_SIN_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_SIN_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_SIN_INOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_SIN_INOUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_POW_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_POW_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_POW_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_POW_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_POW_INOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_POW_INOUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_CIRCULAR_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_CIRCULAR_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_CIRCULAR_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_CIRCULAR_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_CIRCULAR_INOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_CIRCULAR_INOUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_ELASTIC_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_ELASTIC_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_ELASTIC_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_ELASTIC_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_ELASTIC_INOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_ELASTIC_INOUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_BACK_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_BACK_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_BACK_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_BACK_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_BACK_INOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_BACK_INOUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_BOUNCE_IN").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_BOUNCE_IN)->GetFunction());
-  ctx->Set(Nan::New("EASING_BOUNCE_OUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_BOUNCE_OUT)->GetFunction());
-  ctx->Set(Nan::New("EASING_BOUNCE_INOUT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_EASING_BOUNCE_INOUT)->GetFunction());
+  Nan::Export(ctx, "EASING_LINEAR", get_EASING_LINEAR);
+  Nan::Export(ctx, "EASING_QUADRATIC_IN", get_EASING_QUADRATIC_IN);
+  Nan::Export(ctx, "EASING_QUADRATIC_OUT", get_EASING_QUADRATIC_OUT);
+  Nan::Export(ctx, "EASING_QUADRATIC_INOUT", get_EASING_QUADRATIC_INOUT);
+  Nan::Export(ctx, "EASING_CUBIC_IN", get_EASING_CUBIC_IN);
+  Nan::Export(ctx, "EASING_CUBIC_OUT", get_EASING_CUBIC_OUT);
+  Nan::Export(ctx, "EASING_SIN_IN", get_EASING_SIN_IN);
+  Nan::Export(ctx, "EASING_SIN_OUT", get_EASING_SIN_OUT);
+  Nan::Export(ctx, "EASING_SIN_INOUT", get_EASING_SIN_INOUT);
+  Nan::Export(ctx, "EASING_POW_IN", get_EASING_POW_IN);
+  Nan::Export(ctx, "EASING_POW_OUT", get_EASING_POW_OUT);
+  Nan::Export(ctx, "EASING_POW_INOUT", get_EASING_POW_INOUT);
+  Nan::Export(ctx, "EASING_CIRCULAR_IN", get_EASING_CIRCULAR_IN);
+  Nan::Export(ctx, "EASING_CIRCULAR_OUT", get_EASING_CIRCULAR_OUT);
+  Nan::Export(ctx, "EASING_CIRCULAR_INOUT", get_EASING_CIRCULAR_INOUT);
+  Nan::Export(ctx, "EASING_ELASTIC_IN", get_EASING_ELASTIC_IN);
+  Nan::Export(ctx, "EASING_ELASTIC_OUT", get_EASING_ELASTIC_OUT);
+  Nan::Export(ctx, "EASING_ELASTIC_INOUT", get_EASING_ELASTIC_INOUT);
+  Nan::Export(ctx, "EASING_BACK_IN", get_EASING_BACK_IN);
+  Nan::Export(ctx, "EASING_BACK_OUT", get_EASING_BACK_OUT);
+  Nan::Export(ctx, "EASING_BACK_INOUT", get_EASING_BACK_INOUT);
+  Nan::Export(ctx, "EASING_BOUNCE_IN", get_EASING_BOUNCE_IN);
+  Nan::Export(ctx, "EASING_BOUNCE_OUT", get_EASING_BOUNCE_OUT);
+  Nan::Export(ctx, "EASING_BOUNCE_INOUT", get_EASING_BOUNCE_INOUT);
 
  return RET_OK;
 }
@@ -12595,24 +11588,15 @@ static void wrap_date_time_t_get_prop_year(const Nan::FunctionCallbackInfo<v8::V
 }
 
 ret_t date_time_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("date_time_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_create)->GetFunction());
-  ctx->Set(Nan::New("date_time_set").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_set)->GetFunction());
-  ctx->Set(Nan::New("date_time_t_get_prop_second").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_t_get_prop_second)->GetFunction());
-  ctx->Set(Nan::New("date_time_t_get_prop_minute").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_t_get_prop_minute)->GetFunction());
-  ctx->Set(Nan::New("date_time_t_get_prop_hour").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_t_get_prop_hour)->GetFunction());
-  ctx->Set(Nan::New("date_time_t_get_prop_day").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_t_get_prop_day)->GetFunction());
-  ctx->Set(Nan::New("date_time_t_get_prop_wday").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_t_get_prop_wday)->GetFunction());
-  ctx->Set(Nan::New("date_time_t_get_prop_month").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_t_get_prop_month)->GetFunction());
-  ctx->Set(Nan::New("date_time_t_get_prop_year").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_date_time_t_get_prop_year)->GetFunction());
+  Nan::Export(ctx, "date_time_create", wrap_date_time_create);
+  Nan::Export(ctx, "date_time_set", wrap_date_time_set);
+  Nan::Export(ctx, "date_time_t_get_prop_second", wrap_date_time_t_get_prop_second);
+  Nan::Export(ctx, "date_time_t_get_prop_minute", wrap_date_time_t_get_prop_minute);
+  Nan::Export(ctx, "date_time_t_get_prop_hour", wrap_date_time_t_get_prop_hour);
+  Nan::Export(ctx, "date_time_t_get_prop_day", wrap_date_time_t_get_prop_day);
+  Nan::Export(ctx, "date_time_t_get_prop_wday", wrap_date_time_t_get_prop_wday);
+  Nan::Export(ctx, "date_time_t_get_prop_month", wrap_date_time_t_get_prop_month);
+  Nan::Export(ctx, "date_time_t_get_prop_year", wrap_date_time_t_get_prop_year);
 
  return RET_OK;
 }
@@ -12743,24 +11727,15 @@ static void wrap_color_t_get_prop_color(const Nan::FunctionCallbackInfo<v8::Valu
 }
 
 ret_t color_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("color_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_create)->GetFunction());
-  ctx->Set(Nan::New("color_from_str").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_from_str)->GetFunction());
-  ctx->Set(Nan::New("color_r").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_r)->GetFunction());
-  ctx->Set(Nan::New("color_g").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_g)->GetFunction());
-  ctx->Set(Nan::New("color_b").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_b)->GetFunction());
-  ctx->Set(Nan::New("color_a").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_a)->GetFunction());
-  ctx->Set(Nan::New("color_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_cast)->GetFunction());
-  ctx->Set(Nan::New("color_t_set_prop_color").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_t_set_prop_color)->GetFunction());
-  ctx->Set(Nan::New("color_t_get_prop_color").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_t_get_prop_color)->GetFunction());
+  Nan::Export(ctx, "color_create", wrap_color_create);
+  Nan::Export(ctx, "color_from_str", wrap_color_from_str);
+  Nan::Export(ctx, "color_r", wrap_color_r);
+  Nan::Export(ctx, "color_g", wrap_color_g);
+  Nan::Export(ctx, "color_b", wrap_color_b);
+  Nan::Export(ctx, "color_a", wrap_color_a);
+  Nan::Export(ctx, "color_cast", wrap_color_cast);
+  Nan::Export(ctx, "color_t_set_prop_color", wrap_color_t_set_prop_color);
+  Nan::Export(ctx, "color_t_get_prop_color", wrap_color_t_get_prop_color);
 
  return RET_OK;
 }
@@ -12828,18 +11803,12 @@ static void wrap_asset_info_t_get_prop_name(const Nan::FunctionCallbackInfo<v8::
 }
 
 ret_t asset_info_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("asset_info_t_get_prop_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_asset_info_t_get_prop_type)->GetFunction());
-  ctx->Set(Nan::New("asset_info_t_get_prop_subtype").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_asset_info_t_get_prop_subtype)->GetFunction());
-  ctx->Set(Nan::New("asset_info_t_get_prop_is_in_rom").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_asset_info_t_get_prop_is_in_rom)->GetFunction());
-  ctx->Set(Nan::New("asset_info_t_get_prop_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_asset_info_t_get_prop_size)->GetFunction());
-  ctx->Set(Nan::New("asset_info_t_get_prop_refcount").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_asset_info_t_get_prop_refcount)->GetFunction());
-  ctx->Set(Nan::New("asset_info_t_get_prop_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_asset_info_t_get_prop_name)->GetFunction());
+  Nan::Export(ctx, "asset_info_t_get_prop_type", wrap_asset_info_t_get_prop_type);
+  Nan::Export(ctx, "asset_info_t_get_prop_subtype", wrap_asset_info_t_get_prop_subtype);
+  Nan::Export(ctx, "asset_info_t_get_prop_is_in_rom", wrap_asset_info_t_get_prop_is_in_rom);
+  Nan::Export(ctx, "asset_info_t_get_prop_size", wrap_asset_info_t_get_prop_size);
+  Nan::Export(ctx, "asset_info_t_get_prop_refcount", wrap_asset_info_t_get_prop_refcount);
+  Nan::Export(ctx, "asset_info_t_get_prop_name", wrap_asset_info_t_get_prop_name);
 
  return RET_OK;
 }
@@ -12917,24 +11886,15 @@ static void get_ASSET_TYPE_DATA(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t asset_type_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("ASSET_TYPE_NONE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_NONE)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_FONT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_FONT)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_IMAGE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_IMAGE)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_STYLE").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_STYLE)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_UI").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_UI)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_XML").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_XML)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_STRINGS").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_STRINGS)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_SCRIPT").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_SCRIPT)->GetFunction());
-  ctx->Set(Nan::New("ASSET_TYPE_DATA").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(get_ASSET_TYPE_DATA)->GetFunction());
+  Nan::Export(ctx, "ASSET_TYPE_NONE", get_ASSET_TYPE_NONE);
+  Nan::Export(ctx, "ASSET_TYPE_FONT", get_ASSET_TYPE_FONT);
+  Nan::Export(ctx, "ASSET_TYPE_IMAGE", get_ASSET_TYPE_IMAGE);
+  Nan::Export(ctx, "ASSET_TYPE_STYLE", get_ASSET_TYPE_STYLE);
+  Nan::Export(ctx, "ASSET_TYPE_UI", get_ASSET_TYPE_UI);
+  Nan::Export(ctx, "ASSET_TYPE_XML", get_ASSET_TYPE_XML);
+  Nan::Export(ctx, "ASSET_TYPE_STRINGS", get_ASSET_TYPE_STRINGS);
+  Nan::Export(ctx, "ASSET_TYPE_SCRIPT", get_ASSET_TYPE_SCRIPT);
+  Nan::Export(ctx, "ASSET_TYPE_DATA", get_ASSET_TYPE_DATA);
 
  return RET_OK;
 }
@@ -12985,12 +11945,9 @@ static void wrap_assets_manager_unref(const Nan::FunctionCallbackInfo<v8::Value>
 }
 
 ret_t assets_manager_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("assets_manager").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_assets_manager)->GetFunction());
-  ctx->Set(Nan::New("assets_manager_ref").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_assets_manager_ref)->GetFunction());
-  ctx->Set(Nan::New("assets_manager_unref").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_assets_manager_unref)->GetFunction());
+  Nan::Export(ctx, "assets_manager", wrap_assets_manager);
+  Nan::Export(ctx, "assets_manager_ref", wrap_assets_manager_ref);
+  Nan::Export(ctx, "assets_manager_unref", wrap_assets_manager_unref);
 
  return RET_OK;
 }
@@ -13028,10 +11985,8 @@ static void wrap_canvas_widget_cast(const Nan::FunctionCallbackInfo<v8::Value>& 
 }
 
 ret_t canvas_widget_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("canvas_widget_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_widget_create)->GetFunction());
-  ctx->Set(Nan::New("canvas_widget_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_canvas_widget_cast)->GetFunction());
+  Nan::Export(ctx, "canvas_widget_create", wrap_canvas_widget_create);
+  Nan::Export(ctx, "canvas_widget_cast", wrap_canvas_widget_cast);
 
  return RET_OK;
 }
@@ -13410,60 +12365,33 @@ static void wrap_time_clock_t_get_prop_second_anchor_y(const Nan::FunctionCallba
 }
 
 ret_t time_clock_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("time_clock_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_create)->GetFunction());
-  ctx->Set(Nan::New("time_clock_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_cast)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_hour").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_hour)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_minute").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_minute)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_second").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_second)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_hour_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_hour_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_minute_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_minute_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_second_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_second_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_bg_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_bg_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_hour_anchor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_hour_anchor)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_minute_anchor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_minute_anchor)->GetFunction());
-  ctx->Set(Nan::New("time_clock_set_second_anchor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_set_second_anchor)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_hour").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_hour)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_minute").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_minute)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_second").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_second)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_bg_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_bg_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_hour_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_hour_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_minute_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_minute_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_second_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_second_image)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_hour_anchor_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_hour_anchor_x)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_hour_anchor_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_hour_anchor_y)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_minute_anchor_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_minute_anchor_x)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_minute_anchor_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_minute_anchor_y)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_second_anchor_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_second_anchor_x)->GetFunction());
-  ctx->Set(Nan::New("time_clock_t_get_prop_second_anchor_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_time_clock_t_get_prop_second_anchor_y)->GetFunction());
+  Nan::Export(ctx, "time_clock_create", wrap_time_clock_create);
+  Nan::Export(ctx, "time_clock_cast", wrap_time_clock_cast);
+  Nan::Export(ctx, "time_clock_set_hour", wrap_time_clock_set_hour);
+  Nan::Export(ctx, "time_clock_set_minute", wrap_time_clock_set_minute);
+  Nan::Export(ctx, "time_clock_set_second", wrap_time_clock_set_second);
+  Nan::Export(ctx, "time_clock_set_hour_image", wrap_time_clock_set_hour_image);
+  Nan::Export(ctx, "time_clock_set_minute_image", wrap_time_clock_set_minute_image);
+  Nan::Export(ctx, "time_clock_set_second_image", wrap_time_clock_set_second_image);
+  Nan::Export(ctx, "time_clock_set_bg_image", wrap_time_clock_set_bg_image);
+  Nan::Export(ctx, "time_clock_set_image", wrap_time_clock_set_image);
+  Nan::Export(ctx, "time_clock_set_hour_anchor", wrap_time_clock_set_hour_anchor);
+  Nan::Export(ctx, "time_clock_set_minute_anchor", wrap_time_clock_set_minute_anchor);
+  Nan::Export(ctx, "time_clock_set_second_anchor", wrap_time_clock_set_second_anchor);
+  Nan::Export(ctx, "time_clock_t_get_prop_hour", wrap_time_clock_t_get_prop_hour);
+  Nan::Export(ctx, "time_clock_t_get_prop_minute", wrap_time_clock_t_get_prop_minute);
+  Nan::Export(ctx, "time_clock_t_get_prop_second", wrap_time_clock_t_get_prop_second);
+  Nan::Export(ctx, "time_clock_t_get_prop_image", wrap_time_clock_t_get_prop_image);
+  Nan::Export(ctx, "time_clock_t_get_prop_bg_image", wrap_time_clock_t_get_prop_bg_image);
+  Nan::Export(ctx, "time_clock_t_get_prop_hour_image", wrap_time_clock_t_get_prop_hour_image);
+  Nan::Export(ctx, "time_clock_t_get_prop_minute_image", wrap_time_clock_t_get_prop_minute_image);
+  Nan::Export(ctx, "time_clock_t_get_prop_second_image", wrap_time_clock_t_get_prop_second_image);
+  Nan::Export(ctx, "time_clock_t_get_prop_hour_anchor_x", wrap_time_clock_t_get_prop_hour_anchor_x);
+  Nan::Export(ctx, "time_clock_t_get_prop_hour_anchor_y", wrap_time_clock_t_get_prop_hour_anchor_y);
+  Nan::Export(ctx, "time_clock_t_get_prop_minute_anchor_x", wrap_time_clock_t_get_prop_minute_anchor_x);
+  Nan::Export(ctx, "time_clock_t_get_prop_minute_anchor_y", wrap_time_clock_t_get_prop_minute_anchor_y);
+  Nan::Export(ctx, "time_clock_t_get_prop_second_anchor_x", wrap_time_clock_t_get_prop_second_anchor_x);
+  Nan::Export(ctx, "time_clock_t_get_prop_second_anchor_y", wrap_time_clock_t_get_prop_second_anchor_y);
 
  return RET_OK;
 }
@@ -13702,38 +12630,22 @@ static void wrap_text_selector_t_get_prop_options(const Nan::FunctionCallbackInf
 }
 
 ret_t text_selector_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("text_selector_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_create)->GetFunction());
-  ctx->Set(Nan::New("text_selector_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_cast)->GetFunction());
-  ctx->Set(Nan::New("text_selector_reset_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_reset_options)->GetFunction());
-  ctx->Set(Nan::New("text_selector_count_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_count_options)->GetFunction());
-  ctx->Set(Nan::New("text_selector_append_option").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_append_option)->GetFunction());
-  ctx->Set(Nan::New("text_selector_set_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_set_options)->GetFunction());
-  ctx->Set(Nan::New("text_selector_set_range_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_set_range_options)->GetFunction());
-  ctx->Set(Nan::New("text_selector_get_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_get_value)->GetFunction());
-  ctx->Set(Nan::New("text_selector_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_set_value)->GetFunction());
-  ctx->Set(Nan::New("text_selector_get_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_get_text)->GetFunction());
-  ctx->Set(Nan::New("text_selector_set_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_set_text)->GetFunction());
-  ctx->Set(Nan::New("text_selector_set_selected_index").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_set_selected_index)->GetFunction());
-  ctx->Set(Nan::New("text_selector_set_visible_nr").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_set_visible_nr)->GetFunction());
-  ctx->Set(Nan::New("text_selector_t_get_prop_visible_nr").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_t_get_prop_visible_nr)->GetFunction());
-  ctx->Set(Nan::New("text_selector_t_get_prop_selected_index").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_t_get_prop_selected_index)->GetFunction());
-  ctx->Set(Nan::New("text_selector_t_get_prop_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_text_selector_t_get_prop_options)->GetFunction());
+  Nan::Export(ctx, "text_selector_create", wrap_text_selector_create);
+  Nan::Export(ctx, "text_selector_cast", wrap_text_selector_cast);
+  Nan::Export(ctx, "text_selector_reset_options", wrap_text_selector_reset_options);
+  Nan::Export(ctx, "text_selector_count_options", wrap_text_selector_count_options);
+  Nan::Export(ctx, "text_selector_append_option", wrap_text_selector_append_option);
+  Nan::Export(ctx, "text_selector_set_options", wrap_text_selector_set_options);
+  Nan::Export(ctx, "text_selector_set_range_options", wrap_text_selector_set_range_options);
+  Nan::Export(ctx, "text_selector_get_value", wrap_text_selector_get_value);
+  Nan::Export(ctx, "text_selector_set_value", wrap_text_selector_set_value);
+  Nan::Export(ctx, "text_selector_get_text", wrap_text_selector_get_text);
+  Nan::Export(ctx, "text_selector_set_text", wrap_text_selector_set_text);
+  Nan::Export(ctx, "text_selector_set_selected_index", wrap_text_selector_set_selected_index);
+  Nan::Export(ctx, "text_selector_set_visible_nr", wrap_text_selector_set_visible_nr);
+  Nan::Export(ctx, "text_selector_t_get_prop_visible_nr", wrap_text_selector_t_get_prop_visible_nr);
+  Nan::Export(ctx, "text_selector_t_get_prop_selected_index", wrap_text_selector_t_get_prop_selected_index);
+  Nan::Export(ctx, "text_selector_t_get_prop_options", wrap_text_selector_t_get_prop_options);
 
  return RET_OK;
 }
@@ -13775,12 +12687,9 @@ static void wrap_prop_change_event_t_get_prop_value(const Nan::FunctionCallbackI
 }
 
 ret_t prop_change_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("prop_change_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_prop_change_event_cast)->GetFunction());
-  ctx->Set(Nan::New("prop_change_event_t_get_prop_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_prop_change_event_t_get_prop_name)->GetFunction());
-  ctx->Set(Nan::New("prop_change_event_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_prop_change_event_t_get_prop_value)->GetFunction());
+  Nan::Export(ctx, "prop_change_event_cast", wrap_prop_change_event_cast);
+  Nan::Export(ctx, "prop_change_event_t_get_prop_name", wrap_prop_change_event_t_get_prop_name);
+  Nan::Export(ctx, "prop_change_event_t_get_prop_value", wrap_prop_change_event_t_get_prop_value);
 
  return RET_OK;
 }
@@ -13810,10 +12719,8 @@ static void wrap_progress_event_t_get_prop_percent(const Nan::FunctionCallbackIn
 }
 
 ret_t progress_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("progress_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_event_cast)->GetFunction());
-  ctx->Set(Nan::New("progress_event_t_get_prop_percent").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_event_t_get_prop_percent)->GetFunction());
+  Nan::Export(ctx, "progress_event_cast", wrap_progress_event_cast);
+  Nan::Export(ctx, "progress_event_t_get_prop_percent", wrap_progress_event_t_get_prop_percent);
 
  return RET_OK;
 }
@@ -13886,16 +12793,11 @@ static void wrap_switch_t_get_prop_max_xoffset_ratio(const Nan::FunctionCallback
 }
 
 ret_t switch_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("switch_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_switch_create)->GetFunction());
-  ctx->Set(Nan::New("switch_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_switch_set_value)->GetFunction());
-  ctx->Set(Nan::New("switch_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_switch_cast)->GetFunction());
-  ctx->Set(Nan::New("switch_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_switch_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("switch_t_get_prop_max_xoffset_ratio").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_switch_t_get_prop_max_xoffset_ratio)->GetFunction());
+  Nan::Export(ctx, "switch_create", wrap_switch_create);
+  Nan::Export(ctx, "switch_set_value", wrap_switch_set_value);
+  Nan::Export(ctx, "switch_cast", wrap_switch_cast);
+  Nan::Export(ctx, "switch_t_get_prop_value", wrap_switch_t_get_prop_value);
+  Nan::Export(ctx, "switch_t_get_prop_max_xoffset_ratio", wrap_switch_t_get_prop_max_xoffset_ratio);
 
  return RET_OK;
 }
@@ -14051,28 +12953,17 @@ static void wrap_slide_view_t_get_prop_anim_hint(const Nan::FunctionCallbackInfo
 }
 
 ret_t slide_view_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("slide_view_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_create)->GetFunction());
-  ctx->Set(Nan::New("slide_view_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_cast)->GetFunction());
-  ctx->Set(Nan::New("slide_view_set_auto_play").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_set_auto_play)->GetFunction());
-  ctx->Set(Nan::New("slide_view_set_active").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_set_active)->GetFunction());
-  ctx->Set(Nan::New("slide_view_set_vertical").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_set_vertical)->GetFunction());
-  ctx->Set(Nan::New("slide_view_set_anim_hint").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_set_anim_hint)->GetFunction());
-  ctx->Set(Nan::New("slide_view_set_loop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_set_loop)->GetFunction());
-  ctx->Set(Nan::New("slide_view_t_get_prop_vertical").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_t_get_prop_vertical)->GetFunction());
-  ctx->Set(Nan::New("slide_view_t_get_prop_auto_play").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_t_get_prop_auto_play)->GetFunction());
-  ctx->Set(Nan::New("slide_view_t_get_prop_loop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_t_get_prop_loop)->GetFunction());
-  ctx->Set(Nan::New("slide_view_t_get_prop_anim_hint").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_view_t_get_prop_anim_hint)->GetFunction());
+  Nan::Export(ctx, "slide_view_create", wrap_slide_view_create);
+  Nan::Export(ctx, "slide_view_cast", wrap_slide_view_cast);
+  Nan::Export(ctx, "slide_view_set_auto_play", wrap_slide_view_set_auto_play);
+  Nan::Export(ctx, "slide_view_set_active", wrap_slide_view_set_active);
+  Nan::Export(ctx, "slide_view_set_vertical", wrap_slide_view_set_vertical);
+  Nan::Export(ctx, "slide_view_set_anim_hint", wrap_slide_view_set_anim_hint);
+  Nan::Export(ctx, "slide_view_set_loop", wrap_slide_view_set_loop);
+  Nan::Export(ctx, "slide_view_t_get_prop_vertical", wrap_slide_view_t_get_prop_vertical);
+  Nan::Export(ctx, "slide_view_t_get_prop_auto_play", wrap_slide_view_t_get_prop_auto_play);
+  Nan::Export(ctx, "slide_view_t_get_prop_loop", wrap_slide_view_t_get_prop_loop);
+  Nan::Export(ctx, "slide_view_t_get_prop_anim_hint", wrap_slide_view_t_get_prop_anim_hint);
 
  return RET_OK;
 }
@@ -14387,52 +13278,29 @@ static void wrap_slide_indicator_t_get_prop_indicated_target(const Nan::Function
 }
 
 ret_t slide_indicator_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("slide_indicator_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_create)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_create_linear").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_create_linear)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_create_arc").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_create_arc)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_cast)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_value)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_max)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_default_paint").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_default_paint)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_auto_hide").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_auto_hide)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_margin").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_margin)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_spacing").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_spacing)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_size)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_anchor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_anchor)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_set_indicated_target").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_set_indicated_target)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_max)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_default_paint").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_default_paint)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_auto_hide").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_auto_hide)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_margin").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_margin)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_spacing").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_spacing)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_size)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_anchor_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_anchor_x)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_anchor_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_anchor_y)->GetFunction());
-  ctx->Set(Nan::New("slide_indicator_t_get_prop_indicated_target").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_indicator_t_get_prop_indicated_target)->GetFunction());
+  Nan::Export(ctx, "slide_indicator_create", wrap_slide_indicator_create);
+  Nan::Export(ctx, "slide_indicator_create_linear", wrap_slide_indicator_create_linear);
+  Nan::Export(ctx, "slide_indicator_create_arc", wrap_slide_indicator_create_arc);
+  Nan::Export(ctx, "slide_indicator_cast", wrap_slide_indicator_cast);
+  Nan::Export(ctx, "slide_indicator_set_value", wrap_slide_indicator_set_value);
+  Nan::Export(ctx, "slide_indicator_set_max", wrap_slide_indicator_set_max);
+  Nan::Export(ctx, "slide_indicator_set_default_paint", wrap_slide_indicator_set_default_paint);
+  Nan::Export(ctx, "slide_indicator_set_auto_hide", wrap_slide_indicator_set_auto_hide);
+  Nan::Export(ctx, "slide_indicator_set_margin", wrap_slide_indicator_set_margin);
+  Nan::Export(ctx, "slide_indicator_set_spacing", wrap_slide_indicator_set_spacing);
+  Nan::Export(ctx, "slide_indicator_set_size", wrap_slide_indicator_set_size);
+  Nan::Export(ctx, "slide_indicator_set_anchor", wrap_slide_indicator_set_anchor);
+  Nan::Export(ctx, "slide_indicator_set_indicated_target", wrap_slide_indicator_set_indicated_target);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_value", wrap_slide_indicator_t_get_prop_value);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_max", wrap_slide_indicator_t_get_prop_max);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_default_paint", wrap_slide_indicator_t_get_prop_default_paint);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_auto_hide", wrap_slide_indicator_t_get_prop_auto_hide);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_margin", wrap_slide_indicator_t_get_prop_margin);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_spacing", wrap_slide_indicator_t_get_prop_spacing);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_size", wrap_slide_indicator_t_get_prop_size);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_anchor_x", wrap_slide_indicator_t_get_prop_anchor_x);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_anchor_y", wrap_slide_indicator_t_get_prop_anchor_y);
+  Nan::Export(ctx, "slide_indicator_t_get_prop_indicated_target", wrap_slide_indicator_t_get_prop_indicated_target);
 
  return RET_OK;
 }
@@ -14545,22 +13413,14 @@ static void wrap_slide_menu_t_get_prop_min_scale(const Nan::FunctionCallbackInfo
 }
 
 ret_t slide_menu_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("slide_menu_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_create)->GetFunction());
-  ctx->Set(Nan::New("slide_menu_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_cast)->GetFunction());
-  ctx->Set(Nan::New("slide_menu_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_set_value)->GetFunction());
-  ctx->Set(Nan::New("slide_menu_set_align_v").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_set_align_v)->GetFunction());
-  ctx->Set(Nan::New("slide_menu_set_min_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_set_min_scale)->GetFunction());
-  ctx->Set(Nan::New("slide_menu_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("slide_menu_t_get_prop_align_v").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_t_get_prop_align_v)->GetFunction());
-  ctx->Set(Nan::New("slide_menu_t_get_prop_min_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slide_menu_t_get_prop_min_scale)->GetFunction());
+  Nan::Export(ctx, "slide_menu_create", wrap_slide_menu_create);
+  Nan::Export(ctx, "slide_menu_cast", wrap_slide_menu_cast);
+  Nan::Export(ctx, "slide_menu_set_value", wrap_slide_menu_set_value);
+  Nan::Export(ctx, "slide_menu_set_align_v", wrap_slide_menu_set_align_v);
+  Nan::Export(ctx, "slide_menu_set_min_scale", wrap_slide_menu_set_min_scale);
+  Nan::Export(ctx, "slide_menu_t_get_prop_value", wrap_slide_menu_t_get_prop_value);
+  Nan::Export(ctx, "slide_menu_t_get_prop_align_v", wrap_slide_menu_t_get_prop_align_v);
+  Nan::Export(ctx, "slide_menu_t_get_prop_min_scale", wrap_slide_menu_t_get_prop_min_scale);
 
  return RET_OK;
 }
@@ -14804,42 +13664,24 @@ static void wrap_scroll_view_t_get_prop_yslidable(const Nan::FunctionCallbackInf
 }
 
 ret_t scroll_view_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("scroll_view_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_create)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_cast)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_set_virtual_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_set_virtual_w)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_set_virtual_h").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_set_virtual_h)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_set_xslidable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_set_xslidable)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_set_yslidable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_set_yslidable)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_set_offset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_set_offset)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_set_speed_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_set_speed_scale)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_scroll_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_scroll_to)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_scroll_delta_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_scroll_delta_to)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_virtual_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_virtual_w)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_virtual_h").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_virtual_h)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_xoffset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_xoffset)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_yoffset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_yoffset)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_xspeed_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_xspeed_scale)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_yspeed_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_yspeed_scale)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_xslidable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_xslidable)->GetFunction());
-  ctx->Set(Nan::New("scroll_view_t_get_prop_yslidable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_view_t_get_prop_yslidable)->GetFunction());
+  Nan::Export(ctx, "scroll_view_create", wrap_scroll_view_create);
+  Nan::Export(ctx, "scroll_view_cast", wrap_scroll_view_cast);
+  Nan::Export(ctx, "scroll_view_set_virtual_w", wrap_scroll_view_set_virtual_w);
+  Nan::Export(ctx, "scroll_view_set_virtual_h", wrap_scroll_view_set_virtual_h);
+  Nan::Export(ctx, "scroll_view_set_xslidable", wrap_scroll_view_set_xslidable);
+  Nan::Export(ctx, "scroll_view_set_yslidable", wrap_scroll_view_set_yslidable);
+  Nan::Export(ctx, "scroll_view_set_offset", wrap_scroll_view_set_offset);
+  Nan::Export(ctx, "scroll_view_set_speed_scale", wrap_scroll_view_set_speed_scale);
+  Nan::Export(ctx, "scroll_view_scroll_to", wrap_scroll_view_scroll_to);
+  Nan::Export(ctx, "scroll_view_scroll_delta_to", wrap_scroll_view_scroll_delta_to);
+  Nan::Export(ctx, "scroll_view_t_get_prop_virtual_w", wrap_scroll_view_t_get_prop_virtual_w);
+  Nan::Export(ctx, "scroll_view_t_get_prop_virtual_h", wrap_scroll_view_t_get_prop_virtual_h);
+  Nan::Export(ctx, "scroll_view_t_get_prop_xoffset", wrap_scroll_view_t_get_prop_xoffset);
+  Nan::Export(ctx, "scroll_view_t_get_prop_yoffset", wrap_scroll_view_t_get_prop_yoffset);
+  Nan::Export(ctx, "scroll_view_t_get_prop_xspeed_scale", wrap_scroll_view_t_get_prop_xspeed_scale);
+  Nan::Export(ctx, "scroll_view_t_get_prop_yspeed_scale", wrap_scroll_view_t_get_prop_yspeed_scale);
+  Nan::Export(ctx, "scroll_view_t_get_prop_xslidable", wrap_scroll_view_t_get_prop_xslidable);
+  Nan::Export(ctx, "scroll_view_t_get_prop_yslidable", wrap_scroll_view_t_get_prop_yslidable);
 
  return RET_OK;
 }
@@ -15059,36 +13901,21 @@ static void wrap_scroll_bar_t_get_prop_animatable(const Nan::FunctionCallbackInf
 }
 
 ret_t scroll_bar_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("scroll_bar_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_create)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_cast)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_create_mobile").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_create_mobile)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_create_desktop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_create_desktop)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_set_params").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_set_params)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_scroll_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_scroll_to)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_set_value)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_add_delta").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_add_delta)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_scroll_delta").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_scroll_delta)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_set_value_only").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_set_value_only)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_is_mobile").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_is_mobile)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_t_get_prop_virtual_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_t_get_prop_virtual_size)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_t_get_prop_row").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_t_get_prop_row)->GetFunction());
-  ctx->Set(Nan::New("scroll_bar_t_get_prop_animatable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_scroll_bar_t_get_prop_animatable)->GetFunction());
+  Nan::Export(ctx, "scroll_bar_create", wrap_scroll_bar_create);
+  Nan::Export(ctx, "scroll_bar_cast", wrap_scroll_bar_cast);
+  Nan::Export(ctx, "scroll_bar_create_mobile", wrap_scroll_bar_create_mobile);
+  Nan::Export(ctx, "scroll_bar_create_desktop", wrap_scroll_bar_create_desktop);
+  Nan::Export(ctx, "scroll_bar_set_params", wrap_scroll_bar_set_params);
+  Nan::Export(ctx, "scroll_bar_scroll_to", wrap_scroll_bar_scroll_to);
+  Nan::Export(ctx, "scroll_bar_set_value", wrap_scroll_bar_set_value);
+  Nan::Export(ctx, "scroll_bar_add_delta", wrap_scroll_bar_add_delta);
+  Nan::Export(ctx, "scroll_bar_scroll_delta", wrap_scroll_bar_scroll_delta);
+  Nan::Export(ctx, "scroll_bar_set_value_only", wrap_scroll_bar_set_value_only);
+  Nan::Export(ctx, "scroll_bar_is_mobile", wrap_scroll_bar_is_mobile);
+  Nan::Export(ctx, "scroll_bar_t_get_prop_virtual_size", wrap_scroll_bar_t_get_prop_virtual_size);
+  Nan::Export(ctx, "scroll_bar_t_get_prop_value", wrap_scroll_bar_t_get_prop_value);
+  Nan::Export(ctx, "scroll_bar_t_get_prop_row", wrap_scroll_bar_t_get_prop_row);
+  Nan::Export(ctx, "scroll_bar_t_get_prop_animatable", wrap_scroll_bar_t_get_prop_animatable);
 
  return RET_OK;
 }
@@ -15201,22 +14028,14 @@ static void wrap_list_view_t_get_prop_auto_hide_scroll_bar(const Nan::FunctionCa
 }
 
 ret_t list_view_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("list_view_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_create)->GetFunction());
-  ctx->Set(Nan::New("list_view_set_item_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_set_item_height)->GetFunction());
-  ctx->Set(Nan::New("list_view_set_default_item_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_set_default_item_height)->GetFunction());
-  ctx->Set(Nan::New("list_view_set_auto_hide_scroll_bar").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_set_auto_hide_scroll_bar)->GetFunction());
-  ctx->Set(Nan::New("list_view_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_cast)->GetFunction());
-  ctx->Set(Nan::New("list_view_t_get_prop_item_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_t_get_prop_item_height)->GetFunction());
-  ctx->Set(Nan::New("list_view_t_get_prop_default_item_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_t_get_prop_default_item_height)->GetFunction());
-  ctx->Set(Nan::New("list_view_t_get_prop_auto_hide_scroll_bar").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_t_get_prop_auto_hide_scroll_bar)->GetFunction());
+  Nan::Export(ctx, "list_view_create", wrap_list_view_create);
+  Nan::Export(ctx, "list_view_set_item_height", wrap_list_view_set_item_height);
+  Nan::Export(ctx, "list_view_set_default_item_height", wrap_list_view_set_default_item_height);
+  Nan::Export(ctx, "list_view_set_auto_hide_scroll_bar", wrap_list_view_set_auto_hide_scroll_bar);
+  Nan::Export(ctx, "list_view_cast", wrap_list_view_cast);
+  Nan::Export(ctx, "list_view_t_get_prop_item_height", wrap_list_view_t_get_prop_item_height);
+  Nan::Export(ctx, "list_view_t_get_prop_default_item_height", wrap_list_view_t_get_prop_default_item_height);
+  Nan::Export(ctx, "list_view_t_get_prop_auto_hide_scroll_bar", wrap_list_view_t_get_prop_auto_hide_scroll_bar);
 
  return RET_OK;
 }
@@ -15304,18 +14123,12 @@ static void wrap_list_view_h_t_get_prop_spacing(const Nan::FunctionCallbackInfo<
 }
 
 ret_t list_view_h_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("list_view_h_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_h_create)->GetFunction());
-  ctx->Set(Nan::New("list_view_h_set_item_width").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_h_set_item_width)->GetFunction());
-  ctx->Set(Nan::New("list_view_h_set_spacing").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_h_set_spacing)->GetFunction());
-  ctx->Set(Nan::New("list_view_h_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_h_cast)->GetFunction());
-  ctx->Set(Nan::New("list_view_h_t_get_prop_item_width").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_h_t_get_prop_item_width)->GetFunction());
-  ctx->Set(Nan::New("list_view_h_t_get_prop_spacing").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_view_h_t_get_prop_spacing)->GetFunction());
+  Nan::Export(ctx, "list_view_h_create", wrap_list_view_h_create);
+  Nan::Export(ctx, "list_view_h_set_item_width", wrap_list_view_h_set_item_width);
+  Nan::Export(ctx, "list_view_h_set_spacing", wrap_list_view_h_set_spacing);
+  Nan::Export(ctx, "list_view_h_cast", wrap_list_view_h_cast);
+  Nan::Export(ctx, "list_view_h_t_get_prop_item_width", wrap_list_view_h_t_get_prop_item_width);
+  Nan::Export(ctx, "list_view_h_t_get_prop_spacing", wrap_list_view_h_t_get_prop_spacing);
 
  return RET_OK;
 }
@@ -15353,10 +14166,8 @@ static void wrap_list_item_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t list_item_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("list_item_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_item_create)->GetFunction());
-  ctx->Set(Nan::New("list_item_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_list_item_cast)->GetFunction());
+  Nan::Export(ctx, "list_item_create", wrap_list_item_create);
+  Nan::Export(ctx, "list_item_cast", wrap_list_item_cast);
 
  return RET_OK;
 }
@@ -15632,48 +14443,27 @@ static void wrap_hscroll_label_t_get_prop_text_w(const Nan::FunctionCallbackInfo
 }
 
 ret_t hscroll_label_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("hscroll_label_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_create)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_lull").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_lull)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_duration").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_duration)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_only_focus").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_only_focus)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_only_parent_focus").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_only_parent_focus)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_loop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_loop)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_yoyo").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_yoyo)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_ellipses").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_ellipses)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_set_xoffset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_set_xoffset)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_start").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_start)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_stop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_stop)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_cast)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_only_focus").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_only_focus)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_only_parent_focus").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_only_parent_focus)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_loop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_loop)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_yoyo").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_yoyo)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_ellipses").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_ellipses)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_lull").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_lull)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_duration").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_duration)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_xoffset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_xoffset)->GetFunction());
-  ctx->Set(Nan::New("hscroll_label_t_get_prop_text_w").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_hscroll_label_t_get_prop_text_w)->GetFunction());
+  Nan::Export(ctx, "hscroll_label_create", wrap_hscroll_label_create);
+  Nan::Export(ctx, "hscroll_label_set_lull", wrap_hscroll_label_set_lull);
+  Nan::Export(ctx, "hscroll_label_set_duration", wrap_hscroll_label_set_duration);
+  Nan::Export(ctx, "hscroll_label_set_only_focus", wrap_hscroll_label_set_only_focus);
+  Nan::Export(ctx, "hscroll_label_set_only_parent_focus", wrap_hscroll_label_set_only_parent_focus);
+  Nan::Export(ctx, "hscroll_label_set_loop", wrap_hscroll_label_set_loop);
+  Nan::Export(ctx, "hscroll_label_set_yoyo", wrap_hscroll_label_set_yoyo);
+  Nan::Export(ctx, "hscroll_label_set_ellipses", wrap_hscroll_label_set_ellipses);
+  Nan::Export(ctx, "hscroll_label_set_xoffset", wrap_hscroll_label_set_xoffset);
+  Nan::Export(ctx, "hscroll_label_start", wrap_hscroll_label_start);
+  Nan::Export(ctx, "hscroll_label_stop", wrap_hscroll_label_stop);
+  Nan::Export(ctx, "hscroll_label_cast", wrap_hscroll_label_cast);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_only_focus", wrap_hscroll_label_t_get_prop_only_focus);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_only_parent_focus", wrap_hscroll_label_t_get_prop_only_parent_focus);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_loop", wrap_hscroll_label_t_get_prop_loop);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_yoyo", wrap_hscroll_label_t_get_prop_yoyo);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_ellipses", wrap_hscroll_label_t_get_prop_ellipses);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_lull", wrap_hscroll_label_t_get_prop_lull);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_duration", wrap_hscroll_label_t_get_prop_duration);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_xoffset", wrap_hscroll_label_t_get_prop_xoffset);
+  Nan::Export(ctx, "hscroll_label_t_get_prop_text_w", wrap_hscroll_label_t_get_prop_text_w);
 
  return RET_OK;
 }
@@ -15747,16 +14537,11 @@ static void wrap_rich_text_t_get_prop_margin(const Nan::FunctionCallbackInfo<v8:
 }
 
 ret_t rich_text_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("rich_text_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rich_text_create)->GetFunction());
-  ctx->Set(Nan::New("rich_text_set_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rich_text_set_text)->GetFunction());
-  ctx->Set(Nan::New("rich_text_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rich_text_cast)->GetFunction());
-  ctx->Set(Nan::New("rich_text_t_get_prop_line_gap").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rich_text_t_get_prop_line_gap)->GetFunction());
-  ctx->Set(Nan::New("rich_text_t_get_prop_margin").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_rich_text_t_get_prop_margin)->GetFunction());
+  Nan::Export(ctx, "rich_text_create", wrap_rich_text_create);
+  Nan::Export(ctx, "rich_text_set_text", wrap_rich_text_set_text);
+  Nan::Export(ctx, "rich_text_cast", wrap_rich_text_cast);
+  Nan::Export(ctx, "rich_text_t_get_prop_line_gap", wrap_rich_text_t_get_prop_line_gap);
+  Nan::Export(ctx, "rich_text_t_get_prop_margin", wrap_rich_text_t_get_prop_margin);
 
  return RET_OK;
 }
@@ -15972,38 +14757,22 @@ static void wrap_progress_circle_t_get_prop_show_text(const Nan::FunctionCallbac
 }
 
 ret_t progress_circle_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("progress_circle_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_create)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_cast)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_set_value)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_set_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_set_max)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_set_line_width").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_set_line_width)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_set_start_angle").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_set_start_angle)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_set_unit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_set_unit)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_set_show_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_set_show_text)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_set_counter_clock_wise").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_set_counter_clock_wise)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_t_get_prop_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_t_get_prop_max)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_t_get_prop_start_angle").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_t_get_prop_start_angle)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_t_get_prop_line_width").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_t_get_prop_line_width)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_t_get_prop_unit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_t_get_prop_unit)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_t_get_prop_counter_clock_wise").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_t_get_prop_counter_clock_wise)->GetFunction());
-  ctx->Set(Nan::New("progress_circle_t_get_prop_show_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_circle_t_get_prop_show_text)->GetFunction());
+  Nan::Export(ctx, "progress_circle_create", wrap_progress_circle_create);
+  Nan::Export(ctx, "progress_circle_cast", wrap_progress_circle_cast);
+  Nan::Export(ctx, "progress_circle_set_value", wrap_progress_circle_set_value);
+  Nan::Export(ctx, "progress_circle_set_max", wrap_progress_circle_set_max);
+  Nan::Export(ctx, "progress_circle_set_line_width", wrap_progress_circle_set_line_width);
+  Nan::Export(ctx, "progress_circle_set_start_angle", wrap_progress_circle_set_start_angle);
+  Nan::Export(ctx, "progress_circle_set_unit", wrap_progress_circle_set_unit);
+  Nan::Export(ctx, "progress_circle_set_show_text", wrap_progress_circle_set_show_text);
+  Nan::Export(ctx, "progress_circle_set_counter_clock_wise", wrap_progress_circle_set_counter_clock_wise);
+  Nan::Export(ctx, "progress_circle_t_get_prop_value", wrap_progress_circle_t_get_prop_value);
+  Nan::Export(ctx, "progress_circle_t_get_prop_max", wrap_progress_circle_t_get_prop_max);
+  Nan::Export(ctx, "progress_circle_t_get_prop_start_angle", wrap_progress_circle_t_get_prop_start_angle);
+  Nan::Export(ctx, "progress_circle_t_get_prop_line_width", wrap_progress_circle_t_get_prop_line_width);
+  Nan::Export(ctx, "progress_circle_t_get_prop_unit", wrap_progress_circle_t_get_prop_unit);
+  Nan::Export(ctx, "progress_circle_t_get_prop_counter_clock_wise", wrap_progress_circle_t_get_prop_counter_clock_wise);
+  Nan::Export(ctx, "progress_circle_t_get_prop_show_text", wrap_progress_circle_t_get_prop_show_text);
 
  return RET_OK;
 }
@@ -16199,34 +14968,20 @@ static void wrap_mledit_t_get_prop_scroll_line(const Nan::FunctionCallbackInfo<v
 }
 
 ret_t mledit_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("mledit_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_create)->GetFunction());
-  ctx->Set(Nan::New("mledit_set_readonly").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_set_readonly)->GetFunction());
-  ctx->Set(Nan::New("mledit_set_focus").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_set_focus)->GetFunction());
-  ctx->Set(Nan::New("mledit_set_wrap_word").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_set_wrap_word)->GetFunction());
-  ctx->Set(Nan::New("mledit_set_max_lines").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_set_max_lines)->GetFunction());
-  ctx->Set(Nan::New("mledit_set_input_tips").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_set_input_tips)->GetFunction());
-  ctx->Set(Nan::New("mledit_set_cursor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_set_cursor)->GetFunction());
-  ctx->Set(Nan::New("mledit_set_scroll_line").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_set_scroll_line)->GetFunction());
-  ctx->Set(Nan::New("mledit_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_cast)->GetFunction());
-  ctx->Set(Nan::New("mledit_t_get_prop_readonly").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_t_get_prop_readonly)->GetFunction());
-  ctx->Set(Nan::New("mledit_t_get_prop_tips").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_t_get_prop_tips)->GetFunction());
-  ctx->Set(Nan::New("mledit_t_get_prop_wrap_word").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_t_get_prop_wrap_word)->GetFunction());
-  ctx->Set(Nan::New("mledit_t_get_prop_max_lines").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_t_get_prop_max_lines)->GetFunction());
-  ctx->Set(Nan::New("mledit_t_get_prop_scroll_line").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_mledit_t_get_prop_scroll_line)->GetFunction());
+  Nan::Export(ctx, "mledit_create", wrap_mledit_create);
+  Nan::Export(ctx, "mledit_set_readonly", wrap_mledit_set_readonly);
+  Nan::Export(ctx, "mledit_set_focus", wrap_mledit_set_focus);
+  Nan::Export(ctx, "mledit_set_wrap_word", wrap_mledit_set_wrap_word);
+  Nan::Export(ctx, "mledit_set_max_lines", wrap_mledit_set_max_lines);
+  Nan::Export(ctx, "mledit_set_input_tips", wrap_mledit_set_input_tips);
+  Nan::Export(ctx, "mledit_set_cursor", wrap_mledit_set_cursor);
+  Nan::Export(ctx, "mledit_set_scroll_line", wrap_mledit_set_scroll_line);
+  Nan::Export(ctx, "mledit_cast", wrap_mledit_cast);
+  Nan::Export(ctx, "mledit_t_get_prop_readonly", wrap_mledit_t_get_prop_readonly);
+  Nan::Export(ctx, "mledit_t_get_prop_tips", wrap_mledit_t_get_prop_tips);
+  Nan::Export(ctx, "mledit_t_get_prop_wrap_word", wrap_mledit_t_get_prop_wrap_word);
+  Nan::Export(ctx, "mledit_t_get_prop_max_lines", wrap_mledit_t_get_prop_max_lines);
+  Nan::Export(ctx, "mledit_t_get_prop_scroll_line", wrap_mledit_t_get_prop_scroll_line);
 
  return RET_OK;
 }
@@ -16324,18 +15079,12 @@ static void wrap_line_number_cast(const Nan::FunctionCallbackInfo<v8::Value>& ar
 }
 
 ret_t line_number_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("line_number_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_line_number_create)->GetFunction());
-  ctx->Set(Nan::New("line_number_set_top_margin").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_line_number_set_top_margin)->GetFunction());
-  ctx->Set(Nan::New("line_number_set_bottom_margin").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_line_number_set_bottom_margin)->GetFunction());
-  ctx->Set(Nan::New("line_number_set_line_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_line_number_set_line_height)->GetFunction());
-  ctx->Set(Nan::New("line_number_set_yoffset").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_line_number_set_yoffset)->GetFunction());
-  ctx->Set(Nan::New("line_number_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_line_number_cast)->GetFunction());
+  Nan::Export(ctx, "line_number_create", wrap_line_number_create);
+  Nan::Export(ctx, "line_number_set_top_margin", wrap_line_number_set_top_margin);
+  Nan::Export(ctx, "line_number_set_bottom_margin", wrap_line_number_set_bottom_margin);
+  Nan::Export(ctx, "line_number_set_line_height", wrap_line_number_set_line_height);
+  Nan::Export(ctx, "line_number_set_yoffset", wrap_line_number_set_yoffset);
+  Nan::Export(ctx, "line_number_cast", wrap_line_number_cast);
 
  return RET_OK;
 }
@@ -16454,22 +15203,14 @@ static void wrap_image_value_t_get_prop_value(const Nan::FunctionCallbackInfo<v8
 }
 
 ret_t image_value_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("image_value_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_create)->GetFunction());
-  ctx->Set(Nan::New("image_value_set_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_set_image)->GetFunction());
-  ctx->Set(Nan::New("image_value_set_format").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_set_format)->GetFunction());
-  ctx->Set(Nan::New("image_value_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_set_value)->GetFunction());
-  ctx->Set(Nan::New("image_value_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_cast)->GetFunction());
-  ctx->Set(Nan::New("image_value_t_get_prop_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_t_get_prop_image)->GetFunction());
-  ctx->Set(Nan::New("image_value_t_get_prop_format").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_t_get_prop_format)->GetFunction());
-  ctx->Set(Nan::New("image_value_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_value_t_get_prop_value)->GetFunction());
+  Nan::Export(ctx, "image_value_create", wrap_image_value_create);
+  Nan::Export(ctx, "image_value_set_image", wrap_image_value_set_image);
+  Nan::Export(ctx, "image_value_set_format", wrap_image_value_set_format);
+  Nan::Export(ctx, "image_value_set_value", wrap_image_value_set_value);
+  Nan::Export(ctx, "image_value_cast", wrap_image_value_cast);
+  Nan::Export(ctx, "image_value_t_get_prop_image", wrap_image_value_t_get_prop_image);
+  Nan::Export(ctx, "image_value_t_get_prop_format", wrap_image_value_t_get_prop_format);
+  Nan::Export(ctx, "image_value_t_get_prop_value", wrap_image_value_t_get_prop_value);
 
  return RET_OK;
 }
@@ -16808,56 +15549,31 @@ static void wrap_image_animation_t_get_prop_delay(const Nan::FunctionCallbackInf
 }
 
 ret_t image_animation_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("image_animation_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_create)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_loop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_loop)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_image)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_interval").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_interval)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_delay").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_delay)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_auto_play").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_auto_play)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_sequence").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_sequence)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_range_sequence").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_range_sequence)->GetFunction());
-  ctx->Set(Nan::New("image_animation_play").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_play)->GetFunction());
-  ctx->Set(Nan::New("image_animation_stop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_stop)->GetFunction());
-  ctx->Set(Nan::New("image_animation_pause").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_pause)->GetFunction());
-  ctx->Set(Nan::New("image_animation_next").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_next)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_format").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_format)->GetFunction());
-  ctx->Set(Nan::New("image_animation_set_unload_after_paint").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_set_unload_after_paint)->GetFunction());
-  ctx->Set(Nan::New("image_animation_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_cast)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_image)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_sequence").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_sequence)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_start_index").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_start_index)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_end_index").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_end_index)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_loop").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_loop)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_auto_play").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_auto_play)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_unload_after_paint").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_unload_after_paint)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_format").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_format)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_interval").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_interval)->GetFunction());
-  ctx->Set(Nan::New("image_animation_t_get_prop_delay").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_animation_t_get_prop_delay)->GetFunction());
+  Nan::Export(ctx, "image_animation_create", wrap_image_animation_create);
+  Nan::Export(ctx, "image_animation_set_loop", wrap_image_animation_set_loop);
+  Nan::Export(ctx, "image_animation_set_image", wrap_image_animation_set_image);
+  Nan::Export(ctx, "image_animation_set_interval", wrap_image_animation_set_interval);
+  Nan::Export(ctx, "image_animation_set_delay", wrap_image_animation_set_delay);
+  Nan::Export(ctx, "image_animation_set_auto_play", wrap_image_animation_set_auto_play);
+  Nan::Export(ctx, "image_animation_set_sequence", wrap_image_animation_set_sequence);
+  Nan::Export(ctx, "image_animation_set_range_sequence", wrap_image_animation_set_range_sequence);
+  Nan::Export(ctx, "image_animation_play", wrap_image_animation_play);
+  Nan::Export(ctx, "image_animation_stop", wrap_image_animation_stop);
+  Nan::Export(ctx, "image_animation_pause", wrap_image_animation_pause);
+  Nan::Export(ctx, "image_animation_next", wrap_image_animation_next);
+  Nan::Export(ctx, "image_animation_set_format", wrap_image_animation_set_format);
+  Nan::Export(ctx, "image_animation_set_unload_after_paint", wrap_image_animation_set_unload_after_paint);
+  Nan::Export(ctx, "image_animation_cast", wrap_image_animation_cast);
+  Nan::Export(ctx, "image_animation_t_get_prop_image", wrap_image_animation_t_get_prop_image);
+  Nan::Export(ctx, "image_animation_t_get_prop_sequence", wrap_image_animation_t_get_prop_sequence);
+  Nan::Export(ctx, "image_animation_t_get_prop_start_index", wrap_image_animation_t_get_prop_start_index);
+  Nan::Export(ctx, "image_animation_t_get_prop_end_index", wrap_image_animation_t_get_prop_end_index);
+  Nan::Export(ctx, "image_animation_t_get_prop_loop", wrap_image_animation_t_get_prop_loop);
+  Nan::Export(ctx, "image_animation_t_get_prop_auto_play", wrap_image_animation_t_get_prop_auto_play);
+  Nan::Export(ctx, "image_animation_t_get_prop_unload_after_paint", wrap_image_animation_t_get_prop_unload_after_paint);
+  Nan::Export(ctx, "image_animation_t_get_prop_format", wrap_image_animation_t_get_prop_format);
+  Nan::Export(ctx, "image_animation_t_get_prop_interval", wrap_image_animation_t_get_prop_interval);
+  Nan::Export(ctx, "image_animation_t_get_prop_delay", wrap_image_animation_t_get_prop_delay);
 
  return RET_OK;
 }
@@ -16948,18 +15664,12 @@ static void wrap_guage_t_get_prop_draw_type(const Nan::FunctionCallbackInfo<v8::
 }
 
 ret_t guage_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("guage_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_create)->GetFunction());
-  ctx->Set(Nan::New("guage_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_cast)->GetFunction());
-  ctx->Set(Nan::New("guage_set_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_set_image)->GetFunction());
-  ctx->Set(Nan::New("guage_set_draw_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_set_draw_type)->GetFunction());
-  ctx->Set(Nan::New("guage_t_get_prop_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_t_get_prop_image)->GetFunction());
-  ctx->Set(Nan::New("guage_t_get_prop_draw_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_t_get_prop_draw_type)->GetFunction());
+  Nan::Export(ctx, "guage_create", wrap_guage_create);
+  Nan::Export(ctx, "guage_cast", wrap_guage_cast);
+  Nan::Export(ctx, "guage_set_image", wrap_guage_set_image);
+  Nan::Export(ctx, "guage_set_draw_type", wrap_guage_set_draw_type);
+  Nan::Export(ctx, "guage_t_get_prop_image", wrap_guage_t_get_prop_image);
+  Nan::Export(ctx, "guage_t_get_prop_draw_type", wrap_guage_t_get_prop_draw_type);
 
  return RET_OK;
 }
@@ -17088,24 +15798,15 @@ static void wrap_guage_pointer_t_get_prop_anchor_y(const Nan::FunctionCallbackIn
 }
 
 ret_t guage_pointer_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("guage_pointer_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_create)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_cast)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_set_angle").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_set_angle)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_set_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_set_image)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_set_anchor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_set_anchor)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_t_get_prop_angle").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_t_get_prop_angle)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_t_get_prop_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_t_get_prop_image)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_t_get_prop_anchor_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_t_get_prop_anchor_x)->GetFunction());
-  ctx->Set(Nan::New("guage_pointer_t_get_prop_anchor_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_guage_pointer_t_get_prop_anchor_y)->GetFunction());
+  Nan::Export(ctx, "guage_pointer_create", wrap_guage_pointer_create);
+  Nan::Export(ctx, "guage_pointer_cast", wrap_guage_pointer_cast);
+  Nan::Export(ctx, "guage_pointer_set_angle", wrap_guage_pointer_set_angle);
+  Nan::Export(ctx, "guage_pointer_set_image", wrap_guage_pointer_set_image);
+  Nan::Export(ctx, "guage_pointer_set_anchor", wrap_guage_pointer_set_anchor);
+  Nan::Export(ctx, "guage_pointer_t_get_prop_angle", wrap_guage_pointer_t_get_prop_angle);
+  Nan::Export(ctx, "guage_pointer_t_get_prop_image", wrap_guage_pointer_t_get_prop_image);
+  Nan::Export(ctx, "guage_pointer_t_get_prop_anchor_x", wrap_guage_pointer_t_get_prop_anchor_x);
+  Nan::Export(ctx, "guage_pointer_t_get_prop_anchor_y", wrap_guage_pointer_t_get_prop_anchor_y);
 
  return RET_OK;
 }
@@ -17318,38 +16019,22 @@ static void wrap_draggable_t_get_prop_drag_window(const Nan::FunctionCallbackInf
 }
 
 ret_t draggable_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("draggable_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_create)->GetFunction());
-  ctx->Set(Nan::New("draggable_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_cast)->GetFunction());
-  ctx->Set(Nan::New("draggable_set_top").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_set_top)->GetFunction());
-  ctx->Set(Nan::New("draggable_set_bottom").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_set_bottom)->GetFunction());
-  ctx->Set(Nan::New("draggable_set_left").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_set_left)->GetFunction());
-  ctx->Set(Nan::New("draggable_set_right").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_set_right)->GetFunction());
-  ctx->Set(Nan::New("draggable_set_vertical_only").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_set_vertical_only)->GetFunction());
-  ctx->Set(Nan::New("draggable_set_horizontal_only").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_set_horizontal_only)->GetFunction());
-  ctx->Set(Nan::New("draggable_set_drag_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_set_drag_window)->GetFunction());
-  ctx->Set(Nan::New("draggable_t_get_prop_top").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_t_get_prop_top)->GetFunction());
-  ctx->Set(Nan::New("draggable_t_get_prop_bottom").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_t_get_prop_bottom)->GetFunction());
-  ctx->Set(Nan::New("draggable_t_get_prop_left").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_t_get_prop_left)->GetFunction());
-  ctx->Set(Nan::New("draggable_t_get_prop_right").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_t_get_prop_right)->GetFunction());
-  ctx->Set(Nan::New("draggable_t_get_prop_vertical_only").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_t_get_prop_vertical_only)->GetFunction());
-  ctx->Set(Nan::New("draggable_t_get_prop_horizontal_only").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_t_get_prop_horizontal_only)->GetFunction());
-  ctx->Set(Nan::New("draggable_t_get_prop_drag_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_draggable_t_get_prop_drag_window)->GetFunction());
+  Nan::Export(ctx, "draggable_create", wrap_draggable_create);
+  Nan::Export(ctx, "draggable_cast", wrap_draggable_cast);
+  Nan::Export(ctx, "draggable_set_top", wrap_draggable_set_top);
+  Nan::Export(ctx, "draggable_set_bottom", wrap_draggable_set_bottom);
+  Nan::Export(ctx, "draggable_set_left", wrap_draggable_set_left);
+  Nan::Export(ctx, "draggable_set_right", wrap_draggable_set_right);
+  Nan::Export(ctx, "draggable_set_vertical_only", wrap_draggable_set_vertical_only);
+  Nan::Export(ctx, "draggable_set_horizontal_only", wrap_draggable_set_horizontal_only);
+  Nan::Export(ctx, "draggable_set_drag_window", wrap_draggable_set_drag_window);
+  Nan::Export(ctx, "draggable_t_get_prop_top", wrap_draggable_t_get_prop_top);
+  Nan::Export(ctx, "draggable_t_get_prop_bottom", wrap_draggable_t_get_prop_bottom);
+  Nan::Export(ctx, "draggable_t_get_prop_left", wrap_draggable_t_get_prop_left);
+  Nan::Export(ctx, "draggable_t_get_prop_right", wrap_draggable_t_get_prop_right);
+  Nan::Export(ctx, "draggable_t_get_prop_vertical_only", wrap_draggable_t_get_prop_vertical_only);
+  Nan::Export(ctx, "draggable_t_get_prop_horizontal_only", wrap_draggable_t_get_prop_horizontal_only);
+  Nan::Export(ctx, "draggable_t_get_prop_drag_window", wrap_draggable_t_get_prop_drag_window);
 
  return RET_OK;
 }
@@ -17415,14 +16100,10 @@ static void wrap_color_picker_t_get_prop_value(const Nan::FunctionCallbackInfo<v
 }
 
 ret_t color_picker_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("color_picker_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_picker_create)->GetFunction());
-  ctx->Set(Nan::New("color_picker_set_color").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_picker_set_color)->GetFunction());
-  ctx->Set(Nan::New("color_picker_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_picker_cast)->GetFunction());
-  ctx->Set(Nan::New("color_picker_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_picker_t_get_prop_value)->GetFunction());
+  Nan::Export(ctx, "color_picker_create", wrap_color_picker_create);
+  Nan::Export(ctx, "color_picker_set_color", wrap_color_picker_set_color);
+  Nan::Export(ctx, "color_picker_cast", wrap_color_picker_cast);
+  Nan::Export(ctx, "color_picker_t_get_prop_value", wrap_color_picker_t_get_prop_value);
 
  return RET_OK;
 }
@@ -17442,8 +16123,7 @@ static void wrap_color_component_cast(const Nan::FunctionCallbackInfo<v8::Value>
 }
 
 ret_t color_component_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("color_component_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_component_cast)->GetFunction());
+  Nan::Export(ctx, "color_component_cast", wrap_color_component_cast);
 
  return RET_OK;
 }
@@ -17650,34 +16330,20 @@ static void wrap_window_manager_back_to(const Nan::FunctionCallbackInfo<v8::Valu
 }
 
 ret_t window_manager_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("window_manager").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager)->GetFunction());
-  ctx->Set(Nan::New("window_manager_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_cast)->GetFunction());
-  ctx->Set(Nan::New("window_manager_get_top_main_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_get_top_main_window)->GetFunction());
-  ctx->Set(Nan::New("window_manager_get_top_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_get_top_window)->GetFunction());
-  ctx->Set(Nan::New("window_manager_get_prev_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_get_prev_window)->GetFunction());
-  ctx->Set(Nan::New("window_manager_get_pointer_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_get_pointer_x)->GetFunction());
-  ctx->Set(Nan::New("window_manager_get_pointer_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_get_pointer_y)->GetFunction());
-  ctx->Set(Nan::New("window_manager_get_pointer_pressed").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_get_pointer_pressed)->GetFunction());
-  ctx->Set(Nan::New("window_manager_set_show_fps").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_set_show_fps)->GetFunction());
-  ctx->Set(Nan::New("window_manager_set_screen_saver_time").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_set_screen_saver_time)->GetFunction());
-  ctx->Set(Nan::New("window_manager_set_cursor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_set_cursor)->GetFunction());
-  ctx->Set(Nan::New("window_manager_back").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_back)->GetFunction());
-  ctx->Set(Nan::New("window_manager_back_to_home").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_back_to_home)->GetFunction());
-  ctx->Set(Nan::New("window_manager_back_to").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_manager_back_to)->GetFunction());
+  Nan::Export(ctx, "window_manager", wrap_window_manager);
+  Nan::Export(ctx, "window_manager_cast", wrap_window_manager_cast);
+  Nan::Export(ctx, "window_manager_get_top_main_window", wrap_window_manager_get_top_main_window);
+  Nan::Export(ctx, "window_manager_get_top_window", wrap_window_manager_get_top_window);
+  Nan::Export(ctx, "window_manager_get_prev_window", wrap_window_manager_get_prev_window);
+  Nan::Export(ctx, "window_manager_get_pointer_x", wrap_window_manager_get_pointer_x);
+  Nan::Export(ctx, "window_manager_get_pointer_y", wrap_window_manager_get_pointer_y);
+  Nan::Export(ctx, "window_manager_get_pointer_pressed", wrap_window_manager_get_pointer_pressed);
+  Nan::Export(ctx, "window_manager_set_show_fps", wrap_window_manager_set_show_fps);
+  Nan::Export(ctx, "window_manager_set_screen_saver_time", wrap_window_manager_set_screen_saver_time);
+  Nan::Export(ctx, "window_manager_set_cursor", wrap_window_manager_set_cursor);
+  Nan::Export(ctx, "window_manager_back", wrap_window_manager_back);
+  Nan::Export(ctx, "window_manager_back_to_home", wrap_window_manager_back_to_home);
+  Nan::Export(ctx, "window_manager_back_to", wrap_window_manager_back_to);
 
  return RET_OK;
 }
@@ -17719,12 +16385,9 @@ static void wrap_window_base_t_get_prop_closable(const Nan::FunctionCallbackInfo
 }
 
 ret_t window_base_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("window_base_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_base_cast)->GetFunction());
-  ctx->Set(Nan::New("window_base_t_get_prop_theme").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_base_t_get_prop_theme)->GetFunction());
-  ctx->Set(Nan::New("window_base_t_get_prop_closable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_base_t_get_prop_closable)->GetFunction());
+  Nan::Export(ctx, "window_base_cast", wrap_window_base_cast);
+  Nan::Export(ctx, "window_base_t_get_prop_theme", wrap_window_base_t_get_prop_theme);
+  Nan::Export(ctx, "window_base_t_get_prop_closable", wrap_window_base_t_get_prop_closable);
 
  return RET_OK;
 }
@@ -17806,16 +16469,11 @@ static void wrap_style_mutable_t_get_prop_name(const Nan::FunctionCallbackInfo<v
 }
 
 ret_t style_mutable_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("style_mutable_set_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_mutable_set_name)->GetFunction());
-  ctx->Set(Nan::New("style_mutable_set_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_mutable_set_int)->GetFunction());
-  ctx->Set(Nan::New("style_mutable_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_mutable_cast)->GetFunction());
-  ctx->Set(Nan::New("style_mutable_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_mutable_create)->GetFunction());
-  ctx->Set(Nan::New("style_mutable_t_get_prop_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_style_mutable_t_get_prop_name)->GetFunction());
+  Nan::Export(ctx, "style_mutable_set_name", wrap_style_mutable_set_name);
+  Nan::Export(ctx, "style_mutable_set_int", wrap_style_mutable_set_int);
+  Nan::Export(ctx, "style_mutable_cast", wrap_style_mutable_cast);
+  Nan::Export(ctx, "style_mutable_create", wrap_style_mutable_create);
+  Nan::Export(ctx, "style_mutable_t_get_prop_name", wrap_style_mutable_t_get_prop_name);
 
  return RET_OK;
 }
@@ -18035,40 +16693,23 @@ static void wrap_image_base_t_get_prop_selected(const Nan::FunctionCallbackInfo<
 }
 
 ret_t image_base_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("image_base_set_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_set_image)->GetFunction());
-  ctx->Set(Nan::New("image_base_set_rotation").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_set_rotation)->GetFunction());
-  ctx->Set(Nan::New("image_base_set_scale").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_set_scale)->GetFunction());
-  ctx->Set(Nan::New("image_base_set_anchor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_set_anchor)->GetFunction());
-  ctx->Set(Nan::New("image_base_set_selected").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_set_selected)->GetFunction());
-  ctx->Set(Nan::New("image_base_set_selectable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_set_selectable)->GetFunction());
-  ctx->Set(Nan::New("image_base_set_clickable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_set_clickable)->GetFunction());
-  ctx->Set(Nan::New("image_base_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_cast)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_image)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_anchor_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_anchor_x)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_anchor_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_anchor_y)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_scale_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_scale_x)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_scale_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_scale_y)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_rotation").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_rotation)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_clickable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_clickable)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_selectable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_selectable)->GetFunction());
-  ctx->Set(Nan::New("image_base_t_get_prop_selected").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_base_t_get_prop_selected)->GetFunction());
+  Nan::Export(ctx, "image_base_set_image", wrap_image_base_set_image);
+  Nan::Export(ctx, "image_base_set_rotation", wrap_image_base_set_rotation);
+  Nan::Export(ctx, "image_base_set_scale", wrap_image_base_set_scale);
+  Nan::Export(ctx, "image_base_set_anchor", wrap_image_base_set_anchor);
+  Nan::Export(ctx, "image_base_set_selected", wrap_image_base_set_selected);
+  Nan::Export(ctx, "image_base_set_selectable", wrap_image_base_set_selectable);
+  Nan::Export(ctx, "image_base_set_clickable", wrap_image_base_set_clickable);
+  Nan::Export(ctx, "image_base_cast", wrap_image_base_cast);
+  Nan::Export(ctx, "image_base_t_get_prop_image", wrap_image_base_t_get_prop_image);
+  Nan::Export(ctx, "image_base_t_get_prop_anchor_x", wrap_image_base_t_get_prop_anchor_x);
+  Nan::Export(ctx, "image_base_t_get_prop_anchor_y", wrap_image_base_t_get_prop_anchor_y);
+  Nan::Export(ctx, "image_base_t_get_prop_scale_x", wrap_image_base_t_get_prop_scale_x);
+  Nan::Export(ctx, "image_base_t_get_prop_scale_y", wrap_image_base_t_get_prop_scale_y);
+  Nan::Export(ctx, "image_base_t_get_prop_rotation", wrap_image_base_t_get_prop_rotation);
+  Nan::Export(ctx, "image_base_t_get_prop_clickable", wrap_image_base_t_get_prop_clickable);
+  Nan::Export(ctx, "image_base_t_get_prop_selectable", wrap_image_base_t_get_prop_selectable);
+  Nan::Export(ctx, "image_base_t_get_prop_selected", wrap_image_base_t_get_prop_selected);
 
  return RET_OK;
 }
@@ -18098,10 +16739,8 @@ static void wrap_window_event_t_get_prop_window(const Nan::FunctionCallbackInfo<
 }
 
 ret_t window_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("window_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_event_cast)->GetFunction());
-  ctx->Set(Nan::New("window_event_t_get_prop_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_event_t_get_prop_window)->GetFunction());
+  Nan::Export(ctx, "window_event_cast", wrap_window_event_cast);
+  Nan::Export(ctx, "window_event_t_get_prop_window", wrap_window_event_t_get_prop_window);
 
  return RET_OK;
 }
@@ -18131,10 +16770,8 @@ static void wrap_paint_event_t_get_prop_c(const Nan::FunctionCallbackInfo<v8::Va
 }
 
 ret_t paint_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("paint_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_paint_event_cast)->GetFunction());
-  ctx->Set(Nan::New("paint_event_t_get_prop_c").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_paint_event_t_get_prop_c)->GetFunction());
+  Nan::Export(ctx, "paint_event_cast", wrap_paint_event_cast);
+  Nan::Export(ctx, "paint_event_t_get_prop_c", wrap_paint_event_t_get_prop_c);
 
  return RET_OK;
 }
@@ -18284,34 +16921,20 @@ static void wrap_key_event_t_get_prop_capslock(const Nan::FunctionCallbackInfo<v
 }
 
 ret_t key_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("key_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_cast)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_key").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_key)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_alt").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_alt)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_lalt").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_lalt)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_ralt").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_ralt)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_ctrl").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_ctrl)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_lctrl").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_lctrl)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_rctrl").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_rctrl)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_shift").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_shift)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_lshift").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_lshift)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_rshift").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_rshift)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_cmd").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_cmd)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_menu").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_menu)->GetFunction());
-  ctx->Set(Nan::New("key_event_t_get_prop_capslock").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_key_event_t_get_prop_capslock)->GetFunction());
+  Nan::Export(ctx, "key_event_cast", wrap_key_event_cast);
+  Nan::Export(ctx, "key_event_t_get_prop_key", wrap_key_event_t_get_prop_key);
+  Nan::Export(ctx, "key_event_t_get_prop_alt", wrap_key_event_t_get_prop_alt);
+  Nan::Export(ctx, "key_event_t_get_prop_lalt", wrap_key_event_t_get_prop_lalt);
+  Nan::Export(ctx, "key_event_t_get_prop_ralt", wrap_key_event_t_get_prop_ralt);
+  Nan::Export(ctx, "key_event_t_get_prop_ctrl", wrap_key_event_t_get_prop_ctrl);
+  Nan::Export(ctx, "key_event_t_get_prop_lctrl", wrap_key_event_t_get_prop_lctrl);
+  Nan::Export(ctx, "key_event_t_get_prop_rctrl", wrap_key_event_t_get_prop_rctrl);
+  Nan::Export(ctx, "key_event_t_get_prop_shift", wrap_key_event_t_get_prop_shift);
+  Nan::Export(ctx, "key_event_t_get_prop_lshift", wrap_key_event_t_get_prop_lshift);
+  Nan::Export(ctx, "key_event_t_get_prop_rshift", wrap_key_event_t_get_prop_rshift);
+  Nan::Export(ctx, "key_event_t_get_prop_cmd", wrap_key_event_t_get_prop_cmd);
+  Nan::Export(ctx, "key_event_t_get_prop_menu", wrap_key_event_t_get_prop_menu);
+  Nan::Export(ctx, "key_event_t_get_prop_capslock", wrap_key_event_t_get_prop_capslock);
 
  return RET_OK;
 }
@@ -18421,26 +17044,16 @@ static void wrap_pointer_event_t_get_prop_shift(const Nan::FunctionCallbackInfo<
 }
 
 ret_t pointer_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("pointer_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_cast)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_x").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_x)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_y").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_y)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_button").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_button)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_pressed").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_pressed)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_alt").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_alt)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_ctrl").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_ctrl)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_cmd").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_cmd)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_menu").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_menu)->GetFunction());
-  ctx->Set(Nan::New("pointer_event_t_get_prop_shift").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pointer_event_t_get_prop_shift)->GetFunction());
+  Nan::Export(ctx, "pointer_event_cast", wrap_pointer_event_cast);
+  Nan::Export(ctx, "pointer_event_t_get_prop_x", wrap_pointer_event_t_get_prop_x);
+  Nan::Export(ctx, "pointer_event_t_get_prop_y", wrap_pointer_event_t_get_prop_y);
+  Nan::Export(ctx, "pointer_event_t_get_prop_button", wrap_pointer_event_t_get_prop_button);
+  Nan::Export(ctx, "pointer_event_t_get_prop_pressed", wrap_pointer_event_t_get_prop_pressed);
+  Nan::Export(ctx, "pointer_event_t_get_prop_alt", wrap_pointer_event_t_get_prop_alt);
+  Nan::Export(ctx, "pointer_event_t_get_prop_ctrl", wrap_pointer_event_t_get_prop_ctrl);
+  Nan::Export(ctx, "pointer_event_t_get_prop_cmd", wrap_pointer_event_t_get_prop_cmd);
+  Nan::Export(ctx, "pointer_event_t_get_prop_menu", wrap_pointer_event_t_get_prop_menu);
+  Nan::Export(ctx, "pointer_event_t_get_prop_shift", wrap_pointer_event_t_get_prop_shift);
 
  return RET_OK;
 }
@@ -18470,10 +17083,8 @@ static void wrap_orientation_event_t_get_prop_orientation(const Nan::FunctionCal
 }
 
 ret_t orientation_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("orientation_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_orientation_event_cast)->GetFunction());
-  ctx->Set(Nan::New("orientation_event_t_get_prop_orientation").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_orientation_event_t_get_prop_orientation)->GetFunction());
+  Nan::Export(ctx, "orientation_event_cast", wrap_orientation_event_cast);
+  Nan::Export(ctx, "orientation_event_t_get_prop_orientation", wrap_orientation_event_t_get_prop_orientation);
 
  return RET_OK;
 }
@@ -18533,16 +17144,11 @@ static void wrap_wheel_event_t_get_prop_shift(const Nan::FunctionCallbackInfo<v8
 }
 
 ret_t wheel_event_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("wheel_event_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_wheel_event_cast)->GetFunction());
-  ctx->Set(Nan::New("wheel_event_t_get_prop_dy").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_wheel_event_t_get_prop_dy)->GetFunction());
-  ctx->Set(Nan::New("wheel_event_t_get_prop_alt").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_wheel_event_t_get_prop_alt)->GetFunction());
-  ctx->Set(Nan::New("wheel_event_t_get_prop_ctrl").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_wheel_event_t_get_prop_ctrl)->GetFunction());
-  ctx->Set(Nan::New("wheel_event_t_get_prop_shift").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_wheel_event_t_get_prop_shift)->GetFunction());
+  Nan::Export(ctx, "wheel_event_cast", wrap_wheel_event_cast);
+  Nan::Export(ctx, "wheel_event_t_get_prop_dy", wrap_wheel_event_t_get_prop_dy);
+  Nan::Export(ctx, "wheel_event_t_get_prop_alt", wrap_wheel_event_t_get_prop_alt);
+  Nan::Export(ctx, "wheel_event_t_get_prop_ctrl", wrap_wheel_event_t_get_prop_ctrl);
+  Nan::Export(ctx, "wheel_event_t_get_prop_shift", wrap_wheel_event_t_get_prop_shift);
 
  return RET_OK;
 }
@@ -18580,10 +17186,8 @@ static void wrap_app_bar_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 }
 
 ret_t app_bar_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("app_bar_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_app_bar_create)->GetFunction());
-  ctx->Set(Nan::New("app_bar_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_app_bar_cast)->GetFunction());
+  Nan::Export(ctx, "app_bar_create", wrap_app_bar_create);
+  Nan::Export(ctx, "app_bar_cast", wrap_app_bar_cast);
 
  return RET_OK;
 }
@@ -18621,10 +17225,8 @@ static void wrap_button_group_cast(const Nan::FunctionCallbackInfo<v8::Value>& a
 }
 
 ret_t button_group_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("button_group_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_group_create)->GetFunction());
-  ctx->Set(Nan::New("button_group_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_group_cast)->GetFunction());
+  Nan::Export(ctx, "button_group_create", wrap_button_group_create);
+  Nan::Export(ctx, "button_group_cast", wrap_button_group_cast);
 
  return RET_OK;
 }
@@ -18712,18 +17314,12 @@ static void wrap_button_t_get_prop_enable_long_press(const Nan::FunctionCallback
 }
 
 ret_t button_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("button_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_create)->GetFunction());
-  ctx->Set(Nan::New("button_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_cast)->GetFunction());
-  ctx->Set(Nan::New("button_set_repeat").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_set_repeat)->GetFunction());
-  ctx->Set(Nan::New("button_set_enable_long_press").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_set_enable_long_press)->GetFunction());
-  ctx->Set(Nan::New("button_t_get_prop_repeat").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_t_get_prop_repeat)->GetFunction());
-  ctx->Set(Nan::New("button_t_get_prop_enable_long_press").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_button_t_get_prop_enable_long_press)->GetFunction());
+  Nan::Export(ctx, "button_create", wrap_button_create);
+  Nan::Export(ctx, "button_cast", wrap_button_cast);
+  Nan::Export(ctx, "button_set_repeat", wrap_button_set_repeat);
+  Nan::Export(ctx, "button_set_enable_long_press", wrap_button_set_enable_long_press);
+  Nan::Export(ctx, "button_t_get_prop_repeat", wrap_button_t_get_prop_repeat);
+  Nan::Export(ctx, "button_t_get_prop_enable_long_press", wrap_button_t_get_prop_enable_long_press);
 
  return RET_OK;
 }
@@ -18804,16 +17400,11 @@ static void wrap_check_button_t_get_prop_value(const Nan::FunctionCallbackInfo<v
 }
 
 ret_t check_button_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("check_button_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_check_button_create)->GetFunction());
-  ctx->Set(Nan::New("check_button_create_radio").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_check_button_create_radio)->GetFunction());
-  ctx->Set(Nan::New("check_button_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_check_button_set_value)->GetFunction());
-  ctx->Set(Nan::New("check_button_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_check_button_cast)->GetFunction());
-  ctx->Set(Nan::New("check_button_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_check_button_t_get_prop_value)->GetFunction());
+  Nan::Export(ctx, "check_button_create", wrap_check_button_create);
+  Nan::Export(ctx, "check_button_create_radio", wrap_check_button_create_radio);
+  Nan::Export(ctx, "check_button_set_value", wrap_check_button_set_value);
+  Nan::Export(ctx, "check_button_cast", wrap_check_button_cast);
+  Nan::Export(ctx, "check_button_t_get_prop_value", wrap_check_button_t_get_prop_value);
 
  return RET_OK;
 }
@@ -18851,10 +17442,8 @@ static void wrap_clip_view_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t clip_view_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("clip_view_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_clip_view_create)->GetFunction());
-  ctx->Set(Nan::New("clip_view_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_clip_view_cast)->GetFunction());
+  Nan::Export(ctx, "clip_view_create", wrap_clip_view_create);
+  Nan::Export(ctx, "clip_view_cast", wrap_clip_view_cast);
 
  return RET_OK;
 }
@@ -18932,16 +17521,11 @@ static void wrap_color_tile_t_get_prop_border_color(const Nan::FunctionCallbackI
 }
 
 ret_t color_tile_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("color_tile_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_tile_create)->GetFunction());
-  ctx->Set(Nan::New("color_tile_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_tile_cast)->GetFunction());
-  ctx->Set(Nan::New("color_tile_set_bg_color").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_tile_set_bg_color)->GetFunction());
-  ctx->Set(Nan::New("color_tile_t_get_prop_bg_color").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_tile_t_get_prop_bg_color)->GetFunction());
-  ctx->Set(Nan::New("color_tile_t_get_prop_border_color").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_color_tile_t_get_prop_border_color)->GetFunction());
+  Nan::Export(ctx, "color_tile_create", wrap_color_tile_create);
+  Nan::Export(ctx, "color_tile_cast", wrap_color_tile_cast);
+  Nan::Export(ctx, "color_tile_set_bg_color", wrap_color_tile_set_bg_color);
+  Nan::Export(ctx, "color_tile_t_get_prop_bg_color", wrap_color_tile_t_get_prop_bg_color);
+  Nan::Export(ctx, "color_tile_t_get_prop_border_color", wrap_color_tile_t_get_prop_border_color);
 
  return RET_OK;
 }
@@ -18979,10 +17563,8 @@ static void wrap_column_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t column_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("column_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_column_create)->GetFunction());
-  ctx->Set(Nan::New("column_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_column_cast)->GetFunction());
+  Nan::Export(ctx, "column_create", wrap_column_create);
+  Nan::Export(ctx, "column_cast", wrap_column_cast);
 
  return RET_OK;
 }
@@ -19070,18 +17652,12 @@ static void wrap_combo_box_item_t_get_prop_checked(const Nan::FunctionCallbackIn
 }
 
 ret_t combo_box_item_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("combo_box_item_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_item_create)->GetFunction());
-  ctx->Set(Nan::New("combo_box_item_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_item_cast)->GetFunction());
-  ctx->Set(Nan::New("combo_box_item_set_checked").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_item_set_checked)->GetFunction());
-  ctx->Set(Nan::New("combo_box_item_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_item_set_value)->GetFunction());
-  ctx->Set(Nan::New("combo_box_item_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_item_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("combo_box_item_t_get_prop_checked").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_item_t_get_prop_checked)->GetFunction());
+  Nan::Export(ctx, "combo_box_item_create", wrap_combo_box_item_create);
+  Nan::Export(ctx, "combo_box_item_cast", wrap_combo_box_item_cast);
+  Nan::Export(ctx, "combo_box_item_set_checked", wrap_combo_box_item_set_checked);
+  Nan::Export(ctx, "combo_box_item_set_value", wrap_combo_box_item_set_value);
+  Nan::Export(ctx, "combo_box_item_t_get_prop_value", wrap_combo_box_item_t_get_prop_value);
+  Nan::Export(ctx, "combo_box_item_t_get_prop_checked", wrap_combo_box_item_t_get_prop_checked);
 
  return RET_OK;
 }
@@ -19350,44 +17926,25 @@ static void wrap_combo_box_t_get_prop_item_height(const Nan::FunctionCallbackInf
 }
 
 ret_t combo_box_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("combo_box_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_create)->GetFunction());
-  ctx->Set(Nan::New("combo_box_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_cast)->GetFunction());
-  ctx->Set(Nan::New("combo_box_set_open_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_set_open_window)->GetFunction());
-  ctx->Set(Nan::New("combo_box_reset_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_reset_options)->GetFunction());
-  ctx->Set(Nan::New("combo_box_count_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_count_options)->GetFunction());
-  ctx->Set(Nan::New("combo_box_set_selected_index").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_set_selected_index)->GetFunction());
-  ctx->Set(Nan::New("combo_box_set_localize_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_set_localize_options)->GetFunction());
-  ctx->Set(Nan::New("combo_box_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_set_value)->GetFunction());
-  ctx->Set(Nan::New("combo_box_set_item_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_set_item_height)->GetFunction());
-  ctx->Set(Nan::New("combo_box_append_option").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_append_option)->GetFunction());
-  ctx->Set(Nan::New("combo_box_set_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_set_options)->GetFunction());
-  ctx->Set(Nan::New("combo_box_get_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_get_value)->GetFunction());
-  ctx->Set(Nan::New("combo_box_get_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_get_text)->GetFunction());
-  ctx->Set(Nan::New("combo_box_t_get_prop_open_window").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_t_get_prop_open_window)->GetFunction());
-  ctx->Set(Nan::New("combo_box_t_get_prop_selected_index").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_t_get_prop_selected_index)->GetFunction());
-  ctx->Set(Nan::New("combo_box_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("combo_box_t_get_prop_localize_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_t_get_prop_localize_options)->GetFunction());
-  ctx->Set(Nan::New("combo_box_t_get_prop_options").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_t_get_prop_options)->GetFunction());
-  ctx->Set(Nan::New("combo_box_t_get_prop_item_height").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_t_get_prop_item_height)->GetFunction());
+  Nan::Export(ctx, "combo_box_create", wrap_combo_box_create);
+  Nan::Export(ctx, "combo_box_cast", wrap_combo_box_cast);
+  Nan::Export(ctx, "combo_box_set_open_window", wrap_combo_box_set_open_window);
+  Nan::Export(ctx, "combo_box_reset_options", wrap_combo_box_reset_options);
+  Nan::Export(ctx, "combo_box_count_options", wrap_combo_box_count_options);
+  Nan::Export(ctx, "combo_box_set_selected_index", wrap_combo_box_set_selected_index);
+  Nan::Export(ctx, "combo_box_set_localize_options", wrap_combo_box_set_localize_options);
+  Nan::Export(ctx, "combo_box_set_value", wrap_combo_box_set_value);
+  Nan::Export(ctx, "combo_box_set_item_height", wrap_combo_box_set_item_height);
+  Nan::Export(ctx, "combo_box_append_option", wrap_combo_box_append_option);
+  Nan::Export(ctx, "combo_box_set_options", wrap_combo_box_set_options);
+  Nan::Export(ctx, "combo_box_get_value", wrap_combo_box_get_value);
+  Nan::Export(ctx, "combo_box_get_text", wrap_combo_box_get_text);
+  Nan::Export(ctx, "combo_box_t_get_prop_open_window", wrap_combo_box_t_get_prop_open_window);
+  Nan::Export(ctx, "combo_box_t_get_prop_selected_index", wrap_combo_box_t_get_prop_selected_index);
+  Nan::Export(ctx, "combo_box_t_get_prop_value", wrap_combo_box_t_get_prop_value);
+  Nan::Export(ctx, "combo_box_t_get_prop_localize_options", wrap_combo_box_t_get_prop_localize_options);
+  Nan::Export(ctx, "combo_box_t_get_prop_options", wrap_combo_box_t_get_prop_options);
+  Nan::Export(ctx, "combo_box_t_get_prop_item_height", wrap_combo_box_t_get_prop_item_height);
 
  return RET_OK;
 }
@@ -19425,10 +17982,8 @@ static void wrap_dialog_client_cast(const Nan::FunctionCallbackInfo<v8::Value>& 
 }
 
 ret_t dialog_client_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("dialog_client_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_client_create)->GetFunction());
-  ctx->Set(Nan::New("dialog_client_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_client_cast)->GetFunction());
+  Nan::Export(ctx, "dialog_client_create", wrap_dialog_client_create);
+  Nan::Export(ctx, "dialog_client_cast", wrap_dialog_client_cast);
 
  return RET_OK;
 }
@@ -19466,10 +18021,8 @@ static void wrap_dialog_title_cast(const Nan::FunctionCallbackInfo<v8::Value>& a
 }
 
 ret_t dialog_title_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("dialog_title_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_title_create)->GetFunction());
-  ctx->Set(Nan::New("dialog_title_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_title_cast)->GetFunction());
+  Nan::Export(ctx, "dialog_title_create", wrap_dialog_title_create);
+  Nan::Export(ctx, "dialog_title_cast", wrap_dialog_title_cast);
 
  return RET_OK;
 }
@@ -19535,14 +18088,10 @@ static void wrap_digit_clock_t_get_prop_format(const Nan::FunctionCallbackInfo<v
 }
 
 ret_t digit_clock_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("digit_clock_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_digit_clock_create)->GetFunction());
-  ctx->Set(Nan::New("digit_clock_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_digit_clock_cast)->GetFunction());
-  ctx->Set(Nan::New("digit_clock_set_format").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_digit_clock_set_format)->GetFunction());
-  ctx->Set(Nan::New("digit_clock_t_get_prop_format").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_digit_clock_t_get_prop_format)->GetFunction());
+  Nan::Export(ctx, "digit_clock_create", wrap_digit_clock_create);
+  Nan::Export(ctx, "digit_clock_cast", wrap_digit_clock_cast);
+  Nan::Export(ctx, "digit_clock_set_format", wrap_digit_clock_set_format);
+  Nan::Export(ctx, "digit_clock_t_get_prop_format", wrap_digit_clock_t_get_prop_format);
 
  return RET_OK;
 }
@@ -19638,20 +18187,13 @@ static void wrap_dragger_t_get_prop_y_max(const Nan::FunctionCallbackInfo<v8::Va
 }
 
 ret_t dragger_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("dragger_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dragger_create)->GetFunction());
-  ctx->Set(Nan::New("dragger_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dragger_cast)->GetFunction());
-  ctx->Set(Nan::New("dragger_set_range").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dragger_set_range)->GetFunction());
-  ctx->Set(Nan::New("dragger_t_get_prop_x_min").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dragger_t_get_prop_x_min)->GetFunction());
-  ctx->Set(Nan::New("dragger_t_get_prop_y_min").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dragger_t_get_prop_y_min)->GetFunction());
-  ctx->Set(Nan::New("dragger_t_get_prop_x_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dragger_t_get_prop_x_max)->GetFunction());
-  ctx->Set(Nan::New("dragger_t_get_prop_y_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dragger_t_get_prop_y_max)->GetFunction());
+  Nan::Export(ctx, "dragger_create", wrap_dragger_create);
+  Nan::Export(ctx, "dragger_cast", wrap_dragger_cast);
+  Nan::Export(ctx, "dragger_set_range", wrap_dragger_set_range);
+  Nan::Export(ctx, "dragger_t_get_prop_x_min", wrap_dragger_t_get_prop_x_min);
+  Nan::Export(ctx, "dragger_t_get_prop_y_min", wrap_dragger_t_get_prop_y_min);
+  Nan::Export(ctx, "dragger_t_get_prop_x_max", wrap_dragger_t_get_prop_x_max);
+  Nan::Export(ctx, "dragger_t_get_prop_y_max", wrap_dragger_t_get_prop_y_max);
 
  return RET_OK;
 }
@@ -20035,62 +18577,34 @@ static void wrap_edit_t_get_prop_step(const Nan::FunctionCallbackInfo<v8::Value>
 }
 
 ret_t edit_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("edit_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_create)->GetFunction());
-  ctx->Set(Nan::New("edit_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_cast)->GetFunction());
-  ctx->Set(Nan::New("edit_get_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_get_int)->GetFunction());
-  ctx->Set(Nan::New("edit_get_double").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_get_double)->GetFunction());
-  ctx->Set(Nan::New("edit_set_int").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_int)->GetFunction());
-  ctx->Set(Nan::New("edit_set_double").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_double)->GetFunction());
-  ctx->Set(Nan::New("edit_set_text_limit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_text_limit)->GetFunction());
-  ctx->Set(Nan::New("edit_set_int_limit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_int_limit)->GetFunction());
-  ctx->Set(Nan::New("edit_set_float_limit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_float_limit)->GetFunction());
-  ctx->Set(Nan::New("edit_set_readonly").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_readonly)->GetFunction());
-  ctx->Set(Nan::New("edit_set_auto_fix").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_auto_fix)->GetFunction());
-  ctx->Set(Nan::New("edit_set_select_none_when_focused").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_select_none_when_focused)->GetFunction());
-  ctx->Set(Nan::New("edit_set_open_im_when_focused").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_open_im_when_focused)->GetFunction());
-  ctx->Set(Nan::New("edit_set_input_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_input_type)->GetFunction());
-  ctx->Set(Nan::New("edit_set_input_tips").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_input_tips)->GetFunction());
-  ctx->Set(Nan::New("edit_set_password_visible").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_password_visible)->GetFunction());
-  ctx->Set(Nan::New("edit_set_focus").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_focus)->GetFunction());
-  ctx->Set(Nan::New("edit_set_cursor").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_set_cursor)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_readonly").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_readonly)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_password_visible").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_password_visible)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_auto_fix").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_auto_fix)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_select_none_when_focused").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_select_none_when_focused)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_open_im_when_focused").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_open_im_when_focused)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_tips").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_tips)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_input_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_input_type)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_min").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_min)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_max)->GetFunction());
-  ctx->Set(Nan::New("edit_t_get_prop_step").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_edit_t_get_prop_step)->GetFunction());
+  Nan::Export(ctx, "edit_create", wrap_edit_create);
+  Nan::Export(ctx, "edit_cast", wrap_edit_cast);
+  Nan::Export(ctx, "edit_get_int", wrap_edit_get_int);
+  Nan::Export(ctx, "edit_get_double", wrap_edit_get_double);
+  Nan::Export(ctx, "edit_set_int", wrap_edit_set_int);
+  Nan::Export(ctx, "edit_set_double", wrap_edit_set_double);
+  Nan::Export(ctx, "edit_set_text_limit", wrap_edit_set_text_limit);
+  Nan::Export(ctx, "edit_set_int_limit", wrap_edit_set_int_limit);
+  Nan::Export(ctx, "edit_set_float_limit", wrap_edit_set_float_limit);
+  Nan::Export(ctx, "edit_set_readonly", wrap_edit_set_readonly);
+  Nan::Export(ctx, "edit_set_auto_fix", wrap_edit_set_auto_fix);
+  Nan::Export(ctx, "edit_set_select_none_when_focused", wrap_edit_set_select_none_when_focused);
+  Nan::Export(ctx, "edit_set_open_im_when_focused", wrap_edit_set_open_im_when_focused);
+  Nan::Export(ctx, "edit_set_input_type", wrap_edit_set_input_type);
+  Nan::Export(ctx, "edit_set_input_tips", wrap_edit_set_input_tips);
+  Nan::Export(ctx, "edit_set_password_visible", wrap_edit_set_password_visible);
+  Nan::Export(ctx, "edit_set_focus", wrap_edit_set_focus);
+  Nan::Export(ctx, "edit_set_cursor", wrap_edit_set_cursor);
+  Nan::Export(ctx, "edit_t_get_prop_readonly", wrap_edit_t_get_prop_readonly);
+  Nan::Export(ctx, "edit_t_get_prop_password_visible", wrap_edit_t_get_prop_password_visible);
+  Nan::Export(ctx, "edit_t_get_prop_auto_fix", wrap_edit_t_get_prop_auto_fix);
+  Nan::Export(ctx, "edit_t_get_prop_select_none_when_focused", wrap_edit_t_get_prop_select_none_when_focused);
+  Nan::Export(ctx, "edit_t_get_prop_open_im_when_focused", wrap_edit_t_get_prop_open_im_when_focused);
+  Nan::Export(ctx, "edit_t_get_prop_tips", wrap_edit_t_get_prop_tips);
+  Nan::Export(ctx, "edit_t_get_prop_input_type", wrap_edit_t_get_prop_input_type);
+  Nan::Export(ctx, "edit_t_get_prop_min", wrap_edit_t_get_prop_min);
+  Nan::Export(ctx, "edit_t_get_prop_max", wrap_edit_t_get_prop_max);
+  Nan::Export(ctx, "edit_t_get_prop_step", wrap_edit_t_get_prop_step);
 
  return RET_OK;
 }
@@ -20128,10 +18642,8 @@ static void wrap_grid_item_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t grid_item_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("grid_item_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_grid_item_create)->GetFunction());
-  ctx->Set(Nan::New("grid_item_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_grid_item_cast)->GetFunction());
+  Nan::Export(ctx, "grid_item_create", wrap_grid_item_create);
+  Nan::Export(ctx, "grid_item_cast", wrap_grid_item_cast);
 
  return RET_OK;
 }
@@ -20169,10 +18681,8 @@ static void wrap_grid_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t grid_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("grid_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_grid_create)->GetFunction());
-  ctx->Set(Nan::New("grid_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_grid_cast)->GetFunction());
+  Nan::Export(ctx, "grid_create", wrap_grid_create);
+  Nan::Export(ctx, "grid_cast", wrap_grid_cast);
 
  return RET_OK;
 }
@@ -20210,10 +18720,8 @@ static void wrap_group_box_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t group_box_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("group_box_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_group_box_create)->GetFunction());
-  ctx->Set(Nan::New("group_box_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_group_box_cast)->GetFunction());
+  Nan::Export(ctx, "group_box_create", wrap_group_box_create);
+  Nan::Export(ctx, "group_box_cast", wrap_group_box_cast);
 
  return RET_OK;
 }
@@ -20294,16 +18802,11 @@ static void wrap_label_t_get_prop_length(const Nan::FunctionCallbackInfo<v8::Val
 }
 
 ret_t label_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("label_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_label_create)->GetFunction());
-  ctx->Set(Nan::New("label_set_length").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_label_set_length)->GetFunction());
-  ctx->Set(Nan::New("label_resize_to_content").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_label_resize_to_content)->GetFunction());
-  ctx->Set(Nan::New("label_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_label_cast)->GetFunction());
-  ctx->Set(Nan::New("label_t_get_prop_length").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_label_t_get_prop_length)->GetFunction());
+  Nan::Export(ctx, "label_create", wrap_label_create);
+  Nan::Export(ctx, "label_set_length", wrap_label_set_length);
+  Nan::Export(ctx, "label_resize_to_content", wrap_label_resize_to_content);
+  Nan::Export(ctx, "label_cast", wrap_label_cast);
+  Nan::Export(ctx, "label_t_get_prop_length", wrap_label_t_get_prop_length);
 
  return RET_OK;
 }
@@ -20341,10 +18844,8 @@ static void wrap_overlay_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 }
 
 ret_t overlay_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("overlay_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_overlay_create)->GetFunction());
-  ctx->Set(Nan::New("overlay_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_overlay_cast)->GetFunction());
+  Nan::Export(ctx, "overlay_create", wrap_overlay_create);
+  Nan::Export(ctx, "overlay_cast", wrap_overlay_cast);
 
  return RET_OK;
 }
@@ -20423,16 +18924,11 @@ static void wrap_pages_t_get_prop_active(const Nan::FunctionCallbackInfo<v8::Val
 }
 
 ret_t pages_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("pages_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pages_create)->GetFunction());
-  ctx->Set(Nan::New("pages_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pages_cast)->GetFunction());
-  ctx->Set(Nan::New("pages_set_active").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pages_set_active)->GetFunction());
-  ctx->Set(Nan::New("pages_set_active_by_name").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pages_set_active_by_name)->GetFunction());
-  ctx->Set(Nan::New("pages_t_get_prop_active").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_pages_t_get_prop_active)->GetFunction());
+  Nan::Export(ctx, "pages_create", wrap_pages_create);
+  Nan::Export(ctx, "pages_cast", wrap_pages_cast);
+  Nan::Export(ctx, "pages_set_active", wrap_pages_set_active);
+  Nan::Export(ctx, "pages_set_active_by_name", wrap_pages_set_active_by_name);
+  Nan::Export(ctx, "pages_t_get_prop_active", wrap_pages_t_get_prop_active);
 
  return RET_OK;
 }
@@ -20584,28 +19080,17 @@ static void wrap_progress_bar_t_get_prop_show_text(const Nan::FunctionCallbackIn
 }
 
 ret_t progress_bar_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("progress_bar_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_create)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_cast)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_set_value)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_set_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_set_max)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_set_vertical").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_set_vertical)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_set_show_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_set_show_text)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_get_percent").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_get_percent)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_t_get_prop_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_t_get_prop_max)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_t_get_prop_vertical").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_t_get_prop_vertical)->GetFunction());
-  ctx->Set(Nan::New("progress_bar_t_get_prop_show_text").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_progress_bar_t_get_prop_show_text)->GetFunction());
+  Nan::Export(ctx, "progress_bar_create", wrap_progress_bar_create);
+  Nan::Export(ctx, "progress_bar_cast", wrap_progress_bar_cast);
+  Nan::Export(ctx, "progress_bar_set_value", wrap_progress_bar_set_value);
+  Nan::Export(ctx, "progress_bar_set_max", wrap_progress_bar_set_max);
+  Nan::Export(ctx, "progress_bar_set_vertical", wrap_progress_bar_set_vertical);
+  Nan::Export(ctx, "progress_bar_set_show_text", wrap_progress_bar_set_show_text);
+  Nan::Export(ctx, "progress_bar_get_percent", wrap_progress_bar_get_percent);
+  Nan::Export(ctx, "progress_bar_t_get_prop_value", wrap_progress_bar_t_get_prop_value);
+  Nan::Export(ctx, "progress_bar_t_get_prop_max", wrap_progress_bar_t_get_prop_max);
+  Nan::Export(ctx, "progress_bar_t_get_prop_vertical", wrap_progress_bar_t_get_prop_vertical);
+  Nan::Export(ctx, "progress_bar_t_get_prop_show_text", wrap_progress_bar_t_get_prop_show_text);
 
  return RET_OK;
 }
@@ -20643,10 +19128,8 @@ static void wrap_row_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t row_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("row_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_row_create)->GetFunction());
-  ctx->Set(Nan::New("row_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_row_cast)->GetFunction());
+  Nan::Export(ctx, "row_create", wrap_row_create);
+  Nan::Export(ctx, "row_cast", wrap_row_cast);
 
  return RET_OK;
 }
@@ -20864,40 +19347,23 @@ static void wrap_slider_t_get_prop_slide_with_bar(const Nan::FunctionCallbackInf
 }
 
 ret_t slider_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("slider_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_create)->GetFunction());
-  ctx->Set(Nan::New("slider_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_cast)->GetFunction());
-  ctx->Set(Nan::New("slider_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_set_value)->GetFunction());
-  ctx->Set(Nan::New("slider_set_min").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_set_min)->GetFunction());
-  ctx->Set(Nan::New("slider_set_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_set_max)->GetFunction());
-  ctx->Set(Nan::New("slider_set_step").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_set_step)->GetFunction());
-  ctx->Set(Nan::New("slider_set_bar_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_set_bar_size)->GetFunction());
-  ctx->Set(Nan::New("slider_set_vertical").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_set_vertical)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_min").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_min)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_max").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_max)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_step").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_step)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_vertical").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_vertical)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_bar_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_bar_size)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_dragger_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_dragger_size)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_dragger_adapt_to_icon").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_dragger_adapt_to_icon)->GetFunction());
-  ctx->Set(Nan::New("slider_t_get_prop_slide_with_bar").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_slider_t_get_prop_slide_with_bar)->GetFunction());
+  Nan::Export(ctx, "slider_create", wrap_slider_create);
+  Nan::Export(ctx, "slider_cast", wrap_slider_cast);
+  Nan::Export(ctx, "slider_set_value", wrap_slider_set_value);
+  Nan::Export(ctx, "slider_set_min", wrap_slider_set_min);
+  Nan::Export(ctx, "slider_set_max", wrap_slider_set_max);
+  Nan::Export(ctx, "slider_set_step", wrap_slider_set_step);
+  Nan::Export(ctx, "slider_set_bar_size", wrap_slider_set_bar_size);
+  Nan::Export(ctx, "slider_set_vertical", wrap_slider_set_vertical);
+  Nan::Export(ctx, "slider_t_get_prop_value", wrap_slider_t_get_prop_value);
+  Nan::Export(ctx, "slider_t_get_prop_min", wrap_slider_t_get_prop_min);
+  Nan::Export(ctx, "slider_t_get_prop_max", wrap_slider_t_get_prop_max);
+  Nan::Export(ctx, "slider_t_get_prop_step", wrap_slider_t_get_prop_step);
+  Nan::Export(ctx, "slider_t_get_prop_vertical", wrap_slider_t_get_prop_vertical);
+  Nan::Export(ctx, "slider_t_get_prop_bar_size", wrap_slider_t_get_prop_bar_size);
+  Nan::Export(ctx, "slider_t_get_prop_dragger_size", wrap_slider_t_get_prop_dragger_size);
+  Nan::Export(ctx, "slider_t_get_prop_dragger_adapt_to_icon", wrap_slider_t_get_prop_dragger_adapt_to_icon);
+  Nan::Export(ctx, "slider_t_get_prop_slide_with_bar", wrap_slider_t_get_prop_slide_with_bar);
 
  return RET_OK;
 }
@@ -20985,18 +19451,12 @@ static void wrap_tab_button_group_t_get_prop_scrollable(const Nan::FunctionCallb
 }
 
 ret_t tab_button_group_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("tab_button_group_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_group_create)->GetFunction());
-  ctx->Set(Nan::New("tab_button_group_set_compact").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_group_set_compact)->GetFunction());
-  ctx->Set(Nan::New("tab_button_group_set_scrollable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_group_set_scrollable)->GetFunction());
-  ctx->Set(Nan::New("tab_button_group_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_group_cast)->GetFunction());
-  ctx->Set(Nan::New("tab_button_group_t_get_prop_compact").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_group_t_get_prop_compact)->GetFunction());
-  ctx->Set(Nan::New("tab_button_group_t_get_prop_scrollable").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_group_t_get_prop_scrollable)->GetFunction());
+  Nan::Export(ctx, "tab_button_group_create", wrap_tab_button_group_create);
+  Nan::Export(ctx, "tab_button_group_set_compact", wrap_tab_button_group_set_compact);
+  Nan::Export(ctx, "tab_button_group_set_scrollable", wrap_tab_button_group_set_scrollable);
+  Nan::Export(ctx, "tab_button_group_cast", wrap_tab_button_group_cast);
+  Nan::Export(ctx, "tab_button_group_t_get_prop_compact", wrap_tab_button_group_t_get_prop_compact);
+  Nan::Export(ctx, "tab_button_group_t_get_prop_scrollable", wrap_tab_button_group_t_get_prop_scrollable);
 
  return RET_OK;
 }
@@ -21143,26 +19603,16 @@ static void wrap_tab_button_t_get_prop_icon(const Nan::FunctionCallbackInfo<v8::
 }
 
 ret_t tab_button_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("tab_button_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_create)->GetFunction());
-  ctx->Set(Nan::New("tab_button_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_cast)->GetFunction());
-  ctx->Set(Nan::New("tab_button_set_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_set_value)->GetFunction());
-  ctx->Set(Nan::New("tab_button_set_icon").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_set_icon)->GetFunction());
-  ctx->Set(Nan::New("tab_button_set_active_icon").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_set_active_icon)->GetFunction());
-  ctx->Set(Nan::New("tab_button_set_load_ui").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_set_load_ui)->GetFunction());
-  ctx->Set(Nan::New("tab_button_t_get_prop_value").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_t_get_prop_value)->GetFunction());
-  ctx->Set(Nan::New("tab_button_t_get_prop_load_ui").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_t_get_prop_load_ui)->GetFunction());
-  ctx->Set(Nan::New("tab_button_t_get_prop_active_icon").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_t_get_prop_active_icon)->GetFunction());
-  ctx->Set(Nan::New("tab_button_t_get_prop_icon").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_button_t_get_prop_icon)->GetFunction());
+  Nan::Export(ctx, "tab_button_create", wrap_tab_button_create);
+  Nan::Export(ctx, "tab_button_cast", wrap_tab_button_cast);
+  Nan::Export(ctx, "tab_button_set_value", wrap_tab_button_set_value);
+  Nan::Export(ctx, "tab_button_set_icon", wrap_tab_button_set_icon);
+  Nan::Export(ctx, "tab_button_set_active_icon", wrap_tab_button_set_active_icon);
+  Nan::Export(ctx, "tab_button_set_load_ui", wrap_tab_button_set_load_ui);
+  Nan::Export(ctx, "tab_button_t_get_prop_value", wrap_tab_button_t_get_prop_value);
+  Nan::Export(ctx, "tab_button_t_get_prop_load_ui", wrap_tab_button_t_get_prop_load_ui);
+  Nan::Export(ctx, "tab_button_t_get_prop_active_icon", wrap_tab_button_t_get_prop_active_icon);
+  Nan::Export(ctx, "tab_button_t_get_prop_icon", wrap_tab_button_t_get_prop_icon);
 
  return RET_OK;
 }
@@ -21200,10 +19650,8 @@ static void wrap_tab_control_cast(const Nan::FunctionCallbackInfo<v8::Value>& ar
 }
 
 ret_t tab_control_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("tab_control_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_control_create)->GetFunction());
-  ctx->Set(Nan::New("tab_control_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_tab_control_cast)->GetFunction());
+  Nan::Export(ctx, "tab_control_create", wrap_tab_control_create);
+  Nan::Export(ctx, "tab_control_cast", wrap_tab_control_cast);
 
  return RET_OK;
 }
@@ -21241,10 +19689,8 @@ static void wrap_view_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 }
 
 ret_t view_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("view_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_view_create)->GetFunction());
-  ctx->Set(Nan::New("view_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_view_cast)->GetFunction());
+  Nan::Export(ctx, "view_create", wrap_view_create);
+  Nan::Export(ctx, "view_cast", wrap_view_cast);
 
  return RET_OK;
 }
@@ -21284,12 +19730,9 @@ static void wrap_idle_info_t_get_prop_id(const Nan::FunctionCallbackInfo<v8::Val
 }
 
 ret_t idle_info_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("idle_info_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_idle_info_cast)->GetFunction());
-  ctx->Set(Nan::New("idle_info_t_get_prop_ctx").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_idle_info_t_get_prop_ctx)->GetFunction());
-  ctx->Set(Nan::New("idle_info_t_get_prop_id").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_idle_info_t_get_prop_id)->GetFunction());
+  Nan::Export(ctx, "idle_info_cast", wrap_idle_info_cast);
+  Nan::Export(ctx, "idle_info_t_get_prop_ctx", wrap_idle_info_t_get_prop_ctx);
+  Nan::Export(ctx, "idle_info_t_get_prop_id", wrap_idle_info_t_get_prop_id);
 
  return RET_OK;
 }
@@ -21337,12 +19780,9 @@ static void wrap_object_array_t_get_prop_props_size(const Nan::FunctionCallbackI
 }
 
 ret_t object_array_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("object_array_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_array_create)->GetFunction());
-  ctx->Set(Nan::New("object_array_clear_props").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_array_clear_props)->GetFunction());
-  ctx->Set(Nan::New("object_array_t_get_prop_props_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_array_t_get_prop_props_size)->GetFunction());
+  Nan::Export(ctx, "object_array_create", wrap_object_array_create);
+  Nan::Export(ctx, "object_array_clear_props", wrap_object_array_clear_props);
+  Nan::Export(ctx, "object_array_t_get_prop_props_size", wrap_object_array_t_get_prop_props_size);
 
  return RET_OK;
 }
@@ -21380,10 +19820,8 @@ static void wrap_gif_image_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t gif_image_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("gif_image_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_gif_image_create)->GetFunction());
-  ctx->Set(Nan::New("gif_image_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_gif_image_cast)->GetFunction());
+  Nan::Export(ctx, "gif_image_create", wrap_gif_image_create);
+  Nan::Export(ctx, "gif_image_cast", wrap_gif_image_cast);
 
  return RET_OK;
 }
@@ -21426,12 +19864,9 @@ static void wrap_object_default_t_get_prop_props_size(const Nan::FunctionCallbac
 }
 
 ret_t object_default_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("object_default_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_default_create)->GetFunction());
-  ctx->Set(Nan::New("object_default_clear_props").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_default_clear_props)->GetFunction());
-  ctx->Set(Nan::New("object_default_t_get_prop_props_size").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_object_default_t_get_prop_props_size)->GetFunction());
+  Nan::Export(ctx, "object_default_create", wrap_object_default_create);
+  Nan::Export(ctx, "object_default_clear_props", wrap_object_default_clear_props);
+  Nan::Export(ctx, "object_default_t_get_prop_props_size", wrap_object_default_t_get_prop_props_size);
 
  return RET_OK;
 }
@@ -21494,14 +19929,10 @@ static void wrap_image_t_get_prop_draw_type(const Nan::FunctionCallbackInfo<v8::
 }
 
 ret_t image_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("image_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_create)->GetFunction());
-  ctx->Set(Nan::New("image_set_draw_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_set_draw_type)->GetFunction());
-  ctx->Set(Nan::New("image_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_cast)->GetFunction());
-  ctx->Set(Nan::New("image_t_get_prop_draw_type").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_image_t_get_prop_draw_type)->GetFunction());
+  Nan::Export(ctx, "image_create", wrap_image_create);
+  Nan::Export(ctx, "image_set_draw_type", wrap_image_set_draw_type);
+  Nan::Export(ctx, "image_cast", wrap_image_cast);
+  Nan::Export(ctx, "image_t_get_prop_draw_type", wrap_image_t_get_prop_draw_type);
 
  return RET_OK;
 }
@@ -21525,8 +19956,7 @@ static void wrap_combo_box_ex_create(const Nan::FunctionCallbackInfo<v8::Value>&
 }
 
 ret_t combo_box_ex_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("combo_box_ex_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_combo_box_ex_create)->GetFunction());
+  Nan::Export(ctx, "combo_box_ex_create", wrap_combo_box_ex_create);
 
  return RET_OK;
 }
@@ -21546,8 +19976,7 @@ static void wrap_calibration_win_cast(const Nan::FunctionCallbackInfo<v8::Value>
 }
 
 ret_t calibration_win_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("calibration_win_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_calibration_win_cast)->GetFunction());
+  Nan::Export(ctx, "calibration_win_cast", wrap_calibration_win_cast);
 
  return RET_OK;
 }
@@ -21635,18 +20064,12 @@ static void wrap_popup_t_get_prop_close_when_click_outside(const Nan::FunctionCa
 }
 
 ret_t popup_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("popup_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_popup_create)->GetFunction());
-  ctx->Set(Nan::New("popup_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_popup_cast)->GetFunction());
-  ctx->Set(Nan::New("popup_set_close_when_click").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_popup_set_close_when_click)->GetFunction());
-  ctx->Set(Nan::New("popup_set_close_when_click_outside").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_popup_set_close_when_click_outside)->GetFunction());
-  ctx->Set(Nan::New("popup_t_get_prop_close_when_click").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_popup_t_get_prop_close_when_click)->GetFunction());
-  ctx->Set(Nan::New("popup_t_get_prop_close_when_click_outside").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_popup_t_get_prop_close_when_click_outside)->GetFunction());
+  Nan::Export(ctx, "popup_create", wrap_popup_create);
+  Nan::Export(ctx, "popup_cast", wrap_popup_cast);
+  Nan::Export(ctx, "popup_set_close_when_click", wrap_popup_set_close_when_click);
+  Nan::Export(ctx, "popup_set_close_when_click_outside", wrap_popup_set_close_when_click_outside);
+  Nan::Export(ctx, "popup_t_get_prop_close_when_click", wrap_popup_t_get_prop_close_when_click);
+  Nan::Export(ctx, "popup_t_get_prop_close_when_click_outside", wrap_popup_t_get_prop_close_when_click_outside);
 
  return RET_OK;
 }
@@ -21700,12 +20123,9 @@ static void wrap_svg_image_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv
 }
 
 ret_t svg_image_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("svg_image_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_svg_image_create)->GetFunction());
-  ctx->Set(Nan::New("svg_image_set_image").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_svg_image_set_image)->GetFunction());
-  ctx->Set(Nan::New("svg_image_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_svg_image_cast)->GetFunction());
+  Nan::Export(ctx, "svg_image_create", wrap_svg_image_create);
+  Nan::Export(ctx, "svg_image_set_image", wrap_svg_image_set_image);
+  Nan::Export(ctx, "svg_image_cast", wrap_svg_image_cast);
 
  return RET_OK;
 }
@@ -21755,14 +20175,10 @@ static void wrap_timer_info_t_get_prop_now(const Nan::FunctionCallbackInfo<v8::V
 }
 
 ret_t timer_info_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("timer_info_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_info_cast)->GetFunction());
-  ctx->Set(Nan::New("timer_info_t_get_prop_ctx").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_info_t_get_prop_ctx)->GetFunction());
-  ctx->Set(Nan::New("timer_info_t_get_prop_id").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_info_t_get_prop_id)->GetFunction());
-  ctx->Set(Nan::New("timer_info_t_get_prop_now").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_timer_info_t_get_prop_now)->GetFunction());
+  Nan::Export(ctx, "timer_info_cast", wrap_timer_info_cast);
+  Nan::Export(ctx, "timer_info_t_get_prop_ctx", wrap_timer_info_t_get_prop_ctx);
+  Nan::Export(ctx, "timer_info_t_get_prop_id", wrap_timer_info_t_get_prop_id);
+  Nan::Export(ctx, "timer_info_t_get_prop_now", wrap_timer_info_t_get_prop_now);
 
  return RET_OK;
 }
@@ -21800,10 +20216,8 @@ static void wrap_spin_box_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv)
 }
 
 ret_t spin_box_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("spin_box_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_spin_box_create)->GetFunction());
-  ctx->Set(Nan::New("spin_box_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_spin_box_cast)->GetFunction());
+  Nan::Export(ctx, "spin_box_create", wrap_spin_box_create);
+  Nan::Export(ctx, "spin_box_cast", wrap_spin_box_cast);
 
  return RET_OK;
 }
@@ -21841,10 +20255,8 @@ static void wrap_system_bar_cast(const Nan::FunctionCallbackInfo<v8::Value>& arg
 }
 
 ret_t system_bar_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("system_bar_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_system_bar_create)->GetFunction());
-  ctx->Set(Nan::New("system_bar_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_system_bar_cast)->GetFunction());
+  Nan::Export(ctx, "system_bar_create", wrap_system_bar_create);
+  Nan::Export(ctx, "system_bar_cast", wrap_system_bar_cast);
 
  return RET_OK;
 }
@@ -21979,24 +20391,15 @@ static void wrap_window_t_get_prop_fullscreen(const Nan::FunctionCallbackInfo<v8
 }
 
 ret_t window_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("window_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_create)->GetFunction());
-  ctx->Set(Nan::New("window_create_default").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_create_default)->GetFunction());
-  ctx->Set(Nan::New("window_set_fullscreen").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_set_fullscreen)->GetFunction());
-  ctx->Set(Nan::New("window_open").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_open)->GetFunction());
-  ctx->Set(Nan::New("window_open_and_close").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_open_and_close)->GetFunction());
-  ctx->Set(Nan::New("window_close").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_close)->GetFunction());
-  ctx->Set(Nan::New("window_close_force").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_close_force)->GetFunction());
-  ctx->Set(Nan::New("window_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_cast)->GetFunction());
-  ctx->Set(Nan::New("window_t_get_prop_fullscreen").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_window_t_get_prop_fullscreen)->GetFunction());
+  Nan::Export(ctx, "window_create", wrap_window_create);
+  Nan::Export(ctx, "window_create_default", wrap_window_create_default);
+  Nan::Export(ctx, "window_set_fullscreen", wrap_window_set_fullscreen);
+  Nan::Export(ctx, "window_open", wrap_window_open);
+  Nan::Export(ctx, "window_open_and_close", wrap_window_open_and_close);
+  Nan::Export(ctx, "window_close", wrap_window_close);
+  Nan::Export(ctx, "window_close_force", wrap_window_close_force);
+  Nan::Export(ctx, "window_cast", wrap_window_cast);
+  Nan::Export(ctx, "window_t_get_prop_fullscreen", wrap_window_t_get_prop_fullscreen);
 
  return RET_OK;
 }
@@ -22034,10 +20437,8 @@ static void wrap_keyboard_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv)
 }
 
 ret_t keyboard_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("keyboard_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_keyboard_create)->GetFunction());
-  ctx->Set(Nan::New("keyboard_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_keyboard_cast)->GetFunction());
+  Nan::Export(ctx, "keyboard_create", wrap_keyboard_create);
+  Nan::Export(ctx, "keyboard_cast", wrap_keyboard_cast);
 
  return RET_OK;
 }
@@ -22288,38 +20689,22 @@ static void wrap_dialog_t_get_prop_highlight(const Nan::FunctionCallbackInfo<v8:
 }
 
 ret_t dialog_t_init(v8::Local<v8::Object> ctx) {
-  ctx->Set(Nan::New("dialog_create").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_create)->GetFunction());
-  ctx->Set(Nan::New("dialog_create_simple").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_create_simple)->GetFunction());
-  ctx->Set(Nan::New("dialog_cast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_cast)->GetFunction());
-  ctx->Set(Nan::New("dialog_get_title").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_get_title)->GetFunction());
-  ctx->Set(Nan::New("dialog_get_client").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_get_client)->GetFunction());
-  ctx->Set(Nan::New("dialog_open").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_open)->GetFunction());
-  ctx->Set(Nan::New("dialog_set_title").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_set_title)->GetFunction());
-  ctx->Set(Nan::New("dialog_modal").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_modal)->GetFunction());
-  ctx->Set(Nan::New("dialog_quit").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_quit)->GetFunction());
-  ctx->Set(Nan::New("dialog_is_quited").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_is_quited)->GetFunction());
-  ctx->Set(Nan::New("dialog_is_modal").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_is_modal)->GetFunction());
-  ctx->Set(Nan::New("dialog_toast").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_toast)->GetFunction());
-  ctx->Set(Nan::New("dialog_info").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_info)->GetFunction());
-  ctx->Set(Nan::New("dialog_warn").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_warn)->GetFunction());
-  ctx->Set(Nan::New("dialog_confirm").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_confirm)->GetFunction());
-  ctx->Set(Nan::New("dialog_t_get_prop_highlight").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_dialog_t_get_prop_highlight)->GetFunction());
+  Nan::Export(ctx, "dialog_create", wrap_dialog_create);
+  Nan::Export(ctx, "dialog_create_simple", wrap_dialog_create_simple);
+  Nan::Export(ctx, "dialog_cast", wrap_dialog_cast);
+  Nan::Export(ctx, "dialog_get_title", wrap_dialog_get_title);
+  Nan::Export(ctx, "dialog_get_client", wrap_dialog_get_client);
+  Nan::Export(ctx, "dialog_open", wrap_dialog_open);
+  Nan::Export(ctx, "dialog_set_title", wrap_dialog_set_title);
+  Nan::Export(ctx, "dialog_modal", wrap_dialog_modal);
+  Nan::Export(ctx, "dialog_quit", wrap_dialog_quit);
+  Nan::Export(ctx, "dialog_is_quited", wrap_dialog_is_quited);
+  Nan::Export(ctx, "dialog_is_modal", wrap_dialog_is_modal);
+  Nan::Export(ctx, "dialog_toast", wrap_dialog_toast);
+  Nan::Export(ctx, "dialog_info", wrap_dialog_info);
+  Nan::Export(ctx, "dialog_warn", wrap_dialog_warn);
+  Nan::Export(ctx, "dialog_confirm", wrap_dialog_confirm);
+  Nan::Export(ctx, "dialog_t_get_prop_highlight", wrap_dialog_t_get_prop_highlight);
 
  return RET_OK;
 }
@@ -22464,10 +20849,10 @@ ret_t awtk_js_init(v8::Local<v8::Object> ctx) {
 
 void Init(v8::Local<v8::Object> exports) {
   v8::Local<v8::Object> global =  Nan::GetCurrentContext()->Global();
-  exports->Set(Nan::New("init").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_awtk_init)->GetFunction());
-  exports->Set(Nan::New("step").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(wrap_awtk_main_loop_step)->GetFunction());
+
+  Nan::Export(exports, "init", wrap_awtk_init);
+  Nan::Export(exports, "step", wrap_awtk_main_loop_step);
+
   awtk_js_init(global);
 }
 

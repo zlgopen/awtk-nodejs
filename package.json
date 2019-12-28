@@ -4,6 +4,7 @@
   "description": "awtk on nodejs",
   "main": "awtk.js",
   "scripts": {
+    "rebuild": "node-gyp clean;node-gyp configure;node-gyp --verbose build",
     "config": "node-gyp configure",
     "build": "node-gyp --verbose build",
     "clean": "rm -rf build"

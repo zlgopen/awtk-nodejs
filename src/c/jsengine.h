@@ -15,25 +15,25 @@ static void func_name(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
 
 
 static inline char* jsvalue_get_utf8_string(JSContext* ctx, jsvalue_t v) {
-  Nan::Utf8String str(v->ToString());
+  Nan::Utf8String str(Nan::To<v8::String>(v).ToLocalChecked());
 
   return tk_strdup(*str);
 }
 
 static inline void* jsvalue_get_pointer(JSContext* ctx, jsvalue_t v, const char* type) {
-  return v->IntegerValue() + ((char*)NULL);
+  return (int64_t)(v.As<v8::Number>()->Value()) + (char*)NULL;
 }
 
 static inline int32_t jsvalue_get_int_value(JSContext* ctx, jsvalue_t v) {
-  return v->Int32Value();
+  return v.As<v8::Integer>()->Value();
 }
 
 static inline double jsvalue_get_number_value(JSContext* ctx, jsvalue_t v) {
-  return v->NumberValue();
+  return v.As<v8::Number>()->Value();
 }
 
 static inline bool_t jsvalue_get_boolean_value(JSContext* ctx, jsvalue_t v) {
-  return TRUE;
+  return v.As<v8::Boolean>()->Value();
 }
 
 wchar_t *jsvalue_get_wstring(JSContext *ctx, jsvalue_t v) {
