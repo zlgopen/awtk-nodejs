@@ -1,0 +1,21 @@
+{
+  "name": "awtk-nodejs",
+  "version": "1.0.0",
+  "description": "awtk on nodejs",
+  "main": "awtk.js",
+  "scripts": {
+    "config": "./node_modules/.bin/node-gyp configure",
+    "build": "./node_modules/.bin/node-gyp --verbose build",
+    "clean": "rm -rf build"
+  },
+  "keywords": [
+    "awtk"
+  ],
+  "author": "xianjimli@hotmail.com",
+  "license": "LGPL-2.1",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "nan": "^2.14.0",
+    "node-gyp": "^5.0.7"
+  }
+}
