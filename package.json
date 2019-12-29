@@ -20,7 +20,6 @@
   "license": "LGPL-2.1",
   "dependencies": {
     "bindings": "^1.5.0",
-    "nan": "^2.14.0",
-    "node-gyp": "^5.0.7"
+    "nan": "^2.14.0"
   }
 }

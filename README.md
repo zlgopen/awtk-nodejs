@@ -22,9 +22,16 @@ git clone https://github.com/zlgopen/awtk-nodejs.git
 cd awtk-nodejs
 ```
 
+如果没有安装node-gyp，请用下列命令安装：
+
+```
+npm install -g node-gyp
+node-gyp configure
+```
+
 ```
 npm install
-npm run clean;npm run config;npm run build;
+npm run build;
 ```
 
 ## 运行

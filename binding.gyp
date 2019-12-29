@@ -15,6 +15,7 @@
                 "../awtk/src",
                 "../awtk/3rd",
                 "../awtk/src/ext_widgets",
+                './node_modules/nan',
                 '<!(node -e \'require("nan")\')'
             ],
             "link_settings": {
@@ -58,7 +59,18 @@
                         "-lgpinyin",
                         "-ltkc",
                         "-llinebreak",
-                        "-lSDL2"
+                        "-lSDL2",
+                        "-lgdi32",
+                        "-luser32",
+                        "-lwinmm",
+                        "-limm32",
+                        "-lversion",
+                        "-lshell32",
+                        "-lole32",
+                        "-lOleaut32",
+                        "-lAdvapi32",
+                        "-lDelayImp",
+                        "-lpsapi"
                     ],
                     "include_dirs": [
                     ]
