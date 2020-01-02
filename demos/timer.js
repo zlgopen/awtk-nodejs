@@ -11,4 +11,4 @@ TTimer.add(function() {
     tk_quit();
     return TRet.OK;
   }
-}, 1000);
+}, null, 1000);

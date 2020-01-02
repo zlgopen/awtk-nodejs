@@ -12,7 +12,6 @@ function application_init() {
 
   nv = null;
   v = null;
-  gc()
 }
 
 application_init();
