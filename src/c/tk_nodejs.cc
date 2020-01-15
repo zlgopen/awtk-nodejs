@@ -16935,15 +16935,43 @@ ret_t label_t_init(v8::Local<v8::Object> ctx) {
 static void wrap_file_chooser_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  if(argc >= 2) {
+  if(argc >= 0) {
   file_chooser_t* ret = NULL;
-  const char* init_dir = (const char*)jsvalue_get_utf8_string(ctx, argv[0]);
-  const char* filter = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
-  ret = (file_chooser_t*)file_chooser_create(init_dir, filter);
-  jsvalue_free_str(ctx, init_dir);
-  jsvalue_free_str(ctx, filter);
+  ret = (file_chooser_t*)file_chooser_create();
 
   v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_file_chooser_set_init_dir(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  file_chooser_t* chooser = (file_chooser_t*)jsvalue_get_pointer(ctx, argv[0], "file_chooser_t*");
+  const char* init_dir = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
+  ret = (ret_t)file_chooser_set_init_dir(chooser, init_dir);
+  jsvalue_free_str(ctx, init_dir);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_file_chooser_set_filter(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  file_chooser_t* chooser = (file_chooser_t*)jsvalue_get_pointer(ctx, argv[0], "file_chooser_t*");
+  const char* filter = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
+  ret = (ret_t)file_chooser_set_filter(chooser, filter);
+  jsvalue_free_str(ctx, filter);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
   argv.GetReturnValue().Set(jret);
   }
   (void)argc;(void)ctx;
@@ -16954,8 +16982,8 @@ static void wrap_file_chooser_cast(const Nan::FunctionCallbackInfo<v8::Value>& a
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 1) {
   file_chooser_t* ret = NULL;
-  void* data = (void*)jsvalue_get_pointer(ctx, argv[0], "void*");
-  ret = (file_chooser_t*)file_chooser_cast(data);
+  file_chooser_t* chooser = (file_chooser_t*)jsvalue_get_pointer(ctx, argv[0], "file_chooser_t*");
+  ret = (file_chooser_t*)file_chooser_cast(chooser);
 
   v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
   argv.GetReturnValue().Set(jret);
@@ -17053,6 +17081,8 @@ static void wrap_file_chooser_is_aborted(const Nan::FunctionCallbackInfo<v8::Val
 
 ret_t file_chooser_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "file_chooser_create", wrap_file_chooser_create);
+  Nan::Export(ctx, "file_chooser_set_init_dir", wrap_file_chooser_set_init_dir);
+  Nan::Export(ctx, "file_chooser_set_filter", wrap_file_chooser_set_filter);
   Nan::Export(ctx, "file_chooser_cast", wrap_file_chooser_cast);
   Nan::Export(ctx, "file_chooser_choose_file_for_save", wrap_file_chooser_choose_file_for_save);
   Nan::Export(ctx, "file_chooser_choose_file_for_open", wrap_file_chooser_choose_file_for_open);
