@@ -97,6 +97,7 @@
 #include "widgets/dialog_title.h"
 #include "tkc/object_default.h"
 #include "widgets/combo_box.h"
+#include "base/native_window.h"
 #include "base/window.h"
 #include "tkc/timer_info.h"
 #include "widgets/image.h"
@@ -5386,6 +5387,24 @@ static void wrap_vgcanvas_clip_rect(const Nan::FunctionCallbackInfo<v8::Value>& 
   (void)argc;(void)ctx;
 }
 
+static void wrap_vgcanvas_intersect_clip_rect(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 5) {
+  ret_t ret = (ret_t)0;
+  vgcanvas_t* vg = (vgcanvas_t*)jsvalue_get_pointer(ctx, argv[0], "vgcanvas_t*");
+  float_t x = (float_t)jsvalue_get_number_value(ctx, argv[1]);
+  float_t y = (float_t)jsvalue_get_number_value(ctx, argv[2]);
+  float_t w = (float_t)jsvalue_get_number_value(ctx, argv[3]);
+  float_t h = (float_t)jsvalue_get_number_value(ctx, argv[4]);
+  ret = (ret_t)vgcanvas_intersect_clip_rect(vg, x, y, w, h);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_vgcanvas_fill(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -5898,6 +5917,7 @@ ret_t vgcanvas_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "vgcanvas_transform", wrap_vgcanvas_transform);
   Nan::Export(ctx, "vgcanvas_set_transform", wrap_vgcanvas_set_transform);
   Nan::Export(ctx, "vgcanvas_clip_rect", wrap_vgcanvas_clip_rect);
+  Nan::Export(ctx, "vgcanvas_intersect_clip_rect", wrap_vgcanvas_intersect_clip_rect);
   Nan::Export(ctx, "vgcanvas_fill", wrap_vgcanvas_fill);
   Nan::Export(ctx, "vgcanvas_stroke", wrap_vgcanvas_stroke);
   Nan::Export(ctx, "vgcanvas_paint", wrap_vgcanvas_paint);
@@ -7872,6 +7892,20 @@ static void wrap_widget_get_child(const Nan::FunctionCallbackInfo<v8::Value>& ar
   (void)argc;(void)ctx;
 }
 
+static void wrap_widget_get_native_window(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  native_window_t* ret = NULL;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  ret = (native_window_t*)widget_get_native_window(widget);
+
+  v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_widget_index_of(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -9256,6 +9290,7 @@ static void wrap_widget_t_get_prop_parent(const Nan::FunctionCallbackInfo<v8::Va
 ret_t widget_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "widget_count_children", wrap_widget_count_children);
   Nan::Export(ctx, "widget_get_child", wrap_widget_get_child);
+  Nan::Export(ctx, "widget_get_native_window", wrap_widget_get_native_window);
   Nan::Export(ctx, "widget_index_of", wrap_widget_index_of);
   Nan::Export(ctx, "widget_close_window", wrap_widget_close_window);
   Nan::Export(ctx, "widget_move", wrap_widget_move);
@@ -20615,6 +20650,139 @@ ret_t combo_box_t_init(v8::Local<v8::Object> ctx) {
  return RET_OK;
 }
 
+static void wrap_native_window_move(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 4) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  xy_t x = (xy_t)jsvalue_get_int_value(ctx, argv[1]);
+  xy_t y = (xy_t)jsvalue_get_int_value(ctx, argv[2]);
+  bool_t force = (bool_t)jsvalue_get_boolean_value(ctx, argv[3]);
+  ret = (ret_t)native_window_move(win, x, y, force);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_native_window_resize(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 4) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  wh_t w = (wh_t)jsvalue_get_int_value(ctx, argv[1]);
+  wh_t h = (wh_t)jsvalue_get_int_value(ctx, argv[2]);
+  bool_t force = (bool_t)jsvalue_get_boolean_value(ctx, argv[3]);
+  ret = (ret_t)native_window_resize(win, w, h, force);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_native_window_minimize(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  ret = (ret_t)native_window_minimize(win);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_native_window_maximize(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  ret = (ret_t)native_window_maximize(win);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_native_window_restore(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  ret = (ret_t)native_window_restore(win);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_native_window_center(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  ret = (ret_t)native_window_center(win);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_native_window_show_border(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  bool_t show = (bool_t)jsvalue_get_boolean_value(ctx, argv[1]);
+  ret = (ret_t)native_window_show_border(win, show);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_native_window_set_fullscreen(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  bool_t fullscreen = (bool_t)jsvalue_get_boolean_value(ctx, argv[1]);
+  ret = (ret_t)native_window_set_fullscreen(win, fullscreen);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+ret_t native_window_t_init(v8::Local<v8::Object> ctx) {
+  Nan::Export(ctx, "native_window_move", wrap_native_window_move);
+  Nan::Export(ctx, "native_window_resize", wrap_native_window_resize);
+  Nan::Export(ctx, "native_window_minimize", wrap_native_window_minimize);
+  Nan::Export(ctx, "native_window_maximize", wrap_native_window_maximize);
+  Nan::Export(ctx, "native_window_restore", wrap_native_window_restore);
+  Nan::Export(ctx, "native_window_center", wrap_native_window_center);
+  Nan::Export(ctx, "native_window_show_border", wrap_native_window_show_border);
+  Nan::Export(ctx, "native_window_set_fullscreen", wrap_native_window_set_fullscreen);
+
+ return RET_OK;
+}
+
 static void wrap_window_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -21707,6 +21875,7 @@ ret_t awtk_js_init(v8::Local<v8::Object> ctx) {
   dialog_title_t_init(ctx);
   object_default_t_init(ctx);
   combo_box_t_init(ctx);
+  native_window_t_init(ctx);
   window_t_init(ctx);
   timer_info_t_init(ctx);
   image_t_init(ctx);
