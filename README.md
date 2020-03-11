@@ -74,3 +74,5 @@ node demos/demoui.js
 * 避免使用动态 GIF 图片。
 
 * 避免直接使用 value\_t/color\_t/bitmap\_t/object\_t 等类。
+
+* 编译 PC 版本，请把 src/c/custom.c 中的APP\_SIMULATOR 改成 APP\_DESKTOP，并重新编译。
