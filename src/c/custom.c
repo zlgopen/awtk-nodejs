@@ -197,7 +197,7 @@ static void wrap_emitter_on(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
   argv.GetReturnValue().Set(jret);
 }
 
-extern "C" ret_t assets_init(void);
+extern "C" ret_t assets_init(const char* theme);
 
 static void wrap_awtk_init(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
   JSContext *ctx = NULL;
@@ -209,7 +209,7 @@ static void wrap_awtk_init(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
     const char *app_name = (const char *)jsvalue_get_utf8_string(ctx, argv[3]);
 
     ret = (ret_t)tk_init(w, h, APP_SIMULATOR, app_name, NULL);
-    assets_init();
+    assets_init("default");
     tk_ext_widgets_init();
     main_loop()->running = TRUE;
     system_info_set_default_font(system_info(), "default_full");
