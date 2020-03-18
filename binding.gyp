@@ -2,7 +2,7 @@
     "targets": [
         {
             "target_name": "awtk",
-            "sources": ["src/c/tk_nodejs.cc", "src/assets.c", "src/assets_default.c"],
+            "sources": ["src/c/tk_nodejs.cc", "src/assets.c"],
             'defines': [
                 'WITH_FS_RES=1'
             ],
