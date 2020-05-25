@@ -28,7 +28,7 @@
             "conditions": [[
                 'OS=="mac"', {
                     "libraries": [
-                        "-lawtk",
+                        "-lawtk_global",
                         "-lextwidgets",
                         "-lwidgets",
                         "-lbase",
@@ -50,7 +50,7 @@
                 [
                 'OS=="win"', {
                     "libraries": [
-                        "-lawtk",
+                        "-lawtk_global",
                         "-lextwidgets",
                         "-lwidgets",
                         "-lbase",
@@ -79,7 +79,7 @@
                 [
                 'OS=="linux"', {
                     "libraries": [
-                        "-lawtk",
+                        "-lawtk_global",
                         "-lextwidgets",
                         "-lwidgets",
                         "-lbase",

@@ -206,7 +206,7 @@ static void wrap_awtk_init(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
     ret_t ret = (ret_t)0;
     wh_t w = (wh_t)jsvalue_get_int_value(ctx, argv[0]);
     wh_t h = (wh_t)jsvalue_get_int_value(ctx, argv[1]);
-    const char *app_name = (const char *)jsvalue_get_utf8_string(ctx, argv[3]);
+    const char *app_name = (const char *)jsvalue_get_utf8_string(ctx, argv[2]);
 
     ret = (ret_t)tk_init(w, h, APP_SIMULATOR, app_name, NULL);
     assets_init("default");
