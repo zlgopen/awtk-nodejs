@@ -1737,6 +1737,21 @@ var TEventType;
      */
     TEventType[TEventType["PROP_CHANGED"] = EVT_PROP_CHANGED()] = "PROP_CHANGED";
     /**
+     * 对象即将执行命令(cmd_exec_event_t)。
+     *
+     */
+    TEventType[TEventType["CMD_WILL_EXEC"] = EVT_CMD_WILL_EXEC()] = "CMD_WILL_EXEC";
+    /**
+     * 对象完成执行命令(cmd_exec_event_t)。
+     *
+     */
+    TEventType[TEventType["CMD_EXECED"] = EVT_CMD_EXECED()] = "CMD_EXECED";
+    /**
+     * 对象命令是否能执行指定的命令(cmd_exec_event_t)。
+     *
+     */
+    TEventType[TEventType["CMD_CAN_EXEC"] = EVT_CMD_CAN_EXEC()] = "CMD_CAN_EXEC";
+    /**
      * 即将增加和删除集合中的项目(event_t)。
      *
      */
@@ -1918,57 +1933,77 @@ exports.TImageManager = TImageManager;
 var TInputType;
 (function (TInputType) {
     /**
-     * 文本。
+     * 文本。字符串属性值：text
      *
      */
     TInputType[TInputType["TEXT"] = INPUT_TEXT()] = "TEXT";
     /**
-     * 整数。
+     * 整数。字符串属性值：int
      *
      */
     TInputType[TInputType["INT"] = INPUT_INT()] = "INT";
     /**
-     * 非负整数。
+     * 非负整数。字符串属性值：uint
      *
      */
     TInputType[TInputType["UINT"] = INPUT_UINT()] = "UINT";
     /**
-     * 16进制整数。
+     * 16进制整数。字符串属性值：hex
      *
      */
     TInputType[TInputType["HEX"] = INPUT_HEX()] = "HEX";
     /**
-     * 浮点数。
+     * 浮点数。字符串属性值：float
      *
      */
     TInputType[TInputType["FLOAT"] = INPUT_FLOAT()] = "FLOAT";
     /**
-     * 非负浮点数。
+     * 非负浮点数。字符串属性值：ufloat
      *
      */
     TInputType[TInputType["UFLOAT"] = INPUT_UFLOAT()] = "UFLOAT";
     /**
-     * 邮件地址。
+     * 邮件地址。字符串属性值：email
      *
      */
     TInputType[TInputType["EMAIL"] = INPUT_EMAIL()] = "EMAIL";
     /**
-     * 密码。
+     * 密码。字符串属性值：password
      *
      */
     TInputType[TInputType["PASSWORD"] = INPUT_PASSWORD()] = "PASSWORD";
     /**
-     * 电话号码。
+     * 电话号码。字符串属性值：phone
      *
      */
     TInputType[TInputType["PHONE"] = INPUT_PHONE()] = "PHONE";
     /**
-     * 使用自定义的软键盘(如计算器等应用不希望弹出系统软键盘)。
+     * IP Addr V4(如：192.168.1.1)。字符串属性值：ipv4
+     *
+     */
+    TInputType[TInputType["IPV4"] = INPUT_IPV4()] = "IPV4";
+    /**
+     * 日期(如：2020/02/20)。字符串属性值：date
+     *
+     */
+    TInputType[TInputType["DATE"] = INPUT_DATE()] = "DATE";
+    /**
+     * 时间(时分，如：12:00)。字符串属性值：time
+     *
+     */
+    TInputType[TInputType["TIME"] = INPUT_TIME()] = "TIME";
+    /**
+     * 时间(时分秒，如：12:00:00)。字符串属性值：time_full
+     *
+     */
+    TInputType[TInputType["TIME_FULL"] = INPUT_TIME_FULL()] = "TIME_FULL";
+    /**
+     * 使用自定义的软键盘(如计算器等应用不希望弹出系统软键盘)。字符串属性值：custom
      *
      */
     TInputType[TInputType["CUSTOM"] = INPUT_CUSTOM()] = "CUSTOM";
     /**
-     * 使用自定义的密码软键盘。
+     * 使用自定义的密码软键盘。字符串属性值：custom_password
      *
      */
     TInputType[TInputType["CUSTOM_PASSWORD"] = INPUT_CUSTOM_PASSWORD()] = "CUSTOM_PASSWORD";
@@ -6642,25 +6677,13 @@ var TAppConf = /** @class */ (function () {
         return app_conf_save();
     };
     /**
-     * 注册配置变化事件。
+     * 重新加载配置(内存中的配置丢失)。
      *
-     * @param on_event 事件处理函数。
-     * @param ctx 事件处理函数上下文。
-     *
-     * @returns 返回id，用于app_conf_off_changed。
-     */
-    TAppConf.onChanged = function (on_event, ctx) {
-        return app_conf_on_changed(on_event, ctx);
-    };
-    /**
-     * 注销配置变化事件。
-     *
-     * @param id app_conf_on_changed返回的ID。
      *
      * @returns 返回RET_OK表示成功，否则表示失败。
      */
-    TAppConf.offChanged = function (id) {
-        return app_conf_off_changed(id);
+    TAppConf.reload = function () {
+        return app_conf_reload();
     };
     /**
      * 释放conf对象。
@@ -7433,6 +7456,60 @@ var TCanvas = /** @class */ (function () {
     return TCanvas;
 }());
 exports.TCanvas = TCanvas;
+;
+/**
+ * 对象常见命令定义
+ *
+ */
+var TObjectCmd;
+(function (TObjectCmd) {
+    /**
+     * 保存命令
+     *
+     */
+    TObjectCmd[TObjectCmd["SAVE"] = OBJECT_CMD_SAVE()] = "SAVE";
+    /**
+     * 重新加载命令
+     *
+     */
+    TObjectCmd[TObjectCmd["RELOAD"] = OBJECT_CMD_RELOAD()] = "RELOAD";
+    /**
+     * 和前一个属性交换位置
+     *>参数为属性的名称或路径。
+     *
+     */
+    TObjectCmd[TObjectCmd["MOVE_UP"] = OBJECT_CMD_MOVE_UP()] = "MOVE_UP";
+    /**
+     * 和后一个属性交换位置
+     *>参数为属性的名称或路径。
+     *
+     */
+    TObjectCmd[TObjectCmd["MOVE_DOWN"] = OBJECT_CMD_MOVE_DOWN()] = "MOVE_DOWN";
+    /**
+     * 删除属性。
+     *>参数为属性的名称或路径。
+     *
+     */
+    TObjectCmd[TObjectCmd["REMOVE"] = OBJECT_CMD_REMOVE()] = "REMOVE";
+    /**
+     * 清除全部属性。
+     *>参数为属性的名称或路径。
+     *
+     */
+    TObjectCmd[TObjectCmd["CLEAR"] = OBJECT_CMD_CLEAR()] = "CLEAR";
+    /**
+     * 增加子项。
+     *>参数为属性的名称或路径。
+     *
+     */
+    TObjectCmd[TObjectCmd["ADD"] = OBJECT_CMD_ADD()] = "ADD";
+    /**
+     * 编辑子项。
+     *>参数为属性的名称或路径。
+     *
+     */
+    TObjectCmd[TObjectCmd["EDIT"] = OBJECT_CMD_EDIT()] = "EDIT";
+})(TObjectCmd = exports.TObjectCmd || (exports.TObjectCmd = {}));
 ;
 /**
  * 命名的值。
@@ -8606,50 +8683,47 @@ var TAssetType;
 })(TAssetType = exports.TAssetType || (exports.TAssetType = {}));
 ;
 /**
- * 文件管理/浏览/选择控件。
+ * 画布控件。
  *
- *file\_browser\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于file\_browser\_view\_t控件。
+ *画布控件让开发者可以自己在控件上绘制需要的内容。
  *
- *考虑到文件浏览器界面呈现的多样性，界面呈现工作完全有子控件来完成。
+ *canvas\_widget\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于canvas\_widget\_t控件。
  *
- *file\_browser\_view\_t负责关联文件/文件夹数据到子控件上，子控件需要特定的规范命名。
+ *在xml中使用"canvas"标签创建画布控件。如：
  *
- ** 名为 "cwd" 的子控件用于显示当前路径。
+ *```xml
+ *<canvas name="paint_vgcanvas" x="0" y="0" w="100%" h="100%" />
+ *```
  *
- ** 名为 "selected_file" 的子控件用于显示当前选择的文件。
+ *> 更多用法请参考：
+ *[canvas_widget.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/vgcanvas.xml)
  *
- ** 名为 "file" 的子控件用于显示文件项的模板控件。
+ *在c代码中使用函数canvas\_widget\_create创建画布控件。如：
  *
- ** 名为 "folder" 的子控件用于显示文件夹项的模板控件。
  *
- ** 名为 "return_up" 的子控件用于返回上一级文件夹的模板控件。
+ *> 创建之后，需要用widget\_on注册EVT\_PAINT事件，并在EVT\_PAINT事件处理函数中绘制。
  *
- ** 名为 "container" 的子控件为容器控件，通常是scrollview。
  *
- ** 名为 "name" 的子控件用于显示文件和文件夹的名称(放在列表项目内)。
+ *绘制时，可以通过canvas接口去绘制，也可以通过vgcanvas接口去绘制。
+ *先从evt获取canvas对象，再通过canvas\_get\_vgcanvas从canvas中获取vgcanvas对象。
  *
- ** 名为 "size" 的子控件用于显示文件和文件夹的大小(放在列表项目内)。
  *
- ** 名为 "mtime" 的子控件用于显示文件和文件夹的修改时间(放在列表项目内)。
+ *> 完整示例请参考：
+ *[canvas demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/canvas.c)
  *
- ** 名为 "ctime" 的子控件用于显示文件和文件夹的创建时间(放在列表项目内)。
+ *参考：
  *
- ** 名为 "icon" 的子控件用于显示文件和文件夹的图标(放在列表项目内)。
- *
- ** 类型为 "check_button" 的子控件用于选择(放在列表项目内)。
- *
- *完整示例请参考：
- *
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/file_chooser_for_open.xml
+ ** [canvas接口描述](canvas_t.md)
+ ** [vgcanvas接口描述](vgcanvas_t.md)
  *
  */
-var TFileBrowserView = /** @class */ (function (_super) {
-    __extends(TFileBrowserView, _super);
-    function TFileBrowserView(nativeObj) {
+var TCanvasWidget = /** @class */ (function (_super) {
+    __extends(TCanvasWidget, _super);
+    function TCanvasWidget(nativeObj) {
         return _super.call(this, nativeObj) || this;
     }
     /**
-     * 创建file_browser_view对象
+     * 创建canvas_widget对象
      *
      * @param parent 父控件
      * @param x x坐标
@@ -8659,207 +8733,925 @@ var TFileBrowserView = /** @class */ (function (_super) {
      *
      * @returns 对象。
      */
-    TFileBrowserView.create = function (parent, x, y, w, h) {
-        return new TFileBrowserView(file_browser_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    TCanvasWidget.create = function (parent, x, y, w, h) {
+        return new TCanvasWidget(canvas_widget_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
     };
     /**
-     * 转换为file_browser_view对象(供脚本语言使用)。
+     * 转换为canvas_widget对象(供脚本语言使用)。
      *
-     * @param widget file_browser_view对象。
+     * @param widget canvas_widget对象。
      *
-     * @returns file_browser_view对象。
+     * @returns canvas_widget对象。
      */
-    TFileBrowserView.cast = function (widget) {
-        return new TFileBrowserView(file_browser_view_cast(widget != null ? (widget.nativeObj || widget) : null));
+    TCanvasWidget.cast = function (widget) {
+        return new TCanvasWidget(canvas_widget_cast(widget != null ? (widget.nativeObj || widget) : null));
     };
-    /**
-     * 设置 初始文件夹。
-     *
-     * @param init_dir 初始文件夹。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.setInitDir = function (init_dir) {
-        return file_browser_view_set_init_dir(this != null ? (this.nativeObj || this) : null, init_dir);
-    };
-    /**
-     * 设置 过滤规则。
-     *> files_only 表示只列出文件，dir_only 表示只列出目录，其它表示只列出满足扩展名文件集合(如：.jpg.png.gif)。
-     *
-     * @param filter 过滤规则。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.setFilter = function (filter) {
-        return file_browser_view_set_filter(this != null ? (this.nativeObj || this) : null, filter);
-    };
-    /**
-     * 重新加载。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.reload = function () {
-        return file_browser_view_reload(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 设置 忽略隐藏文件。
-     *
-     * @param ignore_hidden_files 忽略隐藏文件。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.setIgnoreHiddenFiles = function (ignore_hidden_files) {
-        return file_browser_view_set_ignore_hidden_files(this != null ? (this.nativeObj || this) : null, ignore_hidden_files);
-    };
-    /**
-     * 设置 是否为升序排序。
-     *
-     * @param sort_ascending 是否为升序排序。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.setSortAscending = function (sort_ascending) {
-        return file_browser_view_set_sort_ascending(this != null ? (this.nativeObj || this) : null, sort_ascending);
-    };
-    /**
-     * 设置 是否显示checkbutton。
-     *
-     * @param show_check_button 是否显示checkbutton。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.setShowCheckButton = function (show_check_button) {
-        return file_browser_view_set_show_check_button(this != null ? (this.nativeObj || this) : null, show_check_button);
-    };
-    /**
-     * 设置 排序方式。可选值(name, size, mtime, type)。
-     *
-     * @param sort_by 排序方式。可选值(name, size, mtime, type)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.setSortBy = function (sort_by) {
-        return file_browser_view_set_sort_by(this != null ? (this.nativeObj || this) : null, sort_by);
-    };
-    /**
-     * 获取当前路径。
-     *
-     *
-     * @returns 返回当前路径。
-     */
-    TFileBrowserView.prototype.getCwd = function () {
-        return file_browser_view_get_cwd(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 在当前文件夹创建子文件夹。
-     *
-     * @param name 子文件夹名。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.createDir = function (name) {
-        return file_browser_view_create_dir(this != null ? (this.nativeObj || this) : null, name);
-    };
-    /**
-     * 在当前文件夹创建文件。
-     *
-     * @param name 文件名。
-     * @param data 数据。
-     * @param size 数据长度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileBrowserView.prototype.createFile = function (name, data, size) {
-        return file_browser_view_create_file(this != null ? (this.nativeObj || this) : null, name, data, size);
-    };
-    Object.defineProperty(TFileBrowserView.prototype, "initDir", {
-        /**
-         * 初始文件夹。
-         *
-         */
-        get: function () {
-            return file_browser_view_t_get_prop_init_dir(this.nativeObj);
-        },
-        set: function (v) {
-            this.setInitDir(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TFileBrowserView.prototype, "filter", {
-        /**
-         * 过滤规则。
-         *
-         */
-        get: function () {
-            return file_browser_view_t_get_prop_filter(this.nativeObj);
-        },
-        set: function (v) {
-            this.setFilter(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TFileBrowserView.prototype, "ignoreHiddenFiles", {
-        /**
-         * 是否忽略隐藏文件。
-         *
-         */
-        get: function () {
-            return file_browser_view_t_get_prop_ignore_hidden_files(this.nativeObj);
-        },
-        set: function (v) {
-            this.setIgnoreHiddenFiles(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TFileBrowserView.prototype, "sortAscending", {
-        /**
-         * 是否为升序排序。
-         *
-         */
-        get: function () {
-            return file_browser_view_t_get_prop_sort_ascending(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSortAscending(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TFileBrowserView.prototype, "showCheckButton", {
-        /**
-         * 是否显示checkbutton。
-         *
-         */
-        get: function () {
-            return file_browser_view_t_get_prop_show_check_button(this.nativeObj);
-        },
-        set: function (v) {
-            this.setShowCheckButton(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TFileBrowserView.prototype, "sortBy", {
-        /**
-         * 排序方式。可选值(name, size, mtime, type)。
-         *
-         */
-        get: function () {
-            return file_browser_view_t_get_prop_sort_by(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSortBy(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TFileBrowserView;
+    return TCanvasWidget;
 }(TWidget));
-exports.TFileBrowserView = TFileBrowserView;
+exports.TCanvasWidget = TCanvasWidget;
+;
+/**
+ * 表盘控件。
+ *
+ *表盘控件就是一张图片。
+ *
+ *guage\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于guage\_t控件。
+ *
+ *在xml中使用"guage"标签创建表盘控件。如：
+ *
+ *```xml
+ *<guage x="c" y="10" w="240" h="240" image="guage_bg"
+ *```
+ *
+ *> 更多用法请参考：
+ *[guage.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/guage.xml)
+ *
+ *在c代码中使用函数guage\_create创建表盘控件。如：
+ *
+ *
+ *可用通过style来设置控件的显示风格，如背景和边框等。如：
+ *
+ *```xml
+ *<guage>
+ *<style name="border">
+ *<normal border_color="#000000" bg_color="#e0e0e0" text_color="black"/>
+ *</style>
+ *</guage>
+ *```
+ *
+ *> 更多用法请参考：
+ *[theme
+ *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
+ *
+ */
+var TGuage = /** @class */ (function (_super) {
+    __extends(TGuage, _super);
+    function TGuage(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建guage对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TGuage.create = function (parent, x, y, w, h) {
+        return new TGuage(guage_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为guage对象(供脚本语言使用)。
+     *
+     * @param widget guage对象。
+     *
+     * @returns guage对象。
+     */
+    TGuage.cast = function (widget) {
+        return new TGuage(guage_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置背景图片的名称。
+     *
+     * @param name 图片名称，该图片必须存在于资源管理器。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TGuage.prototype.setImage = function (name) {
+        return guage_set_image(this != null ? (this.nativeObj || this) : null, name);
+    };
+    /**
+     * 设置图片的显示方式。
+     *
+     *> 绘制方式的属性值和枚举值:
+     *[image\_draw\_type\_name\_value](https://github.com/zlgopen/awtk/blob/master/src/base/enums.c#L98)
+     *
+     * @param draw_type 显示方式。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TGuage.prototype.setDrawType = function (draw_type) {
+        return guage_set_draw_type(this != null ? (this.nativeObj || this) : null, draw_type);
+    };
+    Object.defineProperty(TGuage.prototype, "image", {
+        /**
+         * 背景图片。
+         *
+         */
+        get: function () {
+            return guage_t_get_prop_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TGuage.prototype, "drawType", {
+        /**
+         * 图片的绘制方式。
+         *
+         */
+        get: function () {
+            return guage_t_get_prop_draw_type(this.nativeObj);
+        },
+        set: function (v) {
+            this.setDrawType(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TGuage;
+}(TWidget));
+exports.TGuage = TGuage;
+;
+/**
+ * 对象属性变化事件。
+ *
+ */
+var TPropChangeEvent = /** @class */ (function (_super) {
+    __extends(TPropChangeEvent, _super);
+    function TPropChangeEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转prop_change_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns 返回event对象。
+     */
+    TPropChangeEvent.cast = function (event) {
+        return new TPropChangeEvent(prop_change_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TPropChangeEvent.prototype, "name", {
+        /**
+         * 属性的名称。
+         *
+         */
+        get: function () {
+            return prop_change_event_t_get_prop_name(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPropChangeEvent.prototype, "value", {
+        /**
+         * 属性的值。
+         *
+         */
+        get: function () {
+            return new TValue(prop_change_event_t_get_prop_value(this.nativeObj));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TPropChangeEvent;
+}(TEvent));
+exports.TPropChangeEvent = TPropChangeEvent;
+;
+/**
+ * 进度变化事件。
+ *
+ */
+var TProgressEvent = /** @class */ (function (_super) {
+    __extends(TProgressEvent, _super);
+    function TProgressEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转progress_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns 返回event对象。
+     */
+    TProgressEvent.cast = function (event) {
+        return new TProgressEvent(progress_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TProgressEvent.prototype, "percent", {
+        /**
+         * 进度百分比。
+         *
+         */
+        get: function () {
+            return progress_event_t_get_prop_percent(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TProgressEvent;
+}(TEvent));
+exports.TProgressEvent = TProgressEvent;
+;
+/**
+ * 执行完成事件。
+ *
+ */
+var TDoneEvent = /** @class */ (function (_super) {
+    __extends(TDoneEvent, _super);
+    function TDoneEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转done_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns 返回event对象。
+     */
+    TDoneEvent.cast = function (event) {
+        return new TDoneEvent(done_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TDoneEvent.prototype, "result", {
+        /**
+         * 执行结果。
+         *
+         */
+        get: function () {
+            return done_event_t_get_prop_result(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TDoneEvent;
+}(TEvent));
+exports.TDoneEvent = TDoneEvent;
+;
+/**
+ * 执行完成事件。
+ *
+ */
+var TErrorEvent = /** @class */ (function (_super) {
+    __extends(TErrorEvent, _super);
+    function TErrorEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转error_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns 返回event对象。
+     */
+    TErrorEvent.cast = function (event) {
+        return new TErrorEvent(error_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TErrorEvent.prototype, "code", {
+        /**
+         * 错误码。
+         *
+         */
+        get: function () {
+            return error_event_t_get_prop_code(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TErrorEvent.prototype, "message", {
+        /**
+         * 错误信息。
+         *
+         */
+        get: function () {
+            return error_event_t_get_prop_message(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TErrorEvent;
+}(TEvent));
+exports.TErrorEvent = TErrorEvent;
+;
+/**
+ * 对象执行命令的事件。
+ *
+ */
+var TCmdExecEvent = /** @class */ (function (_super) {
+    __extends(TCmdExecEvent, _super);
+    function TCmdExecEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转cmd_exec_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns 返回event对象。
+     */
+    TCmdExecEvent.cast = function (event) {
+        return new TCmdExecEvent(cmd_exec_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TCmdExecEvent.prototype, "name", {
+        /**
+         * 命令的名称。
+         *
+         */
+        get: function () {
+            return cmd_exec_event_t_get_prop_name(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TCmdExecEvent.prototype, "args", {
+        /**
+         * 命令的参数。
+         *
+         */
+        get: function () {
+            return cmd_exec_event_t_get_prop_args(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TCmdExecEvent.prototype, "result", {
+        /**
+         * 执行结果(适用于EXECED)。
+         *
+         */
+        get: function () {
+            return cmd_exec_event_t_get_prop_result(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TCmdExecEvent;
+}(TEvent));
+exports.TCmdExecEvent = TCmdExecEvent;
+;
+/**
+ * 模拟时钟控件。
+ *
+ *time\_clock\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于time\_clock\_t控件。
+ *
+ *在xml中使用"time\_clock"标签创建模拟时钟控件。如：
+ *
+ *```xml
+ *<time_clock x="c" y="m" w="300" h="300" bg_image="clock_bg" image="clock"
+ *hour_image="clock_hour" minute_image="clock_minute" second_image="clock_second"/>
+ *```
+ *
+ *> 更多用法请参考：[time\_clock.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/time_clock.xml)
+ *
+ *在c代码中使用函数time\_clock\_create创建模拟时钟控件。如：
+ *
+ *
+ *> 完整示例请参考：[time_clock demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/time_clock.c)
+ *
+ *time\_clock一般不需要设置style。
+ *
+ */
+var TTimeClock = /** @class */ (function (_super) {
+    __extends(TTimeClock, _super);
+    function TTimeClock(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建time_clock对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TTimeClock.create = function (parent, x, y, w, h) {
+        return new TTimeClock(time_clock_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为time_clock对象(供脚本语言使用)。
+     *
+     * @param widget time_clock对象。
+     *
+     * @returns time_clock对象。
+     */
+    TTimeClock.cast = function (widget) {
+        return new TTimeClock(time_clock_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置小时的值。
+     *
+     * @param hour 小时的值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setHour = function (hour) {
+        return time_clock_set_hour(this != null ? (this.nativeObj || this) : null, hour);
+    };
+    /**
+     * 设置分钟的值。
+     *
+     * @param minute 分钟的值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setMinute = function (minute) {
+        return time_clock_set_minute(this != null ? (this.nativeObj || this) : null, minute);
+    };
+    /**
+     * 设置秒的值。
+     *
+     * @param second 秒的值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setSecond = function (second) {
+        return time_clock_set_second(this != null ? (this.nativeObj || this) : null, second);
+    };
+    /**
+     * 设置小时的图片。
+     *
+     * @param hour 小时的图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setHourImage = function (hour) {
+        return time_clock_set_hour_image(this != null ? (this.nativeObj || this) : null, hour);
+    };
+    /**
+     * 设置分钟的图片。
+     *
+     * @param minute_image 分钟的图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setMinuteImage = function (minute_image) {
+        return time_clock_set_minute_image(this != null ? (this.nativeObj || this) : null, minute_image);
+    };
+    /**
+     * 设置秒的图片。
+     *
+     * @param second_image 秒的图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setSecondImage = function (second_image) {
+        return time_clock_set_second_image(this != null ? (this.nativeObj || this) : null, second_image);
+    };
+    /**
+     * 设置背景图片。
+     *
+     * @param bg_image 背景图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setBgImage = function (bg_image) {
+        return time_clock_set_bg_image(this != null ? (this.nativeObj || this) : null, bg_image);
+    };
+    /**
+     * 设置中心图片。
+     *
+     * @param image 图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setImage = function (image) {
+        return time_clock_set_image(this != null ? (this.nativeObj || this) : null, image);
+    };
+    /**
+     * 设置小时指针的旋转锚点。
+     *> 后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f
+     *
+     * @param anchor_x 指针的锚点坐标x。
+     * @param anchor_y 指针的锚点坐标y。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setHourAnchor = function (anchor_x, anchor_y) {
+        return time_clock_set_hour_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
+    };
+    /**
+     * 设置分钟指针的旋转锚点。
+     *> 后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f
+     *
+     * @param anchor_x 指针的锚点坐标x。
+     * @param anchor_y 指针的锚点坐标y。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setMinuteAnchor = function (anchor_x, anchor_y) {
+        return time_clock_set_minute_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
+    };
+    /**
+     * 设置秒钟指针的旋转锚点。
+     *> 后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f
+     *
+     * @param anchor_x 指针的锚点坐标x。
+     * @param anchor_y 指针的锚点坐标y。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTimeClock.prototype.setSecondAnchor = function (anchor_x, anchor_y) {
+        return time_clock_set_second_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
+    };
+    Object.defineProperty(TTimeClock.prototype, "hour", {
+        /**
+         * 小时。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_hour(this.nativeObj);
+        },
+        set: function (v) {
+            this.setHour(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "minute", {
+        /**
+         * 分钟。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_minute(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMinute(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "second", {
+        /**
+         * 秒。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_second(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSecond(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "image", {
+        /**
+         * 中心图片。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "bgImage", {
+        /**
+         * 背景图片。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_bg_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setBgImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "hourImage", {
+        /**
+         * 时针图片。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_hour_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setHourImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "minuteImage", {
+        /**
+         * 分针图片。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_minute_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMinuteImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "secondImage", {
+        /**
+         * 秒针图片。
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_second_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSecondImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "hourAnchorX", {
+        /**
+         * 时针图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_hour_anchor_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "hourAnchorY", {
+        /**
+         * 时针图片旋转锚点y坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_hour_anchor_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "minuteAnchorX", {
+        /**
+         * 分针图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_minute_anchor_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "minuteAnchorY", {
+        /**
+         * 分针图片旋转锚点y坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_minute_anchor_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "secondAnchorX", {
+        /**
+         * 秒针图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_second_anchor_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimeClock.prototype, "secondAnchorY", {
+        /**
+         * 秒针图片旋转锚点y坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return time_clock_t_get_prop_second_anchor_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TTimeClock;
+}(TWidget));
+exports.TTimeClock = TTimeClock;
+;
+/**
+ * 文本选择器控件，通常用于选择日期和时间等。
+ *
+ *> XXX: 目前需要先设置options和visible_nr，再设置其它参数(在XML中也需要按此顺序)。
+ *
+ *text\_selector\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于text\_selector\_t控件。
+ *
+ *在xml中使用"text\_selector"标签创建文本选择器控件。如：
+ *
+ *```xml
+ *<text_selector options="red;green;blue;gold;orange" visible_nr="3" text="red"/>
+ *```
+ *
+ *> 更多用法请参考：[text\_selector.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/text_selector.xml)
+ *
+ *在c代码中使用函数text\_selector\_create创建文本选择器控件。如：
+ *
+ *
+ *> 完整示例请参考：[text\_selector demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/text_selector.c)
+ *
+ *可用通过style来设置控件的显示风格，如字体和背景颜色等。如：
+ *
+ *```xml
+ *<style name="dark" fg_color="#a0a0a0"  text_color="black" text_align_h="center">
+ *<normal     bg_color="#ffffff" mask_color="#404040" border_color="#404040"/>
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L443)
+ *
+ */
+var TTextSelector = /** @class */ (function (_super) {
+    __extends(TTextSelector, _super);
+    function TTextSelector(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建text_selector对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TTextSelector.create = function (parent, x, y, w, h) {
+        return new TTextSelector(text_selector_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换text_selector对象(供脚本语言使用)。
+     *
+     * @param widget text_selector对象。
+     *
+     * @returns text_selector对象。
+     */
+    TTextSelector.cast = function (widget) {
+        return new TTextSelector(text_selector_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 重置所有选项。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.resetOptions = function () {
+        return text_selector_reset_options(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 获取选项个数。
+     *
+     *
+     * @returns 返回选项个数。
+     */
+    TTextSelector.prototype.countOptions = function () {
+        return text_selector_count_options(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 追加一个选项。
+     *
+     * @param value 值。
+     * @param text 文本。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.appendOption = function (value, text) {
+        return text_selector_append_option(this != null ? (this.nativeObj || this) : null, value, text);
+    };
+    /**
+     * 设置选项。
+     *
+     * @param options 选项。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.setOptions = function (options) {
+        return text_selector_set_options(this != null ? (this.nativeObj || this) : null, options);
+    };
+    /**
+     * 设置一系列的整数选项。
+     *
+     * @param start 起始值。
+     * @param nr 个数。
+     * @param step 步长。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.setRangeOptions = function (start, nr, step) {
+        return text_selector_set_range_options(this != null ? (this.nativeObj || this) : null, start, nr, step);
+    };
+    /**
+     * 获取text_selector的值。
+     *
+     *
+     * @returns 返回值。
+     */
+    TTextSelector.prototype.getValue = function () {
+        return text_selector_get_value(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 设置text_selector的值。
+     *
+     * @param value 值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.setValue = function (value) {
+        return text_selector_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 获取text_selector的文本。
+     *
+     *
+     * @returns 返回文本。
+     */
+    TTextSelector.prototype.getTextValue = function () {
+        return text_selector_get_text(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 设置text_selector的文本。
+     *
+     * @param text 文本。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.setText = function (text) {
+        return text_selector_set_text(this != null ? (this.nativeObj || this) : null, text);
+    };
+    /**
+     * 设置第index个选项为当前选中的选项。
+     *
+     * @param index 选项的索引。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.setSelectedIndex = function (index) {
+        return text_selector_set_selected_index(this != null ? (this.nativeObj || this) : null, index);
+    };
+    /**
+     * 设置可见的选项数。
+     *
+     * @param visible_nr 选项数。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.setVisibleNr = function (visible_nr) {
+        return text_selector_set_visible_nr(this != null ? (this.nativeObj || this) : null, visible_nr);
+    };
+    Object.defineProperty(TTextSelector.prototype, "visibleNr", {
+        /**
+         * 可见的选项数量(只能是3或者5，缺省为5)。
+         *
+         */
+        get: function () {
+            return text_selector_t_get_prop_visible_nr(this.nativeObj);
+        },
+        set: function (v) {
+            this.setVisibleNr(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTextSelector.prototype, "selectedIndex", {
+        /**
+         * 当前选中的选项。
+         *
+         */
+        get: function () {
+            return text_selector_t_get_prop_selected_index(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSelectedIndex(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTextSelector.prototype, "options", {
+        /**
+         * 设置可选项(冒号分隔值和文本，分号分隔选项，如:1:red;2:green;3:blue)。
+         *对于数值选项，也可以指定一个范围，用『-』分隔起始值、结束值和格式。
+         *如："1-7-%02d"表示1到7，格式为『02d』，格式为可选，缺省为『%d』。
+         *
+         */
+        get: function () {
+            return text_selector_t_get_prop_options(this.nativeObj);
+        },
+        set: function (v) {
+            this.setOptions(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TTextSelector;
+}(TWidget));
+exports.TTextSelector = TTextSelector;
 ;
 /**
  * 滚轮事件。
@@ -8927,6 +9719,106 @@ var TWheelEvent = /** @class */ (function (_super) {
     return TWheelEvent;
 }(TEvent));
 exports.TWheelEvent = TWheelEvent;
+;
+/**
+ * 开关控件。
+ *
+ *switch\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于switch\_t控件。
+ *
+ *在xml中使用"switch"标签创建开关控件。如：
+ *
+ *```xml
+ *<switch x="10" y="60" w="60" h="22" />
+ *```
+ *
+ *> 更多用法请参考：[switch.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/switch.xml)
+ *
+ *在c代码中使用函数switch\_create创建开关控件。如：
+ *
+ *
+ *> 完整示例请参考：[switch demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/switch.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景图片等。如：
+ *
+ *```xml
+ *<style name="default">
+ *<normal  bg_image="switch" />
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L452)
+ *
+ */
+var TSwitch = /** @class */ (function (_super) {
+    __extends(TSwitch, _super);
+    function TSwitch(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建switch对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TSwitch.create = function (parent, x, y, w, h) {
+        return new TSwitch(switch_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置控件的值。
+     *
+     * @param value 值
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSwitch.prototype.setValue = function (value) {
+        return switch_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 转换switch对象(供脚本语言使用)。
+     *
+     * @param widget switch对象。
+     *
+     * @returns switch对象。
+     */
+    TSwitch.cast = function (widget) {
+        return new TSwitch(switch_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TSwitch.prototype, "value", {
+        /**
+         * 值。
+         *
+         */
+        get: function () {
+            return switch_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSwitch.prototype, "maxXoffsetRatio", {
+        /**
+         * 当开关处于关闭时，图片偏移相对于图片宽度的比例(缺省为1/3)。
+         *
+         */
+        get: function () {
+            return switch_t_get_prop_max_xoffset_ratio(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TSwitch;
+}(TWidget));
+exports.TSwitch = TSwitch;
 ;
 /**
  * 一个通用的容器控件。
@@ -9265,6 +10157,1490 @@ var TTabButton = /** @class */ (function (_super) {
     return TTabButton;
 }(TWidget));
 exports.TTabButton = TTabButton;
+;
+/**
+ * 滑动视图。
+ *
+ *滑动视图可以管理多个页面，并通过滑动来切换当前页面。也可以管理多张图片，让它们自动切换。
+ *
+ *slide\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于slide\_view\_t控件。
+ *
+ *在xml中使用"slide\_view"标签创建滑动视图控件。如：
+ *
+ *```xml
+ *<slide_view x="0" y="0" w="100%" h="100%" style="dot">
+ *<view x="0" y="0" w="100%" h="100%" children_layout="default(w=60,h=60,m=5,s=10)">
+ *...
+ *</view>
+ *<view x="0" y="0" w="100%" h="100%" children_layout="default(w=60,h=60,m=5,s=10)">
+ *...
+ *</view>
+ *</slide_view>
+ *```
+ *
+ *> 更多用法请参考：[slide_view.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/slide_view.xml)
+ *
+ *在c代码中使用函数slide\_view\_create创建滑动视图控件。如：
+ *
+ *
+ *> 完整示例请参考：
+ *[slide_view demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/slide_view.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色和指示器的图标等等。如：
+ *
+ *```xml
+ *<style name="dot">
+ *<normal  icon="dot" active_icon="active_dot"/>
+ *</style>
+ *```
+ *
+ *> 如果希望背景图片跟随滚动，请将背景图片设置到页面上，否则设置到slide\_view上。
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L458)
+ *
+ */
+var TSlideView = /** @class */ (function (_super) {
+    __extends(TSlideView, _super);
+    function TSlideView(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建slide_view对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TSlideView.create = function (parent, x, y, w, h) {
+        return new TSlideView(slide_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为slide_view对象(供脚本语言使用)。
+     *
+     * @param widget slide_view对象。
+     *
+     * @returns slide_view对象。
+     */
+    TSlideView.cast = function (widget) {
+        return new TSlideView(slide_view_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置为自动播放模式。
+     *
+     * @param auto_play 0表示禁止自动播放，非0表示自动播放时每一页播放的时间。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideView.prototype.setAutoPlay = function (auto_play) {
+        return slide_view_set_auto_play(this != null ? (this.nativeObj || this) : null, auto_play);
+    };
+    /**
+     * 设置当前页的序号。
+     *
+     * @param index 当前页的序号。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideView.prototype.setActive = function (index) {
+        return slide_view_set_active(this != null ? (this.nativeObj || this) : null, index);
+    };
+    /**
+     * 设置为上下滑动(缺省为左右滑动)。
+     *
+     * @param vertical TRUE表示上下滑动，FALSE表示左右滑动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideView.prototype.setVertical = function (vertical) {
+        return slide_view_set_vertical(this != null ? (this.nativeObj || this) : null, vertical);
+    };
+    /**
+     * 设置页面切换动画。
+     *
+     *anim_hint取值如下：
+     *
+     ** "translate"：平移。
+     ** "overlap"：覆盖。
+     ** "overlap\_with\_alpha"：覆盖并改变透明度。
+     *
+     *> 使用"overlap"或"overlap\_with\_alpha"动画时，背景图片最好指定到page上。
+     *>
+     *> 使用"overlap\_with\_alpha"动画时，slideview的背景设置为黑色，
+     *> 或slideview的背景设置为透明，窗口的背景设置为黑色，以获得更好的视觉效果和性能。
+     *
+     * @param anim_hint 页面切换动画。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideView.prototype.setAnimHint = function (anim_hint) {
+        return slide_view_set_anim_hint(this != null ? (this.nativeObj || this) : null, anim_hint);
+    };
+    /**
+     * 设置循环切换模式。
+     *
+     * @param loop 是否启用循环切换模式。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideView.prototype.setLoop = function (loop) {
+        return slide_view_set_loop(this != null ? (this.nativeObj || this) : null, loop);
+    };
+    Object.defineProperty(TSlideView.prototype, "vertical", {
+        /**
+         * 是否为上下滑动模式。
+         *
+         */
+        get: function () {
+            return slide_view_t_get_prop_vertical(this.nativeObj);
+        },
+        set: function (v) {
+            this.setVertical(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideView.prototype, "autoPlay", {
+        /**
+         * 自动播放。0表示禁止自动播放，非0表示自动播放时每一页播放的时间。
+         *
+         */
+        get: function () {
+            return slide_view_t_get_prop_auto_play(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAutoPlay(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideView.prototype, "loop", {
+        /**
+         * 循环切换模式。
+         *
+         *向后切换：切换到最后一页时，再往后切换就到第一页。
+         *向前切换：切换到第一页时，再往前切换就到最后一页。
+         *
+         */
+        get: function () {
+            return slide_view_t_get_prop_loop(this.nativeObj);
+        },
+        set: function (v) {
+            this.setLoop(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideView.prototype, "animHint", {
+        /**
+         * 页面切换效果。
+         *
+         */
+        get: function () {
+            return slide_view_t_get_prop_anim_hint(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAnimHint(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TSlideView;
+}(TWidget));
+exports.TSlideView = TSlideView;
+;
+/**
+ * slide_view的指示器控件。
+ *
+ *> 支持直线、弧线排布，默认有4种绘制样式，若设置了icon/active_icon，则优先使用icon/active_icon
+ *
+ *slide\_indicator\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于slide\_indicator\_t控件。
+ *
+ *在xml中使用"slide\_indicator"或"slide\_indicator\_arc"标签创建指示器控件。如：
+ *
+ *```xml
+ *<slide_view name="view" x="0"  y="0" w="100%" h="100%">
+ *...
+ *</slide_view>
+ *<slide_indicator name="indicator" x="right" y="0" w="6" h="100%"/>
+ *```
+ *
+ *> 更多用法请参考：[slide\_view.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/slide_view.xml)
+ *
+ *在c代码中使用函数slide\_indicator\_create创建指示器控件。如：
+ *
+ *
+ *```xml
+ *<style name="default">
+ *<normal fg_color="#FFFFFF80" selected_fg_color="#FFFFFF"/>
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L350)
+ *
+ */
+var TSlideIndicator = /** @class */ (function (_super) {
+    __extends(TSlideIndicator, _super);
+    function TSlideIndicator(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建slide_indicator对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TSlideIndicator.create = function (parent, x, y, w, h) {
+        return new TSlideIndicator(slide_indicator_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 创建slide_indicator对象（线性显示）
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TSlideIndicator.createLinear = function (parent, x, y, w, h) {
+        return new TSlideIndicator(slide_indicator_create_linear(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 创建slide_indicator对象（圆弧显示）
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TSlideIndicator.createArc = function (parent, x, y, w, h) {
+        return new TSlideIndicator(slide_indicator_create_arc(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为slide_indicator对象(供脚本语言使用)。
+     *
+     * @param widget slide_indicator对象。
+     *
+     * @returns slide_indicator对象。
+     */
+    TSlideIndicator.cast = function (widget) {
+        return new TSlideIndicator(slide_indicator_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置当前页的序号。
+     *
+     * @param value 当前项的序号。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setValue = function (value) {
+        return slide_indicator_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 设置指示器的数量。
+     *
+     * @param max 数量。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setMax = function (max) {
+        return slide_indicator_set_max(this != null ? (this.nativeObj || this) : null, max);
+    };
+    /**
+     * 设置指示器的默认绘制类型。
+     *
+     * @param default_paint 默认绘制类型。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setDefaultPaint = function (default_paint) {
+        return slide_indicator_set_default_paint(this != null ? (this.nativeObj || this) : null, default_paint);
+    };
+    /**
+     * 设置指示器是否自动隐藏。
+     *
+     * @param auto_hide 0表示禁止，非0表示无操作后延迟多久隐藏。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setAutoHide = function (auto_hide) {
+        return slide_indicator_set_auto_hide(this != null ? (this.nativeObj || this) : null, auto_hide);
+    };
+    /**
+     * 设置指示器的边距(默认为10像素)。
+     *
+     * @param margin 指示器的边距。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setMargin = function (margin) {
+        return slide_indicator_set_margin(this != null ? (this.nativeObj || this) : null, margin);
+    };
+    /**
+     * 设置指示器的间距(指示器有弧度时为角度值，否则为直线间距)。
+     *
+     * @param spacing 指示器的间距。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setSpacing = function (spacing) {
+        return slide_indicator_set_spacing(this != null ? (this.nativeObj || this) : null, spacing);
+    };
+    /**
+     * 设置指示器的大小(默认为8)。
+     *
+     * @param size 指示器的大小。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setSize = function (size) {
+        return slide_indicator_set_size(this != null ? (this.nativeObj || this) : null, size);
+    };
+    /**
+     * 设置旋转锚点。
+     *
+     * @param anchor_x 锚点坐标x。(后面加上px为像素点，不加px为相对百分比坐标)
+     * @param anchor_y 锚点坐标y。(后面加上px为像素点，不加px为相对百分比坐标)
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setAnchor = function (anchor_x, anchor_y) {
+        return slide_indicator_set_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
+    };
+    /**
+     * 设置指示器指示的目标。
+     *
+     * @param indicated_target 指示器指示的目标
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideIndicator.prototype.setIndicatedTarget = function (indicated_target) {
+        return slide_indicator_set_indicated_target(this != null ? (this.nativeObj || this) : null, indicated_target);
+    };
+    Object.defineProperty(TSlideIndicator.prototype, "value", {
+        /**
+         * 值(缺省为0)。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "max", {
+        /**
+         * 最大值(缺省为100)。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_max(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMax(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "defaultPaint", {
+        /**
+         * 指示器的类型。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_default_paint(this.nativeObj);
+        },
+        set: function (v) {
+            this.setDefaultPaint(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "autoHide", {
+        /**
+         * 自动隐藏。0表示禁止，非0表示无操作后延迟多久隐藏。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_auto_hide(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAutoHide(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "margin", {
+        /**
+         * 指示器与边缘的边距。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_margin(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMargin(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "spacing", {
+        /**
+         * 指示器的中心之间的间距（圆弧显示时，间距的单位为弧度，否则为像素）。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_spacing(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSpacing(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "size", {
+        /**
+         * 指示器的大小。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_size(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSize(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "anchorX", {
+        /**
+         * 锚点x坐标。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_anchor_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "anchorY", {
+        /**
+         * 锚点y坐标。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_anchor_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideIndicator.prototype, "indicatedTarget", {
+        /**
+         * 指示器指示的目标。
+         *
+         */
+        get: function () {
+            return slide_indicator_t_get_prop_indicated_target(this.nativeObj);
+        },
+        set: function (v) {
+            this.setIndicatedTarget(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TSlideIndicator;
+}(TWidget));
+exports.TSlideIndicator = TSlideIndicator;
+;
+/**
+ * 左右滑动菜单控件。
+ *
+ *一般用一组按钮作为子控件，通过左右滑动改变当前的项。除了当菜单使用外，也可以用来切换页面。
+ *
+ *slide\_menu\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于slide\_menu\_t控件。
+ *
+ *在xml中使用"slide\_menu"标签创建左右滑动菜单控件。如：
+ *
+ *```xml
+ *<slide_menu style="mask" align_v="top">
+ *<button style="slide_button" text="0"/>
+ *<button style="slide_button" text="1"/>
+ *<button style="slide_button" text="2"/>
+ *<button style="slide_button" text="3"/>
+ *<button style="slide_button" text="4"/>
+ *</slide_menu>
+ *```
+ *
+ *> 更多用法请参考：[slide_menu.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/slide_menu.xml)
+ *
+ *在c代码中使用函数slide\_menu\_create创建左右滑动菜单控件。如：
+ *
+ *
+ *可按下面的方法关注当前项改变的事件：
+ *
+ *
+ *可按下面的方法关注当前按钮被点击的事件：
+ *
+ *
+ *> 完整示例请参考：[slide_menu demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/slide_menu.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色和蒙版颜色等等。如：
+ *
+ *```xml
+ *<style name="mask">
+ *<normal     bg_color="#f0f0f0" mask_color="#f0f0f0"/>
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L493)
+ *
+ */
+var TSlideMenu = /** @class */ (function (_super) {
+    __extends(TSlideMenu, _super);
+    function TSlideMenu(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建slide_menu对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TSlideMenu.create = function (parent, x, y, w, h) {
+        return new TSlideMenu(slide_menu_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换slide_menu对象(供脚本语言使用)。
+     *
+     * @param widget slide_menu对象。
+     *
+     * @returns slide_menu对象。
+     */
+    TSlideMenu.cast = function (widget) {
+        return new TSlideMenu(slide_menu_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置当前项。
+     *
+     * @param value 当前项的索引。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideMenu.prototype.setValue = function (value) {
+        return slide_menu_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 设置垂直对齐方式。
+     *
+     * @param align_v 对齐方式。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideMenu.prototype.setAlignV = function (align_v) {
+        return slide_menu_set_align_v(this != null ? (this.nativeObj || this) : null, align_v);
+    };
+    /**
+     * 设置最小缩放比例。
+     *
+     * @param min_scale 最小缩放比例，范围[0.5-1]。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSlideMenu.prototype.setMinScale = function (min_scale) {
+        return slide_menu_set_min_scale(this != null ? (this.nativeObj || this) : null, min_scale);
+    };
+    Object.defineProperty(TSlideMenu.prototype, "value", {
+        /**
+         * 值。代表当前选中项的索引。
+         *
+         */
+        get: function () {
+            return slide_menu_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideMenu.prototype, "alignV", {
+        /**
+         * 垂直对齐方式。
+         *
+         */
+        get: function () {
+            return slide_menu_t_get_prop_align_v(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAlignV(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TSlideMenu.prototype, "minScale", {
+        /**
+         * 最小缩放比例。
+         *
+         */
+        get: function () {
+            return slide_menu_t_get_prop_min_scale(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMinScale(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TSlideMenu;
+}(TWidget));
+exports.TSlideMenu = TSlideMenu;
+;
+/**
+ * 滚动视图。
+ *
+ *scroll\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于scroll\_view\_t控件。
+ *
+ *在xml中使用"scroll\_view"标签创建滚动视图控件。如：
+ *
+ *```xml
+ *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
+ *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
+ *<list_item style="odd" children_layout="default(rows=1,cols=0)">
+ *<image draw_type="icon" w="30" image="earth"/>
+ *<label w="-30" text="1.Hello AWTK !">
+ *<switch x="r:10" y="m" w="60" h="20"/>
+ *</label>
+ *</list_item>
+ *...
+ *</scroll_view>
+ *</list_view>
+ *```
+ *
+ *> 滚动视图一般作为列表视图的子控件使用。
+ *
+ *> 更多用法请参考：[list\_view\_m.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
+ *
+ *在c代码中使用函数scroll\_view\_create创建列表视图控件。如：
+ *
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色和边框颜色等(一般情况不需要)。
+ *
+ */
+var TScrollView = /** @class */ (function (_super) {
+    __extends(TScrollView, _super);
+    function TScrollView(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建scroll_view对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TScrollView.create = function (parent, x, y, w, h) {
+        return new TScrollView(scroll_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为scroll_view对象(供脚本语言使用)。
+     *
+     * @param widget scroll_view对象。
+     *
+     * @returns scroll_view对象。
+     */
+    TScrollView.cast = function (widget) {
+        return new TScrollView(scroll_view_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置虚拟宽度。
+     *
+     * @param w 虚拟宽度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.setVirtualW = function (w) {
+        return scroll_view_set_virtual_w(this != null ? (this.nativeObj || this) : null, w);
+    };
+    /**
+     * 设置虚拟高度。
+     *
+     * @param h 虚拟高度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.setVirtualH = function (h) {
+        return scroll_view_set_virtual_h(this != null ? (this.nativeObj || this) : null, h);
+    };
+    /**
+     * 设置是否允许x方向滑动。
+     *
+     * @param xslidable 是否允许滑动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.setXslidable = function (xslidable) {
+        return scroll_view_set_xslidable(this != null ? (this.nativeObj || this) : null, xslidable);
+    };
+    /**
+     * 设置是否允许y方向滑动。
+     *
+     * @param yslidable 是否允许滑动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.setYslidable = function (yslidable) {
+        return scroll_view_set_yslidable(this != null ? (this.nativeObj || this) : null, yslidable);
+    };
+    /**
+     * 设置偏移量。
+     *
+     * @param xoffset x偏移量。
+     * @param yoffset y偏移量。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.setOffset = function (xoffset, yoffset) {
+        return scroll_view_set_offset(this != null ? (this.nativeObj || this) : null, xoffset, yoffset);
+    };
+    /**
+     * 设置偏移速度比例。
+     *
+     * @param xspeed_scale x偏移速度比例。。
+     * @param yspeed_scale y偏移速度比例。。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.setSpeedScale = function (xspeed_scale, yspeed_scale) {
+        return scroll_view_set_speed_scale(this != null ? (this.nativeObj || this) : null, xspeed_scale, yspeed_scale);
+    };
+    /**
+     * 滚动到指定的偏移量。
+     *
+     * @param xoffset_end x偏移量。
+     * @param yoffset_end y偏移量。
+     * @param duration 时间。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.scrollTo = function (xoffset_end, yoffset_end, duration) {
+        return scroll_view_scroll_to(this != null ? (this.nativeObj || this) : null, xoffset_end, yoffset_end, duration);
+    };
+    /**
+     * 滚动到指定的偏移量。
+     *
+     * @param xoffset_delta x偏移量。
+     * @param yoffset_delta y偏移量。
+     * @param duration 时间。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollView.prototype.scrollDeltaTo = function (xoffset_delta, yoffset_delta, duration) {
+        return scroll_view_scroll_delta_to(this != null ? (this.nativeObj || this) : null, xoffset_delta, yoffset_delta, duration);
+    };
+    Object.defineProperty(TScrollView.prototype, "virtualW", {
+        /**
+         * 虚拟宽度。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_virtual_w(this.nativeObj);
+        },
+        set: function (v) {
+            this.setVirtualW(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollView.prototype, "virtualH", {
+        /**
+         * 虚拟高度。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_virtual_h(this.nativeObj);
+        },
+        set: function (v) {
+            this.setVirtualH(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollView.prototype, "xoffset", {
+        /**
+         * x偏移量。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_xoffset(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollView.prototype, "yoffset", {
+        /**
+         * y偏移量。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_yoffset(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollView.prototype, "xspeedScale", {
+        /**
+         * x偏移速度比例。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_xspeed_scale(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollView.prototype, "yspeedScale", {
+        /**
+         * y偏移速度比例。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_yspeed_scale(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollView.prototype, "xslidable", {
+        /**
+         * 是否允许x方向滑动。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_xslidable(this.nativeObj);
+        },
+        set: function (v) {
+            this.setXslidable(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollView.prototype, "yslidable", {
+        /**
+         * 是否允许y方向滑动。
+         *
+         */
+        get: function () {
+            return scroll_view_t_get_prop_yslidable(this.nativeObj);
+        },
+        set: function (v) {
+            this.setYslidable(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TScrollView;
+}(TWidget));
+exports.TScrollView = TScrollView;
+;
+/**
+ * 滚动条控件。
+ *
+ *> 目前只支持垂直滚动。
+ *
+ *scroll\_bar\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于scroll\_bar\_t控件。
+ *
+ *在xml中使用"scroll\_bar"或"scroll\_bar\_d"或"scroll\_bar\_m"标签创建滚动条控件。如：
+ *
+ *```xml
+ *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
+ *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
+ *...
+ *</scroll_view>
+ *<scroll_bar_m name="bar" x="right" y="0" w="6" h="100%" value="0"/>
+ *</list_view>
+ *```
+ *
+ *> 更多用法请参考：[list\_view\_m.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
+ *
+ *在c代码中使用函数scroll\_bar\_create创建列表项控件。如：
+ *
+ *
+ *```xml
+ *<style name="default">
+ *<normal bg_color="#c0c0c0" fg_color="#808080"/>
+ *<over bg_color="#c0c0c0" fg_color="#808080"/>
+ *<pressed bg_color="#c0c0c0" fg_color="#808080"/>
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L350)
+ *
+ */
+var TScrollBar = /** @class */ (function (_super) {
+    __extends(TScrollBar, _super);
+    function TScrollBar(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建scroll_bar对象
+     *
+     *> 根据宏WITH_DESKTOP_STYLE决定创建desktop风格还是mobile风格的滚动条
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TScrollBar.create = function (parent, x, y, w, h) {
+        return new TScrollBar(scroll_bar_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为scroll_bar对象(供脚本语言使用)。
+     *
+     * @param widget scroll_bar对象。
+     *
+     * @returns scroll_bar对象。
+     */
+    TScrollBar.cast = function (widget) {
+        return new TScrollBar(scroll_bar_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 创建mobile风格的scroll_bar对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TScrollBar.createMobile = function (parent, x, y, w, h) {
+        return new TScrollBar(scroll_bar_create_mobile(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 创建desktop风格的scroll_bar对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TScrollBar.createDesktop = function (parent, x, y, w, h) {
+        return new TScrollBar(scroll_bar_create_desktop(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置参数。
+     *
+     * @param virtual_size 虚拟高度。
+     * @param row 每一行的高度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollBar.prototype.setParams = function (virtual_size, row) {
+        return scroll_bar_set_params(this != null ? (this.nativeObj || this) : null, virtual_size, row);
+    };
+    /**
+     * 滚动到指定的值。
+     *
+     * @param value 值。
+     * @param duration 动画持续时间。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollBar.prototype.scrollTo = function (value, duration) {
+        return scroll_bar_scroll_to(this != null ? (this.nativeObj || this) : null, value, duration);
+    };
+    /**
+     * 设置值，并触发EVT_VALUE_CHANGED事件。
+     *
+     * @param value 值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollBar.prototype.setValue = function (value) {
+        return scroll_bar_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 在当前的值上增加一个值，并触发EVT_VALUE_CHANGED事件。
+     *
+     * @param delta 值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollBar.prototype.addDelta = function (delta) {
+        return scroll_bar_add_delta(this != null ? (this.nativeObj || this) : null, delta);
+    };
+    /**
+     * 在当前的值上增加一个值，并滚动到新的值，并触发EVT_VALUE_CHANGED事件。
+     *
+     * @param delta 值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollBar.prototype.scrollDelta = function (delta) {
+        return scroll_bar_scroll_delta(this != null ? (this.nativeObj || this) : null, delta);
+    };
+    /**
+     * 设置值，但不触发EVT_VALUE_CHANGED事件。
+     *
+     * @param value 值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TScrollBar.prototype.setValueOnly = function (value) {
+        return scroll_bar_set_value_only(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 判断是否是mobile风格的滚动条。
+     *
+     *
+     * @returns 返回TRUE表示是mobile风格的，否则表示不是mobile风格的。
+     */
+    TScrollBar.prototype.isMobile = function () {
+        return scroll_bar_is_mobile(this != null ? (this.nativeObj || this) : null);
+    };
+    Object.defineProperty(TScrollBar.prototype, "virtualSize", {
+        /**
+         * 虚拟宽度或高度。
+         *
+         */
+        get: function () {
+            return scroll_bar_t_get_prop_virtual_size(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollBar.prototype, "value", {
+        /**
+         * 当前的值。
+         *
+         */
+        get: function () {
+            return scroll_bar_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollBar.prototype, "row", {
+        /**
+         * 行的高度。
+         *
+         */
+        get: function () {
+            return scroll_bar_t_get_prop_row(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TScrollBar.prototype, "animatable", {
+        /**
+         * 滚动时是否启用动画。
+         *
+         */
+        get: function () {
+            return scroll_bar_t_get_prop_animatable(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TScrollBar;
+}(TWidget));
+exports.TScrollBar = TScrollBar;
+;
+/**
+ * 列表视图控件。
+ *
+ *列表视图控件是一个可以垂直滚动的列表控件。
+ *
+ *如果不需要滚动，可以用view控件配置适当的layout参数作为列表控件。
+ *
+ *列表视图中的列表项可以固定高度，也可以使用不同高度。请参考[变高列表项](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_vh.xml)
+ *
+ *列表视图控件的中可以有滚动条，也可以没有滚动条。
+ *可以使用移动设备风格的滚动条，也可以使用桌面风格的滚动条。
+ *
+ *list\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于list\_view\_t控件。
+ *
+ *在xml中使用"list\_view"标签创建列表视图控件。如：
+ *
+ *```xml
+ *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
+ *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
+ *<list_item style="odd" children_layout="default(rows=1,cols=0)">
+ *<image draw_type="icon" w="30" image="earth"/>
+ *<label w="-30" text="1.Hello AWTK !">
+ *<switch x="r:10" y="m" w="60" h="20"/>
+ *</label>
+ *</list_item>
+ *...
+ *</scroll_view>
+ *</list_view>
+ *```
+ *
+ *> 注意：列表项不是作为列表视图控件的直接子控件，而是作为滚动视图的子控件。
+ *
+ *
+ *> 更多用法请参考：[list\_view\_m.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
+ *
+ *在c代码中使用函数list\_view\_create创建列表视图控件。如：
+ *
+ *
+ *用代码构造列表视图是比较繁琐的事情，最好用XML来构造。
+ *如果需要动态修改，可以使用widget\_clone来增加列表项，使用widget\_remove\_child来移出列表项。
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色和边框颜色等(一般情况不需要)。
+ *
+ */
+var TListView = /** @class */ (function (_super) {
+    __extends(TListView, _super);
+    function TListView(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建list_view对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TListView.create = function (parent, x, y, w, h) {
+        return new TListView(list_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置列表项的高度。
+     *
+     * @param item_height 列表项的高度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TListView.prototype.setItemHeight = function (item_height) {
+        return list_view_set_item_height(this != null ? (this.nativeObj || this) : null, item_height);
+    };
+    /**
+     * 设置列表项的缺省高度。
+     *
+     * @param default_item_height 列表项的高度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TListView.prototype.setDefaultItemHeight = function (default_item_height) {
+        return list_view_set_default_item_height(this != null ? (this.nativeObj || this) : null, default_item_height);
+    };
+    /**
+     * 设置是否自动隐藏滚动条。
+     *
+     * @param auto_hide_scroll_bar 是否自动隐藏滚动条。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TListView.prototype.setAutoHideScrollBar = function (auto_hide_scroll_bar) {
+        return list_view_set_auto_hide_scroll_bar(this != null ? (this.nativeObj || this) : null, auto_hide_scroll_bar);
+    };
+    /**
+     * 转换为list_view对象(供脚本语言使用)。
+     *
+     * @param widget list_view对象。
+     *
+     * @returns list_view对象。
+     */
+    TListView.cast = function (widget) {
+        return new TListView(list_view_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * list_view重新初始化。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TListView.prototype.reinit = function () {
+        return list_view_reinit(this != null ? (this.nativeObj || this) : null);
+    };
+    Object.defineProperty(TListView.prototype, "itemHeight", {
+        /**
+         * 列表项的高度。如果 item_height 0，所有列表项使用固定高度，否则使用列表项自身的高度。
+         *
+         */
+        get: function () {
+            return list_view_t_get_prop_item_height(this.nativeObj);
+        },
+        set: function (v) {
+            this.setItemHeight(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TListView.prototype, "defaultItemHeight", {
+        /**
+         * 列表项的缺省高度。如果item_height <= 0 而且列表项自身的高度 <= 0，则使用缺省高度。
+         *
+         */
+        get: function () {
+            return list_view_t_get_prop_default_item_height(this.nativeObj);
+        },
+        set: function (v) {
+            this.setDefaultItemHeight(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TListView.prototype, "autoHideScrollBar", {
+        /**
+         * 如果不需要滚动条时，自动隐藏滚动条。
+         *
+         */
+        get: function () {
+            return list_view_t_get_prop_auto_hide_scroll_bar(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAutoHideScrollBar(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TListView;
+}(TWidget));
+exports.TListView = TListView;
+;
+/**
+ * 水平列表视图控件。
+ *
+ *list\_view\_h\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于list\_view\_h\_t控件。
+ *
+ *在xml中使用"list\_view\_h"标签创建水平列表视图控件。如：
+ *
+ *```xml
+ *<list_view_h x="center"  y="10" w="90%" h="100" item_width="200" spacing="5">
+ *<scroll_view name="view" w="100%" h="100%">
+ *<image style="border" draw_type="auto" image="1" text="1"/>
+ *...
+ *</scroll_view>
+ *</list_view_h>
+ *```
+ *
+ *> 注意：列表项不是作为列表视图控件的直接子控件，而是作为滚动视图的子控件。
+ *
+ *
+ *> 更多用法请参考：[list\_view\_h.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_h.xml)
+ *
+ *在c代码中使用函数list\_view\_h\_create创建水平列表视图控件。如：
+ *
+ *
+ *用代码构造列表视图是比较繁琐的事情，最好用XML来构造。
+ *如果需要动态修改，可以使用widget\_clone来增加列表项，使用widget\_remove\_child来移出列表项。
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色和边框颜色等(一般情况不需要)。
+ *
+ */
+var TListViewH = /** @class */ (function (_super) {
+    __extends(TListViewH, _super);
+    function TListViewH(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建list_view_h对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TListViewH.create = function (parent, x, y, w, h) {
+        return new TListViewH(list_view_h_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置列表项的宽度。
+     *
+     * @param item_width 列表项的宽度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TListViewH.prototype.setItemWidth = function (item_width) {
+        return list_view_h_set_item_width(this != null ? (this.nativeObj || this) : null, item_width);
+    };
+    /**
+     * 设置列表项的间距。
+     *
+     * @param spacing 列表项的间距。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TListViewH.prototype.setSpacing = function (spacing) {
+        return list_view_h_set_spacing(this != null ? (this.nativeObj || this) : null, spacing);
+    };
+    /**
+     * 转换为list_view_h对象(供脚本语言使用)。
+     *
+     * @param widget list_view_h对象。
+     *
+     * @returns list_view_h对象。
+     */
+    TListViewH.cast = function (widget) {
+        return new TListViewH(list_view_h_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TListViewH.prototype, "itemWidth", {
+        /**
+         * 列表项的宽度。
+         *
+         */
+        get: function () {
+            return list_view_h_t_get_prop_item_width(this.nativeObj);
+        },
+        set: function (v) {
+            this.setItemWidth(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TListViewH.prototype, "spacing", {
+        /**
+         * 间距。
+         *
+         */
+        get: function () {
+            return list_view_h_t_get_prop_spacing(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSpacing(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TListViewH;
+}(TWidget));
+exports.TListViewH = TListViewH;
+;
+/**
+ * 列表项控件。
+ *
+ *列表项控件是一个简单的容器控件，一般作为列表视图中滚动视图的子控件。
+ *
+ *list\_item\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于list\_item\_t控件。
+ *
+ *在xml中使用"list\_item"标签创建列表项控件。如：
+ *
+ *```xml
+ *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
+ *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
+ *<list_item style="odd" children_layout="default(rows=1,cols=0)">
+ *<image draw_type="icon" w="30" image="earth"/>
+ *<label w="-30" text="1.Hello AWTK !">
+ *<switch x="r:10" y="m" w="60" h="20"/>
+ *</label>
+ *</list_item>
+ *...
+ *</scroll_view>
+ *</list_view>
+ *```
+ *
+ *> 更多用法请参考：[list\_view\_m.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
+ *
+ *在c代码中使用函数list\_item\_create创建列表项控件。如：
+ *
+ *
+ *> 列表项控件大小一般由列表控制，不需指定xywh参数。
+ *
+ *可以用style来实现可点击或不可点击的效果。如：
+ *
+ *```xml
+ *<style name="odd_clickable" border_color="#a0a0a0"  border="bottom" text_color="black">
+ *<normal     bg_color="#f5f5f5" />
+ *<pressed    bg_color="#c0c0c0" />
+ *<over       bg_color="#f5f5f5" />
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L372)
+ *
+ */
+var TListItem = /** @class */ (function (_super) {
+    __extends(TListItem, _super);
+    function TListItem(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建list_item对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TListItem.create = function (parent, x, y, w, h) {
+        return new TListItem(list_item_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为list_item对象(供脚本语言使用)。
+     *
+     * @param widget list_item对象。
+     *
+     * @returns list_item对象。
+     */
+    TListItem.cast = function (widget) {
+        return new TListItem(list_item_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TListItem;
+}(TWidget));
+exports.TListItem = TListItem;
 ;
 /**
  * 标签按钮分组控件。
@@ -9867,6 +12243,393 @@ var TProgressBar = /** @class */ (function (_super) {
 exports.TProgressBar = TProgressBar;
 ;
 /**
+ * 可水平滚动的文本控件，方便实现长文本滚动。
+ *
+ *
+ *hscroll\_label\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于hscroll\_label\_t控件。
+ *
+ *在xml中使用"hscroll\_label"标签创建行号控件，一般配合mledit使用。如：
+ *
+ *```xml
+ *```
+ *
+ *> 更多用法请参考：[mledit.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mledit.xml)
+ *
+ *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ *```xml
+ *<style name="default" text_color="black">
+ *<normal   />
+ *<focused  />
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：
+ *[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
+ *
+ */
+var THscrollLabel = /** @class */ (function (_super) {
+    __extends(THscrollLabel, _super);
+    function THscrollLabel(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建hscroll_label对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    THscrollLabel.create = function (parent, x, y, w, h) {
+        return new THscrollLabel(hscroll_label_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置lull。
+     *
+     * @param lull 间歇时间(ms)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setLull = function (lull) {
+        return hscroll_label_set_lull(this != null ? (this.nativeObj || this) : null, lull);
+    };
+    /**
+     * 设置duration。
+     *
+     * @param duration 滚动时间(ms)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setDuration = function (duration) {
+        return hscroll_label_set_duration(this != null ? (this.nativeObj || this) : null, duration);
+    };
+    /**
+     * 设置only_focus。
+     *
+     * @param only_focus 是否只有处于focus时才滚动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setOnlyFocus = function (only_focus) {
+        return hscroll_label_set_only_focus(this != null ? (this.nativeObj || this) : null, only_focus);
+    };
+    /**
+     * 设置only_parent_focus。
+     *
+     * @param only_parent_focus 是否只有处于focus时才滚动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setOnlyParentFocus = function (only_parent_focus) {
+        return hscroll_label_set_only_parent_focus(this != null ? (this.nativeObj || this) : null, only_parent_focus);
+    };
+    /**
+     * 设置loop。
+     *
+     * @param loop 是否循环滚动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setLoop = function (loop) {
+        return hscroll_label_set_loop(this != null ? (this.nativeObj || this) : null, loop);
+    };
+    /**
+     * 设置yoyo。
+     *
+     * @param yoyo 是否往返滚动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setYoyo = function (yoyo) {
+        return hscroll_label_set_yoyo(this != null ? (this.nativeObj || this) : null, yoyo);
+    };
+    /**
+     * 设置ellipses。
+     *
+     * @param ellipses 是否在文本超长时在行尾显示"..."。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setEllipses = function (ellipses) {
+        return hscroll_label_set_ellipses(this != null ? (this.nativeObj || this) : null, ellipses);
+    };
+    /**
+     * 设置x偏移(一般无需用户调用)。。
+     *
+     * @param xoffset x偏移。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.setXoffset = function (xoffset) {
+        return hscroll_label_set_xoffset(this != null ? (this.nativeObj || this) : null, xoffset);
+    };
+    /**
+     * 启动(一般无需用户调用)。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.start = function () {
+        return hscroll_label_start(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 停止(一般无需用户调用)。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    THscrollLabel.prototype.stop = function () {
+        return hscroll_label_stop(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 转换为hscroll_label对象(供脚本语言使用)。
+     *
+     * @param widget hscroll_label对象。
+     *
+     * @returns hscroll_label对象。
+     */
+    THscrollLabel.cast = function (widget) {
+        return new THscrollLabel(hscroll_label_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(THscrollLabel.prototype, "onlyFocus", {
+        /**
+         * 只有处于focus时才滚动(缺省否)。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_only_focus(this.nativeObj);
+        },
+        set: function (v) {
+            this.setOnlyFocus(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "onlyParentFocus", {
+        /**
+         * 只有父控件处于focus时才滚动(缺省否)。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_only_parent_focus(this.nativeObj);
+        },
+        set: function (v) {
+            this.setOnlyParentFocus(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "loop", {
+        /**
+         * loop是否循环滚动(缺省FALSE)。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_loop(this.nativeObj);
+        },
+        set: function (v) {
+            this.setLoop(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "yoyo", {
+        /**
+         * 是否往返滚动(缺省FALSE)。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_yoyo(this.nativeObj);
+        },
+        set: function (v) {
+            this.setYoyo(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "ellipses", {
+        /**
+         * 文本显示不下时，在行尾显示省略号(缺省FALSE)。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_ellipses(this.nativeObj);
+        },
+        set: function (v) {
+            this.setEllipses(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "lull", {
+        /**
+         * 滚动之间的间歇时间(ms)，缺省3000ms。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_lull(this.nativeObj);
+        },
+        set: function (v) {
+            this.setLull(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "duration", {
+        /**
+         * 完整的滚动一次需要的时间(ms)，缺省5000ms。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_duration(this.nativeObj);
+        },
+        set: function (v) {
+            this.setDuration(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "xoffset", {
+        /**
+         * 偏移量。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_xoffset(this.nativeObj);
+        },
+        set: function (v) {
+            this.setXoffset(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(THscrollLabel.prototype, "textW", {
+        /**
+         * 文本的宽度。
+         *
+         */
+        get: function () {
+            return hscroll_label_t_get_prop_text_w(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return THscrollLabel;
+}(TWidget));
+exports.THscrollLabel = THscrollLabel;
+;
+/**
+ * 图文混排控件，实现简单的图文混排。
+ *
+ *rich\_text\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于rich\_text\_t控件。
+ *
+ *在xml中使用"rich\_text"标签创建图文混排控件。如：
+ *
+ *```xml
+ *<rich_text x="0" y="0" w="100%" h="60"
+ *text="<image name=&quota;bricks&quota;/><font align_v=&quota;middle&quota;>hello awtk!</font>" />
+ *```
+ *>
+ *
+ *> 更多用法请参考：
+ *[rich_text.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/rich_text.xml)
+ *
+ *在c代码中使用函数rich\_text\_create创建图文混排控件。如：
+ *
+ *
+ *> 完整示例请参考：
+ *[rich_text demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/rich_text.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色等等。而字体的大小和颜色则由文本内部的属性决定。
+ *
+ *目前支持image和font两个tag：
+ *
+ ** image 支持的属性有：
+ ** name 图片的名称。
+ ** w 图片的宽度。
+ ** h 图片的高度。
+ *
+ ** font 支持的属性有：
+ ** color 颜色。
+ ** size 大小。
+ ** align_v 垂直方向对齐的方式(top|middle|bottom)。
+ ** bold 粗体(暂不支持)
+ ** italic 斜体(暂不支持)
+ ** underline 下划线(暂不支持)
+ *
+ */
+var TRichText = /** @class */ (function (_super) {
+    __extends(TRichText, _super);
+    function TRichText(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建rich_text对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TRichText.create = function (parent, x, y, w, h) {
+        return new TRichText(rich_text_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置文本。
+     *
+     * @param text 文本。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TRichText.prototype.setText = function (text) {
+        return rich_text_set_text(this != null ? (this.nativeObj || this) : null, text);
+    };
+    /**
+     * 转换为rich_text对象(供脚本语言使用)。
+     *
+     * @param widget rich_text对象。
+     *
+     * @returns rich_text对象。
+     */
+    TRichText.cast = function (widget) {
+        return new TRichText(rich_text_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TRichText.prototype, "lineGap", {
+        /**
+         * 行间距。
+         *
+         */
+        get: function () {
+            return rich_text_t_get_prop_line_gap(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TRichText.prototype, "margin", {
+        /**
+         * 边距。
+         *
+         */
+        get: function () {
+            return rich_text_t_get_prop_margin(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TRichText;
+}(TWidget));
+exports.TRichText = TRichText;
+;
+/**
  * 页面管理控件。
  *
  *只有一个Page处于active状态，处于active状态的Page才能显示并接收事件。
@@ -9958,6 +12721,323 @@ var TPages = /** @class */ (function (_super) {
     return TPages;
 }(TWidget));
 exports.TPages = TPages;
+;
+/**
+ * rich_text_view是一个专用容器，用来放rich text和 scroll bar，并在两者之间建立联系。
+ *
+ *rich_text_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于rich_text_view\_t控件。
+ *
+ *在xml中使用"rich_text_view"标签创建rich_text_view。如：
+ *
+ *```xml
+ *<rich_text_view x="0" y="10" w="100%" h="300">
+ *<rich_text line_gap="5" x="0" y="10" w="-12" h="100%" margin="10">
+ *...
+ *</rich_text>
+ *<scroll_bar_d name="bar" x="right" y="0" w="12" h="100%" value="0"/>
+ *</rich_text_view>
+ *```
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色等。如：
+ *
+ *```xml
+ *<style name="default" border_color="#a0a0a0">
+ *<normal     bg_color="#f0f0f0" />
+ *</style>
+ *```
+ *
+ */
+var TRichTextView = /** @class */ (function (_super) {
+    __extends(TRichTextView, _super);
+    function TRichTextView(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建rich_text_view对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TRichTextView.create = function (parent, x, y, w, h) {
+        return new TRichTextView(rich_text_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为rich_text_view对象(供脚本语言使用)。
+     *
+     * @param widget rich_text_view对象。
+     *
+     * @returns rich_text_view对象。
+     */
+    TRichTextView.cast = function (widget) {
+        return new TRichTextView(rich_text_view_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TRichTextView;
+}(TWidget));
+exports.TRichTextView = TRichTextView;
+;
+/**
+ * 进度圆环控件。
+ *
+ *progress\_circle\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于progress\_circle\_t控件。
+ *
+ *在xml中使用"progress\_circle"标签创建进度圆环控件。如：
+ *
+ *```xml
+ *<progress_circle max="360" show_text="true" start_angle="90" />
+ *```
+ *
+ *> 更多用法请参考：
+ *[progress_circle.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/progress_circle.xml)
+ *
+ *在c代码中使用函数progress\_circle\_create创建进度圆环控件。如：
+ *
+ *
+ *> 完整示例请参考：
+ *[progress_circle
+ *demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/progress_circle.c)
+ *
+ *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ *```xml
+ *<style name="default">
+ *<normal text_color="green" fg_color="black" />
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：
+ *[theme
+ *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L467)
+ *
+ */
+var TProgressCircle = /** @class */ (function (_super) {
+    __extends(TProgressCircle, _super);
+    function TProgressCircle(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建progress_circle对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TProgressCircle.create = function (parent, x, y, w, h) {
+        return new TProgressCircle(progress_circle_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为progress_circle对象(供脚本语言使用)。
+     *
+     * @param widget progress_circle对象。
+     *
+     * @returns progress_circle对象。
+     */
+    TProgressCircle.cast = function (widget) {
+        return new TProgressCircle(progress_circle_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置值。
+     *
+     * @param value 值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setValue = function (value) {
+        return progress_circle_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 设置最大值。
+     *
+     * @param max 最大值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setMax = function (max) {
+        return progress_circle_set_max(this != null ? (this.nativeObj || this) : null, max);
+    };
+    /**
+     * 设置环线的厚度。
+     *
+     * @param line_width 环线的厚度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setLineWidth = function (line_width) {
+        return progress_circle_set_line_width(this != null ? (this.nativeObj || this) : null, line_width);
+    };
+    /**
+     * 设置起始角度。
+     *
+     * @param start_angle 起始角度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setStartAngle = function (start_angle) {
+        return progress_circle_set_start_angle(this != null ? (this.nativeObj || this) : null, start_angle);
+    };
+    /**
+     * 设置单位。
+     *
+     * @param unit 单位。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setUnit = function (unit) {
+        return progress_circle_set_unit(this != null ? (this.nativeObj || this) : null, unit);
+    };
+    /**
+     * 设置线帽类型。
+     *
+     * @param line_cap 线帽类型(round:圆头，square:方头)。。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setLineCap = function (line_cap) {
+        return progress_circle_set_line_cap(this != null ? (this.nativeObj || this) : null, line_cap);
+    };
+    /**
+     * 设置是否显示文本。
+     *
+     * @param show_text 是否显示文本。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setShowText = function (show_text) {
+        return progress_circle_set_show_text(this != null ? (this.nativeObj || this) : null, show_text);
+    };
+    /**
+     * 设置是否为逆时针方向。
+     *
+     * @param counter_clock_wise 是否为逆时针方向。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TProgressCircle.prototype.setCounterClockWise = function (counter_clock_wise) {
+        return progress_circle_set_counter_clock_wise(this != null ? (this.nativeObj || this) : null, counter_clock_wise);
+    };
+    Object.defineProperty(TProgressCircle.prototype, "value", {
+        /**
+         * 值(缺省为0)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TProgressCircle.prototype, "max", {
+        /**
+         * 最大值(缺省为100)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_max(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMax(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TProgressCircle.prototype, "startAngle", {
+        /**
+         * 起始角度(单位为度，缺省-90)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_start_angle(this.nativeObj);
+        },
+        set: function (v) {
+            this.setStartAngle(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TProgressCircle.prototype, "lineWidth", {
+        /**
+         * 环线的厚度(缺省为8)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_line_width(this.nativeObj);
+        },
+        set: function (v) {
+            this.setLineWidth(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TProgressCircle.prototype, "unit", {
+        /**
+         * 单元(缺省无)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_unit(this.nativeObj);
+        },
+        set: function (v) {
+            this.setUnit(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TProgressCircle.prototype, "lineCap", {
+        /**
+         * 线帽类型(round:圆头，square:方头)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_line_cap(this.nativeObj);
+        },
+        set: function (v) {
+            this.setLineCap(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TProgressCircle.prototype, "counterClockWise", {
+        /**
+         * 是否为逆时针方向(缺省为FALSE)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_counter_clock_wise(this.nativeObj);
+        },
+        set: function (v) {
+            this.setCounterClockWise(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TProgressCircle.prototype, "showText", {
+        /**
+         * 是否显示文本(缺省为TRUE)。
+         *
+         */
+        get: function () {
+            return progress_circle_t_get_prop_show_text(this.nativeObj);
+        },
+        set: function (v) {
+            this.setShowText(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TProgressCircle;
+}(TWidget));
+exports.TProgressCircle = TProgressCircle;
 ;
 /**
  * 文本控件。用于显示一行或多行文本。
@@ -10070,6 +13150,480 @@ var TLabel = /** @class */ (function (_super) {
 exports.TLabel = TLabel;
 ;
 /**
+ * 多行编辑器控件。
+ *
+ *mledit\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于mledit\_t控件。
+ *
+ *在xml中使用"mledit"标签创建多行编辑器控件。如：
+ *
+ *```xml
+ *<mledit x="c" y="m" w="300" h="300" />
+ *```
+ *
+ *> 更多用法请参考：[mledit.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mledit.xml)
+ *
+ *在c代码中使用函数mledit\_create创建多行编辑器控件。如：
+ *
+ *
+ *> 完整示例请参考：[mledit demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/mledit.c)
+ *
+ *time\_clock一般不需要设置style。
+ *
+ */
+var TMledit = /** @class */ (function (_super) {
+    __extends(TMledit, _super);
+    function TMledit(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建mledit对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TMledit.create = function (parent, x, y, w, h) {
+        return new TMledit(mledit_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置编辑器是否为只读。
+     *
+     * @param readonly 只读。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setReadonly = function (readonly) {
+        return mledit_set_readonly(this != null ? (this.nativeObj || this) : null, readonly);
+    };
+    /**
+     * 设置为焦点。
+     *
+     * @param focus 是否为焦点。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setFocus = function (focus) {
+        return mledit_set_focus(this != null ? (this.nativeObj || this) : null, focus);
+    };
+    /**
+     * 设置编辑器是否自动折行。
+     *
+     * @param wrap_word 是否自动折行。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setWrapWord = function (wrap_word) {
+        return mledit_set_wrap_word(this != null ? (this.nativeObj || this) : null, wrap_word);
+    };
+    /**
+     * 设置编辑器的最大行数。
+     *
+     * @param max_lines 最大行数。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setMaxLines = function (max_lines) {
+        return mledit_set_max_lines(this != null ? (this.nativeObj || this) : null, max_lines);
+    };
+    /**
+     * 设置编辑器的输入提示。
+     *
+     * @param tips 输入提示。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setTips = function (tips) {
+        return mledit_set_tips(this != null ? (this.nativeObj || this) : null, tips);
+    };
+    /**
+     * 获取翻译之后的文本，然后调用mledit_set_tips。
+     *
+     * @param tr_tips 提示信息。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setTrTips = function (tr_tips) {
+        return mledit_set_tr_tips(this != null ? (this.nativeObj || this) : null, tr_tips);
+    };
+    /**
+     * 设置自定义软键盘名称。
+     *
+     * @param keyboard 键盘名称(相应UI资源必须存在)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setKeyboard = function (keyboard) {
+        return mledit_set_keyboard(this != null ? (this.nativeObj || this) : null, keyboard);
+    };
+    /**
+     * 设置编辑器光标位置。
+     *
+     * @param cursor 光标位置。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setCursor = function (cursor) {
+        return mledit_set_cursor(this != null ? (this.nativeObj || this) : null, cursor);
+    };
+    /**
+     * 设置编辑器滚动速度。
+     *
+     * @param scroll_line 滚动行数。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TMledit.prototype.setScrollLine = function (scroll_line) {
+        return mledit_set_scroll_line(this != null ? (this.nativeObj || this) : null, scroll_line);
+    };
+    /**
+     * 转换为mledit对象(供脚本语言使用)。
+     *
+     * @param widget mledit对象。
+     *
+     * @returns mledit对象。
+     */
+    TMledit.cast = function (widget) {
+        return new TMledit(mledit_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TMledit.prototype, "readonly", {
+        /**
+         * 编辑器是否为只读。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_readonly(this.nativeObj);
+        },
+        set: function (v) {
+            this.setReadonly(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "topMargin", {
+        /**
+         * 上边距。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_top_margin(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "bottomMargin", {
+        /**
+         * 下边距。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_bottom_margin(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "leftMargin", {
+        /**
+         * 左边距。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_left_margin(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "rightMargin", {
+        /**
+         * 右边距。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_right_margin(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "tips", {
+        /**
+         * 输入提示。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_tips(this.nativeObj);
+        },
+        set: function (v) {
+            this.setTips(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "trTips", {
+        /**
+         * 保存用于翻译的提示信息。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_tr_tips(this.nativeObj);
+        },
+        set: function (v) {
+            this.setTrTips(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "keyboard", {
+        /**
+         * 自定义软键盘名称。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_keyboard(this.nativeObj);
+        },
+        set: function (v) {
+            this.setKeyboard(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "wrapWord", {
+        /**
+         * 是否自动折行。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_wrap_word(this.nativeObj);
+        },
+        set: function (v) {
+            this.setWrapWord(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "maxLines", {
+        /**
+         * 最大行数。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_max_lines(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMaxLines(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TMledit.prototype, "scrollLine", {
+        /**
+         * 鼠标一次滚动行数。
+         *
+         */
+        get: function () {
+            return mledit_t_get_prop_scroll_line(this.nativeObj);
+        },
+        set: function (v) {
+            this.setScrollLine(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TMledit;
+}(TWidget));
+exports.TMledit = TMledit;
+;
+/**
+ * 行号。多行编辑器的行号。
+ *
+ *line\_number\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于line\_number\_t控件。
+ *
+ *在xml中使用"lin\e_number"标签创建行号控件，一般配合mledit使用。如：
+ *
+ *```xml
+ *<mledit x="c" y="10" h="40%" w="90%" focus="true" left_margin="36" right_margin="16"
+ *wrap_word="true">
+ *<line_number x="0" y="0" w="32" h="100%" value="0"/>
+ *<scroll_bar_d x="right" y="0" w="14" h="100%" value="0"/>
+ *</mledit>
+ *```
+ *
+ *> 更多用法请参考：[mledit.xml](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mledit.xml)
+ *
+ *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ *```xml
+ *<line_number>
+ *<style name="default">
+ *<normal text_color="black" bg_color="#d0d0d0" text_align_h="right"/>
+ *</style>
+ *</line_number>
+ *```
+ *
+ *> 更多用法请参考：
+ *[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L556)
+ *
+ */
+var TLineNumber = /** @class */ (function (_super) {
+    __extends(TLineNumber, _super);
+    function TLineNumber(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建line_number对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TLineNumber.create = function (parent, x, y, w, h) {
+        return new TLineNumber(line_number_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置顶部边距。
+     *
+     * @param top_margin 顶部边距。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TLineNumber.prototype.setTopMargin = function (top_margin) {
+        return line_number_set_top_margin(this != null ? (this.nativeObj || this) : null, top_margin);
+    };
+    /**
+     * 设置顶部边距。
+     *
+     * @param bottom_margin 顶部边距。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TLineNumber.prototype.setBottomMargin = function (bottom_margin) {
+        return line_number_set_bottom_margin(this != null ? (this.nativeObj || this) : null, bottom_margin);
+    };
+    /**
+     * 设置行高。
+     *
+     * @param line_height 行高。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TLineNumber.prototype.setLineHeight = function (line_height) {
+        return line_number_set_line_height(this != null ? (this.nativeObj || this) : null, line_height);
+    };
+    /**
+     * 设置y偏移。
+     *
+     * @param yoffset 行高。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TLineNumber.prototype.setYoffset = function (yoffset) {
+        return line_number_set_yoffset(this != null ? (this.nativeObj || this) : null, yoffset);
+    };
+    /**
+     * 转换为line_number对象(供脚本语言使用)。
+     *
+     * @param widget line_number对象。
+     *
+     * @returns line_number对象。
+     */
+    TLineNumber.cast = function (widget) {
+        return new TLineNumber(line_number_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TLineNumber;
+}(TWidget));
+exports.TLineNumber = TLineNumber;
+;
+/**
+ * 输入法语言指示器。
+ *
+ *用于显示输入法的输入语言或类型，主要用于T9输入法。
+ *
+ *lang_indicator\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于lang_indicator\_t控件。
+ *
+ *在xml中使用"lang_indicator"标签创建lang_indicator。如：
+ *
+ *```xml
+ *<lang_indicator x="0" y="0" w="100%" h="100%" children_layout="default(c=2,r=2,m=5,s=5)">
+ *</lang_indicator>
+ *```
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色等。如：
+ *
+ *```xml
+ *<style name="default" border_color="#a0a0a0">
+ *<normal     bg_color="#f0f0f0" />
+ *</style>
+ *```
+ *
+ */
+var TLangIndicator = /** @class */ (function (_super) {
+    __extends(TLangIndicator, _super);
+    function TLangIndicator(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建lang_indicator对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TLangIndicator.create = function (parent, x, y, w, h) {
+        return new TLangIndicator(lang_indicator_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置缺省获得焦点的子控件(可用控件名或类型)。
+     *
+     * @param image 缺省获得焦点的子控件(可用控件名或类型)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TLangIndicator.prototype.setImage = function (image) {
+        return lang_indicator_set_image(this != null ? (this.nativeObj || this) : null, image);
+    };
+    /**
+     * 转换为lang_indicator对象(供脚本语言使用)。
+     *
+     * @param widget lang_indicator对象。
+     *
+     * @returns lang_indicator对象。
+     */
+    TLangIndicator.cast = function (widget) {
+        return new TLangIndicator(lang_indicator_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TLangIndicator.prototype, "image", {
+        /**
+         * 如果希望用图片格式显示，本属性用于指定图片的前缀。
+         *
+         */
+        get: function () {
+            return lang_indicator_t_get_prop_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TLangIndicator;
+}(TWidget));
+exports.TLangIndicator = TLangIndicator;
+;
+/**
  * 分组控件。
  *
  *单选按钮在同一个父控件中是互斥的，所以通常将相关的单选按钮放在一个group\_box中。
@@ -10133,6 +13687,834 @@ var TGroupBox = /** @class */ (function (_super) {
 exports.TGroupBox = TGroupBox;
 ;
 /**
+ * 输入法候选字词控件。
+ *
+ *如果希望启用用数字选择对应的候选字，请设置属性grab_keys="true"。如：
+ *
+ *```xml
+ *<candidates x="0" y="0" w="100%" h="30" grab_keys="true"/>
+ *```
+ *
+ *>相关文件： assets/default/raw/ui/kb_default.xml
+ *
+ *如果希望通过左右键切换不同的候选字，除了设置属性grab_keys="true"，还需要设置按钮的focused状态的style。
+ *
+ *```xml
+ *<style name="candidates" text_color="black">
+ *<normal  />
+ *<pressed    bg_color="#c0c0c0" border_color="#a0a0a0"/>
+ *<over       bg_color="#e0e0e0" border_color="#a0a0a0"/>
+ *<focused    border_color="#a0a0a0"/>
+ *</style>
+ *```
+ *
+ *>相关文件：assets/default/raw/styles/keyboard.xml
+ *
+ */
+var TCandidates = /** @class */ (function (_super) {
+    __extends(TCandidates, _super);
+    function TCandidates(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 转换为candidates对象(供脚本语言使用)。
+     *
+     * @param widget candidates对象。
+     *
+     * @returns candidates对象。
+     */
+    TCandidates.cast = function (widget) {
+        return new TCandidates(candidates_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置是否为预候选字列表。
+     *
+     *> 为预候选字列表则注册EVT\_IM\_SHOW\_PRE\_CANDIDATES，否则注册EVT\_IM\_SHOW\_CANDIDATES事件。
+     *
+     * @param pre 是否为预候选字列表。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TCandidates.prototype.setPre = function (pre) {
+        return candidates_set_pre(this != null ? (this.nativeObj || this) : null, pre);
+    };
+    /**
+     * 设置是否启用用数字选择候选字。
+     *
+     * @param select_by_num 是否启用用数字选择候选字。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TCandidates.prototype.setSelectByNum = function (select_by_num) {
+        return candidates_set_select_by_num(this != null ? (this.nativeObj || this) : null, select_by_num);
+    };
+    /**
+     * 设置是否自动隐藏。
+     *
+     * @param auto_hide 是否自动隐藏。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TCandidates.prototype.setAutoHide = function (auto_hide) {
+        return candidates_set_auto_hide(this != null ? (this.nativeObj || this) : null, auto_hide);
+    };
+    /**
+     * 设置按钮的style名称。
+     *
+     * @param button_style 按钮的style名称。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TCandidates.prototype.setButtonStyle = function (button_style) {
+        return candidates_set_button_style(this != null ? (this.nativeObj || this) : null, button_style);
+    };
+    Object.defineProperty(TCandidates.prototype, "pre", {
+        /**
+         * 是否为预候选字。
+         *
+         *> 预候选字: 在有的输入法中，比如T9硬键盘输入时，按下12两个键时，预候选字会显示可用的拼音列表。
+         *> 从预候选字列表中选择拼音，再查询拼音对应的候选字列表。
+         *
+         */
+        get: function () {
+            return candidates_t_get_prop_pre(this.nativeObj);
+        },
+        set: function (v) {
+            this.setPre(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TCandidates.prototype, "selectByNum", {
+        /**
+         * 是否启用用数字选择候选字。比如按下1选择第1个候选字，按下2选择第2个候选字。
+         *
+         */
+        get: function () {
+            return candidates_t_get_prop_select_by_num(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSelectByNum(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TCandidates.prototype, "autoHide", {
+        /**
+         * 没有候选字时，是否自动隐藏控件。
+         *
+         */
+        get: function () {
+            return candidates_t_get_prop_auto_hide(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAutoHide(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TCandidates.prototype, "buttonStyle", {
+        /**
+         * 按钮的style名称。
+         *
+         */
+        get: function () {
+            return candidates_t_get_prop_button_style(this.nativeObj);
+        },
+        set: function (v) {
+            this.setButtonStyle(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TCandidates;
+}(TWidget));
+exports.TCandidates = TCandidates;
+;
+/**
+ * 图片值控件。
+ *
+ *可以用图片来表示如电池电量、WIFI信号强度和其它各种数值的值。
+ *
+ *其原理如下：
+ *
+ ** 1.把value以format为格式转换成字符串。
+ ** 2.把每个字符与image(图片文件名前缀)映射成一个图片名。
+ ** 3.最后把这些图片显示出来。
+ *
+ *如果设置click\_add\_delta为非0，那么点击时自动增加指定的增量，值超过最大值时回到最小值,
+ *或者值超过最小值时回到最大值。
+ *
+ *image\_value\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于image\_value\_t控件。
+ *
+ *在xml中使用"image\_value"标签创建图片值控件。如：
+ *
+ *```xml
+ *<image_value  value="0" image="num_" />
+ *```
+ *
+ *> 更多用法请参考：
+ *[image\_value](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/image_value.xml)
+ *
+ *在c代码中使用函数image\_value\_create创建图片值控件。如：
+ *
+ *
+ *> 完整示例请参考：
+ *[image_value demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/image_value.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色和边框等等，不过一般情况并不需要。
+ *
+ */
+var TImageValue = /** @class */ (function (_super) {
+    __extends(TImageValue, _super);
+    function TImageValue(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建image_value对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TImageValue.create = function (parent, x, y, w, h) {
+        return new TImageValue(image_value_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置图片前缀。
+     *
+     * @param image 图片前缀。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageValue.prototype.setImage = function (image) {
+        return image_value_set_image(this != null ? (this.nativeObj || this) : null, image);
+    };
+    /**
+     * 设置格式。
+     *
+     * @param format 格式。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageValue.prototype.setFormat = function (format) {
+        return image_value_set_format(this != null ? (this.nativeObj || this) : null, format);
+    };
+    /**
+     * 设置点击时加上的增量。
+     *
+     * @param delta 增量。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageValue.prototype.setClickAddDelta = function (delta) {
+        return image_value_set_click_add_delta(this != null ? (this.nativeObj || this) : null, delta);
+    };
+    /**
+     * 设置值。
+     *
+     * @param value 值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageValue.prototype.setValue = function (value) {
+        return image_value_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 设置最小值。
+     *
+     * @param min 最小值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageValue.prototype.setMin = function (min) {
+        return image_value_set_min(this != null ? (this.nativeObj || this) : null, min);
+    };
+    /**
+     * 设置最大值。
+     *
+     * @param max 最大值。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageValue.prototype.setMax = function (max) {
+        return image_value_set_max(this != null ? (this.nativeObj || this) : null, max);
+    };
+    /**
+     * 转换为image_value对象(供脚本语言使用)。
+     *
+     * @param widget image_value对象。
+     *
+     * @returns image_value对象。
+     */
+    TImageValue.cast = function (widget) {
+        return new TImageValue(image_value_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TImageValue.prototype, "image", {
+        /**
+         * 图片名称的前缀。
+         *
+         */
+        get: function () {
+            return image_value_t_get_prop_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageValue.prototype, "format", {
+        /**
+         * 数值到字符串转换时的格式，缺省为"%d"。
+         *
+         */
+        get: function () {
+            return image_value_t_get_prop_format(this.nativeObj);
+        },
+        set: function (v) {
+            this.setFormat(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageValue.prototype, "clickAddDelta", {
+        /**
+         * 点击时加上一个增量。
+         *
+         */
+        get: function () {
+            return image_value_t_get_prop_click_add_delta(this.nativeObj);
+        },
+        set: function (v) {
+            this.setClickAddDelta(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageValue.prototype, "value", {
+        /**
+         * 值。
+         *
+         */
+        get: function () {
+            return image_value_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageValue.prototype, "min", {
+        /**
+         * 最小值(如果设置了click\_add\_delta，到达最小值后回到最大值)。
+         *
+         */
+        get: function () {
+            return image_value_t_get_prop_min(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMin(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageValue.prototype, "max", {
+        /**
+         * 最大值(如果设置了click\_add\_delta，到达最大值后回到最小值)。
+         *
+         */
+        get: function () {
+            return image_value_t_get_prop_max(this.nativeObj);
+        },
+        set: function (v) {
+            this.setMax(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TImageValue;
+}(TWidget));
+exports.TImageValue = TImageValue;
+;
+/**
+ * 图片动画控件，指定一个图片前缀，依次显示指定序列的图片，从而形成动画效果。
+ *
+ *图片序列可以用sequence指定，也可以用start\_index和end\_index指定一个范围。
+ *
+ *image\_animation\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于image\_animation\_t控件。
+ *
+ *在xml中使用"image\_animation"标签创建图片动画控件。如：
+ *
+ *```xml
+ *<image_animation image="ani" start_index="1" end_index="9" auto_play="true" interval="50"
+ *delay="100"/>
+ *```
+ *
+ *> 更多用法请参考：
+ *[image_animation.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/image_animation.xml)
+ *
+ *在c代码中使用函数image\_animation\_create创建图片动画控件。如：
+ *
+ *
+ *> 完整示例请参考：
+ *[image_animation
+ *demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/image_animation.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色和边框等等，不过一般情况并不需要。
+ *
+ */
+var TImageAnimation = /** @class */ (function (_super) {
+    __extends(TImageAnimation, _super);
+    function TImageAnimation(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建image_animation对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TImageAnimation.create = function (parent, x, y, w, h) {
+        return new TImageAnimation(image_animation_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置是否循环播放。
+     *
+     * @param loop 是否循环播放。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setLoop = function (loop) {
+        return image_animation_set_loop(this != null ? (this.nativeObj || this) : null, loop);
+    };
+    /**
+     * 设置图片前缀。
+     *
+     * @param image 图片前缀。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setImage = function (image) {
+        return image_animation_set_image(this != null ? (this.nativeObj || this) : null, image);
+    };
+    /**
+     * 设置播放间隔时间。
+     *
+     * @param interval 间隔时间(毫秒)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setInterval = function (interval) {
+        return image_animation_set_interval(this != null ? (this.nativeObj || this) : null, interval);
+    };
+    /**
+     * 设置延迟播放时间(仅适用于自动播放)。
+     *
+     * @param delay 延迟播放时间(毫秒)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setDelay = function (delay) {
+        return image_animation_set_delay(this != null ? (this.nativeObj || this) : null, delay);
+    };
+    /**
+     * 设置是否自动播放。
+     *
+     * @param auto_play 是否自动播放。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setAutoPlay = function (auto_play) {
+        return image_animation_set_auto_play(this != null ? (this.nativeObj || this) : null, auto_play);
+    };
+    /**
+     * 设置播放序列。比如image为"fire"，sequence为"12223", 将依次播放"fire1", "fire2", "fire2", "fire2",
+     *"fire3"。
+     *
+     * @param sequence 播放序列。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setSequence = function (sequence) {
+        return image_animation_set_sequence(this != null ? (this.nativeObj || this) : null, sequence);
+    };
+    /**
+     * 设置播放序列。比如image为"fire"，start_index为0, end_index为99, 将依次播放"fire0", ...,
+     *"fire99"。
+     *
+     *若指定的图片不存在，则重复上一张图片。
+     *
+     * @param start_index 图片起始序数。
+     * @param end_index 图片结束序数。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setRangeSequence = function (start_index, end_index) {
+        return image_animation_set_range_sequence(this != null ? (this.nativeObj || this) : null, start_index, end_index);
+    };
+    /**
+     * 播放。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.play = function () {
+        return image_animation_play(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 停止(并重置index为-1)。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.stop = function () {
+        return image_animation_stop(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 暂停。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.pause = function () {
+        return image_animation_pause(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 手动切换到下一张图片。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.next = function () {
+        return image_animation_next(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 设置生成图片名的格式。
+     *
+     *XXX:生成图片名时，第一个参数是图片名前缀，第二个是序数，只能在此前提下设置格式。
+     *
+     *```
+     *const char* format = image_animation->format ? image_animation->format : "%s%d";
+     *tk_snprintf(name, TK_NAME_LEN, format, image_animation->image, image_animation->index);
+     *```
+     *
+     * @param format 格式。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setFormat = function (format) {
+        return image_animation_set_format(this != null ? (this.nativeObj || this) : null, format);
+    };
+    /**
+     * 设置绘制完成后unload图片，以释放内存空间。
+     *
+     * @param unload_after_paint 是否绘制完成后unload图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageAnimation.prototype.setUnloadAfterPaint = function (unload_after_paint) {
+        return image_animation_set_unload_after_paint(this != null ? (this.nativeObj || this) : null, unload_after_paint);
+    };
+    /**
+     * 转换为image_animation对象(供脚本语言使用)。
+     *
+     * @param widget image_animation对象。
+     *
+     * @returns image_animation对象。
+     */
+    TImageAnimation.cast = function (widget) {
+        return new TImageAnimation(image_animation_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TImageAnimation.prototype, "image", {
+        /**
+         * 图片名称的前缀。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "sequence", {
+        /**
+         * 播放的序列，字符可选值为数字和英文大小写字母，字符可以重复。如：0123456789或者123123abcd。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_sequence(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSequence(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "startIndex", {
+        /**
+         * 图片起始序数。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_start_index(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "endIndex", {
+        /**
+         * 图片结束序数。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_end_index(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "loop", {
+        /**
+         * 是否循环播放。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_loop(this.nativeObj);
+        },
+        set: function (v) {
+            this.setLoop(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "autoPlay", {
+        /**
+         * 是否自动播放。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_auto_play(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAutoPlay(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "unloadAfterPaint", {
+        /**
+         * 绘制完成后unload图片，以释放内存空间。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_unload_after_paint(this.nativeObj);
+        },
+        set: function (v) {
+            this.setUnloadAfterPaint(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "format", {
+        /**
+         * 索引到图片名转换时的格式，缺省为"%s%d"。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_format(this.nativeObj);
+        },
+        set: function (v) {
+            this.setFormat(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "interval", {
+        /**
+         * 每张图片播放的时间(毫秒)。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_interval(this.nativeObj);
+        },
+        set: function (v) {
+            this.setInterval(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageAnimation.prototype, "delay", {
+        /**
+         * 自动播放时延迟播放的时间(毫秒)。
+         *
+         */
+        get: function () {
+            return image_animation_t_get_prop_delay(this.nativeObj);
+        },
+        set: function (v) {
+            this.setDelay(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TImageAnimation;
+}(TWidget));
+exports.TImageAnimation = TImageAnimation;
+;
+/**
+ * 仪表指针控件。
+ *
+ *仪表指针就是一张旋转的图片，图片可以是普通图片也可以是SVG图片。
+ *
+ *在嵌入式平台上，对于旋转的图片，SVG图片的效率比位图高数倍，所以推荐使用SVG图片。
+ *
+ *guage\_pointer\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于guage\_pointer\_t控件。
+ *
+ *在xml中使用"guage\_pointer"标签创建仪表指针控件。如：
+ *
+ *```xml
+ *<guage_pointer x="c" y="50" w="24" h="140" value="-128" image="guage_pointer" />
+ *```
+ *
+ *> 更多用法请参考：
+ *[guage.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/guage.xml)
+ *
+ *在c代码中使用函数guage\_pointer\_create创建仪表指针控件。如：
+ *
+ *
+ *> 创建之后，需要用guage\_pointer\_set\_image设置仪表指针图片。
+ *
+ */
+var TGuagePointer = /** @class */ (function (_super) {
+    __extends(TGuagePointer, _super);
+    function TGuagePointer(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建guage_pointer对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TGuagePointer.create = function (parent, x, y, w, h) {
+        return new TGuagePointer(guage_pointer_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为guage_pointer对象(供脚本语言使用)。
+     *
+     * @param widget guage_pointer对象。
+     *
+     * @returns guage_pointer对象。
+     */
+    TGuagePointer.cast = function (widget) {
+        return new TGuagePointer(guage_pointer_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置指针角度。12点钟方向为0度，顺时钟方向为正，单位为度。
+     *
+     * @param angle 指针角度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TGuagePointer.prototype.setAngle = function (angle) {
+        return guage_pointer_set_angle(this != null ? (this.nativeObj || this) : null, angle);
+    };
+    /**
+     * 设置指针的图片。
+     *
+     * @param image 指针的图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TGuagePointer.prototype.setImage = function (image) {
+        return guage_pointer_set_image(this != null ? (this.nativeObj || this) : null, image);
+    };
+    /**
+     * 设置指针的旋转锚点。
+     *
+     * @param anchor_x 指针的锚点坐标x。(后面加上px为像素点，不加px为相对百分比坐标)
+     * @param anchor_y 指针的锚点坐标y。(后面加上px为像素点，不加px为相对百分比坐标)
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TGuagePointer.prototype.setAnchor = function (anchor_x, anchor_y) {
+        return guage_pointer_set_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
+    };
+    Object.defineProperty(TGuagePointer.prototype, "angle", {
+        /**
+         * 指针角度。12点钟方向为0度，顺时钟方向为正，单位为度。
+         *
+         */
+        get: function () {
+            return guage_pointer_t_get_prop_angle(this.nativeObj);
+        },
+        set: function (v) {
+            this.setAngle(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TGuagePointer.prototype, "image", {
+        /**
+         * 指针图片。
+         *
+         *图片须垂直向上，图片的中心点为旋转方向。
+         *
+         */
+        get: function () {
+            return guage_pointer_t_get_prop_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TGuagePointer.prototype, "anchorX", {
+        /**
+         * 图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return guage_pointer_t_get_prop_anchor_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TGuagePointer.prototype, "anchorY", {
+        /**
+         * 图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
+         *
+         */
+        get: function () {
+            return guage_pointer_t_get_prop_anchor_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TGuagePointer;
+}(TWidget));
+exports.TGuagePointer = TGuagePointer;
+;
+/**
  * grid控件。一个简单的容器控件，用于网格排列一组控件。
  *
  *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
@@ -10193,6 +14575,601 @@ var TGrid = /** @class */ (function (_super) {
     return TGrid;
 }(TWidget));
 exports.TGrid = TGrid;
+;
+/**
+ * 文件/目录选择器
+ *
+ */
+var TFileChooser = /** @class */ (function (_super) {
+    __extends(TFileChooser, _super);
+    function TFileChooser(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建file_chooser对象
+     *
+     *
+     * @returns 对象。
+     */
+    TFileChooser.create = function () {
+        return new TFileChooser(file_chooser_create());
+    };
+    /**
+     * 设置初始目录。
+     *
+     * @param init_dir 初始目录
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileChooser.prototype.setInitDir = function (init_dir) {
+        return file_chooser_set_init_dir(this != null ? (this.nativeObj || this) : null, init_dir);
+    };
+    /**
+     * 设置过滤规则。
+     *> files_only 表示只列出文件，dir_only 表示只列出目录，其它表示只列出满足扩展名文件集合(如：.jpg.png.gif)。
+     *
+     * @param filter 过滤规则。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileChooser.prototype.setFilter = function (filter) {
+        return file_chooser_set_filter(this != null ? (this.nativeObj || this) : null, filter);
+    };
+    /**
+     * 转换为file_chooser对象(供脚本语言使用)。
+     *
+     * @param chooser file_chooser对象。
+     *
+     * @returns 对象。
+     */
+    TFileChooser.cast = function (chooser) {
+        return new TFileChooser(file_chooser_cast(chooser != null ? (chooser.nativeObj || chooser) : null));
+    };
+    /**
+     * 为了保存而选择文件。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileChooser.prototype.chooseFileForSave = function () {
+        return file_chooser_choose_file_for_save(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 为了打开而选择文件。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileChooser.prototype.chooseFileForOpen = function () {
+        return file_chooser_choose_file_for_open(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 选择目录。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileChooser.prototype.chooseFolder = function () {
+        return file_chooser_choose_folder(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 获取目录。
+     *
+     *
+     * @returns 返回选择的目录。
+     */
+    TFileChooser.prototype.getDir = function () {
+        return file_chooser_get_dir(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 获取文件名。
+     *
+     *
+     * @returns 返回选择的文件名。
+     */
+    TFileChooser.prototype.getFilename = function () {
+        return file_chooser_get_filename(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 用户是否取消了选择。
+     *
+     *
+     * @returns 返回用户是否取消了选择。
+     */
+    TFileChooser.prototype.isAborted = function () {
+        return file_chooser_is_aborted(this != null ? (this.nativeObj || this) : null);
+    };
+    return TFileChooser;
+}(TEmitter));
+exports.TFileChooser = TFileChooser;
+;
+/**
+ * 文件管理/浏览/选择控件。
+ *
+ *file\_browser\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于file\_browser\_view\_t控件。
+ *
+ *考虑到文件浏览器界面呈现的多样性，界面呈现工作完全有子控件来完成。
+ *
+ *file\_browser\_view\_t负责关联文件/文件夹数据到子控件上，子控件需要特定的规范命名。
+ *
+ ** 名为 "cwd" 的子控件用于显示当前路径。
+ *
+ ** 名为 "selected_file" 的子控件用于显示当前选择的文件。
+ *
+ ** 名为 "file" 的子控件用于显示文件项的模板控件。
+ *
+ ** 名为 "folder" 的子控件用于显示文件夹项的模板控件。
+ *
+ ** 名为 "return_up" 的子控件用于返回上一级文件夹的模板控件。
+ *
+ ** 名为 "container" 的子控件为容器控件，通常是scrollview。
+ *
+ ** 名为 "name" 的子控件用于显示文件和文件夹的名称(放在列表项目内)。
+ *
+ ** 名为 "size" 的子控件用于显示文件和文件夹的大小(放在列表项目内)。
+ *
+ ** 名为 "mtime" 的子控件用于显示文件和文件夹的修改时间(放在列表项目内)。
+ *
+ ** 名为 "ctime" 的子控件用于显示文件和文件夹的创建时间(放在列表项目内)。
+ *
+ ** 名为 "icon" 的子控件用于显示文件和文件夹的图标(放在列表项目内)。
+ *
+ ** 类型为 "check_button" 的子控件用于选择(放在列表项目内)。
+ *
+ *完整示例请参考：
+ *
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/file_chooser_for_open.xml
+ *
+ */
+var TFileBrowserView = /** @class */ (function (_super) {
+    __extends(TFileBrowserView, _super);
+    function TFileBrowserView(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建file_browser_view对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TFileBrowserView.create = function (parent, x, y, w, h) {
+        return new TFileBrowserView(file_browser_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为file_browser_view对象(供脚本语言使用)。
+     *
+     * @param widget file_browser_view对象。
+     *
+     * @returns file_browser_view对象。
+     */
+    TFileBrowserView.cast = function (widget) {
+        return new TFileBrowserView(file_browser_view_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置 初始文件夹。
+     *
+     * @param init_dir 初始文件夹。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.setInitDir = function (init_dir) {
+        return file_browser_view_set_init_dir(this != null ? (this.nativeObj || this) : null, init_dir);
+    };
+    /**
+     * 设置 过滤规则。
+     *> files_only 表示只列出文件，dir_only 表示只列出目录，其它表示只列出满足扩展名文件集合(如：.jpg.png.gif)。
+     *
+     * @param filter 过滤规则。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.setFilter = function (filter) {
+        return file_browser_view_set_filter(this != null ? (this.nativeObj || this) : null, filter);
+    };
+    /**
+     * 重新加载。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.reload = function () {
+        return file_browser_view_reload(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 设置 忽略隐藏文件。
+     *
+     * @param ignore_hidden_files 忽略隐藏文件。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.setIgnoreHiddenFiles = function (ignore_hidden_files) {
+        return file_browser_view_set_ignore_hidden_files(this != null ? (this.nativeObj || this) : null, ignore_hidden_files);
+    };
+    /**
+     * 设置 是否为升序排序。
+     *
+     * @param sort_ascending 是否为升序排序。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.setSortAscending = function (sort_ascending) {
+        return file_browser_view_set_sort_ascending(this != null ? (this.nativeObj || this) : null, sort_ascending);
+    };
+    /**
+     * 设置 是否显示checkbutton。
+     *
+     * @param show_check_button 是否显示checkbutton。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.setShowCheckButton = function (show_check_button) {
+        return file_browser_view_set_show_check_button(this != null ? (this.nativeObj || this) : null, show_check_button);
+    };
+    /**
+     * 设置 排序方式。可选值(name, size, mtime, type)。
+     *
+     * @param sort_by 排序方式。可选值(name, size, mtime, type)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.setSortBy = function (sort_by) {
+        return file_browser_view_set_sort_by(this != null ? (this.nativeObj || this) : null, sort_by);
+    };
+    /**
+     * 获取当前路径。
+     *
+     *
+     * @returns 返回当前路径。
+     */
+    TFileBrowserView.prototype.getCwd = function () {
+        return file_browser_view_get_cwd(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 在当前文件夹创建子文件夹。
+     *
+     * @param name 子文件夹名。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.createDir = function (name) {
+        return file_browser_view_create_dir(this != null ? (this.nativeObj || this) : null, name);
+    };
+    /**
+     * 在当前文件夹创建文件。
+     *
+     * @param name 文件名。
+     * @param data 数据。
+     * @param size 数据长度。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TFileBrowserView.prototype.createFile = function (name, data, size) {
+        return file_browser_view_create_file(this != null ? (this.nativeObj || this) : null, name, data, size);
+    };
+    Object.defineProperty(TFileBrowserView.prototype, "initDir", {
+        /**
+         * 初始文件夹。
+         *
+         */
+        get: function () {
+            return file_browser_view_t_get_prop_init_dir(this.nativeObj);
+        },
+        set: function (v) {
+            this.setInitDir(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TFileBrowserView.prototype, "filter", {
+        /**
+         * 过滤规则。
+         *
+         */
+        get: function () {
+            return file_browser_view_t_get_prop_filter(this.nativeObj);
+        },
+        set: function (v) {
+            this.setFilter(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TFileBrowserView.prototype, "ignoreHiddenFiles", {
+        /**
+         * 是否忽略隐藏文件。
+         *
+         */
+        get: function () {
+            return file_browser_view_t_get_prop_ignore_hidden_files(this.nativeObj);
+        },
+        set: function (v) {
+            this.setIgnoreHiddenFiles(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TFileBrowserView.prototype, "sortAscending", {
+        /**
+         * 是否为升序排序。
+         *
+         */
+        get: function () {
+            return file_browser_view_t_get_prop_sort_ascending(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSortAscending(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TFileBrowserView.prototype, "showCheckButton", {
+        /**
+         * 是否显示checkbutton。
+         *
+         */
+        get: function () {
+            return file_browser_view_t_get_prop_show_check_button(this.nativeObj);
+        },
+        set: function (v) {
+            this.setShowCheckButton(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TFileBrowserView.prototype, "sortBy", {
+        /**
+         * 排序方式。可选值(name, size, mtime, type)。
+         *
+         */
+        get: function () {
+            return file_browser_view_t_get_prop_sort_by(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSortBy(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TFileBrowserView;
+}(TWidget));
+exports.TFileBrowserView = TFileBrowserView;
+;
+/**
+ * 将draggable放入目标控件，即可让目标控件或当前窗口可以被拖动。
+ *
+ *draggable\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于draggable\_t控件。
+ *
+ *在xml中使用"draggable"标签创建draggable控件。如：
+ *
+ *```xml
+ *<button text="Drag Me" w="80" h="40" x="10" y="10">
+ *<draggable />
+ *</button>
+ *```
+ *
+ *拖动对话框标题时移动对话框：
+ *
+ *```xml
+ *<dialog_title x="0" y="0" w="100%" h="30" text="Hello AWTK"
+ *<draggable drag_window="true"/>
+ *</dialog_title>
+ *```
+ *
+ *> 更多用法请参考：
+ *[draggable.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/draggable.xml)
+ *
+ *在c代码中使用函数draggable\_create创建按钮控件。如：
+ *
+ *
+ *> draggable本身不可见，故无需style。
+ *
+ */
+var TDraggable = /** @class */ (function (_super) {
+    __extends(TDraggable, _super);
+    function TDraggable(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建draggable对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TDraggable.create = function (parent, x, y, w, h) {
+        return new TDraggable(draggable_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为draggable对象(供脚本语言使用)。
+     *
+     * @param widget draggable对象。
+     *
+     * @returns draggable对象。
+     */
+    TDraggable.cast = function (widget) {
+        return new TDraggable(draggable_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置top。
+     *
+     * @param top 拖动范围的顶部限制。缺省为父控件的顶部。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TDraggable.prototype.setTop = function (top) {
+        return draggable_set_top(this != null ? (this.nativeObj || this) : null, top);
+    };
+    /**
+     * 设置bottom。
+     *
+     * @param bottom 拖动范围的底部限制。缺省为父控件的底部。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TDraggable.prototype.setBottom = function (bottom) {
+        return draggable_set_bottom(this != null ? (this.nativeObj || this) : null, bottom);
+    };
+    /**
+     * 设置left。
+     *
+     * @param left 拖动范围的左边限制。缺省为父控件的左边。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TDraggable.prototype.setLeft = function (left) {
+        return draggable_set_left(this != null ? (this.nativeObj || this) : null, left);
+    };
+    /**
+     * 设置right。
+     *
+     * @param right 拖动范围的右边限制。缺省为父控件的右边边。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TDraggable.prototype.setRight = function (right) {
+        return draggable_set_right(this != null ? (this.nativeObj || this) : null, right);
+    };
+    /**
+     * 设置vertical_only。
+     *
+     * @param vertical_only 只允许垂直拖动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TDraggable.prototype.setVerticalOnly = function (vertical_only) {
+        return draggable_set_vertical_only(this != null ? (this.nativeObj || this) : null, vertical_only);
+    };
+    /**
+     * 设置horizontal_only。
+     *
+     * @param horizontal_only 只允许水平拖动。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TDraggable.prototype.setHorizontalOnly = function (horizontal_only) {
+        return draggable_set_horizontal_only(this != null ? (this.nativeObj || this) : null, horizontal_only);
+    };
+    /**
+     * 设置drag_window。
+     *拖动窗口而不是父控件。比如放在对话框的titlebar上，拖动titlebar其实是希望拖动对话框。
+     *
+     * @param drag_window drag_window
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TDraggable.prototype.setDragWindow = function (drag_window) {
+        return draggable_set_drag_window(this != null ? (this.nativeObj || this) : null, drag_window);
+    };
+    Object.defineProperty(TDraggable.prototype, "top", {
+        /**
+         * 拖动范围的顶部限制。缺省为父控件的顶部。
+         *
+         */
+        get: function () {
+            return draggable_t_get_prop_top(this.nativeObj);
+        },
+        set: function (v) {
+            this.setTop(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TDraggable.prototype, "bottom", {
+        /**
+         * 拖动范围的底部限制。缺省为父控件的底部。
+         *
+         */
+        get: function () {
+            return draggable_t_get_prop_bottom(this.nativeObj);
+        },
+        set: function (v) {
+            this.setBottom(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TDraggable.prototype, "left", {
+        /**
+         * 拖动范围的左边限制。缺省为父控件的左边。
+         *
+         */
+        get: function () {
+            return draggable_t_get_prop_left(this.nativeObj);
+        },
+        set: function (v) {
+            this.setLeft(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TDraggable.prototype, "right", {
+        /**
+         * 拖动范围的右边限制。缺省为父控件的右边边。
+         *
+         */
+        get: function () {
+            return draggable_t_get_prop_right(this.nativeObj);
+        },
+        set: function (v) {
+            this.setRight(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TDraggable.prototype, "verticalOnly", {
+        /**
+         * 只允许垂直拖动。
+         *
+         */
+        get: function () {
+            return draggable_t_get_prop_vertical_only(this.nativeObj);
+        },
+        set: function (v) {
+            this.setVerticalOnly(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TDraggable.prototype, "horizontalOnly", {
+        /**
+         * 只允许水平拖动。
+         *
+         */
+        get: function () {
+            return draggable_t_get_prop_horizontal_only(this.nativeObj);
+        },
+        set: function (v) {
+            this.setHorizontalOnly(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TDraggable.prototype, "dragWindow", {
+        /**
+         * 拖动窗口而不是父控件。比如放在对话框的titlebar上，拖动titlebar其实是希望拖动对话框。
+         *
+         */
+        get: function () {
+            return draggable_t_get_prop_drag_window(this.nativeObj);
+        },
+        set: function (v) {
+            this.setDragWindow(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TDraggable;
+}(TWidget));
+exports.TDraggable = TDraggable;
 ;
 /**
  * grid_item。一个简单的容器控件，一般作为grid的子控件。
@@ -10264,6 +15241,118 @@ var TGridItem = /** @class */ (function (_super) {
     return TGridItem;
 }(TWidget));
 exports.TGridItem = TGridItem;
+;
+/**
+ * 颜色选择器。
+ *
+ *color\_picker\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于color\_picker\_t控件。
+ *
+ *在xml中使用"color\_picker"标签创建颜色选择器控件。如：
+ *
+ *```xml
+ *<color_picker x="0" y="0" w="100%" h="100%" value="orange">
+ *<color_component x="0" y="0" w="200" h="200" name="sv"/>
+ *<color_component x="210" y="0" w="20" h="200" name="h"/>
+ *<color_tile x="0" y="210" w="50%" h="20" name="new" bg_color="green"/>
+ *<color_tile x="right" y="210" w="50%" h="20" name="old" bg_color="blue"/>
+ *</color_picker>
+ *```
+ *
+ *> 更多用法请参考：
+ *[color\_picker](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/color_picker.xml)
+ *
+ *其中的子控件必须按下列规则命名：
+ *
+ ** r 红色分量。可以是spin_box、edit和slider。
+ ** g 绿色分量。可以是spin_box、edit和slider。
+ ** b 蓝色分量。可以是spin_box、edit和slider。
+ ** h Hue分量。可以是spin_box、edit、slider和color_component。
+ ** s Saturation分量。可以是spin_box、edit和slider。
+ ** v Value/Brightness分量。可以是spin_box、edit和slider。
+ ** sv Saturation和Value/Brightness分量。可以是color_component。
+ ** old 旧的值。可以是spin_box、edit和color_tile。
+ ** new 新的值。可以是spin_box、edit和color_tile。
+ *
+ */
+var TColorPicker = /** @class */ (function (_super) {
+    __extends(TColorPicker, _super);
+    function TColorPicker(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建color_picker对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TColorPicker.create = function (parent, x, y, w, h) {
+        return new TColorPicker(color_picker_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置颜色。
+     *
+     * @param color 颜色。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TColorPicker.prototype.setColor = function (color) {
+        return color_picker_set_color(this != null ? (this.nativeObj || this) : null, color);
+    };
+    /**
+     * 转换为color_picker对象(供脚本语言使用)。
+     *
+     * @param widget color_picker对象。
+     *
+     * @returns color_picker对象。
+     */
+    TColorPicker.cast = function (widget) {
+        return new TColorPicker(color_picker_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TColorPicker.prototype, "value", {
+        /**
+         * 颜色。
+         *
+         */
+        get: function () {
+            return color_picker_t_get_prop_value(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TColorPicker;
+}(TWidget));
+exports.TColorPicker = TColorPicker;
+;
+/**
+ * 颜色选择器的颜色分量。
+ *控件的名称有严格规定：
+ *COLOR_PICKER_CHILD_SV: 水平为Value/Brightness(递增)，垂直为Saturation(递减)。
+ *COLOR_PICKER_CHILD_H: 水平为同色，垂直为Hue(递减)。
+ *
+ */
+var TColorComponent = /** @class */ (function (_super) {
+    __extends(TColorComponent, _super);
+    function TColorComponent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 转换为color_component对象(供脚本语言使用)。
+     *
+     * @param widget color_component对象。
+     *
+     * @returns color_component对象。
+     */
+    TColorComponent.cast = function (widget) {
+        return new TColorComponent(color_component_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TColorComponent;
+}(TWidget));
+exports.TColorComponent = TColorComponent;
 ;
 /**
  * 单行编辑器控件。
@@ -11095,6252 +16184,6 @@ var TDialogClient = /** @class */ (function (_super) {
 exports.TDialogClient = TDialogClient;
 ;
 /**
- * ComboBox Item控件。
- *
- *本类仅供combo\_box控件内部使用。
- *
- */
-var TComboBoxItem = /** @class */ (function (_super) {
-    __extends(TComboBoxItem, _super);
-    function TComboBoxItem(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建combo_box_item对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TComboBoxItem.create = function (parent, x, y, w, h) {
-        return new TComboBoxItem(combo_box_item_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换combo_box_item对象(供脚本语言使用)。
-     *
-     * @param widget combo_box_item对象。
-     *
-     * @returns combo_box_item对象。
-     */
-    TComboBoxItem.cast = function (widget) {
-        return new TComboBoxItem(combo_box_item_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置控件是否被选中。
-     *
-     * @param checked 是否被选中。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TComboBoxItem.prototype.setChecked = function (checked) {
-        return combo_box_item_set_checked(this != null ? (this.nativeObj || this) : null, checked);
-    };
-    /**
-     * 设置控件的值。
-     *
-     * @param value 值
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TComboBoxItem.prototype.setValue = function (value) {
-        return combo_box_item_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    Object.defineProperty(TComboBoxItem.prototype, "value", {
-        /**
-         * 值。
-         *
-         */
-        get: function () {
-            return combo_box_item_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TComboBoxItem.prototype, "checked", {
-        /**
-         * 是否被选中。
-         *
-         */
-        get: function () {
-            return combo_box_item_t_get_prop_checked(this.nativeObj);
-        },
-        set: function (v) {
-            this.setChecked(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TComboBoxItem;
-}(TWidget));
-exports.TComboBoxItem = TComboBoxItem;
-;
-/**
- * 对象属性变化事件。
- *
- */
-var TPropChangeEvent = /** @class */ (function (_super) {
-    __extends(TPropChangeEvent, _super);
-    function TPropChangeEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转prop_change_event_t对象，主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns 返回event对象。
-     */
-    TPropChangeEvent.cast = function (event) {
-        return new TPropChangeEvent(prop_change_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TPropChangeEvent.prototype, "name", {
-        /**
-         * 属性的名称。
-         *
-         */
-        get: function () {
-            return prop_change_event_t_get_prop_name(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPropChangeEvent.prototype, "value", {
-        /**
-         * 属性的值。
-         *
-         */
-        get: function () {
-            return new TValue(prop_change_event_t_get_prop_value(this.nativeObj));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TPropChangeEvent;
-}(TEvent));
-exports.TPropChangeEvent = TPropChangeEvent;
-;
-/**
- * 进度变化事件。
- *
- */
-var TProgressEvent = /** @class */ (function (_super) {
-    __extends(TProgressEvent, _super);
-    function TProgressEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转progress_event_t对象，主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns 返回event对象。
-     */
-    TProgressEvent.cast = function (event) {
-        return new TProgressEvent(progress_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TProgressEvent.prototype, "percent", {
-        /**
-         * 进度百分比。
-         *
-         */
-        get: function () {
-            return progress_event_t_get_prop_percent(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TProgressEvent;
-}(TEvent));
-exports.TProgressEvent = TProgressEvent;
-;
-/**
- * 执行完成事件。
- *
- */
-var TDoneEvent = /** @class */ (function (_super) {
-    __extends(TDoneEvent, _super);
-    function TDoneEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转done_event_t对象，主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns 返回event对象。
-     */
-    TDoneEvent.cast = function (event) {
-        return new TDoneEvent(done_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TDoneEvent.prototype, "result", {
-        /**
-         * 执行结果。
-         *
-         */
-        get: function () {
-            return done_event_t_get_prop_result(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TDoneEvent;
-}(TEvent));
-exports.TDoneEvent = TDoneEvent;
-;
-/**
- * 执行完成事件。
- *
- */
-var TErrorEvent = /** @class */ (function (_super) {
-    __extends(TErrorEvent, _super);
-    function TErrorEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转error_event_t对象，主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns 返回event对象。
-     */
-    TErrorEvent.cast = function (event) {
-        return new TErrorEvent(error_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TErrorEvent.prototype, "code", {
-        /**
-         * 错误码。
-         *
-         */
-        get: function () {
-            return error_event_t_get_prop_code(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TErrorEvent.prototype, "message", {
-        /**
-         * 错误信息。
-         *
-         */
-        get: function () {
-            return error_event_t_get_prop_message(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TErrorEvent;
-}(TEvent));
-exports.TErrorEvent = TErrorEvent;
-;
-/**
- * 模拟时钟控件。
- *
- *time\_clock\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于time\_clock\_t控件。
- *
- *在xml中使用"time\_clock"标签创建模拟时钟控件。如：
- *
- *```xml
- *<time_clock x="c" y="m" w="300" h="300" bg_image="clock_bg" image="clock"
- *hour_image="clock_hour" minute_image="clock_minute" second_image="clock_second"/>
- *```
- *
- *> 更多用法请参考：[time\_clock.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/time_clock.xml)
- *
- *在c代码中使用函数time\_clock\_create创建模拟时钟控件。如：
- *
- *
- *> 完整示例请参考：[time_clock demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/time_clock.c)
- *
- *time\_clock一般不需要设置style。
- *
- */
-var TTimeClock = /** @class */ (function (_super) {
-    __extends(TTimeClock, _super);
-    function TTimeClock(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建time_clock对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TTimeClock.create = function (parent, x, y, w, h) {
-        return new TTimeClock(time_clock_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为time_clock对象(供脚本语言使用)。
-     *
-     * @param widget time_clock对象。
-     *
-     * @returns time_clock对象。
-     */
-    TTimeClock.cast = function (widget) {
-        return new TTimeClock(time_clock_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置小时的值。
-     *
-     * @param hour 小时的值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setHour = function (hour) {
-        return time_clock_set_hour(this != null ? (this.nativeObj || this) : null, hour);
-    };
-    /**
-     * 设置分钟的值。
-     *
-     * @param minute 分钟的值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setMinute = function (minute) {
-        return time_clock_set_minute(this != null ? (this.nativeObj || this) : null, minute);
-    };
-    /**
-     * 设置秒的值。
-     *
-     * @param second 秒的值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setSecond = function (second) {
-        return time_clock_set_second(this != null ? (this.nativeObj || this) : null, second);
-    };
-    /**
-     * 设置小时的图片。
-     *
-     * @param hour 小时的图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setHourImage = function (hour) {
-        return time_clock_set_hour_image(this != null ? (this.nativeObj || this) : null, hour);
-    };
-    /**
-     * 设置分钟的图片。
-     *
-     * @param minute_image 分钟的图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setMinuteImage = function (minute_image) {
-        return time_clock_set_minute_image(this != null ? (this.nativeObj || this) : null, minute_image);
-    };
-    /**
-     * 设置秒的图片。
-     *
-     * @param second_image 秒的图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setSecondImage = function (second_image) {
-        return time_clock_set_second_image(this != null ? (this.nativeObj || this) : null, second_image);
-    };
-    /**
-     * 设置背景图片。
-     *
-     * @param bg_image 背景图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setBgImage = function (bg_image) {
-        return time_clock_set_bg_image(this != null ? (this.nativeObj || this) : null, bg_image);
-    };
-    /**
-     * 设置中心图片。
-     *
-     * @param image 图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setImage = function (image) {
-        return time_clock_set_image(this != null ? (this.nativeObj || this) : null, image);
-    };
-    /**
-     * 设置小时指针的旋转锚点。
-     *> 后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f
-     *
-     * @param anchor_x 指针的锚点坐标x。
-     * @param anchor_y 指针的锚点坐标y。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setHourAnchor = function (anchor_x, anchor_y) {
-        return time_clock_set_hour_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
-    };
-    /**
-     * 设置分钟指针的旋转锚点。
-     *> 后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f
-     *
-     * @param anchor_x 指针的锚点坐标x。
-     * @param anchor_y 指针的锚点坐标y。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setMinuteAnchor = function (anchor_x, anchor_y) {
-        return time_clock_set_minute_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
-    };
-    /**
-     * 设置秒钟指针的旋转锚点。
-     *> 后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f
-     *
-     * @param anchor_x 指针的锚点坐标x。
-     * @param anchor_y 指针的锚点坐标y。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTimeClock.prototype.setSecondAnchor = function (anchor_x, anchor_y) {
-        return time_clock_set_second_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
-    };
-    Object.defineProperty(TTimeClock.prototype, "hour", {
-        /**
-         * 小时。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_hour(this.nativeObj);
-        },
-        set: function (v) {
-            this.setHour(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "minute", {
-        /**
-         * 分钟。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_minute(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMinute(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "second", {
-        /**
-         * 秒。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_second(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSecond(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "image", {
-        /**
-         * 中心图片。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "bgImage", {
-        /**
-         * 背景图片。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_bg_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setBgImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "hourImage", {
-        /**
-         * 时针图片。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_hour_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setHourImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "minuteImage", {
-        /**
-         * 分针图片。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_minute_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMinuteImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "secondImage", {
-        /**
-         * 秒针图片。
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_second_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSecondImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "hourAnchorX", {
-        /**
-         * 时针图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_hour_anchor_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "hourAnchorY", {
-        /**
-         * 时针图片旋转锚点y坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_hour_anchor_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "minuteAnchorX", {
-        /**
-         * 分针图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_minute_anchor_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "minuteAnchorY", {
-        /**
-         * 分针图片旋转锚点y坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_minute_anchor_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "secondAnchorX", {
-        /**
-         * 秒针图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_second_anchor_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimeClock.prototype, "secondAnchorY", {
-        /**
-         * 秒针图片旋转锚点y坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return time_clock_t_get_prop_second_anchor_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TTimeClock;
-}(TWidget));
-exports.TTimeClock = TTimeClock;
-;
-/**
- * 文本选择器控件，通常用于选择日期和时间等。
- *
- *> XXX: 目前需要先设置options和visible_nr，再设置其它参数(在XML中也需要按此顺序)。
- *
- *text\_selector\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于text\_selector\_t控件。
- *
- *在xml中使用"text\_selector"标签创建文本选择器控件。如：
- *
- *```xml
- *<text_selector options="red;green;blue;gold;orange" visible_nr="3" text="red"/>
- *```
- *
- *> 更多用法请参考：[text\_selector.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/text_selector.xml)
- *
- *在c代码中使用函数text\_selector\_create创建文本选择器控件。如：
- *
- *
- *> 完整示例请参考：[text\_selector demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/text_selector.c)
- *
- *可用通过style来设置控件的显示风格，如字体和背景颜色等。如：
- *
- *```xml
- *<style name="dark" fg_color="#a0a0a0"  text_color="black" text_align_h="center">
- *<normal     bg_color="#ffffff" mask_color="#404040" border_color="#404040"/>
- *</style>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L443)
- *
- */
-var TTextSelector = /** @class */ (function (_super) {
-    __extends(TTextSelector, _super);
-    function TTextSelector(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建text_selector对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TTextSelector.create = function (parent, x, y, w, h) {
-        return new TTextSelector(text_selector_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换text_selector对象(供脚本语言使用)。
-     *
-     * @param widget text_selector对象。
-     *
-     * @returns text_selector对象。
-     */
-    TTextSelector.cast = function (widget) {
-        return new TTextSelector(text_selector_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 重置所有选项。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.resetOptions = function () {
-        return text_selector_reset_options(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 获取选项个数。
-     *
-     *
-     * @returns 返回选项个数。
-     */
-    TTextSelector.prototype.countOptions = function () {
-        return text_selector_count_options(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 追加一个选项。
-     *
-     * @param value 值。
-     * @param text 文本。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.appendOption = function (value, text) {
-        return text_selector_append_option(this != null ? (this.nativeObj || this) : null, value, text);
-    };
-    /**
-     * 设置选项。
-     *
-     * @param options 选项。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.setOptions = function (options) {
-        return text_selector_set_options(this != null ? (this.nativeObj || this) : null, options);
-    };
-    /**
-     * 设置一系列的整数选项。
-     *
-     * @param start 起始值。
-     * @param nr 个数。
-     * @param step 步长。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.setRangeOptions = function (start, nr, step) {
-        return text_selector_set_range_options(this != null ? (this.nativeObj || this) : null, start, nr, step);
-    };
-    /**
-     * 获取text_selector的值。
-     *
-     *
-     * @returns 返回值。
-     */
-    TTextSelector.prototype.getValue = function () {
-        return text_selector_get_value(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 设置text_selector的值。
-     *
-     * @param value 值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.setValue = function (value) {
-        return text_selector_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 获取text_selector的文本。
-     *
-     *
-     * @returns 返回文本。
-     */
-    TTextSelector.prototype.getTextValue = function () {
-        return text_selector_get_text(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 设置text_selector的文本。
-     *
-     * @param text 文本。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.setText = function (text) {
-        return text_selector_set_text(this != null ? (this.nativeObj || this) : null, text);
-    };
-    /**
-     * 设置第index个选项为当前选中的选项。
-     *
-     * @param index 选项的索引。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.setSelectedIndex = function (index) {
-        return text_selector_set_selected_index(this != null ? (this.nativeObj || this) : null, index);
-    };
-    /**
-     * 设置可见的选项数。
-     *
-     * @param visible_nr 选项数。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TTextSelector.prototype.setVisibleNr = function (visible_nr) {
-        return text_selector_set_visible_nr(this != null ? (this.nativeObj || this) : null, visible_nr);
-    };
-    Object.defineProperty(TTextSelector.prototype, "visibleNr", {
-        /**
-         * 可见的选项数量(只能是3或者5，缺省为5)。
-         *
-         */
-        get: function () {
-            return text_selector_t_get_prop_visible_nr(this.nativeObj);
-        },
-        set: function (v) {
-            this.setVisibleNr(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTextSelector.prototype, "selectedIndex", {
-        /**
-         * 当前选中的选项。
-         *
-         */
-        get: function () {
-            return text_selector_t_get_prop_selected_index(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSelectedIndex(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTextSelector.prototype, "options", {
-        /**
-         * 设置可选项(冒号分隔值和文本，分号分隔选项，如:1:red;2:green;3:blue)。
-         *对于数值选项，也可以指定一个范围，用『-』分隔起始值、结束值和格式。
-         *如："1-7-%02d"表示1到7，格式为『02d』，格式为可选，缺省为『%d』。
-         *
-         */
-        get: function () {
-            return text_selector_t_get_prop_options(this.nativeObj);
-        },
-        set: function (v) {
-            this.setOptions(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TTextSelector;
-}(TWidget));
-exports.TTextSelector = TTextSelector;
-;
-/**
- * 开关控件。
- *
- *switch\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于switch\_t控件。
- *
- *在xml中使用"switch"标签创建开关控件。如：
- *
- *```xml
- *<switch x="10" y="60" w="60" h="22" />
- *```
- *
- *> 更多用法请参考：[switch.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/switch.xml)
- *
- *在c代码中使用函数switch\_create创建开关控件。如：
- *
- *
- *> 完整示例请参考：[switch demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/switch.c)
- *
- *可用通过style来设置控件的显示风格，如背景图片等。如：
- *
- *```xml
- *<style name="default">
- *<normal  bg_image="switch" />
- *</style>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L452)
- *
- */
-var TSwitch = /** @class */ (function (_super) {
-    __extends(TSwitch, _super);
-    function TSwitch(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建switch对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TSwitch.create = function (parent, x, y, w, h) {
-        return new TSwitch(switch_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置控件的值。
-     *
-     * @param value 值
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSwitch.prototype.setValue = function (value) {
-        return switch_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 转换switch对象(供脚本语言使用)。
-     *
-     * @param widget switch对象。
-     *
-     * @returns switch对象。
-     */
-    TSwitch.cast = function (widget) {
-        return new TSwitch(switch_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TSwitch.prototype, "value", {
-        /**
-         * 值。
-         *
-         */
-        get: function () {
-            return switch_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSwitch.prototype, "maxXoffsetRatio", {
-        /**
-         * 当开关处于关闭时，图片偏移相对于图片宽度的比例(缺省为1/3)。
-         *
-         */
-        get: function () {
-            return switch_t_get_prop_max_xoffset_ratio(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TSwitch;
-}(TWidget));
-exports.TSwitch = TSwitch;
-;
-/**
- * column。一个简单的容器控件，垂直排列其子控件。
- *
- *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
- *子控件的布局可用layout\_children属性指定。
- *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
- *
- *column\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于column\_t控件。
- *
- *在xml中使用"column"标签创建column。如：
- *
- *```xml
- *<column x="0" y="0" w="100%" h="100%" children_layout="default(c=1,r=0)">
- *<button name="open:basic" text="Basic"/>
- *<button name="open:button" text="Buttons"/>
- *<button name="open:edit" text="Edits"/>
- *<button name="open:keyboard" text="KeyBoard"/>
- *</column>
- *```
- *
- *可用通过style来设置控件的显示风格，如背景颜色等。如：
- *
- *```xml
- *<style name="default" border_color="#a0a0a0">
- *<normal     bg_color="#f0f0f0" />
- *</style>
- *```
- *
- */
-var TColumn = /** @class */ (function (_super) {
-    __extends(TColumn, _super);
-    function TColumn(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建column对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TColumn.create = function (parent, x, y, w, h) {
-        return new TColumn(column_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为column对象(供脚本语言使用)。
-     *
-     * @param widget column对象。
-     *
-     * @returns column对象。
-     */
-    TColumn.cast = function (widget) {
-        return new TColumn(column_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TColumn;
-}(TWidget));
-exports.TColumn = TColumn;
-;
-/**
- * 滑动视图。
- *
- *滑动视图可以管理多个页面，并通过滑动来切换当前页面。也可以管理多张图片，让它们自动切换。
- *
- *slide\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于slide\_view\_t控件。
- *
- *在xml中使用"slide\_view"标签创建滑动视图控件。如：
- *
- *```xml
- *<slide_view x="0" y="0" w="100%" h="100%" style="dot">
- *<view x="0" y="0" w="100%" h="100%" children_layout="default(w=60,h=60,m=5,s=10)">
- *...
- *</view>
- *<view x="0" y="0" w="100%" h="100%" children_layout="default(w=60,h=60,m=5,s=10)">
- *...
- *</view>
- *</slide_view>
- *```
- *
- *> 更多用法请参考：[slide_view.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/slide_view.xml)
- *
- *在c代码中使用函数slide\_view\_create创建滑动视图控件。如：
- *
- *
- *> 完整示例请参考：
- *[slide_view demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/slide_view.c)
- *
- *可用通过style来设置控件的显示风格，如背景颜色和指示器的图标等等。如：
- *
- *```xml
- *<style name="dot">
- *<normal  icon="dot" active_icon="active_dot"/>
- *</style>
- *```
- *
- *> 如果希望背景图片跟随滚动，请将背景图片设置到页面上，否则设置到slide\_view上。
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L458)
- *
- */
-var TSlideView = /** @class */ (function (_super) {
-    __extends(TSlideView, _super);
-    function TSlideView(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建slide_view对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TSlideView.create = function (parent, x, y, w, h) {
-        return new TSlideView(slide_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为slide_view对象(供脚本语言使用)。
-     *
-     * @param widget slide_view对象。
-     *
-     * @returns slide_view对象。
-     */
-    TSlideView.cast = function (widget) {
-        return new TSlideView(slide_view_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置为自动播放模式。
-     *
-     * @param auto_play 0表示禁止自动播放，非0表示自动播放时每一页播放的时间。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideView.prototype.setAutoPlay = function (auto_play) {
-        return slide_view_set_auto_play(this != null ? (this.nativeObj || this) : null, auto_play);
-    };
-    /**
-     * 设置当前页的序号。
-     *
-     * @param index 当前页的序号。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideView.prototype.setActive = function (index) {
-        return slide_view_set_active(this != null ? (this.nativeObj || this) : null, index);
-    };
-    /**
-     * 设置为上下滑动(缺省为左右滑动)。
-     *
-     * @param vertical TRUE表示上下滑动，FALSE表示左右滑动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideView.prototype.setVertical = function (vertical) {
-        return slide_view_set_vertical(this != null ? (this.nativeObj || this) : null, vertical);
-    };
-    /**
-     * 设置页面切换动画。
-     *
-     *anim_hint取值如下：
-     *
-     ** "translate"：平移。
-     ** "overlap"：覆盖。
-     ** "overlap\_with\_alpha"：覆盖并改变透明度。
-     *
-     *> 使用"overlap"或"overlap\_with\_alpha"动画时，背景图片最好指定到page上。
-     *>
-     *> 使用"overlap\_with\_alpha"动画时，slideview的背景设置为黑色，
-     *> 或slideview的背景设置为透明，窗口的背景设置为黑色，以获得更好的视觉效果和性能。
-     *
-     * @param anim_hint 页面切换动画。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideView.prototype.setAnimHint = function (anim_hint) {
-        return slide_view_set_anim_hint(this != null ? (this.nativeObj || this) : null, anim_hint);
-    };
-    /**
-     * 设置循环切换模式。
-     *
-     * @param loop 是否启用循环切换模式。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideView.prototype.setLoop = function (loop) {
-        return slide_view_set_loop(this != null ? (this.nativeObj || this) : null, loop);
-    };
-    Object.defineProperty(TSlideView.prototype, "vertical", {
-        /**
-         * 是否为上下滑动模式。
-         *
-         */
-        get: function () {
-            return slide_view_t_get_prop_vertical(this.nativeObj);
-        },
-        set: function (v) {
-            this.setVertical(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideView.prototype, "autoPlay", {
-        /**
-         * 自动播放。0表示禁止自动播放，非0表示自动播放时每一页播放的时间。
-         *
-         */
-        get: function () {
-            return slide_view_t_get_prop_auto_play(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAutoPlay(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideView.prototype, "loop", {
-        /**
-         * 循环切换模式。
-         *
-         *向后切换：切换到最后一页时，再往后切换就到第一页。
-         *向前切换：切换到第一页时，再往前切换就到最后一页。
-         *
-         */
-        get: function () {
-            return slide_view_t_get_prop_loop(this.nativeObj);
-        },
-        set: function (v) {
-            this.setLoop(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideView.prototype, "animHint", {
-        /**
-         * 页面切换效果。
-         *
-         */
-        get: function () {
-            return slide_view_t_get_prop_anim_hint(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAnimHint(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TSlideView;
-}(TWidget));
-exports.TSlideView = TSlideView;
-;
-/**
- * 色块控件。
- *
- *用来显示一个颜色块，它通过属性而不是主题来设置颜色，方便在运行时动态改变颜色。
- *
- *可以使用value属性访问背景颜色的颜色值。
- *
- *color\_tile\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于color\_tile\_t控件。
- *
- *在xml中使用"color_tile"标签创建色块控件。如：
- *
- *```xml
- *<color_tile x="c" y="m" w="80" h="30" bg_color="green" />
- *```
- *
- *> 更多用法请参考：
- *[color_tile](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/color_picker_rgb.xml)
- *
- *在c代码中使用函数color_tile\_create创建色块控件。如：
- *
- *> 创建之后，用color\_tile\_set\_bg\_color设置背景颜色。
- *
- */
-var TColorTile = /** @class */ (function (_super) {
-    __extends(TColorTile, _super);
-    function TColorTile(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建color_tile对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TColorTile.create = function (parent, x, y, w, h) {
-        return new TColorTile(color_tile_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为color_tile对象(供脚本语言使用)。
-     *
-     * @param widget color_tile对象。
-     *
-     * @returns color_tile对象。
-     */
-    TColorTile.cast = function (widget) {
-        return new TColorTile(color_tile_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置背景颜色。
-     *
-     * @param color 背景颜色。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TColorTile.prototype.setBgColor = function (color) {
-        return color_tile_set_bg_color(this != null ? (this.nativeObj || this) : null, color);
-    };
-    Object.defineProperty(TColorTile.prototype, "bgColor", {
-        /**
-         * 背景颜色。
-         *
-         */
-        get: function () {
-            return color_tile_t_get_prop_bg_color(this.nativeObj);
-        },
-        set: function (v) {
-            this.setBgColor(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TColorTile.prototype, "borderColor", {
-        /**
-         * 边框颜色。
-         *
-         */
-        get: function () {
-            return color_tile_t_get_prop_border_color(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TColorTile;
-}(TWidget));
-exports.TColorTile = TColorTile;
-;
-/**
- * slide_view的指示器控件。
- *
- *> 支持直线、弧线排布，默认有4种绘制样式，若设置了icon/active_icon，则优先使用icon/active_icon
- *
- *slide\_indicator\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于slide\_indicator\_t控件。
- *
- *在xml中使用"slide\_indicator"或"slide\_indicator\_arc"标签创建指示器控件。如：
- *
- *```xml
- *<slide_view name="view" x="0"  y="0" w="100%" h="100%">
- *...
- *</slide_view>
- *<slide_indicator name="indicator" x="right" y="0" w="6" h="100%"/>
- *```
- *
- *> 更多用法请参考：[slide\_view.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/slide_view.xml)
- *
- *在c代码中使用函数slide\_indicator\_create创建指示器控件。如：
- *
- *
- *```xml
- *<style name="default">
- *<normal fg_color="#FFFFFF80" selected_fg_color="#FFFFFF"/>
- *</style>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L350)
- *
- */
-var TSlideIndicator = /** @class */ (function (_super) {
-    __extends(TSlideIndicator, _super);
-    function TSlideIndicator(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建slide_indicator对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TSlideIndicator.create = function (parent, x, y, w, h) {
-        return new TSlideIndicator(slide_indicator_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 创建slide_indicator对象（线性显示）
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TSlideIndicator.createLinear = function (parent, x, y, w, h) {
-        return new TSlideIndicator(slide_indicator_create_linear(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 创建slide_indicator对象（圆弧显示）
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TSlideIndicator.createArc = function (parent, x, y, w, h) {
-        return new TSlideIndicator(slide_indicator_create_arc(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为slide_indicator对象(供脚本语言使用)。
-     *
-     * @param widget slide_indicator对象。
-     *
-     * @returns slide_indicator对象。
-     */
-    TSlideIndicator.cast = function (widget) {
-        return new TSlideIndicator(slide_indicator_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置当前页的序号。
-     *
-     * @param value 当前项的序号。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setValue = function (value) {
-        return slide_indicator_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 设置指示器的数量。
-     *
-     * @param max 数量。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setMax = function (max) {
-        return slide_indicator_set_max(this != null ? (this.nativeObj || this) : null, max);
-    };
-    /**
-     * 设置指示器的默认绘制类型。
-     *
-     * @param default_paint 默认绘制类型。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setDefaultPaint = function (default_paint) {
-        return slide_indicator_set_default_paint(this != null ? (this.nativeObj || this) : null, default_paint);
-    };
-    /**
-     * 设置指示器是否自动隐藏。
-     *
-     * @param auto_hide 0表示禁止，非0表示无操作后延迟多久隐藏。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setAutoHide = function (auto_hide) {
-        return slide_indicator_set_auto_hide(this != null ? (this.nativeObj || this) : null, auto_hide);
-    };
-    /**
-     * 设置指示器的边距(默认为10像素)。
-     *
-     * @param margin 指示器的边距。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setMargin = function (margin) {
-        return slide_indicator_set_margin(this != null ? (this.nativeObj || this) : null, margin);
-    };
-    /**
-     * 设置指示器的间距(指示器有弧度时为角度值，否则为直线间距)。
-     *
-     * @param spacing 指示器的间距。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setSpacing = function (spacing) {
-        return slide_indicator_set_spacing(this != null ? (this.nativeObj || this) : null, spacing);
-    };
-    /**
-     * 设置指示器的大小(默认为8)。
-     *
-     * @param size 指示器的大小。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setSize = function (size) {
-        return slide_indicator_set_size(this != null ? (this.nativeObj || this) : null, size);
-    };
-    /**
-     * 设置旋转锚点。
-     *
-     * @param anchor_x 锚点坐标x。(后面加上px为像素点，不加px为相对百分比坐标)
-     * @param anchor_y 锚点坐标y。(后面加上px为像素点，不加px为相对百分比坐标)
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setAnchor = function (anchor_x, anchor_y) {
-        return slide_indicator_set_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
-    };
-    /**
-     * 设置指示器指示的目标。
-     *
-     * @param indicated_target 指示器指示的目标
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideIndicator.prototype.setIndicatedTarget = function (indicated_target) {
-        return slide_indicator_set_indicated_target(this != null ? (this.nativeObj || this) : null, indicated_target);
-    };
-    Object.defineProperty(TSlideIndicator.prototype, "value", {
-        /**
-         * 值(缺省为0)。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "max", {
-        /**
-         * 最大值(缺省为100)。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_max(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMax(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "defaultPaint", {
-        /**
-         * 指示器的类型。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_default_paint(this.nativeObj);
-        },
-        set: function (v) {
-            this.setDefaultPaint(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "autoHide", {
-        /**
-         * 自动隐藏。0表示禁止，非0表示无操作后延迟多久隐藏。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_auto_hide(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAutoHide(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "margin", {
-        /**
-         * 指示器与边缘的边距。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_margin(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMargin(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "spacing", {
-        /**
-         * 指示器的中心之间的间距（圆弧显示时，间距的单位为弧度，否则为像素）。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_spacing(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSpacing(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "size", {
-        /**
-         * 指示器的大小。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_size(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSize(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "anchorX", {
-        /**
-         * 锚点x坐标。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_anchor_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "anchorY", {
-        /**
-         * 锚点y坐标。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_anchor_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideIndicator.prototype, "indicatedTarget", {
-        /**
-         * 指示器指示的目标。
-         *
-         */
-        get: function () {
-            return slide_indicator_t_get_prop_indicated_target(this.nativeObj);
-        },
-        set: function (v) {
-            this.setIndicatedTarget(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TSlideIndicator;
-}(TWidget));
-exports.TSlideIndicator = TSlideIndicator;
-;
-/**
- * 左右滑动菜单控件。
- *
- *一般用一组按钮作为子控件，通过左右滑动改变当前的项。除了当菜单使用外，也可以用来切换页面。
- *
- *slide\_menu\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于slide\_menu\_t控件。
- *
- *在xml中使用"slide\_menu"标签创建左右滑动菜单控件。如：
- *
- *```xml
- *<slide_menu style="mask" align_v="top">
- *<button style="slide_button" text="0"/>
- *<button style="slide_button" text="1"/>
- *<button style="slide_button" text="2"/>
- *<button style="slide_button" text="3"/>
- *<button style="slide_button" text="4"/>
- *</slide_menu>
- *```
- *
- *> 更多用法请参考：[slide_menu.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/slide_menu.xml)
- *
- *在c代码中使用函数slide\_menu\_create创建左右滑动菜单控件。如：
- *
- *
- *可按下面的方法关注当前项改变的事件：
- *
- *
- *可按下面的方法关注当前按钮被点击的事件：
- *
- *
- *> 完整示例请参考：[slide_menu demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/slide_menu.c)
- *
- *可用通过style来设置控件的显示风格，如背景颜色和蒙版颜色等等。如：
- *
- *```xml
- *<style name="mask">
- *<normal     bg_color="#f0f0f0" mask_color="#f0f0f0"/>
- *</style>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L493)
- *
- */
-var TSlideMenu = /** @class */ (function (_super) {
-    __extends(TSlideMenu, _super);
-    function TSlideMenu(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建slide_menu对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TSlideMenu.create = function (parent, x, y, w, h) {
-        return new TSlideMenu(slide_menu_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换slide_menu对象(供脚本语言使用)。
-     *
-     * @param widget slide_menu对象。
-     *
-     * @returns slide_menu对象。
-     */
-    TSlideMenu.cast = function (widget) {
-        return new TSlideMenu(slide_menu_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置当前项。
-     *
-     * @param value 当前项的索引。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideMenu.prototype.setValue = function (value) {
-        return slide_menu_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 设置垂直对齐方式。
-     *
-     * @param align_v 对齐方式。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideMenu.prototype.setAlignV = function (align_v) {
-        return slide_menu_set_align_v(this != null ? (this.nativeObj || this) : null, align_v);
-    };
-    /**
-     * 设置最小缩放比例。
-     *
-     * @param min_scale 最小缩放比例，范围[0.5-1]。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSlideMenu.prototype.setMinScale = function (min_scale) {
-        return slide_menu_set_min_scale(this != null ? (this.nativeObj || this) : null, min_scale);
-    };
-    Object.defineProperty(TSlideMenu.prototype, "value", {
-        /**
-         * 值。代表当前选中项的索引。
-         *
-         */
-        get: function () {
-            return slide_menu_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideMenu.prototype, "alignV", {
-        /**
-         * 垂直对齐方式。
-         *
-         */
-        get: function () {
-            return slide_menu_t_get_prop_align_v(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAlignV(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TSlideMenu.prototype, "minScale", {
-        /**
-         * 最小缩放比例。
-         *
-         */
-        get: function () {
-            return slide_menu_t_get_prop_min_scale(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMinScale(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TSlideMenu;
-}(TWidget));
-exports.TSlideMenu = TSlideMenu;
-;
-/**
- * 一个裁剪子控件的容器控件。
- *
- *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
- *子控件的布局可用layout\_children属性指定。
- *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
- *
- *clip\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于clip\_view\_t控件。
- *
- *在xml中使用"clip_view"标签创建clip_view，在clip_view控件下的所有子控件都会被裁剪。如下button控件会被裁剪，无法画出clip_view控件 ：
- *
- *```xml
- *<clip_view x="0" y="0" w="100" h="100">
- *<button x="50" y="10" w="100" h="50" />
- *</clip_view>
- *```
- *
- *备注：在clip_view控件下的所有子控件都会被裁剪，如果子控件本身会设置裁剪区的话，在子控件中计算裁剪区的交集，具体请参考scroll_view控件的scroll_view_on_paint_children函数。
- *
- *可用通过style来设置控件的显示风格，如背景颜色等。如：
- *
- *```xml
- *<style name="default" border_color="#a0a0a0">
- *<normal     bg_color="#f0f0f0" />
- *</style>
- *```
- *
- */
-var TClipView = /** @class */ (function (_super) {
-    __extends(TClipView, _super);
-    function TClipView(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建clip_view对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TClipView.create = function (parent, x, y, w, h) {
-        return new TClipView(clip_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为clip_view对象(供脚本语言使用)。
-     *
-     * @param widget clip_view对象。
-     *
-     * @returns clip_view对象。
-     */
-    TClipView.cast = function (widget) {
-        return new TClipView(clip_view_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TClipView;
-}(TWidget));
-exports.TClipView = TClipView;
-;
-/**
- * 勾选按钮控件(单选/多选)。
- *
- *check\_button\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于check\_button\_t控件。
- *
- *在xml中使用"check_button"标签创建多选按钮控件。如：
- *
- *```xml
- *<check_button name="c1" text="Book"/>
- *```
- *
- *在xml中使用"radio_button"标签创建单选按钮控件。如：
- *
- *```xml
- *<radio_button name="r1" text="Book"/>
- *```
- *
- *> 更多用法请参考：
- *[button.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/basic.xml)
- *
- *在c代码中使用函数check\_button\_create创建多选按钮控件。如：
- *
- *
- *在c代码中使用函数check\_button\_create\_radio创建单选按钮控件。如：
- *
- *
- *> 完整示例请参考：
- *[button demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/check_button.c)
- *
- *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
- *
- *```xml
- *<style name="default" icon_at="left">
- *<normal  icon="unchecked" />
- *<pressed icon="unchecked" />
- *<over    icon="unchecked" text_color="green"/>
- *<normal_of_checked icon="checked" text_color="blue"/>
- *<pressed_of_checked icon="checked" text_color="blue"/>
- *<over_of_checked icon="checked" text_color="green"/>
- *</style>
- *```
- *
- *> 更多用法请参考：
- *[theme
- *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L227)
- *
- */
-var TCheckButton = /** @class */ (function (_super) {
-    __extends(TCheckButton, _super);
-    function TCheckButton(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建多选按钮对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TCheckButton.create = function (parent, x, y, w, h) {
-        return new TCheckButton(check_button_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 创建单选按钮对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TCheckButton.createRadio = function (parent, x, y, w, h) {
-        return new TCheckButton(check_button_create_radio(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置控件的值。
-     *
-     * @param value 值(勾选为TRUE，非勾选为FALSE)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TCheckButton.prototype.setValue = function (value) {
-        return check_button_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 转换check_button对象(供脚本语言使用)。
-     *
-     * @param widget check_button对象。
-     *
-     * @returns check_button对象。
-     */
-    TCheckButton.cast = function (widget) {
-        return new TCheckButton(check_button_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TCheckButton.prototype, "value", {
-        /**
-         * 值(勾选为TRUE，非勾选为FALSE)。
-         *
-         */
-        get: function () {
-            return check_button_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TCheckButton;
-}(TWidget));
-exports.TCheckButton = TCheckButton;
-;
-/**
- * 滚动视图。
- *
- *scroll\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于scroll\_view\_t控件。
- *
- *在xml中使用"scroll\_view"标签创建滚动视图控件。如：
- *
- *```xml
- *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
- *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
- *<list_item style="odd" children_layout="default(rows=1,cols=0)">
- *<image draw_type="icon" w="30" image="earth"/>
- *<label w="-30" text="1.Hello AWTK !">
- *<switch x="r:10" y="m" w="60" h="20"/>
- *</label>
- *</list_item>
- *...
- *</scroll_view>
- *</list_view>
- *```
- *
- *> 滚动视图一般作为列表视图的子控件使用。
- *
- *> 更多用法请参考：[list\_view\_m.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
- *
- *在c代码中使用函数scroll\_view\_create创建列表视图控件。如：
- *
- *
- *可用通过style来设置控件的显示风格，如背景颜色和边框颜色等(一般情况不需要)。
- *
- */
-var TScrollView = /** @class */ (function (_super) {
-    __extends(TScrollView, _super);
-    function TScrollView(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建scroll_view对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TScrollView.create = function (parent, x, y, w, h) {
-        return new TScrollView(scroll_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为scroll_view对象(供脚本语言使用)。
-     *
-     * @param widget scroll_view对象。
-     *
-     * @returns scroll_view对象。
-     */
-    TScrollView.cast = function (widget) {
-        return new TScrollView(scroll_view_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置虚拟宽度。
-     *
-     * @param w 虚拟宽度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.setVirtualW = function (w) {
-        return scroll_view_set_virtual_w(this != null ? (this.nativeObj || this) : null, w);
-    };
-    /**
-     * 设置虚拟高度。
-     *
-     * @param h 虚拟高度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.setVirtualH = function (h) {
-        return scroll_view_set_virtual_h(this != null ? (this.nativeObj || this) : null, h);
-    };
-    /**
-     * 设置是否允许x方向滑动。
-     *
-     * @param xslidable 是否允许滑动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.setXslidable = function (xslidable) {
-        return scroll_view_set_xslidable(this != null ? (this.nativeObj || this) : null, xslidable);
-    };
-    /**
-     * 设置是否允许y方向滑动。
-     *
-     * @param yslidable 是否允许滑动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.setYslidable = function (yslidable) {
-        return scroll_view_set_yslidable(this != null ? (this.nativeObj || this) : null, yslidable);
-    };
-    /**
-     * 设置偏移量。
-     *
-     * @param xoffset x偏移量。
-     * @param yoffset y偏移量。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.setOffset = function (xoffset, yoffset) {
-        return scroll_view_set_offset(this != null ? (this.nativeObj || this) : null, xoffset, yoffset);
-    };
-    /**
-     * 设置偏移速度比例。
-     *
-     * @param xspeed_scale x偏移速度比例。。
-     * @param yspeed_scale y偏移速度比例。。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.setSpeedScale = function (xspeed_scale, yspeed_scale) {
-        return scroll_view_set_speed_scale(this != null ? (this.nativeObj || this) : null, xspeed_scale, yspeed_scale);
-    };
-    /**
-     * 滚动到指定的偏移量。
-     *
-     * @param xoffset_end x偏移量。
-     * @param yoffset_end y偏移量。
-     * @param duration 时间。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.scrollTo = function (xoffset_end, yoffset_end, duration) {
-        return scroll_view_scroll_to(this != null ? (this.nativeObj || this) : null, xoffset_end, yoffset_end, duration);
-    };
-    /**
-     * 滚动到指定的偏移量。
-     *
-     * @param xoffset_delta x偏移量。
-     * @param yoffset_delta y偏移量。
-     * @param duration 时间。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollView.prototype.scrollDeltaTo = function (xoffset_delta, yoffset_delta, duration) {
-        return scroll_view_scroll_delta_to(this != null ? (this.nativeObj || this) : null, xoffset_delta, yoffset_delta, duration);
-    };
-    Object.defineProperty(TScrollView.prototype, "virtualW", {
-        /**
-         * 虚拟宽度。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_virtual_w(this.nativeObj);
-        },
-        set: function (v) {
-            this.setVirtualW(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollView.prototype, "virtualH", {
-        /**
-         * 虚拟高度。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_virtual_h(this.nativeObj);
-        },
-        set: function (v) {
-            this.setVirtualH(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollView.prototype, "xoffset", {
-        /**
-         * x偏移量。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_xoffset(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollView.prototype, "yoffset", {
-        /**
-         * y偏移量。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_yoffset(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollView.prototype, "xspeedScale", {
-        /**
-         * x偏移速度比例。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_xspeed_scale(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollView.prototype, "yspeedScale", {
-        /**
-         * y偏移速度比例。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_yspeed_scale(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollView.prototype, "xslidable", {
-        /**
-         * 是否允许x方向滑动。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_xslidable(this.nativeObj);
-        },
-        set: function (v) {
-            this.setXslidable(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollView.prototype, "yslidable", {
-        /**
-         * 是否允许y方向滑动。
-         *
-         */
-        get: function () {
-            return scroll_view_t_get_prop_yslidable(this.nativeObj);
-        },
-        set: function (v) {
-            this.setYslidable(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TScrollView;
-}(TWidget));
-exports.TScrollView = TScrollView;
-;
-/**
- * 滚动条控件。
- *
- *> 目前只支持垂直滚动。
- *
- *scroll\_bar\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于scroll\_bar\_t控件。
- *
- *在xml中使用"scroll\_bar"或"scroll\_bar\_d"或"scroll\_bar\_m"标签创建滚动条控件。如：
- *
- *```xml
- *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
- *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
- *...
- *</scroll_view>
- *<scroll_bar_m name="bar" x="right" y="0" w="6" h="100%" value="0"/>
- *</list_view>
- *```
- *
- *> 更多用法请参考：[list\_view\_m.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
- *
- *在c代码中使用函数scroll\_bar\_create创建列表项控件。如：
- *
- *
- *```xml
- *<style name="default">
- *<normal bg_color="#c0c0c0" fg_color="#808080"/>
- *<over bg_color="#c0c0c0" fg_color="#808080"/>
- *<pressed bg_color="#c0c0c0" fg_color="#808080"/>
- *</style>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L350)
- *
- */
-var TScrollBar = /** @class */ (function (_super) {
-    __extends(TScrollBar, _super);
-    function TScrollBar(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建scroll_bar对象
-     *
-     *> 根据宏WITH_DESKTOP_STYLE决定创建desktop风格还是mobile风格的滚动条
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TScrollBar.create = function (parent, x, y, w, h) {
-        return new TScrollBar(scroll_bar_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为scroll_bar对象(供脚本语言使用)。
-     *
-     * @param widget scroll_bar对象。
-     *
-     * @returns scroll_bar对象。
-     */
-    TScrollBar.cast = function (widget) {
-        return new TScrollBar(scroll_bar_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 创建mobile风格的scroll_bar对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TScrollBar.createMobile = function (parent, x, y, w, h) {
-        return new TScrollBar(scroll_bar_create_mobile(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 创建desktop风格的scroll_bar对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TScrollBar.createDesktop = function (parent, x, y, w, h) {
-        return new TScrollBar(scroll_bar_create_desktop(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置参数。
-     *
-     * @param virtual_size 虚拟高度。
-     * @param row 每一行的高度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollBar.prototype.setParams = function (virtual_size, row) {
-        return scroll_bar_set_params(this != null ? (this.nativeObj || this) : null, virtual_size, row);
-    };
-    /**
-     * 滚动到指定的值。
-     *
-     * @param value 值。
-     * @param duration 动画持续时间。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollBar.prototype.scrollTo = function (value, duration) {
-        return scroll_bar_scroll_to(this != null ? (this.nativeObj || this) : null, value, duration);
-    };
-    /**
-     * 设置值，并触发EVT_VALUE_CHANGED事件。
-     *
-     * @param value 值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollBar.prototype.setValue = function (value) {
-        return scroll_bar_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 在当前的值上增加一个值，并触发EVT_VALUE_CHANGED事件。
-     *
-     * @param delta 值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollBar.prototype.addDelta = function (delta) {
-        return scroll_bar_add_delta(this != null ? (this.nativeObj || this) : null, delta);
-    };
-    /**
-     * 在当前的值上增加一个值，并滚动到新的值，并触发EVT_VALUE_CHANGED事件。
-     *
-     * @param delta 值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollBar.prototype.scrollDelta = function (delta) {
-        return scroll_bar_scroll_delta(this != null ? (this.nativeObj || this) : null, delta);
-    };
-    /**
-     * 设置值，但不触发EVT_VALUE_CHANGED事件。
-     *
-     * @param value 值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TScrollBar.prototype.setValueOnly = function (value) {
-        return scroll_bar_set_value_only(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 判断是否是mobile风格的滚动条。
-     *
-     *
-     * @returns 返回TRUE表示是mobile风格的，否则表示不是mobile风格的。
-     */
-    TScrollBar.prototype.isMobile = function () {
-        return scroll_bar_is_mobile(this != null ? (this.nativeObj || this) : null);
-    };
-    Object.defineProperty(TScrollBar.prototype, "virtualSize", {
-        /**
-         * 虚拟宽度或高度。
-         *
-         */
-        get: function () {
-            return scroll_bar_t_get_prop_virtual_size(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollBar.prototype, "value", {
-        /**
-         * 当前的值。
-         *
-         */
-        get: function () {
-            return scroll_bar_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollBar.prototype, "row", {
-        /**
-         * 行的高度。
-         *
-         */
-        get: function () {
-            return scroll_bar_t_get_prop_row(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TScrollBar.prototype, "animatable", {
-        /**
-         * 滚动时是否启用动画。
-         *
-         */
-        get: function () {
-            return scroll_bar_t_get_prop_animatable(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TScrollBar;
-}(TWidget));
-exports.TScrollBar = TScrollBar;
-;
-/**
- * 列表视图控件。
- *
- *列表视图控件是一个可以垂直滚动的列表控件。
- *
- *如果不需要滚动，可以用view控件配置适当的layout参数作为列表控件。
- *
- *列表视图中的列表项可以固定高度，也可以使用不同高度。请参考[变高列表项](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_vh.xml)
- *
- *列表视图控件的中可以有滚动条，也可以没有滚动条。
- *可以使用移动设备风格的滚动条，也可以使用桌面风格的滚动条。
- *
- *list\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于list\_view\_t控件。
- *
- *在xml中使用"list\_view"标签创建列表视图控件。如：
- *
- *```xml
- *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
- *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
- *<list_item style="odd" children_layout="default(rows=1,cols=0)">
- *<image draw_type="icon" w="30" image="earth"/>
- *<label w="-30" text="1.Hello AWTK !">
- *<switch x="r:10" y="m" w="60" h="20"/>
- *</label>
- *</list_item>
- *...
- *</scroll_view>
- *</list_view>
- *```
- *
- *> 注意：列表项不是作为列表视图控件的直接子控件，而是作为滚动视图的子控件。
- *
- *
- *> 更多用法请参考：[list\_view\_m.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
- *
- *在c代码中使用函数list\_view\_create创建列表视图控件。如：
- *
- *
- *用代码构造列表视图是比较繁琐的事情，最好用XML来构造。
- *如果需要动态修改，可以使用widget\_clone来增加列表项，使用widget\_remove\_child来移出列表项。
- *
- *可用通过style来设置控件的显示风格，如背景颜色和边框颜色等(一般情况不需要)。
- *
- */
-var TListView = /** @class */ (function (_super) {
-    __extends(TListView, _super);
-    function TListView(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建list_view对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TListView.create = function (parent, x, y, w, h) {
-        return new TListView(list_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置列表项的高度。
-     *
-     * @param item_height 列表项的高度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TListView.prototype.setItemHeight = function (item_height) {
-        return list_view_set_item_height(this != null ? (this.nativeObj || this) : null, item_height);
-    };
-    /**
-     * 设置列表项的缺省高度。
-     *
-     * @param default_item_height 列表项的高度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TListView.prototype.setDefaultItemHeight = function (default_item_height) {
-        return list_view_set_default_item_height(this != null ? (this.nativeObj || this) : null, default_item_height);
-    };
-    /**
-     * 设置是否自动隐藏滚动条。
-     *
-     * @param auto_hide_scroll_bar 是否自动隐藏滚动条。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TListView.prototype.setAutoHideScrollBar = function (auto_hide_scroll_bar) {
-        return list_view_set_auto_hide_scroll_bar(this != null ? (this.nativeObj || this) : null, auto_hide_scroll_bar);
-    };
-    /**
-     * 转换为list_view对象(供脚本语言使用)。
-     *
-     * @param widget list_view对象。
-     *
-     * @returns list_view对象。
-     */
-    TListView.cast = function (widget) {
-        return new TListView(list_view_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * list_view重新初始化。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TListView.prototype.reinit = function () {
-        return list_view_reinit(this != null ? (this.nativeObj || this) : null);
-    };
-    Object.defineProperty(TListView.prototype, "itemHeight", {
-        /**
-         * 列表项的高度。如果 item_height 0，所有列表项使用固定高度，否则使用列表项自身的高度。
-         *
-         */
-        get: function () {
-            return list_view_t_get_prop_item_height(this.nativeObj);
-        },
-        set: function (v) {
-            this.setItemHeight(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TListView.prototype, "defaultItemHeight", {
-        /**
-         * 列表项的缺省高度。如果item_height <= 0 而且列表项自身的高度 <= 0，则使用缺省高度。
-         *
-         */
-        get: function () {
-            return list_view_t_get_prop_default_item_height(this.nativeObj);
-        },
-        set: function (v) {
-            this.setDefaultItemHeight(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TListView.prototype, "autoHideScrollBar", {
-        /**
-         * 如果不需要滚动条时，自动隐藏滚动条。
-         *
-         */
-        get: function () {
-            return list_view_t_get_prop_auto_hide_scroll_bar(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAutoHideScrollBar(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TListView;
-}(TWidget));
-exports.TListView = TListView;
-;
-/**
- * 水平列表视图控件。
- *
- *list\_view\_h\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于list\_view\_h\_t控件。
- *
- *在xml中使用"list\_view\_h"标签创建水平列表视图控件。如：
- *
- *```xml
- *<list_view_h x="center"  y="10" w="90%" h="100" item_width="200" spacing="5">
- *<scroll_view name="view" w="100%" h="100%">
- *<image style="border" draw_type="auto" image="1" text="1"/>
- *...
- *</scroll_view>
- *</list_view_h>
- *```
- *
- *> 注意：列表项不是作为列表视图控件的直接子控件，而是作为滚动视图的子控件。
- *
- *
- *> 更多用法请参考：[list\_view\_h.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_h.xml)
- *
- *在c代码中使用函数list\_view\_h\_create创建水平列表视图控件。如：
- *
- *
- *用代码构造列表视图是比较繁琐的事情，最好用XML来构造。
- *如果需要动态修改，可以使用widget\_clone来增加列表项，使用widget\_remove\_child来移出列表项。
- *
- *可用通过style来设置控件的显示风格，如背景颜色和边框颜色等(一般情况不需要)。
- *
- */
-var TListViewH = /** @class */ (function (_super) {
-    __extends(TListViewH, _super);
-    function TListViewH(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建list_view_h对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TListViewH.create = function (parent, x, y, w, h) {
-        return new TListViewH(list_view_h_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置列表项的宽度。
-     *
-     * @param item_width 列表项的宽度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TListViewH.prototype.setItemWidth = function (item_width) {
-        return list_view_h_set_item_width(this != null ? (this.nativeObj || this) : null, item_width);
-    };
-    /**
-     * 设置列表项的间距。
-     *
-     * @param spacing 列表项的间距。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TListViewH.prototype.setSpacing = function (spacing) {
-        return list_view_h_set_spacing(this != null ? (this.nativeObj || this) : null, spacing);
-    };
-    /**
-     * 转换为list_view_h对象(供脚本语言使用)。
-     *
-     * @param widget list_view_h对象。
-     *
-     * @returns list_view_h对象。
-     */
-    TListViewH.cast = function (widget) {
-        return new TListViewH(list_view_h_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TListViewH.prototype, "itemWidth", {
-        /**
-         * 列表项的宽度。
-         *
-         */
-        get: function () {
-            return list_view_h_t_get_prop_item_width(this.nativeObj);
-        },
-        set: function (v) {
-            this.setItemWidth(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TListViewH.prototype, "spacing", {
-        /**
-         * 间距。
-         *
-         */
-        get: function () {
-            return list_view_h_t_get_prop_spacing(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSpacing(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TListViewH;
-}(TWidget));
-exports.TListViewH = TListViewH;
-;
-/**
- * 列表项控件。
- *
- *列表项控件是一个简单的容器控件，一般作为列表视图中滚动视图的子控件。
- *
- *list\_item\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于list\_item\_t控件。
- *
- *在xml中使用"list\_item"标签创建列表项控件。如：
- *
- *```xml
- *<list_view x="0"  y="30" w="100%" h="-80" item_height="60">
- *<scroll_view name="view" x="0"  y="0" w="100%" h="100%">
- *<list_item style="odd" children_layout="default(rows=1,cols=0)">
- *<image draw_type="icon" w="30" image="earth"/>
- *<label w="-30" text="1.Hello AWTK !">
- *<switch x="r:10" y="m" w="60" h="20"/>
- *</label>
- *</list_item>
- *...
- *</scroll_view>
- *</list_view>
- *```
- *
- *> 更多用法请参考：[list\_view\_m.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/list_view_m.xml)
- *
- *在c代码中使用函数list\_item\_create创建列表项控件。如：
- *
- *
- *> 列表项控件大小一般由列表控制，不需指定xywh参数。
- *
- *可以用style来实现可点击或不可点击的效果。如：
- *
- *```xml
- *<style name="odd_clickable" border_color="#a0a0a0"  border="bottom" text_color="black">
- *<normal     bg_color="#f5f5f5" />
- *<pressed    bg_color="#c0c0c0" />
- *<over       bg_color="#f5f5f5" />
- *</style>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L372)
- *
- */
-var TListItem = /** @class */ (function (_super) {
-    __extends(TListItem, _super);
-    function TListItem(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建list_item对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TListItem.create = function (parent, x, y, w, h) {
-        return new TListItem(list_item_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为list_item对象(供脚本语言使用)。
-     *
-     * @param widget list_item对象。
-     *
-     * @returns list_item对象。
-     */
-    TListItem.cast = function (widget) {
-        return new TListItem(list_item_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TListItem;
-}(TWidget));
-exports.TListItem = TListItem;
-;
-/**
- * 可水平滚动的文本控件，方便实现长文本滚动。
- *
- *
- *hscroll\_label\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于hscroll\_label\_t控件。
- *
- *在xml中使用"hscroll\_label"标签创建行号控件，一般配合mledit使用。如：
- *
- *```xml
- *```
- *
- *> 更多用法请参考：[mledit.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mledit.xml)
- *
- *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
- *
- *```xml
- *<style name="default" text_color="black">
- *<normal   />
- *<focused  />
- *</style>
- *```
- *
- *> 更多用法请参考：
- *[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
- *
- */
-var THscrollLabel = /** @class */ (function (_super) {
-    __extends(THscrollLabel, _super);
-    function THscrollLabel(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建hscroll_label对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    THscrollLabel.create = function (parent, x, y, w, h) {
-        return new THscrollLabel(hscroll_label_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置lull。
-     *
-     * @param lull 间歇时间(ms)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setLull = function (lull) {
-        return hscroll_label_set_lull(this != null ? (this.nativeObj || this) : null, lull);
-    };
-    /**
-     * 设置duration。
-     *
-     * @param duration 滚动时间(ms)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setDuration = function (duration) {
-        return hscroll_label_set_duration(this != null ? (this.nativeObj || this) : null, duration);
-    };
-    /**
-     * 设置only_focus。
-     *
-     * @param only_focus 是否只有处于focus时才滚动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setOnlyFocus = function (only_focus) {
-        return hscroll_label_set_only_focus(this != null ? (this.nativeObj || this) : null, only_focus);
-    };
-    /**
-     * 设置only_parent_focus。
-     *
-     * @param only_parent_focus 是否只有处于focus时才滚动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setOnlyParentFocus = function (only_parent_focus) {
-        return hscroll_label_set_only_parent_focus(this != null ? (this.nativeObj || this) : null, only_parent_focus);
-    };
-    /**
-     * 设置loop。
-     *
-     * @param loop 是否循环滚动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setLoop = function (loop) {
-        return hscroll_label_set_loop(this != null ? (this.nativeObj || this) : null, loop);
-    };
-    /**
-     * 设置yoyo。
-     *
-     * @param yoyo 是否往返滚动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setYoyo = function (yoyo) {
-        return hscroll_label_set_yoyo(this != null ? (this.nativeObj || this) : null, yoyo);
-    };
-    /**
-     * 设置ellipses。
-     *
-     * @param ellipses 是否在文本超长时在行尾显示"..."。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setEllipses = function (ellipses) {
-        return hscroll_label_set_ellipses(this != null ? (this.nativeObj || this) : null, ellipses);
-    };
-    /**
-     * 设置x偏移(一般无需用户调用)。。
-     *
-     * @param xoffset x偏移。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.setXoffset = function (xoffset) {
-        return hscroll_label_set_xoffset(this != null ? (this.nativeObj || this) : null, xoffset);
-    };
-    /**
-     * 启动(一般无需用户调用)。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.start = function () {
-        return hscroll_label_start(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 停止(一般无需用户调用)。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    THscrollLabel.prototype.stop = function () {
-        return hscroll_label_stop(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 转换为hscroll_label对象(供脚本语言使用)。
-     *
-     * @param widget hscroll_label对象。
-     *
-     * @returns hscroll_label对象。
-     */
-    THscrollLabel.cast = function (widget) {
-        return new THscrollLabel(hscroll_label_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(THscrollLabel.prototype, "onlyFocus", {
-        /**
-         * 只有处于focus时才滚动(缺省否)。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_only_focus(this.nativeObj);
-        },
-        set: function (v) {
-            this.setOnlyFocus(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "onlyParentFocus", {
-        /**
-         * 只有父控件处于focus时才滚动(缺省否)。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_only_parent_focus(this.nativeObj);
-        },
-        set: function (v) {
-            this.setOnlyParentFocus(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "loop", {
-        /**
-         * loop是否循环滚动(缺省FALSE)。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_loop(this.nativeObj);
-        },
-        set: function (v) {
-            this.setLoop(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "yoyo", {
-        /**
-         * 是否往返滚动(缺省FALSE)。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_yoyo(this.nativeObj);
-        },
-        set: function (v) {
-            this.setYoyo(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "ellipses", {
-        /**
-         * 文本显示不下时，在行尾显示省略号(缺省FALSE)。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_ellipses(this.nativeObj);
-        },
-        set: function (v) {
-            this.setEllipses(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "lull", {
-        /**
-         * 滚动之间的间歇时间(ms)，缺省3000ms。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_lull(this.nativeObj);
-        },
-        set: function (v) {
-            this.setLull(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "duration", {
-        /**
-         * 完整的滚动一次需要的时间(ms)，缺省5000ms。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_duration(this.nativeObj);
-        },
-        set: function (v) {
-            this.setDuration(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "xoffset", {
-        /**
-         * 偏移量。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_xoffset(this.nativeObj);
-        },
-        set: function (v) {
-            this.setXoffset(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(THscrollLabel.prototype, "textW", {
-        /**
-         * 文本的宽度。
-         *
-         */
-        get: function () {
-            return hscroll_label_t_get_prop_text_w(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return THscrollLabel;
-}(TWidget));
-exports.THscrollLabel = THscrollLabel;
-;
-/**
- * 按钮控件。
- *
- *点击按钮之后会触发EVT\_CLICK事件，注册EVT\_CLICK事件以执行特定操作。
- *
- *按钮控件也可以作为容器使用，使用图片和文本作为其子控件，可以实现很多有趣的效果。
- *
- *button\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于button\_t控件。
- *
- *在xml中使用"button"标签创建按钮控件。如：
- *
- *```xml
- *<button x="c" y="m" w="80" h="30" text="OK"/>
- *```
- *
- *> 更多用法请参考：
- *[button.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/button.xml)
- *
- *在c代码中使用函数button\_create创建按钮控件。如：
- *
- *
- *> 创建之后，需要用widget\_set\_text或widget\_set\_text\_utf8设置文本内容。
- *
- *> 完整示例请参考：
- *[button demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/button.c)
- *
- *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
- *
- *```xml
- *<style name="default" border_color="#a0a0a0"  text_color="black">
- *<normal     bg_color="#f0f0f0" />
- *<pressed    bg_color="#c0c0c0" x_offset="1" y_offset="1"/>
- *<over       bg_color="#e0e0e0" />
- *<disable    bg_color="gray" text_color="#d0d0d0" />
- *</style>
- *```
- *
- *> 更多用法请参考：
- *[theme
- *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L31)
- *
- */
-var TButton = /** @class */ (function (_super) {
-    __extends(TButton, _super);
-    function TButton(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建button对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TButton.create = function (parent, x, y, w, h) {
-        return new TButton(button_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为button对象(供脚本语言使用)。
-     *
-     * @param widget button对象。
-     *
-     * @returns button对象。
-     */
-    TButton.cast = function (widget) {
-        return new TButton(button_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置触发EVT\_CLICK事件的时间间隔。为0则不重复触发EVT\_CLICK事件。
-     *
-     * @param repeat 触发EVT_CLICK事件的时间间隔(毫秒)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TButton.prototype.setRepeat = function (repeat) {
-        return button_set_repeat(this != null ? (this.nativeObj || this) : null, repeat);
-    };
-    /**
-     * 设置是否启用长按事件。
-     *
-     * @param enable_long_press 是否启用长按事件。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TButton.prototype.setEnableLongPress = function (enable_long_press) {
-        return button_set_enable_long_press(this != null ? (this.nativeObj || this) : null, enable_long_press);
-    };
-    Object.defineProperty(TButton.prototype, "repeat", {
-        /**
-         * 重复触发EVT\_CLICK事件的时间间隔。
-         *
-         *为0则不重复触发EVT\_CLICK事件。
-         *
-         */
-        get: function () {
-            return button_t_get_prop_repeat(this.nativeObj);
-        },
-        set: function (v) {
-            this.setRepeat(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TButton.prototype, "enableLongPress", {
-        /**
-         * 是否启用长按事件，为true时才触发长按事件。
-         *
-         *触发长按事件后不再触发点击事件。
-         *缺省不启用。
-         *
-         */
-        get: function () {
-            return button_t_get_prop_enable_long_press(this.nativeObj);
-        },
-        set: function (v) {
-            this.setEnableLongPress(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TButton;
-}(TWidget));
-exports.TButton = TButton;
-;
-/**
- * Button Group控件。一个简单的容器控件，用于容纳一组按钮控件。
- *
- *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
- *子控件的布局可用layout\_children属性指定。
- *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
- *
- *button\_group\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于button\_group\_t控件。
- *
- *在xml中使用"button\_group"标签创建button\_group。如：
- *
- *```xml
- *<button_group x="0" y="m" w="100%" h="40" children_layout="default(c=4,r=1,s=5,m=5)">
- *<button name="open:basic" text="Basic"/>
- *<button name="open:button" text="Buttons"/>
- *<button name="open:edit" text="Edits"/>
- *<button name="open:keyboard" text="KeyBoard"/>
- *</button_group>
- *```
- *
- *可用通过style来设置控件的显示风格，如背景颜色等。如：
- *
- *```xml
- *<style name="default" border_color="#a0a0a0">
- *<normal     bg_color="#f0f0f0" />
- *</style>
- *```
- *
- */
-var TButtonGroup = /** @class */ (function (_super) {
-    __extends(TButtonGroup, _super);
-    function TButtonGroup(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建button_group对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TButtonGroup.create = function (parent, x, y, w, h) {
-        return new TButtonGroup(button_group_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为button_group对象(供脚本语言使用)。
-     *
-     * @param widget button_group对象。
-     *
-     * @returns button_group对象。
-     */
-    TButtonGroup.cast = function (widget) {
-        return new TButtonGroup(button_group_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TButtonGroup;
-}(TWidget));
-exports.TButtonGroup = TButtonGroup;
-;
-/**
- * app_bar控件。
- *
- *一个简单的容器控件，一般在窗口的顶部，用于显示本窗口的状态和信息。
- *
- *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
- *子控件的布局可用layout\_children属性指定。
- *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
- *
- *app\_bar\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于app\_bar\_t控件。
- *
- *在xml中使用"app\_bar"标签创建app\_bar。如：
- *
- *```xml
- *<app_bar x="0" y="0" w="100%" h="30"
- *<label x="0" y="0" w="100%" h="100%" text="Basic Controls" />
- *</app_bar>
- *```
- *
- *在c代码中使用函数app\_bar\_create创建app\_bar。如：
- *
- *
- *可用通过style来设置控件的显示风格，如背景颜色等。如：
- *
- *```xml
- *<style name="default" border_color="#a0a0a0">
- *<normal     bg_color="#f0f0f0" />
- *</style>
- *```
- *
- */
-var TAppBar = /** @class */ (function (_super) {
-    __extends(TAppBar, _super);
-    function TAppBar(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建app_bar对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TAppBar.create = function (parent, x, y, w, h) {
-        return new TAppBar(app_bar_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为app_bar对象(供脚本语言使用)。
-     *
-     * @param widget app_bar对象。
-     *
-     * @returns app_bar对象。
-     */
-    TAppBar.cast = function (widget) {
-        return new TAppBar(app_bar_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TAppBar;
-}(TWidget));
-exports.TAppBar = TAppBar;
-;
-/**
- * 图文混排控件，实现简单的图文混排。
- *
- *rich\_text\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于rich\_text\_t控件。
- *
- *在xml中使用"rich\_text"标签创建图文混排控件。如：
- *
- *```xml
- *<rich_text x="0" y="0" w="100%" h="60"
- *text="<image name=&quota;bricks&quota;/><font align_v=&quota;middle&quota;>hello awtk!</font>" />
- *```
- *>
- *
- *> 更多用法请参考：
- *[rich_text.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/rich_text.xml)
- *
- *在c代码中使用函数rich\_text\_create创建图文混排控件。如：
- *
- *
- *> 完整示例请参考：
- *[rich_text demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/rich_text.c)
- *
- *可用通过style来设置控件的显示风格，如背景颜色等等。而字体的大小和颜色则由文本内部的属性决定。
- *
- *目前支持image和font两个tag：
- *
- ** image 支持的属性有：
- ** name 图片的名称。
- ** w 图片的宽度。
- ** h 图片的高度。
- *
- ** font 支持的属性有：
- ** color 颜色。
- ** size 大小。
- ** align_v 垂直方向对齐的方式(top|middle|bottom)。
- ** bold 粗体(暂不支持)
- ** italic 斜体(暂不支持)
- ** underline 下划线(暂不支持)
- *
- */
-var TRichText = /** @class */ (function (_super) {
-    __extends(TRichText, _super);
-    function TRichText(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建rich_text对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TRichText.create = function (parent, x, y, w, h) {
-        return new TRichText(rich_text_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置文本。
-     *
-     * @param text 文本。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TRichText.prototype.setText = function (text) {
-        return rich_text_set_text(this != null ? (this.nativeObj || this) : null, text);
-    };
-    /**
-     * 转换为rich_text对象(供脚本语言使用)。
-     *
-     * @param widget rich_text对象。
-     *
-     * @returns rich_text对象。
-     */
-    TRichText.cast = function (widget) {
-        return new TRichText(rich_text_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TRichText.prototype, "lineGap", {
-        /**
-         * 行间距。
-         *
-         */
-        get: function () {
-            return rich_text_t_get_prop_line_gap(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TRichText.prototype, "margin", {
-        /**
-         * 边距。
-         *
-         */
-        get: function () {
-            return rich_text_t_get_prop_margin(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TRichText;
-}(TWidget));
-exports.TRichText = TRichText;
-;
-/**
- * 滚轮事件。
- *
- */
-var TOrientationEvent = /** @class */ (function (_super) {
-    __extends(TOrientationEvent, _super);
-    function TOrientationEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转orientation_event_t对象，主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns event对象。
-     */
-    TOrientationEvent.cast = function (event) {
-        return new TOrientationEvent(orientation_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TOrientationEvent.prototype, "orientation", {
-        /**
-         * 屏幕方向。
-         *
-         */
-        get: function () {
-            return orientation_event_t_get_prop_orientation(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TOrientationEvent;
-}(TEvent));
-exports.TOrientationEvent = TOrientationEvent;
-;
-/**
- * rich_text_view是一个专用容器，用来放rich text和 scroll bar，并在两者之间建立联系。
- *
- *rich_text_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于rich_text_view\_t控件。
- *
- *在xml中使用"rich_text_view"标签创建rich_text_view。如：
- *
- *```xml
- *<rich_text_view x="0" y="10" w="100%" h="300">
- *<rich_text line_gap="5" x="0" y="10" w="-12" h="100%" margin="10">
- *...
- *</rich_text>
- *<scroll_bar_d name="bar" x="right" y="0" w="12" h="100%" value="0"/>
- *</rich_text_view>
- *```
- *
- *可用通过style来设置控件的显示风格，如背景颜色等。如：
- *
- *```xml
- *<style name="default" border_color="#a0a0a0">
- *<normal     bg_color="#f0f0f0" />
- *</style>
- *```
- *
- */
-var TRichTextView = /** @class */ (function (_super) {
-    __extends(TRichTextView, _super);
-    function TRichTextView(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建rich_text_view对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TRichTextView.create = function (parent, x, y, w, h) {
-        return new TRichTextView(rich_text_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为rich_text_view对象(供脚本语言使用)。
-     *
-     * @param widget rich_text_view对象。
-     *
-     * @returns rich_text_view对象。
-     */
-    TRichTextView.cast = function (widget) {
-        return new TRichTextView(rich_text_view_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TRichTextView;
-}(TWidget));
-exports.TRichTextView = TRichTextView;
-;
-/**
- * 进度圆环控件。
- *
- *progress\_circle\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于progress\_circle\_t控件。
- *
- *在xml中使用"progress\_circle"标签创建进度圆环控件。如：
- *
- *```xml
- *<progress_circle max="360" show_text="true" start_angle="90" />
- *```
- *
- *> 更多用法请参考：
- *[progress_circle.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/progress_circle.xml)
- *
- *在c代码中使用函数progress\_circle\_create创建进度圆环控件。如：
- *
- *
- *> 完整示例请参考：
- *[progress_circle
- *demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/progress_circle.c)
- *
- *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
- *
- *```xml
- *<style name="default">
- *<normal text_color="green" fg_color="black" />
- *</style>
- *```
- *
- *> 更多用法请参考：
- *[theme
- *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L467)
- *
- */
-var TProgressCircle = /** @class */ (function (_super) {
-    __extends(TProgressCircle, _super);
-    function TProgressCircle(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建progress_circle对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TProgressCircle.create = function (parent, x, y, w, h) {
-        return new TProgressCircle(progress_circle_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为progress_circle对象(供脚本语言使用)。
-     *
-     * @param widget progress_circle对象。
-     *
-     * @returns progress_circle对象。
-     */
-    TProgressCircle.cast = function (widget) {
-        return new TProgressCircle(progress_circle_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置值。
-     *
-     * @param value 值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setValue = function (value) {
-        return progress_circle_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 设置最大值。
-     *
-     * @param max 最大值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setMax = function (max) {
-        return progress_circle_set_max(this != null ? (this.nativeObj || this) : null, max);
-    };
-    /**
-     * 设置环线的厚度。
-     *
-     * @param line_width 环线的厚度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setLineWidth = function (line_width) {
-        return progress_circle_set_line_width(this != null ? (this.nativeObj || this) : null, line_width);
-    };
-    /**
-     * 设置起始角度。
-     *
-     * @param start_angle 起始角度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setStartAngle = function (start_angle) {
-        return progress_circle_set_start_angle(this != null ? (this.nativeObj || this) : null, start_angle);
-    };
-    /**
-     * 设置单位。
-     *
-     * @param unit 单位。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setUnit = function (unit) {
-        return progress_circle_set_unit(this != null ? (this.nativeObj || this) : null, unit);
-    };
-    /**
-     * 设置线帽类型。
-     *
-     * @param line_cap 线帽类型(round:圆头，square:方头)。。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setLineCap = function (line_cap) {
-        return progress_circle_set_line_cap(this != null ? (this.nativeObj || this) : null, line_cap);
-    };
-    /**
-     * 设置是否显示文本。
-     *
-     * @param show_text 是否显示文本。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setShowText = function (show_text) {
-        return progress_circle_set_show_text(this != null ? (this.nativeObj || this) : null, show_text);
-    };
-    /**
-     * 设置是否为逆时针方向。
-     *
-     * @param counter_clock_wise 是否为逆时针方向。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TProgressCircle.prototype.setCounterClockWise = function (counter_clock_wise) {
-        return progress_circle_set_counter_clock_wise(this != null ? (this.nativeObj || this) : null, counter_clock_wise);
-    };
-    Object.defineProperty(TProgressCircle.prototype, "value", {
-        /**
-         * 值(缺省为0)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TProgressCircle.prototype, "max", {
-        /**
-         * 最大值(缺省为100)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_max(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMax(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TProgressCircle.prototype, "startAngle", {
-        /**
-         * 起始角度(单位为度，缺省-90)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_start_angle(this.nativeObj);
-        },
-        set: function (v) {
-            this.setStartAngle(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TProgressCircle.prototype, "lineWidth", {
-        /**
-         * 环线的厚度(缺省为8)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_line_width(this.nativeObj);
-        },
-        set: function (v) {
-            this.setLineWidth(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TProgressCircle.prototype, "unit", {
-        /**
-         * 单元(缺省无)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_unit(this.nativeObj);
-        },
-        set: function (v) {
-            this.setUnit(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TProgressCircle.prototype, "lineCap", {
-        /**
-         * 线帽类型(round:圆头，square:方头)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_line_cap(this.nativeObj);
-        },
-        set: function (v) {
-            this.setLineCap(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TProgressCircle.prototype, "counterClockWise", {
-        /**
-         * 是否为逆时针方向(缺省为FALSE)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_counter_clock_wise(this.nativeObj);
-        },
-        set: function (v) {
-            this.setCounterClockWise(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TProgressCircle.prototype, "showText", {
-        /**
-         * 是否显示文本(缺省为TRUE)。
-         *
-         */
-        get: function () {
-            return progress_circle_t_get_prop_show_text(this.nativeObj);
-        },
-        set: function (v) {
-            this.setShowText(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TProgressCircle;
-}(TWidget));
-exports.TProgressCircle = TProgressCircle;
-;
-/**
- * 指针事件。
- *
- */
-var TPointerEvent = /** @class */ (function (_super) {
-    __extends(TPointerEvent, _super);
-    function TPointerEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转pointer_event_t对象，主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns event对象。
-     */
-    TPointerEvent.cast = function (event) {
-        return new TPointerEvent(pointer_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TPointerEvent.prototype, "x", {
-        /**
-         * x坐标。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "y", {
-        /**
-         * y坐标。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "button", {
-        /**
-         * button。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_button(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "pressed", {
-        /**
-         * 指针是否按下。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_pressed(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "alt", {
-        /**
-         * alt键是否按下。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_alt(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "ctrl", {
-        /**
-         * ctrl键是否按下。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_ctrl(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "cmd", {
-        /**
-         * cmd键是否按下。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_cmd(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "menu", {
-        /**
-         * menu键是否按下。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_menu(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TPointerEvent.prototype, "shift", {
-        /**
-         * shift键是否按下。
-         *
-         */
-        get: function () {
-            return pointer_event_t_get_prop_shift(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TPointerEvent;
-}(TEvent));
-exports.TPointerEvent = TPointerEvent;
-;
-/**
- * 多行编辑器控件。
- *
- *mledit\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于mledit\_t控件。
- *
- *在xml中使用"mledit"标签创建多行编辑器控件。如：
- *
- *```xml
- *<mledit x="c" y="m" w="300" h="300" />
- *```
- *
- *> 更多用法请参考：[mledit.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mledit.xml)
- *
- *在c代码中使用函数mledit\_create创建多行编辑器控件。如：
- *
- *
- *> 完整示例请参考：[mledit demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/mledit.c)
- *
- *time\_clock一般不需要设置style。
- *
- */
-var TMledit = /** @class */ (function (_super) {
-    __extends(TMledit, _super);
-    function TMledit(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建mledit对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TMledit.create = function (parent, x, y, w, h) {
-        return new TMledit(mledit_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置编辑器是否为只读。
-     *
-     * @param readonly 只读。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setReadonly = function (readonly) {
-        return mledit_set_readonly(this != null ? (this.nativeObj || this) : null, readonly);
-    };
-    /**
-     * 设置为焦点。
-     *
-     * @param focus 是否为焦点。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setFocus = function (focus) {
-        return mledit_set_focus(this != null ? (this.nativeObj || this) : null, focus);
-    };
-    /**
-     * 设置编辑器是否自动折行。
-     *
-     * @param wrap_word 是否自动折行。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setWrapWord = function (wrap_word) {
-        return mledit_set_wrap_word(this != null ? (this.nativeObj || this) : null, wrap_word);
-    };
-    /**
-     * 设置编辑器的最大行数。
-     *
-     * @param max_lines 最大行数。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setMaxLines = function (max_lines) {
-        return mledit_set_max_lines(this != null ? (this.nativeObj || this) : null, max_lines);
-    };
-    /**
-     * 设置编辑器的输入提示。
-     *
-     * @param tips 输入提示。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setTips = function (tips) {
-        return mledit_set_tips(this != null ? (this.nativeObj || this) : null, tips);
-    };
-    /**
-     * 获取翻译之后的文本，然后调用mledit_set_tips。
-     *
-     * @param tr_tips 提示信息。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setTrTips = function (tr_tips) {
-        return mledit_set_tr_tips(this != null ? (this.nativeObj || this) : null, tr_tips);
-    };
-    /**
-     * 设置自定义软键盘名称。
-     *
-     * @param keyboard 键盘名称(相应UI资源必须存在)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setKeyboard = function (keyboard) {
-        return mledit_set_keyboard(this != null ? (this.nativeObj || this) : null, keyboard);
-    };
-    /**
-     * 设置编辑器光标位置。
-     *
-     * @param cursor 光标位置。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setCursor = function (cursor) {
-        return mledit_set_cursor(this != null ? (this.nativeObj || this) : null, cursor);
-    };
-    /**
-     * 设置编辑器滚动速度。
-     *
-     * @param scroll_line 滚动行数。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TMledit.prototype.setScrollLine = function (scroll_line) {
-        return mledit_set_scroll_line(this != null ? (this.nativeObj || this) : null, scroll_line);
-    };
-    /**
-     * 转换为mledit对象(供脚本语言使用)。
-     *
-     * @param widget mledit对象。
-     *
-     * @returns mledit对象。
-     */
-    TMledit.cast = function (widget) {
-        return new TMledit(mledit_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TMledit.prototype, "readonly", {
-        /**
-         * 编辑器是否为只读。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_readonly(this.nativeObj);
-        },
-        set: function (v) {
-            this.setReadonly(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "topMargin", {
-        /**
-         * 上边距。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_top_margin(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "bottomMargin", {
-        /**
-         * 下边距。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_bottom_margin(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "leftMargin", {
-        /**
-         * 左边距。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_left_margin(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "rightMargin", {
-        /**
-         * 右边距。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_right_margin(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "tips", {
-        /**
-         * 输入提示。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_tips(this.nativeObj);
-        },
-        set: function (v) {
-            this.setTips(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "trTips", {
-        /**
-         * 保存用于翻译的提示信息。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_tr_tips(this.nativeObj);
-        },
-        set: function (v) {
-            this.setTrTips(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "keyboard", {
-        /**
-         * 自定义软键盘名称。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_keyboard(this.nativeObj);
-        },
-        set: function (v) {
-            this.setKeyboard(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "wrapWord", {
-        /**
-         * 是否自动折行。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_wrap_word(this.nativeObj);
-        },
-        set: function (v) {
-            this.setWrapWord(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "maxLines", {
-        /**
-         * 最大行数。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_max_lines(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMaxLines(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TMledit.prototype, "scrollLine", {
-        /**
-         * 鼠标一次滚动行数。
-         *
-         */
-        get: function () {
-            return mledit_t_get_prop_scroll_line(this.nativeObj);
-        },
-        set: function (v) {
-            this.setScrollLine(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TMledit;
-}(TWidget));
-exports.TMledit = TMledit;
-;
-/**
- * 行号。多行编辑器的行号。
- *
- *line\_number\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于line\_number\_t控件。
- *
- *在xml中使用"lin\e_number"标签创建行号控件，一般配合mledit使用。如：
- *
- *```xml
- *<mledit x="c" y="10" h="40%" w="90%" focus="true" left_margin="36" right_margin="16"
- *wrap_word="true">
- *<line_number x="0" y="0" w="32" h="100%" value="0"/>
- *<scroll_bar_d x="right" y="0" w="14" h="100%" value="0"/>
- *</mledit>
- *```
- *
- *> 更多用法请参考：[mledit.xml](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mledit.xml)
- *
- *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
- *
- *```xml
- *<line_number>
- *<style name="default">
- *<normal text_color="black" bg_color="#d0d0d0" text_align_h="right"/>
- *</style>
- *</line_number>
- *```
- *
- *> 更多用法请参考：
- *[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L556)
- *
- */
-var TLineNumber = /** @class */ (function (_super) {
-    __extends(TLineNumber, _super);
-    function TLineNumber(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建line_number对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TLineNumber.create = function (parent, x, y, w, h) {
-        return new TLineNumber(line_number_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置顶部边距。
-     *
-     * @param top_margin 顶部边距。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TLineNumber.prototype.setTopMargin = function (top_margin) {
-        return line_number_set_top_margin(this != null ? (this.nativeObj || this) : null, top_margin);
-    };
-    /**
-     * 设置顶部边距。
-     *
-     * @param bottom_margin 顶部边距。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TLineNumber.prototype.setBottomMargin = function (bottom_margin) {
-        return line_number_set_bottom_margin(this != null ? (this.nativeObj || this) : null, bottom_margin);
-    };
-    /**
-     * 设置行高。
-     *
-     * @param line_height 行高。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TLineNumber.prototype.setLineHeight = function (line_height) {
-        return line_number_set_line_height(this != null ? (this.nativeObj || this) : null, line_height);
-    };
-    /**
-     * 设置y偏移。
-     *
-     * @param yoffset 行高。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TLineNumber.prototype.setYoffset = function (yoffset) {
-        return line_number_set_yoffset(this != null ? (this.nativeObj || this) : null, yoffset);
-    };
-    /**
-     * 转换为line_number对象(供脚本语言使用)。
-     *
-     * @param widget line_number对象。
-     *
-     * @returns line_number对象。
-     */
-    TLineNumber.cast = function (widget) {
-        return new TLineNumber(line_number_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TLineNumber;
-}(TWidget));
-exports.TLineNumber = TLineNumber;
-;
-/**
- * 输入法语言指示器。
- *
- *用于显示输入法的输入语言或类型，主要用于T9输入法。
- *
- *lang_indicator\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于lang_indicator\_t控件。
- *
- *在xml中使用"lang_indicator"标签创建lang_indicator。如：
- *
- *```xml
- *<lang_indicator x="0" y="0" w="100%" h="100%" children_layout="default(c=2,r=2,m=5,s=5)">
- *</lang_indicator>
- *```
- *
- *可用通过style来设置控件的显示风格，如背景颜色等。如：
- *
- *```xml
- *<style name="default" border_color="#a0a0a0">
- *<normal     bg_color="#f0f0f0" />
- *</style>
- *```
- *
- */
-var TLangIndicator = /** @class */ (function (_super) {
-    __extends(TLangIndicator, _super);
-    function TLangIndicator(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建lang_indicator对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TLangIndicator.create = function (parent, x, y, w, h) {
-        return new TLangIndicator(lang_indicator_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置缺省获得焦点的子控件(可用控件名或类型)。
-     *
-     * @param image 缺省获得焦点的子控件(可用控件名或类型)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TLangIndicator.prototype.setImage = function (image) {
-        return lang_indicator_set_image(this != null ? (this.nativeObj || this) : null, image);
-    };
-    /**
-     * 转换为lang_indicator对象(供脚本语言使用)。
-     *
-     * @param widget lang_indicator对象。
-     *
-     * @returns lang_indicator对象。
-     */
-    TLangIndicator.cast = function (widget) {
-        return new TLangIndicator(lang_indicator_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TLangIndicator.prototype, "image", {
-        /**
-         * 如果希望用图片格式显示，本属性用于指定图片的前缀。
-         *
-         */
-        get: function () {
-            return lang_indicator_t_get_prop_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TLangIndicator;
-}(TWidget));
-exports.TLangIndicator = TLangIndicator;
-;
-/**
- * 按键事件。
- *
- */
-var TKeyEvent = /** @class */ (function (_super) {
-    __extends(TKeyEvent, _super);
-    function TKeyEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转key_event_t对象，主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns event对象。
-     */
-    TKeyEvent.cast = function (event) {
-        return new TKeyEvent(key_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TKeyEvent.prototype, "key", {
-        /**
-         * 键值。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_key(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "alt", {
-        /**
-         * alt键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_alt(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "lalt", {
-        /**
-         * left alt键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_lalt(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "ralt", {
-        /**
-         * right alt键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_ralt(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "ctrl", {
-        /**
-         * right alt键是否按下。
-         *ctrl键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_ctrl(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "lctrl", {
-        /**
-         * left ctrl键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_lctrl(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "rctrl", {
-        /**
-         * right ctrl键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_rctrl(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "shift", {
-        /**
-         * shift键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_shift(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "lshift", {
-        /**
-         * left shift键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_lshift(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "rshift", {
-        /**
-         * right shift键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_rshift(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "cmd", {
-        /**
-         * left shift键是否按下。
-         *cmd/win键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_cmd(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "menu", {
-        /**
-         * menu键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_menu(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TKeyEvent.prototype, "capslock", {
-        /**
-         * capslock键是否按下。
-         *
-         */
-        get: function () {
-            return key_event_t_get_prop_capslock(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TKeyEvent;
-}(TEvent));
-exports.TKeyEvent = TKeyEvent;
-;
-/**
- * 输入法候选字词控件。
- *
- *如果希望启用用数字选择对应的候选字，请设置属性grab_keys="true"。如：
- *
- *```xml
- *<candidates x="0" y="0" w="100%" h="30" grab_keys="true"/>
- *```
- *
- *>相关文件： assets/default/raw/ui/kb_default.xml
- *
- *如果希望通过左右键切换不同的候选字，除了设置属性grab_keys="true"，还需要设置按钮的focused状态的style。
- *
- *```xml
- *<style name="candidates" text_color="black">
- *<normal  />
- *<pressed    bg_color="#c0c0c0" border_color="#a0a0a0"/>
- *<over       bg_color="#e0e0e0" border_color="#a0a0a0"/>
- *<focused    border_color="#a0a0a0"/>
- *</style>
- *```
- *
- *>相关文件：assets/default/raw/styles/keyboard.xml
- *
- */
-var TCandidates = /** @class */ (function (_super) {
-    __extends(TCandidates, _super);
-    function TCandidates(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 转换为candidates对象(供脚本语言使用)。
-     *
-     * @param widget candidates对象。
-     *
-     * @returns candidates对象。
-     */
-    TCandidates.cast = function (widget) {
-        return new TCandidates(candidates_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置是否为预候选字列表。
-     *
-     *> 为预候选字列表则注册EVT\_IM\_SHOW\_PRE\_CANDIDATES，否则注册EVT\_IM\_SHOW\_CANDIDATES事件。
-     *
-     * @param pre 是否为预候选字列表。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TCandidates.prototype.setPre = function (pre) {
-        return candidates_set_pre(this != null ? (this.nativeObj || this) : null, pre);
-    };
-    /**
-     * 设置是否启用用数字选择候选字。
-     *
-     * @param select_by_num 是否启用用数字选择候选字。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TCandidates.prototype.setSelectByNum = function (select_by_num) {
-        return candidates_set_select_by_num(this != null ? (this.nativeObj || this) : null, select_by_num);
-    };
-    /**
-     * 设置是否自动隐藏。
-     *
-     * @param auto_hide 是否自动隐藏。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TCandidates.prototype.setAutoHide = function (auto_hide) {
-        return candidates_set_auto_hide(this != null ? (this.nativeObj || this) : null, auto_hide);
-    };
-    /**
-     * 设置按钮的style名称。
-     *
-     * @param button_style 按钮的style名称。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TCandidates.prototype.setButtonStyle = function (button_style) {
-        return candidates_set_button_style(this != null ? (this.nativeObj || this) : null, button_style);
-    };
-    Object.defineProperty(TCandidates.prototype, "pre", {
-        /**
-         * 是否为预候选字。
-         *
-         *> 预候选字: 在有的输入法中，比如T9硬键盘输入时，按下12两个键时，预候选字会显示可用的拼音列表。
-         *> 从预候选字列表中选择拼音，再查询拼音对应的候选字列表。
-         *
-         */
-        get: function () {
-            return candidates_t_get_prop_pre(this.nativeObj);
-        },
-        set: function (v) {
-            this.setPre(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TCandidates.prototype, "selectByNum", {
-        /**
-         * 是否启用用数字选择候选字。比如按下1选择第1个候选字，按下2选择第2个候选字。
-         *
-         */
-        get: function () {
-            return candidates_t_get_prop_select_by_num(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSelectByNum(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TCandidates.prototype, "autoHide", {
-        /**
-         * 没有候选字时，是否自动隐藏控件。
-         *
-         */
-        get: function () {
-            return candidates_t_get_prop_auto_hide(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAutoHide(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TCandidates.prototype, "buttonStyle", {
-        /**
-         * 按钮的style名称。
-         *
-         */
-        get: function () {
-            return candidates_t_get_prop_button_style(this.nativeObj);
-        },
-        set: function (v) {
-            this.setButtonStyle(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TCandidates;
-}(TWidget));
-exports.TCandidates = TCandidates;
-;
-/**
- * 图片值控件。
- *
- *可以用图片来表示如电池电量、WIFI信号强度和其它各种数值的值。
- *
- *其原理如下：
- *
- ** 1.把value以format为格式转换成字符串。
- ** 2.把每个字符与image(图片文件名前缀)映射成一个图片名。
- ** 3.最后把这些图片显示出来。
- *
- *如果设置click\_add\_delta为非0，那么点击时自动增加指定的增量，值超过最大值时回到最小值,
- *或者值超过最小值时回到最大值。
- *
- *image\_value\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于image\_value\_t控件。
- *
- *在xml中使用"image\_value"标签创建图片值控件。如：
- *
- *```xml
- *<image_value  value="0" image="num_" />
- *```
- *
- *> 更多用法请参考：
- *[image\_value](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/image_value.xml)
- *
- *在c代码中使用函数image\_value\_create创建图片值控件。如：
- *
- *
- *> 完整示例请参考：
- *[image_value demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/image_value.c)
- *
- *可用通过style来设置控件的显示风格，如背景颜色和边框等等，不过一般情况并不需要。
- *
- */
-var TImageValue = /** @class */ (function (_super) {
-    __extends(TImageValue, _super);
-    function TImageValue(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建image_value对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TImageValue.create = function (parent, x, y, w, h) {
-        return new TImageValue(image_value_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置图片前缀。
-     *
-     * @param image 图片前缀。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageValue.prototype.setImage = function (image) {
-        return image_value_set_image(this != null ? (this.nativeObj || this) : null, image);
-    };
-    /**
-     * 设置格式。
-     *
-     * @param format 格式。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageValue.prototype.setFormat = function (format) {
-        return image_value_set_format(this != null ? (this.nativeObj || this) : null, format);
-    };
-    /**
-     * 设置点击时加上的增量。
-     *
-     * @param delta 增量。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageValue.prototype.setClickAddDelta = function (delta) {
-        return image_value_set_click_add_delta(this != null ? (this.nativeObj || this) : null, delta);
-    };
-    /**
-     * 设置值。
-     *
-     * @param value 值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageValue.prototype.setValue = function (value) {
-        return image_value_set_value(this != null ? (this.nativeObj || this) : null, value);
-    };
-    /**
-     * 设置最小值。
-     *
-     * @param min 最小值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageValue.prototype.setMin = function (min) {
-        return image_value_set_min(this != null ? (this.nativeObj || this) : null, min);
-    };
-    /**
-     * 设置最大值。
-     *
-     * @param max 最大值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageValue.prototype.setMax = function (max) {
-        return image_value_set_max(this != null ? (this.nativeObj || this) : null, max);
-    };
-    /**
-     * 转换为image_value对象(供脚本语言使用)。
-     *
-     * @param widget image_value对象。
-     *
-     * @returns image_value对象。
-     */
-    TImageValue.cast = function (widget) {
-        return new TImageValue(image_value_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TImageValue.prototype, "image", {
-        /**
-         * 图片名称的前缀。
-         *
-         */
-        get: function () {
-            return image_value_t_get_prop_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageValue.prototype, "format", {
-        /**
-         * 数值到字符串转换时的格式，缺省为"%d"。
-         *
-         */
-        get: function () {
-            return image_value_t_get_prop_format(this.nativeObj);
-        },
-        set: function (v) {
-            this.setFormat(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageValue.prototype, "clickAddDelta", {
-        /**
-         * 点击时加上一个增量。
-         *
-         */
-        get: function () {
-            return image_value_t_get_prop_click_add_delta(this.nativeObj);
-        },
-        set: function (v) {
-            this.setClickAddDelta(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageValue.prototype, "value", {
-        /**
-         * 值。
-         *
-         */
-        get: function () {
-            return image_value_t_get_prop_value(this.nativeObj);
-        },
-        set: function (v) {
-            this.setValue(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageValue.prototype, "min", {
-        /**
-         * 最小值(如果设置了click\_add\_delta，到达最小值后回到最大值)。
-         *
-         */
-        get: function () {
-            return image_value_t_get_prop_min(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMin(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageValue.prototype, "max", {
-        /**
-         * 最大值(如果设置了click\_add\_delta，到达最大值后回到最小值)。
-         *
-         */
-        get: function () {
-            return image_value_t_get_prop_max(this.nativeObj);
-        },
-        set: function (v) {
-            this.setMax(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TImageValue;
-}(TWidget));
-exports.TImageValue = TImageValue;
-;
-/**
- * 图片动画控件，指定一个图片前缀，依次显示指定序列的图片，从而形成动画效果。
- *
- *图片序列可以用sequence指定，也可以用start\_index和end\_index指定一个范围。
- *
- *image\_animation\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于image\_animation\_t控件。
- *
- *在xml中使用"image\_animation"标签创建图片动画控件。如：
- *
- *```xml
- *<image_animation image="ani" start_index="1" end_index="9" auto_play="true" interval="50"
- *delay="100"/>
- *```
- *
- *> 更多用法请参考：
- *[image_animation.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/image_animation.xml)
- *
- *在c代码中使用函数image\_animation\_create创建图片动画控件。如：
- *
- *
- *> 完整示例请参考：
- *[image_animation
- *demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/image_animation.c)
- *
- *可用通过style来设置控件的显示风格，如背景颜色和边框等等，不过一般情况并不需要。
- *
- */
-var TImageAnimation = /** @class */ (function (_super) {
-    __extends(TImageAnimation, _super);
-    function TImageAnimation(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建image_animation对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TImageAnimation.create = function (parent, x, y, w, h) {
-        return new TImageAnimation(image_animation_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置是否循环播放。
-     *
-     * @param loop 是否循环播放。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setLoop = function (loop) {
-        return image_animation_set_loop(this != null ? (this.nativeObj || this) : null, loop);
-    };
-    /**
-     * 设置图片前缀。
-     *
-     * @param image 图片前缀。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setImage = function (image) {
-        return image_animation_set_image(this != null ? (this.nativeObj || this) : null, image);
-    };
-    /**
-     * 设置播放间隔时间。
-     *
-     * @param interval 间隔时间(毫秒)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setInterval = function (interval) {
-        return image_animation_set_interval(this != null ? (this.nativeObj || this) : null, interval);
-    };
-    /**
-     * 设置延迟播放时间(仅适用于自动播放)。
-     *
-     * @param delay 延迟播放时间(毫秒)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setDelay = function (delay) {
-        return image_animation_set_delay(this != null ? (this.nativeObj || this) : null, delay);
-    };
-    /**
-     * 设置是否自动播放。
-     *
-     * @param auto_play 是否自动播放。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setAutoPlay = function (auto_play) {
-        return image_animation_set_auto_play(this != null ? (this.nativeObj || this) : null, auto_play);
-    };
-    /**
-     * 设置播放序列。比如image为"fire"，sequence为"12223", 将依次播放"fire1", "fire2", "fire2", "fire2",
-     *"fire3"。
-     *
-     * @param sequence 播放序列。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setSequence = function (sequence) {
-        return image_animation_set_sequence(this != null ? (this.nativeObj || this) : null, sequence);
-    };
-    /**
-     * 设置播放序列。比如image为"fire"，start_index为0, end_index为99, 将依次播放"fire0", ...,
-     *"fire99"。
-     *
-     *若指定的图片不存在，则重复上一张图片。
-     *
-     * @param start_index 图片起始序数。
-     * @param end_index 图片结束序数。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setRangeSequence = function (start_index, end_index) {
-        return image_animation_set_range_sequence(this != null ? (this.nativeObj || this) : null, start_index, end_index);
-    };
-    /**
-     * 播放。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.play = function () {
-        return image_animation_play(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 停止(并重置index为-1)。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.stop = function () {
-        return image_animation_stop(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 暂停。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.pause = function () {
-        return image_animation_pause(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 手动切换到下一张图片。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.next = function () {
-        return image_animation_next(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 设置生成图片名的格式。
-     *
-     *XXX:生成图片名时，第一个参数是图片名前缀，第二个是序数，只能在此前提下设置格式。
-     *
-     *```
-     *const char* format = image_animation->format ? image_animation->format : "%s%d";
-     *tk_snprintf(name, TK_NAME_LEN, format, image_animation->image, image_animation->index);
-     *```
-     *
-     * @param format 格式。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setFormat = function (format) {
-        return image_animation_set_format(this != null ? (this.nativeObj || this) : null, format);
-    };
-    /**
-     * 设置绘制完成后unload图片，以释放内存空间。
-     *
-     * @param unload_after_paint 是否绘制完成后unload图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageAnimation.prototype.setUnloadAfterPaint = function (unload_after_paint) {
-        return image_animation_set_unload_after_paint(this != null ? (this.nativeObj || this) : null, unload_after_paint);
-    };
-    /**
-     * 转换为image_animation对象(供脚本语言使用)。
-     *
-     * @param widget image_animation对象。
-     *
-     * @returns image_animation对象。
-     */
-    TImageAnimation.cast = function (widget) {
-        return new TImageAnimation(image_animation_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TImageAnimation.prototype, "image", {
-        /**
-         * 图片名称的前缀。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "sequence", {
-        /**
-         * 播放的序列，字符可选值为数字和英文大小写字母，字符可以重复。如：0123456789或者123123abcd。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_sequence(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSequence(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "startIndex", {
-        /**
-         * 图片起始序数。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_start_index(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "endIndex", {
-        /**
-         * 图片结束序数。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_end_index(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "loop", {
-        /**
-         * 是否循环播放。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_loop(this.nativeObj);
-        },
-        set: function (v) {
-            this.setLoop(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "autoPlay", {
-        /**
-         * 是否自动播放。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_auto_play(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAutoPlay(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "unloadAfterPaint", {
-        /**
-         * 绘制完成后unload图片，以释放内存空间。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_unload_after_paint(this.nativeObj);
-        },
-        set: function (v) {
-            this.setUnloadAfterPaint(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "format", {
-        /**
-         * 索引到图片名转换时的格式，缺省为"%s%d"。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_format(this.nativeObj);
-        },
-        set: function (v) {
-            this.setFormat(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "interval", {
-        /**
-         * 每张图片播放的时间(毫秒)。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_interval(this.nativeObj);
-        },
-        set: function (v) {
-            this.setInterval(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageAnimation.prototype, "delay", {
-        /**
-         * 自动播放时延迟播放的时间(毫秒)。
-         *
-         */
-        get: function () {
-            return image_animation_t_get_prop_delay(this.nativeObj);
-        },
-        set: function (v) {
-            this.setDelay(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TImageAnimation;
-}(TWidget));
-exports.TImageAnimation = TImageAnimation;
-;
-/**
- * 表盘控件。
- *
- *表盘控件就是一张图片。
- *
- *guage\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于guage\_t控件。
- *
- *在xml中使用"guage"标签创建表盘控件。如：
- *
- *```xml
- *<guage x="c" y="10" w="240" h="240" image="guage_bg"
- *```
- *
- *> 更多用法请参考：
- *[guage.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/guage.xml)
- *
- *在c代码中使用函数guage\_create创建表盘控件。如：
- *
- *
- *可用通过style来设置控件的显示风格，如背景和边框等。如：
- *
- *```xml
- *<guage>
- *<style name="border">
- *<normal border_color="#000000" bg_color="#e0e0e0" text_color="black"/>
- *</style>
- *</guage>
- *```
- *
- *> 更多用法请参考：
- *[theme
- *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
- *
- */
-var TGuage = /** @class */ (function (_super) {
-    __extends(TGuage, _super);
-    function TGuage(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建guage对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TGuage.create = function (parent, x, y, w, h) {
-        return new TGuage(guage_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为guage对象(供脚本语言使用)。
-     *
-     * @param widget guage对象。
-     *
-     * @returns guage对象。
-     */
-    TGuage.cast = function (widget) {
-        return new TGuage(guage_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置背景图片的名称。
-     *
-     * @param name 图片名称，该图片必须存在于资源管理器。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TGuage.prototype.setImage = function (name) {
-        return guage_set_image(this != null ? (this.nativeObj || this) : null, name);
-    };
-    /**
-     * 设置图片的显示方式。
-     *
-     *> 绘制方式的属性值和枚举值:
-     *[image\_draw\_type\_name\_value](https://github.com/zlgopen/awtk/blob/master/src/base/enums.c#L98)
-     *
-     * @param draw_type 显示方式。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TGuage.prototype.setDrawType = function (draw_type) {
-        return guage_set_draw_type(this != null ? (this.nativeObj || this) : null, draw_type);
-    };
-    Object.defineProperty(TGuage.prototype, "image", {
-        /**
-         * 背景图片。
-         *
-         */
-        get: function () {
-            return guage_t_get_prop_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TGuage.prototype, "drawType", {
-        /**
-         * 图片的绘制方式。
-         *
-         */
-        get: function () {
-            return guage_t_get_prop_draw_type(this.nativeObj);
-        },
-        set: function (v) {
-            this.setDrawType(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TGuage;
-}(TWidget));
-exports.TGuage = TGuage;
-;
-/**
- * 仪表指针控件。
- *
- *仪表指针就是一张旋转的图片，图片可以是普通图片也可以是SVG图片。
- *
- *在嵌入式平台上，对于旋转的图片，SVG图片的效率比位图高数倍，所以推荐使用SVG图片。
- *
- *guage\_pointer\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于guage\_pointer\_t控件。
- *
- *在xml中使用"guage\_pointer"标签创建仪表指针控件。如：
- *
- *```xml
- *<guage_pointer x="c" y="50" w="24" h="140" value="-128" image="guage_pointer" />
- *```
- *
- *> 更多用法请参考：
- *[guage.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/guage.xml)
- *
- *在c代码中使用函数guage\_pointer\_create创建仪表指针控件。如：
- *
- *
- *> 创建之后，需要用guage\_pointer\_set\_image设置仪表指针图片。
- *
- */
-var TGuagePointer = /** @class */ (function (_super) {
-    __extends(TGuagePointer, _super);
-    function TGuagePointer(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建guage_pointer对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TGuagePointer.create = function (parent, x, y, w, h) {
-        return new TGuagePointer(guage_pointer_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为guage_pointer对象(供脚本语言使用)。
-     *
-     * @param widget guage_pointer对象。
-     *
-     * @returns guage_pointer对象。
-     */
-    TGuagePointer.cast = function (widget) {
-        return new TGuagePointer(guage_pointer_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置指针角度。12点钟方向为0度，顺时钟方向为正，单位为度。
-     *
-     * @param angle 指针角度。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TGuagePointer.prototype.setAngle = function (angle) {
-        return guage_pointer_set_angle(this != null ? (this.nativeObj || this) : null, angle);
-    };
-    /**
-     * 设置指针的图片。
-     *
-     * @param image 指针的图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TGuagePointer.prototype.setImage = function (image) {
-        return guage_pointer_set_image(this != null ? (this.nativeObj || this) : null, image);
-    };
-    /**
-     * 设置指针的旋转锚点。
-     *
-     * @param anchor_x 指针的锚点坐标x。(后面加上px为像素点，不加px为相对百分比坐标)
-     * @param anchor_y 指针的锚点坐标y。(后面加上px为像素点，不加px为相对百分比坐标)
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TGuagePointer.prototype.setAnchor = function (anchor_x, anchor_y) {
-        return guage_pointer_set_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
-    };
-    Object.defineProperty(TGuagePointer.prototype, "angle", {
-        /**
-         * 指针角度。12点钟方向为0度，顺时钟方向为正，单位为度。
-         *
-         */
-        get: function () {
-            return guage_pointer_t_get_prop_angle(this.nativeObj);
-        },
-        set: function (v) {
-            this.setAngle(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TGuagePointer.prototype, "image", {
-        /**
-         * 指针图片。
-         *
-         *图片须垂直向上，图片的中心点为旋转方向。
-         *
-         */
-        get: function () {
-            return guage_pointer_t_get_prop_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TGuagePointer.prototype, "anchorX", {
-        /**
-         * 图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return guage_pointer_t_get_prop_anchor_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TGuagePointer.prototype, "anchorY", {
-        /**
-         * 图片旋转锚点x坐标。(后面加上px为像素点，不加px为相对百分比坐标0.0f到1.0f)
-         *
-         */
-        get: function () {
-            return guage_pointer_t_get_prop_anchor_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TGuagePointer;
-}(TWidget));
-exports.TGuagePointer = TGuagePointer;
-;
-/**
- * 文件/目录选择器
- *
- */
-var TFileChooser = /** @class */ (function (_super) {
-    __extends(TFileChooser, _super);
-    function TFileChooser(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建file_chooser对象
-     *
-     *
-     * @returns 对象。
-     */
-    TFileChooser.create = function () {
-        return new TFileChooser(file_chooser_create());
-    };
-    /**
-     * 设置初始目录。
-     *
-     * @param init_dir 初始目录
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileChooser.prototype.setInitDir = function (init_dir) {
-        return file_chooser_set_init_dir(this != null ? (this.nativeObj || this) : null, init_dir);
-    };
-    /**
-     * 设置过滤规则。
-     *> files_only 表示只列出文件，dir_only 表示只列出目录，其它表示只列出满足扩展名文件集合(如：.jpg.png.gif)。
-     *
-     * @param filter 过滤规则。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileChooser.prototype.setFilter = function (filter) {
-        return file_chooser_set_filter(this != null ? (this.nativeObj || this) : null, filter);
-    };
-    /**
-     * 转换为file_chooser对象(供脚本语言使用)。
-     *
-     * @param chooser file_chooser对象。
-     *
-     * @returns 对象。
-     */
-    TFileChooser.cast = function (chooser) {
-        return new TFileChooser(file_chooser_cast(chooser != null ? (chooser.nativeObj || chooser) : null));
-    };
-    /**
-     * 为了保存而选择文件。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileChooser.prototype.chooseFileForSave = function () {
-        return file_chooser_choose_file_for_save(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 为了打开而选择文件。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileChooser.prototype.chooseFileForOpen = function () {
-        return file_chooser_choose_file_for_open(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 选择目录。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TFileChooser.prototype.chooseFolder = function () {
-        return file_chooser_choose_folder(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 获取目录。
-     *
-     *
-     * @returns 返回选择的目录。
-     */
-    TFileChooser.prototype.getDir = function () {
-        return file_chooser_get_dir(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 获取文件名。
-     *
-     *
-     * @returns 返回选择的文件名。
-     */
-    TFileChooser.prototype.getFilename = function () {
-        return file_chooser_get_filename(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 用户是否取消了选择。
-     *
-     *
-     * @returns 返回用户是否取消了选择。
-     */
-    TFileChooser.prototype.isAborted = function () {
-        return file_chooser_is_aborted(this != null ? (this.nativeObj || this) : null);
-    };
-    return TFileChooser;
-}(TEmitter));
-exports.TFileChooser = TFileChooser;
-;
-/**
- * 将draggable放入目标控件，即可让目标控件或当前窗口可以被拖动。
- *
- *draggable\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于draggable\_t控件。
- *
- *在xml中使用"draggable"标签创建draggable控件。如：
- *
- *```xml
- *<button text="Drag Me" w="80" h="40" x="10" y="10">
- *<draggable />
- *</button>
- *```
- *
- *拖动对话框标题时移动对话框：
- *
- *```xml
- *<dialog_title x="0" y="0" w="100%" h="30" text="Hello AWTK"
- *<draggable drag_window="true"/>
- *</dialog_title>
- *```
- *
- *> 更多用法请参考：
- *[draggable.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/draggable.xml)
- *
- *在c代码中使用函数draggable\_create创建按钮控件。如：
- *
- *
- *> draggable本身不可见，故无需style。
- *
- */
-var TDraggable = /** @class */ (function (_super) {
-    __extends(TDraggable, _super);
-    function TDraggable(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建draggable对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TDraggable.create = function (parent, x, y, w, h) {
-        return new TDraggable(draggable_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为draggable对象(供脚本语言使用)。
-     *
-     * @param widget draggable对象。
-     *
-     * @returns draggable对象。
-     */
-    TDraggable.cast = function (widget) {
-        return new TDraggable(draggable_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    /**
-     * 设置top。
-     *
-     * @param top 拖动范围的顶部限制。缺省为父控件的顶部。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TDraggable.prototype.setTop = function (top) {
-        return draggable_set_top(this != null ? (this.nativeObj || this) : null, top);
-    };
-    /**
-     * 设置bottom。
-     *
-     * @param bottom 拖动范围的底部限制。缺省为父控件的底部。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TDraggable.prototype.setBottom = function (bottom) {
-        return draggable_set_bottom(this != null ? (this.nativeObj || this) : null, bottom);
-    };
-    /**
-     * 设置left。
-     *
-     * @param left 拖动范围的左边限制。缺省为父控件的左边。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TDraggable.prototype.setLeft = function (left) {
-        return draggable_set_left(this != null ? (this.nativeObj || this) : null, left);
-    };
-    /**
-     * 设置right。
-     *
-     * @param right 拖动范围的右边限制。缺省为父控件的右边边。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TDraggable.prototype.setRight = function (right) {
-        return draggable_set_right(this != null ? (this.nativeObj || this) : null, right);
-    };
-    /**
-     * 设置vertical_only。
-     *
-     * @param vertical_only 只允许垂直拖动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TDraggable.prototype.setVerticalOnly = function (vertical_only) {
-        return draggable_set_vertical_only(this != null ? (this.nativeObj || this) : null, vertical_only);
-    };
-    /**
-     * 设置horizontal_only。
-     *
-     * @param horizontal_only 只允许水平拖动。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TDraggable.prototype.setHorizontalOnly = function (horizontal_only) {
-        return draggable_set_horizontal_only(this != null ? (this.nativeObj || this) : null, horizontal_only);
-    };
-    /**
-     * 设置drag_window。
-     *拖动窗口而不是父控件。比如放在对话框的titlebar上，拖动titlebar其实是希望拖动对话框。
-     *
-     * @param drag_window drag_window
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TDraggable.prototype.setDragWindow = function (drag_window) {
-        return draggable_set_drag_window(this != null ? (this.nativeObj || this) : null, drag_window);
-    };
-    Object.defineProperty(TDraggable.prototype, "top", {
-        /**
-         * 拖动范围的顶部限制。缺省为父控件的顶部。
-         *
-         */
-        get: function () {
-            return draggable_t_get_prop_top(this.nativeObj);
-        },
-        set: function (v) {
-            this.setTop(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TDraggable.prototype, "bottom", {
-        /**
-         * 拖动范围的底部限制。缺省为父控件的底部。
-         *
-         */
-        get: function () {
-            return draggable_t_get_prop_bottom(this.nativeObj);
-        },
-        set: function (v) {
-            this.setBottom(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TDraggable.prototype, "left", {
-        /**
-         * 拖动范围的左边限制。缺省为父控件的左边。
-         *
-         */
-        get: function () {
-            return draggable_t_get_prop_left(this.nativeObj);
-        },
-        set: function (v) {
-            this.setLeft(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TDraggable.prototype, "right", {
-        /**
-         * 拖动范围的右边限制。缺省为父控件的右边边。
-         *
-         */
-        get: function () {
-            return draggable_t_get_prop_right(this.nativeObj);
-        },
-        set: function (v) {
-            this.setRight(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TDraggable.prototype, "verticalOnly", {
-        /**
-         * 只允许垂直拖动。
-         *
-         */
-        get: function () {
-            return draggable_t_get_prop_vertical_only(this.nativeObj);
-        },
-        set: function (v) {
-            this.setVerticalOnly(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TDraggable.prototype, "horizontalOnly", {
-        /**
-         * 只允许水平拖动。
-         *
-         */
-        get: function () {
-            return draggable_t_get_prop_horizontal_only(this.nativeObj);
-        },
-        set: function (v) {
-            this.setHorizontalOnly(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TDraggable.prototype, "dragWindow", {
-        /**
-         * 拖动窗口而不是父控件。比如放在对话框的titlebar上，拖动titlebar其实是希望拖动对话框。
-         *
-         */
-        get: function () {
-            return draggable_t_get_prop_drag_window(this.nativeObj);
-        },
-        set: function (v) {
-            this.setDragWindow(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TDraggable;
-}(TWidget));
-exports.TDraggable = TDraggable;
-;
-/**
- * 颜色选择器。
- *
- *color\_picker\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于color\_picker\_t控件。
- *
- *在xml中使用"color\_picker"标签创建颜色选择器控件。如：
- *
- *```xml
- *<color_picker x="0" y="0" w="100%" h="100%" value="orange">
- *<color_component x="0" y="0" w="200" h="200" name="sv"/>
- *<color_component x="210" y="0" w="20" h="200" name="h"/>
- *<color_tile x="0" y="210" w="50%" h="20" name="new" bg_color="green"/>
- *<color_tile x="right" y="210" w="50%" h="20" name="old" bg_color="blue"/>
- *</color_picker>
- *```
- *
- *> 更多用法请参考：
- *[color\_picker](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/color_picker.xml)
- *
- *其中的子控件必须按下列规则命名：
- *
- ** r 红色分量。可以是spin_box、edit和slider。
- ** g 绿色分量。可以是spin_box、edit和slider。
- ** b 蓝色分量。可以是spin_box、edit和slider。
- ** h Hue分量。可以是spin_box、edit、slider和color_component。
- ** s Saturation分量。可以是spin_box、edit和slider。
- ** v Value/Brightness分量。可以是spin_box、edit和slider。
- ** sv Saturation和Value/Brightness分量。可以是color_component。
- ** old 旧的值。可以是spin_box、edit和color_tile。
- ** new 新的值。可以是spin_box、edit和color_tile。
- *
- */
-var TColorPicker = /** @class */ (function (_super) {
-    __extends(TColorPicker, _super);
-    function TColorPicker(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建color_picker对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TColorPicker.create = function (parent, x, y, w, h) {
-        return new TColorPicker(color_picker_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置颜色。
-     *
-     * @param color 颜色。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TColorPicker.prototype.setColor = function (color) {
-        return color_picker_set_color(this != null ? (this.nativeObj || this) : null, color);
-    };
-    /**
-     * 转换为color_picker对象(供脚本语言使用)。
-     *
-     * @param widget color_picker对象。
-     *
-     * @returns color_picker对象。
-     */
-    TColorPicker.cast = function (widget) {
-        return new TColorPicker(color_picker_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TColorPicker.prototype, "value", {
-        /**
-         * 颜色。
-         *
-         */
-        get: function () {
-            return color_picker_t_get_prop_value(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TColorPicker;
-}(TWidget));
-exports.TColorPicker = TColorPicker;
-;
-/**
- * 颜色选择器的颜色分量。
- *控件的名称有严格规定：
- *COLOR_PICKER_CHILD_SV: 水平为Value/Brightness(递增)，垂直为Saturation(递减)。
- *COLOR_PICKER_CHILD_H: 水平为同色，垂直为Hue(递减)。
- *
- */
-var TColorComponent = /** @class */ (function (_super) {
-    __extends(TColorComponent, _super);
-    function TColorComponent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 转换为color_component对象(供脚本语言使用)。
-     *
-     * @param widget color_component对象。
-     *
-     * @returns color_component对象。
-     */
-    TColorComponent.cast = function (widget) {
-        return new TColorComponent(color_component_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TColorComponent;
-}(TWidget));
-exports.TColorComponent = TColorComponent;
-;
-/**
- * 画布控件。
- *
- *画布控件让开发者可以自己在控件上绘制需要的内容。
- *
- *canvas\_widget\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于canvas\_widget\_t控件。
- *
- *在xml中使用"canvas"标签创建画布控件。如：
- *
- *```xml
- *<canvas name="paint_vgcanvas" x="0" y="0" w="100%" h="100%" />
- *```
- *
- *> 更多用法请参考：
- *[canvas_widget.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/vgcanvas.xml)
- *
- *在c代码中使用函数canvas\_widget\_create创建画布控件。如：
- *
- *
- *> 创建之后，需要用widget\_on注册EVT\_PAINT事件，并在EVT\_PAINT事件处理函数中绘制。
- *
- *
- *绘制时，可以通过canvas接口去绘制，也可以通过vgcanvas接口去绘制。
- *先从evt获取canvas对象，再通过canvas\_get\_vgcanvas从canvas中获取vgcanvas对象。
- *
- *
- *> 完整示例请参考：
- *[canvas demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/canvas.c)
- *
- *参考：
- *
- ** [canvas接口描述](canvas_t.md)
- ** [vgcanvas接口描述](vgcanvas_t.md)
- *
- */
-var TCanvasWidget = /** @class */ (function (_super) {
-    __extends(TCanvasWidget, _super);
-    function TCanvasWidget(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建canvas_widget对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TCanvasWidget.create = function (parent, x, y, w, h) {
-        return new TCanvasWidget(canvas_widget_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为canvas_widget对象(供脚本语言使用)。
-     *
-     * @param widget canvas_widget对象。
-     *
-     * @returns canvas_widget对象。
-     */
-    TCanvasWidget.cast = function (widget) {
-        return new TCanvasWidget(canvas_widget_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TCanvasWidget;
-}(TWidget));
-exports.TCanvasWidget = TCanvasWidget;
-;
-/**
- * 绘制事件。
- *
- */
-var TPaintEvent = /** @class */ (function (_super) {
-    __extends(TPaintEvent, _super);
-    function TPaintEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转paint_event_t对象。主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns event 对象。
-     */
-    TPaintEvent.cast = function (event) {
-        return new TPaintEvent(paint_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TPaintEvent.prototype, "c", {
-        /**
-         * canvas。
-         *
-         */
-        get: function () {
-            return new TCanvas(paint_event_t_get_prop_c(this.nativeObj));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TPaintEvent;
-}(TEvent));
-exports.TPaintEvent = TPaintEvent;
-;
-/**
- * 窗口事件，由窗口管理器触发。
- *
- */
-var TWindowEvent = /** @class */ (function (_super) {
-    __extends(TWindowEvent, _super);
-    function TWindowEvent(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 把event对象转window_event_t对象。主要给脚本语言使用。
-     *
-     * @param event event对象。
-     *
-     * @returns 对象。
-     */
-    TWindowEvent.cast = function (event) {
-        return new TWindowEvent(window_event_cast(event != null ? (event.nativeObj || event) : null));
-    };
-    Object.defineProperty(TWindowEvent.prototype, "window", {
-        /**
-         * canvas。
-         *
-         */
-        get: function () {
-            return new TWidget(window_event_t_get_prop_window(this.nativeObj));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TWindowEvent;
-}(TEvent));
-exports.TWindowEvent = TWindowEvent;
-;
-/**
- * 图片控件基类。
- *
- *本类把图片相关控件的公共行为进行抽象，放到一起方便重用。目前已知的具体实现如下图：
- *
- *
- *
- *> 本类是一个抽象类，不能进行实例化。请在应用程序中使用具体的类，如image\_t。
- *
- *如果需要显示文件系统中的图片，只需将图片名称换成实际的文件名，并加上"file://"前缀即可。如：
- *
- *```
- *<image draw_type="center" image="file://./demos/assets/default/raw/images/xx/flag_CN.png" />
- *<gif image="file://./demos/assets/default/raw/images/x2/bee.gif" />
- *<svg image="file://./demos/assets/default/raw/images/svg/china.bsvg" />
- *```
- *
- */
-var TImageBase = /** @class */ (function (_super) {
-    __extends(TImageBase, _super);
-    function TImageBase(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 设置控件的图片名称。
-     *
-     *> 如果需要显示文件系统中的图片，只需将图片名称换成实际的文件名，并加上"file://"前缀即可。
-     *
-     * @param name 图片名称，该图片必须存在于资源管理器。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageBase.prototype.setImage = function (name) {
-        return image_base_set_image(this != null ? (this.nativeObj || this) : null, name);
-    };
-    /**
-     * 设置控件的旋转角度(仅在WITH_VGCANVAS定义时生效)。
-     *
-     * @param rotation 旋转角度(幅度)。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageBase.prototype.setRotation = function (rotation) {
-        return image_base_set_rotation(this != null ? (this.nativeObj || this) : null, rotation);
-    };
-    /**
-     * 设置控件的缩放比例(仅在WITH_VGCANVAS定义时生效)。
-     *
-     * @param scale_x X方向缩放比例。
-     * @param scale_y Y方向缩放比例。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageBase.prototype.setScale = function (scale_x, scale_y) {
-        return image_base_set_scale(this != null ? (this.nativeObj || this) : null, scale_x, scale_y);
-    };
-    /**
-     * 设置控件的锚点(仅在WITH_VGCANVAS定义时生效)。
-     *
-     * @param anchor_x 锚点X(0-1)。0在控件左边，0.5在控件中间，1在控件右边。
-     * @param anchor_y 锚点Y(0-1)。0在控件顶部，0.5在控件中间，1在控件底部。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageBase.prototype.setAnchor = function (anchor_x, anchor_y) {
-        return image_base_set_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
-    };
-    /**
-     * 设置控件的选中状态。
-     *
-     * @param selected 是否被选中。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageBase.prototype.setSelected = function (selected) {
-        return image_base_set_selected(this != null ? (this.nativeObj || this) : null, selected);
-    };
-    /**
-     * 设置控件是否可以被选中。
-     *
-     * @param selectable 是否可以被选中。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageBase.prototype.setSelectable = function (selectable) {
-        return image_base_set_selectable(this != null ? (this.nativeObj || this) : null, selectable);
-    };
-    /**
-     * 设置控件是否可以被点击。
-     *
-     * @param clickable 是否可以被点击。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TImageBase.prototype.setClickable = function (clickable) {
-        return image_base_set_clickable(this != null ? (this.nativeObj || this) : null, clickable);
-    };
-    /**
-     * 转换为image_base对象(供脚本语言使用)。
-     *
-     * @param widget image_base对象。
-     *
-     * @returns image_base对象。
-     */
-    TImageBase.cast = function (widget) {
-        return new TImageBase(image_base_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TImageBase.prototype, "image", {
-        /**
-         * 图片的名称。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_image(this.nativeObj);
-        },
-        set: function (v) {
-            this.setImage(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "anchorX", {
-        /**
-         * 锚点X(0-1)。0在控件左边，0.5在控件中间，1在控件右边。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_anchor_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "anchorY", {
-        /**
-         * 锚点Y(0-1)。0在控件顶部，0.5在控件中间，1在控件底部。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_anchor_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "scaleX", {
-        /**
-         * 控件在X方向上的缩放比例。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_scale_x(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "scaleY", {
-        /**
-         * 控件在Y方向上的缩放比例。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_scale_y(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "rotation", {
-        /**
-         * 控件的旋转角度(幅度)。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_rotation(this.nativeObj);
-        },
-        set: function (v) {
-            this.setRotation(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "clickable", {
-        /**
-         * 点击时，是否触发EVT_CLICK事件。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_clickable(this.nativeObj);
-        },
-        set: function (v) {
-            this.setClickable(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "selectable", {
-        /**
-         * 是否设置选中状态。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_selectable(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSelectable(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TImageBase.prototype, "selected", {
-        /**
-         * 当前是否被选中。
-         *
-         */
-        get: function () {
-            return image_base_t_get_prop_selected(this.nativeObj);
-        },
-        set: function (v) {
-            this.setSelected(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TImageBase;
-}(TWidget));
-exports.TImageBase = TImageBase;
-;
-/**
  * 窗口管理器。
  *
  */
@@ -17444,7 +16287,7 @@ var TWindowManager = /** @class */ (function (_super) {
     /**
      * 设置屏保时间。
      *
-     * @param screen_saver_time 屏保时间(单位毫秒)。
+     * @param screen_saver_time 屏保时间(单位毫秒), 为0关闭屏保。
      *
      * @returns 返回RET_OK表示成功，否则表示失败。
      */
@@ -17686,6 +16529,93 @@ var TWindowBase = /** @class */ (function (_super) {
 exports.TWindowBase = TWindowBase;
 ;
 /**
+ * ComboBox Item控件。
+ *
+ *本类仅供combo\_box控件内部使用。
+ *
+ */
+var TComboBoxItem = /** @class */ (function (_super) {
+    __extends(TComboBoxItem, _super);
+    function TComboBoxItem(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建combo_box_item对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TComboBoxItem.create = function (parent, x, y, w, h) {
+        return new TComboBoxItem(combo_box_item_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换combo_box_item对象(供脚本语言使用)。
+     *
+     * @param widget combo_box_item对象。
+     *
+     * @returns combo_box_item对象。
+     */
+    TComboBoxItem.cast = function (widget) {
+        return new TComboBoxItem(combo_box_item_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置控件是否被选中。
+     *
+     * @param checked 是否被选中。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TComboBoxItem.prototype.setChecked = function (checked) {
+        return combo_box_item_set_checked(this != null ? (this.nativeObj || this) : null, checked);
+    };
+    /**
+     * 设置控件的值。
+     *
+     * @param value 值
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TComboBoxItem.prototype.setValue = function (value) {
+        return combo_box_item_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    Object.defineProperty(TComboBoxItem.prototype, "value", {
+        /**
+         * 值。
+         *
+         */
+        get: function () {
+            return combo_box_item_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TComboBoxItem.prototype, "checked", {
+        /**
+         * 是否被选中。
+         *
+         */
+        get: function () {
+            return combo_box_item_t_get_prop_checked(this.nativeObj);
+        },
+        set: function (v) {
+            this.setChecked(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TComboBoxItem;
+}(TWidget));
+exports.TComboBoxItem = TComboBoxItem;
+;
+/**
  * 可变的style(可实时修改并生效，主要用于在designer中被编辑的控件，或者一些特殊控件)。
  *
  *style\_mutable也对style\_const进行了包装，当用户没修改某个值时，便从style\_const中获取。
@@ -17760,6 +16690,1209 @@ var TStyleMutable = /** @class */ (function (_super) {
 exports.TStyleMutable = TStyleMutable;
 ;
 /**
+ * column。一个简单的容器控件，垂直排列其子控件。
+ *
+ *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
+ *子控件的布局可用layout\_children属性指定。
+ *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
+ *
+ *column\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于column\_t控件。
+ *
+ *在xml中使用"column"标签创建column。如：
+ *
+ *```xml
+ *<column x="0" y="0" w="100%" h="100%" children_layout="default(c=1,r=0)">
+ *<button name="open:basic" text="Basic"/>
+ *<button name="open:button" text="Buttons"/>
+ *<button name="open:edit" text="Edits"/>
+ *<button name="open:keyboard" text="KeyBoard"/>
+ *</column>
+ *```
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色等。如：
+ *
+ *```xml
+ *<style name="default" border_color="#a0a0a0">
+ *<normal     bg_color="#f0f0f0" />
+ *</style>
+ *```
+ *
+ */
+var TColumn = /** @class */ (function (_super) {
+    __extends(TColumn, _super);
+    function TColumn(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建column对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TColumn.create = function (parent, x, y, w, h) {
+        return new TColumn(column_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为column对象(供脚本语言使用)。
+     *
+     * @param widget column对象。
+     *
+     * @returns column对象。
+     */
+    TColumn.cast = function (widget) {
+        return new TColumn(column_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TColumn;
+}(TWidget));
+exports.TColumn = TColumn;
+;
+/**
+ * 图片控件基类。
+ *
+ *本类把图片相关控件的公共行为进行抽象，放到一起方便重用。目前已知的具体实现如下图：
+ *
+ *
+ *
+ *> 本类是一个抽象类，不能进行实例化。请在应用程序中使用具体的类，如image\_t。
+ *
+ *如果需要显示文件系统中的图片，只需将图片名称换成实际的文件名，并加上"file://"前缀即可。如：
+ *
+ *```
+ *<image draw_type="center" image="file://./demos/assets/default/raw/images/xx/flag_CN.png" />
+ *<gif image="file://./demos/assets/default/raw/images/x2/bee.gif" />
+ *<svg image="file://./demos/assets/default/raw/images/svg/china.bsvg" />
+ *```
+ *
+ */
+var TImageBase = /** @class */ (function (_super) {
+    __extends(TImageBase, _super);
+    function TImageBase(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 设置控件的图片名称。
+     *
+     *> 如果需要显示文件系统中的图片，只需将图片名称换成实际的文件名，并加上"file://"前缀即可。
+     *
+     * @param name 图片名称，该图片必须存在于资源管理器。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageBase.prototype.setImage = function (name) {
+        return image_base_set_image(this != null ? (this.nativeObj || this) : null, name);
+    };
+    /**
+     * 设置控件的旋转角度(仅在WITH_VGCANVAS定义时生效)。
+     *
+     * @param rotation 旋转角度(幅度)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageBase.prototype.setRotation = function (rotation) {
+        return image_base_set_rotation(this != null ? (this.nativeObj || this) : null, rotation);
+    };
+    /**
+     * 设置控件的缩放比例(仅在WITH_VGCANVAS定义时生效)。
+     *
+     * @param scale_x X方向缩放比例。
+     * @param scale_y Y方向缩放比例。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageBase.prototype.setScale = function (scale_x, scale_y) {
+        return image_base_set_scale(this != null ? (this.nativeObj || this) : null, scale_x, scale_y);
+    };
+    /**
+     * 设置控件的锚点(仅在WITH_VGCANVAS定义时生效)。
+     *
+     * @param anchor_x 锚点X(0-1)。0在控件左边，0.5在控件中间，1在控件右边。
+     * @param anchor_y 锚点Y(0-1)。0在控件顶部，0.5在控件中间，1在控件底部。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageBase.prototype.setAnchor = function (anchor_x, anchor_y) {
+        return image_base_set_anchor(this != null ? (this.nativeObj || this) : null, anchor_x, anchor_y);
+    };
+    /**
+     * 设置控件的选中状态。
+     *
+     * @param selected 是否被选中。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageBase.prototype.setSelected = function (selected) {
+        return image_base_set_selected(this != null ? (this.nativeObj || this) : null, selected);
+    };
+    /**
+     * 设置控件是否可以被选中。
+     *
+     * @param selectable 是否可以被选中。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageBase.prototype.setSelectable = function (selectable) {
+        return image_base_set_selectable(this != null ? (this.nativeObj || this) : null, selectable);
+    };
+    /**
+     * 设置控件是否可以被点击。
+     *
+     * @param clickable 是否可以被点击。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TImageBase.prototype.setClickable = function (clickable) {
+        return image_base_set_clickable(this != null ? (this.nativeObj || this) : null, clickable);
+    };
+    /**
+     * 转换为image_base对象(供脚本语言使用)。
+     *
+     * @param widget image_base对象。
+     *
+     * @returns image_base对象。
+     */
+    TImageBase.cast = function (widget) {
+        return new TImageBase(image_base_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TImageBase.prototype, "image", {
+        /**
+         * 图片的名称。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_image(this.nativeObj);
+        },
+        set: function (v) {
+            this.setImage(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "anchorX", {
+        /**
+         * 锚点X(0-1)。0在控件左边，0.5在控件中间，1在控件右边。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_anchor_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "anchorY", {
+        /**
+         * 锚点Y(0-1)。0在控件顶部，0.5在控件中间，1在控件底部。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_anchor_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "scaleX", {
+        /**
+         * 控件在X方向上的缩放比例。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_scale_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "scaleY", {
+        /**
+         * 控件在Y方向上的缩放比例。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_scale_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "rotation", {
+        /**
+         * 控件的旋转角度(幅度)。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_rotation(this.nativeObj);
+        },
+        set: function (v) {
+            this.setRotation(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "clickable", {
+        /**
+         * 点击时，是否触发EVT_CLICK事件。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_clickable(this.nativeObj);
+        },
+        set: function (v) {
+            this.setClickable(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "selectable", {
+        /**
+         * 是否设置选中状态。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_selectable(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSelectable(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TImageBase.prototype, "selected", {
+        /**
+         * 当前是否被选中。
+         *
+         */
+        get: function () {
+            return image_base_t_get_prop_selected(this.nativeObj);
+        },
+        set: function (v) {
+            this.setSelected(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TImageBase;
+}(TWidget));
+exports.TImageBase = TImageBase;
+;
+/**
+ * 窗口事件，由窗口管理器触发。
+ *
+ */
+var TWindowEvent = /** @class */ (function (_super) {
+    __extends(TWindowEvent, _super);
+    function TWindowEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转window_event_t对象。主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns 对象。
+     */
+    TWindowEvent.cast = function (event) {
+        return new TWindowEvent(window_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TWindowEvent.prototype, "window", {
+        /**
+         * canvas。
+         *
+         */
+        get: function () {
+            return new TWidget(window_event_t_get_prop_window(this.nativeObj));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TWindowEvent;
+}(TEvent));
+exports.TWindowEvent = TWindowEvent;
+;
+/**
+ * 绘制事件。
+ *
+ */
+var TPaintEvent = /** @class */ (function (_super) {
+    __extends(TPaintEvent, _super);
+    function TPaintEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转paint_event_t对象。主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns event 对象。
+     */
+    TPaintEvent.cast = function (event) {
+        return new TPaintEvent(paint_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TPaintEvent.prototype, "c", {
+        /**
+         * canvas。
+         *
+         */
+        get: function () {
+            return new TCanvas(paint_event_t_get_prop_c(this.nativeObj));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TPaintEvent;
+}(TEvent));
+exports.TPaintEvent = TPaintEvent;
+;
+/**
+ * 按键事件。
+ *
+ */
+var TKeyEvent = /** @class */ (function (_super) {
+    __extends(TKeyEvent, _super);
+    function TKeyEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转key_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns event对象。
+     */
+    TKeyEvent.cast = function (event) {
+        return new TKeyEvent(key_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TKeyEvent.prototype, "key", {
+        /**
+         * 键值。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_key(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "alt", {
+        /**
+         * alt键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_alt(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "lalt", {
+        /**
+         * left alt键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_lalt(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "ralt", {
+        /**
+         * right alt键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_ralt(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "ctrl", {
+        /**
+         * right alt键是否按下。
+         *ctrl键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_ctrl(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "lctrl", {
+        /**
+         * left ctrl键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_lctrl(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "rctrl", {
+        /**
+         * right ctrl键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_rctrl(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "shift", {
+        /**
+         * shift键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_shift(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "lshift", {
+        /**
+         * left shift键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_lshift(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "rshift", {
+        /**
+         * right shift键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_rshift(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "cmd", {
+        /**
+         * left shift键是否按下。
+         *cmd/win键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_cmd(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "menu", {
+        /**
+         * menu键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_menu(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TKeyEvent.prototype, "capslock", {
+        /**
+         * capslock键是否按下。
+         *
+         */
+        get: function () {
+            return key_event_t_get_prop_capslock(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TKeyEvent;
+}(TEvent));
+exports.TKeyEvent = TKeyEvent;
+;
+/**
+ * 指针事件。
+ *
+ */
+var TPointerEvent = /** @class */ (function (_super) {
+    __extends(TPointerEvent, _super);
+    function TPointerEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转pointer_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns event对象。
+     */
+    TPointerEvent.cast = function (event) {
+        return new TPointerEvent(pointer_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TPointerEvent.prototype, "x", {
+        /**
+         * x坐标。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_x(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "y", {
+        /**
+         * y坐标。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_y(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "button", {
+        /**
+         * button。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_button(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "pressed", {
+        /**
+         * 指针是否按下。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_pressed(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "alt", {
+        /**
+         * alt键是否按下。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_alt(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "ctrl", {
+        /**
+         * ctrl键是否按下。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_ctrl(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "cmd", {
+        /**
+         * cmd键是否按下。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_cmd(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "menu", {
+        /**
+         * menu键是否按下。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_menu(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TPointerEvent.prototype, "shift", {
+        /**
+         * shift键是否按下。
+         *
+         */
+        get: function () {
+            return pointer_event_t_get_prop_shift(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TPointerEvent;
+}(TEvent));
+exports.TPointerEvent = TPointerEvent;
+;
+/**
+ * 滚轮事件。
+ *
+ */
+var TOrientationEvent = /** @class */ (function (_super) {
+    __extends(TOrientationEvent, _super);
+    function TOrientationEvent(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 把event对象转orientation_event_t对象，主要给脚本语言使用。
+     *
+     * @param event event对象。
+     *
+     * @returns event对象。
+     */
+    TOrientationEvent.cast = function (event) {
+        return new TOrientationEvent(orientation_event_cast(event != null ? (event.nativeObj || event) : null));
+    };
+    Object.defineProperty(TOrientationEvent.prototype, "orientation", {
+        /**
+         * 屏幕方向。
+         *
+         */
+        get: function () {
+            return orientation_event_t_get_prop_orientation(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TOrientationEvent;
+}(TEvent));
+exports.TOrientationEvent = TOrientationEvent;
+;
+/**
+ * app_bar控件。
+ *
+ *一个简单的容器控件，一般在窗口的顶部，用于显示本窗口的状态和信息。
+ *
+ *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
+ *子控件的布局可用layout\_children属性指定。
+ *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
+ *
+ *app\_bar\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于app\_bar\_t控件。
+ *
+ *在xml中使用"app\_bar"标签创建app\_bar。如：
+ *
+ *```xml
+ *<app_bar x="0" y="0" w="100%" h="30"
+ *<label x="0" y="0" w="100%" h="100%" text="Basic Controls" />
+ *</app_bar>
+ *```
+ *
+ *在c代码中使用函数app\_bar\_create创建app\_bar。如：
+ *
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色等。如：
+ *
+ *```xml
+ *<style name="default" border_color="#a0a0a0">
+ *<normal     bg_color="#f0f0f0" />
+ *</style>
+ *```
+ *
+ */
+var TAppBar = /** @class */ (function (_super) {
+    __extends(TAppBar, _super);
+    function TAppBar(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建app_bar对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TAppBar.create = function (parent, x, y, w, h) {
+        return new TAppBar(app_bar_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为app_bar对象(供脚本语言使用)。
+     *
+     * @param widget app_bar对象。
+     *
+     * @returns app_bar对象。
+     */
+    TAppBar.cast = function (widget) {
+        return new TAppBar(app_bar_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TAppBar;
+}(TWidget));
+exports.TAppBar = TAppBar;
+;
+/**
+ * Button Group控件。一个简单的容器控件，用于容纳一组按钮控件。
+ *
+ *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
+ *子控件的布局可用layout\_children属性指定。
+ *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
+ *
+ *button\_group\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于button\_group\_t控件。
+ *
+ *在xml中使用"button\_group"标签创建button\_group。如：
+ *
+ *```xml
+ *<button_group x="0" y="m" w="100%" h="40" children_layout="default(c=4,r=1,s=5,m=5)">
+ *<button name="open:basic" text="Basic"/>
+ *<button name="open:button" text="Buttons"/>
+ *<button name="open:edit" text="Edits"/>
+ *<button name="open:keyboard" text="KeyBoard"/>
+ *</button_group>
+ *```
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色等。如：
+ *
+ *```xml
+ *<style name="default" border_color="#a0a0a0">
+ *<normal     bg_color="#f0f0f0" />
+ *</style>
+ *```
+ *
+ */
+var TButtonGroup = /** @class */ (function (_super) {
+    __extends(TButtonGroup, _super);
+    function TButtonGroup(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建button_group对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TButtonGroup.create = function (parent, x, y, w, h) {
+        return new TButtonGroup(button_group_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为button_group对象(供脚本语言使用)。
+     *
+     * @param widget button_group对象。
+     *
+     * @returns button_group对象。
+     */
+    TButtonGroup.cast = function (widget) {
+        return new TButtonGroup(button_group_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TButtonGroup;
+}(TWidget));
+exports.TButtonGroup = TButtonGroup;
+;
+/**
+ * 按钮控件。
+ *
+ *点击按钮之后会触发EVT\_CLICK事件，注册EVT\_CLICK事件以执行特定操作。
+ *
+ *按钮控件也可以作为容器使用，使用图片和文本作为其子控件，可以实现很多有趣的效果。
+ *
+ *button\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于button\_t控件。
+ *
+ *在xml中使用"button"标签创建按钮控件。如：
+ *
+ *```xml
+ *<button x="c" y="m" w="80" h="30" text="OK"/>
+ *```
+ *
+ *> 更多用法请参考：
+ *[button.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/button.xml)
+ *
+ *在c代码中使用函数button\_create创建按钮控件。如：
+ *
+ *
+ *> 创建之后，需要用widget\_set\_text或widget\_set\_text\_utf8设置文本内容。
+ *
+ *> 完整示例请参考：
+ *[button demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/button.c)
+ *
+ *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ *```xml
+ *<style name="default" border_color="#a0a0a0"  text_color="black">
+ *<normal     bg_color="#f0f0f0" />
+ *<pressed    bg_color="#c0c0c0" x_offset="1" y_offset="1"/>
+ *<over       bg_color="#e0e0e0" />
+ *<disable    bg_color="gray" text_color="#d0d0d0" />
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：
+ *[theme
+ *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L31)
+ *
+ */
+var TButton = /** @class */ (function (_super) {
+    __extends(TButton, _super);
+    function TButton(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建button对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TButton.create = function (parent, x, y, w, h) {
+        return new TButton(button_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为button对象(供脚本语言使用)。
+     *
+     * @param widget button对象。
+     *
+     * @returns button对象。
+     */
+    TButton.cast = function (widget) {
+        return new TButton(button_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置触发EVT\_CLICK事件的时间间隔。为0则不重复触发EVT\_CLICK事件。
+     *
+     * @param repeat 触发EVT_CLICK事件的时间间隔(毫秒)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TButton.prototype.setRepeat = function (repeat) {
+        return button_set_repeat(this != null ? (this.nativeObj || this) : null, repeat);
+    };
+    /**
+     * 设置是否启用长按事件。
+     *
+     * @param enable_long_press 是否启用长按事件。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TButton.prototype.setEnableLongPress = function (enable_long_press) {
+        return button_set_enable_long_press(this != null ? (this.nativeObj || this) : null, enable_long_press);
+    };
+    Object.defineProperty(TButton.prototype, "repeat", {
+        /**
+         * 重复触发EVT\_CLICK事件的时间间隔。
+         *
+         *为0则不重复触发EVT\_CLICK事件。
+         *
+         */
+        get: function () {
+            return button_t_get_prop_repeat(this.nativeObj);
+        },
+        set: function (v) {
+            this.setRepeat(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TButton.prototype, "enableLongPress", {
+        /**
+         * 是否启用长按事件，为true时才触发长按事件。
+         *
+         *触发长按事件后不再触发点击事件。
+         *缺省不启用。
+         *
+         */
+        get: function () {
+            return button_t_get_prop_enable_long_press(this.nativeObj);
+        },
+        set: function (v) {
+            this.setEnableLongPress(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TButton;
+}(TWidget));
+exports.TButton = TButton;
+;
+/**
+ * 色块控件。
+ *
+ *用来显示一个颜色块，它通过属性而不是主题来设置颜色，方便在运行时动态改变颜色。
+ *
+ *可以使用value属性访问背景颜色的颜色值。
+ *
+ *color\_tile\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于color\_tile\_t控件。
+ *
+ *在xml中使用"color_tile"标签创建色块控件。如：
+ *
+ *```xml
+ *<color_tile x="c" y="m" w="80" h="30" bg_color="green" />
+ *```
+ *
+ *> 更多用法请参考：
+ *[color_tile](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/color_picker_rgb.xml)
+ *
+ *在c代码中使用函数color_tile\_create创建色块控件。如：
+ *
+ *> 创建之后，用color\_tile\_set\_bg\_color设置背景颜色。
+ *
+ */
+var TColorTile = /** @class */ (function (_super) {
+    __extends(TColorTile, _super);
+    function TColorTile(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建color_tile对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TColorTile.create = function (parent, x, y, w, h) {
+        return new TColorTile(color_tile_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为color_tile对象(供脚本语言使用)。
+     *
+     * @param widget color_tile对象。
+     *
+     * @returns color_tile对象。
+     */
+    TColorTile.cast = function (widget) {
+        return new TColorTile(color_tile_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    /**
+     * 设置背景颜色。
+     *
+     * @param color 背景颜色。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TColorTile.prototype.setBgColor = function (color) {
+        return color_tile_set_bg_color(this != null ? (this.nativeObj || this) : null, color);
+    };
+    Object.defineProperty(TColorTile.prototype, "bgColor", {
+        /**
+         * 背景颜色。
+         *
+         */
+        get: function () {
+            return color_tile_t_get_prop_bg_color(this.nativeObj);
+        },
+        set: function (v) {
+            this.setBgColor(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TColorTile.prototype, "borderColor", {
+        /**
+         * 边框颜色。
+         *
+         */
+        get: function () {
+            return color_tile_t_get_prop_border_color(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TColorTile;
+}(TWidget));
+exports.TColorTile = TColorTile;
+;
+/**
+ * 勾选按钮控件(单选/多选)。
+ *
+ *check\_button\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于check\_button\_t控件。
+ *
+ *在xml中使用"check_button"标签创建多选按钮控件。如：
+ *
+ *```xml
+ *<check_button name="c1" text="Book"/>
+ *```
+ *
+ *在xml中使用"radio_button"标签创建单选按钮控件。如：
+ *
+ *```xml
+ *<radio_button name="r1" text="Book"/>
+ *```
+ *
+ *> 更多用法请参考：
+ *[button.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/basic.xml)
+ *
+ *在c代码中使用函数check\_button\_create创建多选按钮控件。如：
+ *
+ *
+ *在c代码中使用函数check\_button\_create\_radio创建单选按钮控件。如：
+ *
+ *
+ *> 完整示例请参考：
+ *[button demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/check_button.c)
+ *
+ *可用通过style来设置控件的显示风格，如字体的大小和颜色等等。如：
+ *
+ *```xml
+ *<style name="default" icon_at="left">
+ *<normal  icon="unchecked" />
+ *<pressed icon="unchecked" />
+ *<over    icon="unchecked" text_color="green"/>
+ *<normal_of_checked icon="checked" text_color="blue"/>
+ *<pressed_of_checked icon="checked" text_color="blue"/>
+ *<over_of_checked icon="checked" text_color="green"/>
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：
+ *[theme
+ *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L227)
+ *
+ */
+var TCheckButton = /** @class */ (function (_super) {
+    __extends(TCheckButton, _super);
+    function TCheckButton(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建多选按钮对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns widget对象。
+     */
+    TCheckButton.create = function (parent, x, y, w, h) {
+        return new TCheckButton(check_button_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 创建单选按钮对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns widget对象。
+     */
+    TCheckButton.createRadio = function (parent, x, y, w, h) {
+        return new TCheckButton(check_button_create_radio(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置控件的值。
+     *
+     * @param value 值(勾选为TRUE，非勾选为FALSE)。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TCheckButton.prototype.setValue = function (value) {
+        return check_button_set_value(this != null ? (this.nativeObj || this) : null, value);
+    };
+    /**
+     * 转换check_button对象(供脚本语言使用)。
+     *
+     * @param widget check_button对象。
+     *
+     * @returns check_button对象。
+     */
+    TCheckButton.cast = function (widget) {
+        return new TCheckButton(check_button_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TCheckButton.prototype, "value", {
+        /**
+         * 值(勾选为TRUE，非勾选为FALSE)。
+         *
+         */
+        get: function () {
+            return check_button_t_get_prop_value(this.nativeObj);
+        },
+        set: function (v) {
+            this.setValue(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TCheckButton;
+}(TWidget));
+exports.TCheckButton = TCheckButton;
+;
+/**
+ * 一个裁剪子控件的容器控件。
+ *
+ *它本身不提供布局功能，仅提供具有语义的标签，让xml更具有可读性。
+ *子控件的布局可用layout\_children属性指定。
+ *请参考[布局参数](https://github.com/zlgopen/awtk/blob/master/docs/layout.md)。
+ *
+ *clip\_view\_t是[widget\_t](widget_t.md)的子类控件，widget\_t的函数均适用于clip\_view\_t控件。
+ *
+ *在xml中使用"clip_view"标签创建clip_view，在clip_view控件下的所有子控件都会被裁剪。如下button控件会被裁剪，无法画出clip_view控件 ：
+ *
+ *```xml
+ *<clip_view x="0" y="0" w="100" h="100">
+ *<button x="50" y="10" w="100" h="50" />
+ *</clip_view>
+ *```
+ *
+ *备注：在clip_view控件下的所有子控件都会被裁剪，如果子控件本身会设置裁剪区的话，在子控件中计算裁剪区的交集，具体请参考scroll_view控件的scroll_view_on_paint_children函数。
+ *
+ *可用通过style来设置控件的显示风格，如背景颜色等。如：
+ *
+ *```xml
+ *<style name="default" border_color="#a0a0a0">
+ *<normal     bg_color="#f0f0f0" />
+ *</style>
+ *```
+ *
+ */
+var TClipView = /** @class */ (function (_super) {
+    __extends(TClipView, _super);
+    function TClipView(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建clip_view对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TClipView.create = function (parent, x, y, w, h) {
+        return new TClipView(clip_view_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为clip_view对象(供脚本语言使用)。
+     *
+     * @param widget clip_view对象。
+     *
+     * @returns clip_view对象。
+     */
+    TClipView.cast = function (widget) {
+        return new TClipView(clip_view_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TClipView;
+}(TWidget));
+exports.TClipView = TClipView;
+;
+/**
  * 电阻屏校准窗口。
  *
  *calibration\_win\_t是[window\_base\_t](window_base_t.md)的子类控件，
@@ -17799,792 +17932,6 @@ var TCalibrationWin = /** @class */ (function (_super) {
     return TCalibrationWin;
 }(TWindowBase));
 exports.TCalibrationWin = TCalibrationWin;
-;
-/**
- * 原生窗口。
- *
- */
-var TNativeWindow = /** @class */ (function (_super) {
-    __extends(TNativeWindow, _super);
-    function TNativeWindow(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 移动窗口。
-     *
-     * @param x x坐标。
-     * @param y y坐标。
-     * @param force 无论是否shared都move。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.move = function (x, y, force) {
-        return native_window_move(this != null ? (this.nativeObj || this) : null, x, y, force);
-    };
-    /**
-     * 调整窗口大小。
-     *
-     * @param w 宽。
-     * @param h 高。
-     * @param force 无论是否shared都resize。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.resize = function (w, h, force) {
-        return native_window_resize(this != null ? (this.nativeObj || this) : null, w, h, force);
-    };
-    /**
-     * 最小化窗口。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.minimize = function () {
-        return native_window_minimize(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 最大化窗口。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.maximize = function () {
-        return native_window_maximize(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 恢复窗口大小。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.restore = function () {
-        return native_window_restore(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 窗口居中。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.center = function () {
-        return native_window_center(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 是否显示边框。
-     *
-     * @param show 是否显示。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.showBorder = function (show) {
-        return native_window_show_border(this != null ? (this.nativeObj || this) : null, show);
-    };
-    /**
-     * 是否全屏。
-     *
-     * @param fullscreen 是否全屏。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.setFullscreen = function (fullscreen) {
-        return native_window_set_fullscreen(this != null ? (this.nativeObj || this) : null, fullscreen);
-    };
-    /**
-     * 设置鼠标光标。
-     *
-     * @param name 鼠标光标的名称。
-     * @param img 鼠标光标的图片。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TNativeWindow.prototype.setCursor = function (name, img) {
-        return native_window_set_cursor(this != null ? (this.nativeObj || this) : null, name, img != null ? (img.nativeObj || img) : null);
-    };
-    return TNativeWindow;
-}(TObject));
-exports.TNativeWindow = TNativeWindow;
-;
-/**
- * 单个定时器的信息。
- *
- */
-var TTimerInfo = /** @class */ (function (_super) {
-    __extends(TTimerInfo, _super);
-    function TTimerInfo(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 转换为timer_info对象(供脚本语言使用)。
-     *
-     * @param timer timer_info对象。
-     *
-     * @returns timer_info对象。
-     */
-    TTimerInfo.cast = function (timer) {
-        return new TTimerInfo(timer_info_cast(timer != null ? (timer.nativeObj || timer) : null));
-    };
-    Object.defineProperty(TTimerInfo.prototype, "ctx", {
-        /**
-         * 定时器回调函数的上下文
-         *
-         */
-        get: function () {
-            return timer_info_t_get_prop_ctx(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimerInfo.prototype, "id", {
-        /**
-         * 定时器的ID
-         *
-         *> 为TK\_INVALID\_ID时表示无效定时器。
-         *
-         */
-        get: function () {
-            return timer_info_t_get_prop_id(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TTimerInfo.prototype, "now", {
-        /**
-         * 当前时间(相对时间，单位为毫秒)。
-         *
-         */
-        get: function () {
-            return timer_info_t_get_prop_now(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TTimerInfo;
-}(TObject));
-exports.TTimerInfo = TTimerInfo;
-;
-/**
- * GIF图片控件。
- *
- *> 注意：GIF图片的尺寸大于控件大小时会自动缩小图片，但一般的嵌入式系统的硬件加速都不支持图片缩放，
- *所以缩放图片会导致性能明显下降。如果性能不满意时，请确认一下GIF图片的尺寸是否小余控件大小。
- *
- *gif\_image\_t是[image\_base\_t](image_base_t.md)的子类控件，image\_base\_t的函数均适用于gif\_image\_t控件。
- *
- *在xml中使用"gif"标签创建GIF图片控件。如：
- *
- *```xml
- *<gif image="bee"/>
- *```
- *
- *>更多用法请参考：
- *[gif
- *image](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/gif_image.xml)
- *
- *在c代码中使用函数gif\_image\_create创建GIF图片控件。如：
- *
- *
- *> 创建之后:
- *>
- *> 需要用widget\_set\_image设置图片名称。
- *
- *> 完整示例请参考：[gif image demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/gif_image.c)
- *
- *可用通过style来设置控件的显示风格，如背景和边框等。如：
- *
- *```xml
- *<gif>
- *<style name="border">
- *<normal border_color="#000000" bg_color="#e0e0e0" text_color="black"/>
- *</style>
- *</gif>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
- *
- */
-var TGifImage = /** @class */ (function (_super) {
-    __extends(TGifImage, _super);
-    function TGifImage(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建gif_image对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TGifImage.create = function (parent, x, y, w, h) {
-        return new TGifImage(gif_image_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为gif_image对象(供脚本语言使用)。
-     *
-     * @param widget gif_image对象。
-     *
-     * @returns gif_image对象。
-     */
-    TGifImage.cast = function (widget) {
-        return new TGifImage(gif_image_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TGifImage;
-}(TImageBase));
-exports.TGifImage = TGifImage;
-;
-/**
- * 软键盘。
- *
- *软键盘是一个特殊的窗口，由编辑器通过输入法自动打开和关闭。
- *
- *这里介绍一下定制软键盘的方法：
- *
- *编辑器输入类型和软键盘UI资源文件的对应关系:
- *
- *| 输入类型       | 软键盘UI资源文件|
- *|----------------|:---------------:|
- *| INPUT\_PHONE    | kb\_phone.xml    |
- *| INPUT\_INT      | kb\_int.xml      |
- *| INPUT\_FLOAT    | kb\_float.xml    |
- *| INPUT\_UINT     | kb\_uint.xml     |
- *| INPUT\_UFLOAT   | kb\_ufloat.xml   |
- *| INPUT\_HEX      | kb\_hex.xml      |
- *| INPUT\_EMAIL    | kb\_ascii.xml    |
- *| INPUT\_PASSWORD | kb\_ascii.xml    |
- *| INPUT\_CUSTOM   | 使用自定义的键盘 |
- *| 其它            | kb\_default.xml  |
- *
- *keyboard中按钮子控件的名称有些特殊要求：
- *
- *|  名称          | 功能            |
- *|----------------|:---------------:|
- *| return         | 回车键          |
- *| action         | 定制按钮        |
- *| backspace      | 删除键          |
- *| tab            | tab键           |
- *| space          | 空格键          |
- *| close          | 关闭软键盘      |
- *| 前缀key:        | 键值           |
- *| 前缀hard_key:   | 模拟物理键盘    |
- *| 前缀page:       | 切换到页面      |
- *| 前缀opt:        | 多个字符选择一个，点击切换到下一个，超时提交字符(用于实现九宫格输入) |
- *
- *示例：
- *
- ** 按键"a"，提交输入法处理。
- *
- *```xml
- *<button repeat="300" name="key:a" text="a"/>
- *```
- *
- ** 字符"a"，直接提交到编辑器。
- *
- *```xml
- *<button repeat="300" name="a" text="a"/>
- *```
- *
- ** 模拟物理键盘数字"1"，触发key down/up事件（可以用来选择候选字）。
- *
- *```xml
- *<button repeat="300" name="hard_key:1" text="1"/>
- *```
- *
- ** 九宫格输入
- *
- *```xml
- *<button repeat="300" name="opt:._@/#" text="._@/#"/>
- *<button repeat="300" name="opt:abc" text="abc"/>
- *<button repeat="300" name="opt:def" text="def"/>
- *```
- *
- *
- ** 输入语言切换
- *
- *有的输入法，同时支持输入多种语言。
- *比如T9，可以同时支持中文和英文输入，配合软键盘随时切换输入的语言。
- *
- *可以在pages的页面里指定lang属性，切换到该页面时会设置输入法的语言。如：
- *
- *```xml
- *<pages x="0" y="bottom" w="100%" h="-28" active="2">
- *<view name="lower" lang="en_us"
- *x="0" y="0" w="100%" h="100%" children_layout="default(r=4,c=4,s=2,m=2)">
- *...
- *</view>
- *<view name="chinese" lang="zh_cn"
- *x="0" y="0" w="100%" h="100%" children_layout="default(r=4,c=4,s=2,m=2)">
- *...
- *</view>
- *</pages>
- *```
- *
- *> 更多用法请参考：
- *[kb_default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/kb_default.xml)
- *
- */
-var TKeyboard = /** @class */ (function (_super) {
-    __extends(TKeyboard, _super);
-    function TKeyboard(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建keyboard对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TKeyboard.create = function (parent, x, y, w, h) {
-        return new TKeyboard(keyboard_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 转换为keyboard对象(供脚本语言使用)。
-     *
-     * @param widget keyboard对象。
-     *
-     * @returns keyboard对象。
-     */
-    TKeyboard.cast = function (widget) {
-        return new TKeyboard(keyboard_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TKeyboard;
-}(TWindowBase));
-exports.TKeyboard = TKeyboard;
-;
-/**
- * mutable图片控件。
- *
- *像摄像头和视频的图像是变化的，每一帧都不同，我们把这类图片称为mutable image。
- *
- *本控件辅助实现摄像头和视频的显示功能。
- *
- *mutable\_image\_t是[image\_base\_t](image_base_t.md)的子类控件，image\_base\_t的函数均适用于mutable\_image\_t控件。
- *
- *在xml中使用"mutable\_image"标签创建mutable图片控件。如：
- *
- *```xml
- *<mutable_image w="100%" h="100%"/>
- *```
- *
- *>更多用法请参考：
- *[mutable
- *image](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mutable_image.xml)
- *
- *在c代码中使用函数mutable\_image\_create创建mutable图片控件。如：
- *
- *
- *> 创建之后:
- *>
- *> 需要用mutable\_image\_set\_create\_image设置创建图片的回调函数。
- *> 需要用mutable\_image\_set\_prepare\_image设置准备图片的回调函数。
- *
- *> 完整示例请参考：[mutable image demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/mutable_image.c)
- *
- *一般不需通过style来设置控件的显示风格，如果在特殊情况下需要，可以参考其它控件。
- *
- */
-var TMutableImage = /** @class */ (function (_super) {
-    __extends(TMutableImage, _super);
-    function TMutableImage(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    return TMutableImage;
-}(TImageBase));
-exports.TMutableImage = TMutableImage;
-;
-/**
- * 对象接口的缺省实现。
- *
- *内部使用有序数组保存所有属性，可以快速查找指定名称的属性。
- *
- */
-var TObjectDefault = /** @class */ (function (_super) {
-    __extends(TObjectDefault, _super);
-    function TObjectDefault(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建对象。
-     *
-     *
-     * @returns 返回object对象。
-     */
-    TObjectDefault.create = function () {
-        return new TObjectDefault(object_default_create());
-    };
-    /**
-     * for script gc
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TObjectDefault.prototype.unref = function () {
-        return object_default_unref(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 清除全部属性。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TObjectDefault.prototype.clearProps = function () {
-        return object_default_clear_props(this != null ? (this.nativeObj || this) : null);
-    };
-    Object.defineProperty(TObjectDefault.prototype, "propsSize", {
-        /**
-         * 属性个数。
-         *
-         */
-        get: function () {
-            return object_default_t_get_prop_props_size(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TObjectDefault;
-}(TObject));
-exports.TObjectDefault = TObjectDefault;
-;
-/**
- * 简单的动态数组，内部存放value对象。
- *
- *访问时属性名称为：
- *
- ** "size"/"length" 用于获取数组的长度。
- ** index 用于访问属性，-1可以用来追加新元素。
- *
- */
-var TObjectArray = /** @class */ (function (_super) {
-    __extends(TObjectArray, _super);
-    function TObjectArray(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建对象。
-     *
-     *
-     * @returns 返回object对象。
-     */
-    TObjectArray.create = function () {
-        return new TObjectArray(object_array_create());
-    };
-    /**
-     * for script gc
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TObjectArray.prototype.unref = function () {
-        return object_array_unref(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 清除全部属性。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TObjectArray.prototype.clearProps = function () {
-        return object_array_clear_props(this != null ? (this.nativeObj || this) : null);
-    };
-    Object.defineProperty(TObjectArray.prototype, "propsSize", {
-        /**
-         * 属性个数。
-         *
-         */
-        get: function () {
-            return object_array_t_get_prop_props_size(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TObjectArray;
-}(TObject));
-exports.TObjectArray = TObjectArray;
-;
-/**
- * 窗口。
- *
- *缺省的应用程序窗口，占用除system\_bar\_t之外的整个区域，请不要修改它的位置和大小(除非你清楚后果)。
- *
- *window\_t是[window\_base\_t](window_base_t.md)的子类控件，window\_base\_t的函数均适用于window\_t控件。
- *
- *在xml中使用"window"标签创建窗口。无需指定坐标和大小，可以指定主题和动画名称。如：
- *
- *```xml
- *<window theme="basic" anim_hint="htranslate">
- *...
- *</window>
- *```
- *
- *>
- *更多用法请参考：[window.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/)
- *
- *在c代码中使用函数window\_create创建窗口。如：
- *
- *
- *> 无需指定父控件、坐标和大小，使用0即可。
- *
- *> 完整示例请参考：[window
- *demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/)
- *
- *可用通过style来设置窗口的风格，如背景颜色或图片等。如：
- *
- *```xml
- *<style name="bricks">
- *<normal bg_image="bricks"  bg_image_draw_type="repeat"/>
- *</style>
- *```
- *
- *> 更多用法请参考：[theme
- *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L0)
- *
- */
-var TWindow = /** @class */ (function (_super) {
-    __extends(TWindow, _super);
-    function TWindow(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建window对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TWindow.create = function (parent, x, y, w, h) {
-        return new TWindow(window_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 以缺省的方式创建window对象。
-     *
-     *
-     * @returns 对象。
-     */
-    TWindow.createDefault = function () {
-        return new TWindow(window_create_default());
-    };
-    /**
-     * 设置为全屏窗口。
-     *
-     *>这里全屏是指与LCD相同大小，而非让SDL窗口全屏。
-     *
-     * @param fullscreen 是否全屏。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TWindow.prototype.setFullscreen = function (fullscreen) {
-        return window_set_fullscreen(this != null ? (this.nativeObj || this) : null, fullscreen);
-    };
-    /**
-     * 从资源文件中加载并创建window_base对象。本函数在ui_loader/ui_builder_default里实现。
-     *
-     * @param name window的名称。
-     *
-     * @returns 对象。
-     */
-    TWindow.open = function (name) {
-        return new TWindow(window_open(name));
-    };
-    /**
-     * 从资源文件中加载并创建window对象。本函数在ui_loader/ui_builder_default里实现。
-     *
-     * @param name window的名称。
-     * @param to_close 关闭该窗口。
-     *
-     * @returns 对象。
-     */
-    TWindow.openAndClose = function (name, to_close) {
-        return new TWindow(window_open_and_close(name, to_close != null ? (to_close.nativeObj || to_close) : null));
-    };
-    /**
-     * 关闭窗口。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TWindow.prototype.close = function () {
-        return window_close(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 立即无条件关闭窗口(无动画)。
-     *
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TWindow.prototype.closeForce = function () {
-        return window_close_force(this != null ? (this.nativeObj || this) : null);
-    };
-    /**
-     * 转换为window对象(供脚本语言使用)。
-     *
-     * @param widget window对象。
-     *
-     * @returns window对象。
-     */
-    TWindow.cast = function (widget) {
-        return new TWindow(window_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    Object.defineProperty(TWindow.prototype, "fullscreen", {
-        /**
-         * 是否全屏。
-         *
-         *>这里全屏是指与LCD相同大小，而非让SDL窗口全屏。
-         *
-         */
-        get: function () {
-            return window_t_get_prop_fullscreen(this.nativeObj);
-        },
-        set: function (v) {
-            this.setFullscreen(v);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TWindow;
-}(TWindowBase));
-exports.TWindow = TWindow;
-;
-/**
- * 单个idle的信息。
- *
- */
-var TIdleInfo = /** @class */ (function (_super) {
-    __extends(TIdleInfo, _super);
-    function TIdleInfo(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 转换为idle_info对象(供脚本语言使用)。
-     *
-     * @param idle idle_info对象。
-     *
-     * @returns idle_info对象。
-     */
-    TIdleInfo.cast = function (idle) {
-        return new TIdleInfo(idle_info_cast(idle != null ? (idle.nativeObj || idle) : null));
-    };
-    Object.defineProperty(TIdleInfo.prototype, "ctx", {
-        /**
-         * idle回调函数上下文。
-         *
-         */
-        get: function () {
-            return idle_info_t_get_prop_ctx(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TIdleInfo.prototype, "id", {
-        /**
-         * idle的ID
-         *
-         *> 为TK\_INVALID\_ID时表示无效idle。
-         *
-         */
-        get: function () {
-            return idle_info_t_get_prop_id(this.nativeObj);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TIdleInfo;
-}(TObject));
-exports.TIdleInfo = TIdleInfo;
-;
-/**
- * SVG图片控件。
- *
- *svg\_image\_t是[image\_base\_t](image_base_t.md)的子类控件，image\_base\_t的函数均适用于svg\_image\_t控件。
- *
- *在xml中使用"svg"标签创建SVG图片控件。如：
- *
- *```xml
- *<svg image="girl"/>
- *```
- *
- *>更多用法请参考：[svg image](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/svg_image.xml)
- *
- *在c代码中使用函数svg\_image\_create创建SVG图片控件。如：
- *
- *
- *> 创建之后: 需要用widget\_set\_image设置图片名称。
- *
- *> 完整示例请参考：[svg image demo](
- *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/svg_image.c)
- *
- *可用通过style来设置控件的显示风格，如背景和边框等。如：
- *
- *```xml
- *<svg>
- *<style name="default">
- *<normal border_color="green" fg_color="red" />
- *</style>
- *</svg>
- *```
- *
- *> 更多用法请参考：[theme default](
- *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
- *
- */
-var TSvgImage = /** @class */ (function (_super) {
-    __extends(TSvgImage, _super);
-    function TSvgImage(nativeObj) {
-        return _super.call(this, nativeObj) || this;
-    }
-    /**
-     * 创建svg_image对象
-     *
-     * @param parent 父控件
-     * @param x x坐标
-     * @param y y坐标
-     * @param w 宽度
-     * @param h 高度
-     *
-     * @returns 对象。
-     */
-    TSvgImage.create = function (parent, x, y, w, h) {
-        return new TSvgImage(svg_image_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
-    };
-    /**
-     * 设置控件的图片名称。
-     *
-     *> 如果需要显示文件系统中的图片，只需将图片名称换成实际的文件名，并加上"file://"前缀即可。
-     *
-     * @param name 图片名称，该图片必须存在于资源管理器。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    TSvgImage.prototype.setImage = function (name) {
-        return svg_image_set_image(this != null ? (this.nativeObj || this) : null, name);
-    };
-    /**
-     * 转换为svg_image对象(供脚本语言使用)。
-     *
-     * @param widget svg_image对象。
-     *
-     * @returns svg_image对象。
-     */
-    TSvgImage.cast = function (widget) {
-        return new TSvgImage(svg_image_cast(widget != null ? (widget.nativeObj || widget) : null));
-    };
-    return TSvgImage;
-}(TImageBase));
-exports.TSvgImage = TSvgImage;
 ;
 /**
  * 下拉列表控件。
@@ -18917,6 +18264,409 @@ var TComboBox = /** @class */ (function (_super) {
 exports.TComboBox = TComboBox;
 ;
 /**
+ * 窗口。
+ *
+ *缺省的应用程序窗口，占用除system\_bar\_t之外的整个区域，请不要修改它的位置和大小(除非你清楚后果)。
+ *
+ *window\_t是[window\_base\_t](window_base_t.md)的子类控件，window\_base\_t的函数均适用于window\_t控件。
+ *
+ *在xml中使用"window"标签创建窗口。无需指定坐标和大小，可以指定主题和动画名称。如：
+ *
+ *```xml
+ *<window theme="basic" anim_hint="htranslate">
+ *...
+ *</window>
+ *```
+ *
+ *>
+ *更多用法请参考：[window.xml](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/)
+ *
+ *在c代码中使用函数window\_create创建窗口。如：
+ *
+ *
+ *> 无需指定父控件、坐标和大小，使用0即可。
+ *
+ *> 完整示例请参考：[window
+ *demo](https://github.com/zlgopen/awtk-c-demos/blob/master/demos/)
+ *
+ *可用通过style来设置窗口的风格，如背景颜色或图片等。如：
+ *
+ *```xml
+ *<style name="bricks">
+ *<normal bg_image="bricks"  bg_image_draw_type="repeat"/>
+ *</style>
+ *```
+ *
+ *> 更多用法请参考：[theme
+ *default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml#L0)
+ *
+ */
+var TWindow = /** @class */ (function (_super) {
+    __extends(TWindow, _super);
+    function TWindow(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建window对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TWindow.create = function (parent, x, y, w, h) {
+        return new TWindow(window_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 以缺省的方式创建window对象。
+     *
+     *
+     * @returns 对象。
+     */
+    TWindow.createDefault = function () {
+        return new TWindow(window_create_default());
+    };
+    /**
+     * 设置为全屏窗口。
+     *
+     *>这里全屏是指与LCD相同大小，而非让SDL窗口全屏。
+     *
+     * @param fullscreen 是否全屏。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TWindow.prototype.setFullscreen = function (fullscreen) {
+        return window_set_fullscreen(this != null ? (this.nativeObj || this) : null, fullscreen);
+    };
+    /**
+     * 从资源文件中加载并创建window_base对象。本函数在ui_loader/ui_builder_default里实现。
+     *
+     * @param name window的名称。
+     *
+     * @returns 对象。
+     */
+    TWindow.open = function (name) {
+        return new TWindow(window_open(name));
+    };
+    /**
+     * 从资源文件中加载并创建window对象。本函数在ui_loader/ui_builder_default里实现。
+     *
+     * @param name window的名称。
+     * @param to_close 关闭该窗口。
+     *
+     * @returns 对象。
+     */
+    TWindow.openAndClose = function (name, to_close) {
+        return new TWindow(window_open_and_close(name, to_close != null ? (to_close.nativeObj || to_close) : null));
+    };
+    /**
+     * 关闭窗口。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TWindow.prototype.close = function () {
+        return window_close(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 立即无条件关闭窗口(无动画)。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TWindow.prototype.closeForce = function () {
+        return window_close_force(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 转换为window对象(供脚本语言使用)。
+     *
+     * @param widget window对象。
+     *
+     * @returns window对象。
+     */
+    TWindow.cast = function (widget) {
+        return new TWindow(window_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    Object.defineProperty(TWindow.prototype, "fullscreen", {
+        /**
+         * 是否全屏。
+         *
+         *>这里全屏是指与LCD相同大小，而非让SDL窗口全屏。
+         *
+         */
+        get: function () {
+            return window_t_get_prop_fullscreen(this.nativeObj);
+        },
+        set: function (v) {
+            this.setFullscreen(v);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TWindow;
+}(TWindowBase));
+exports.TWindow = TWindow;
+;
+/**
+ * 单个定时器的信息。
+ *
+ */
+var TTimerInfo = /** @class */ (function (_super) {
+    __extends(TTimerInfo, _super);
+    function TTimerInfo(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 转换为timer_info对象(供脚本语言使用)。
+     *
+     * @param timer timer_info对象。
+     *
+     * @returns timer_info对象。
+     */
+    TTimerInfo.cast = function (timer) {
+        return new TTimerInfo(timer_info_cast(timer != null ? (timer.nativeObj || timer) : null));
+    };
+    Object.defineProperty(TTimerInfo.prototype, "ctx", {
+        /**
+         * 定时器回调函数的上下文
+         *
+         */
+        get: function () {
+            return timer_info_t_get_prop_ctx(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimerInfo.prototype, "id", {
+        /**
+         * 定时器的ID
+         *
+         *> 为TK\_INVALID\_ID时表示无效定时器。
+         *
+         */
+        get: function () {
+            return timer_info_t_get_prop_id(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TTimerInfo.prototype, "now", {
+        /**
+         * 当前时间(相对时间，单位为毫秒)。
+         *
+         */
+        get: function () {
+            return timer_info_t_get_prop_now(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TTimerInfo;
+}(TObject));
+exports.TTimerInfo = TTimerInfo;
+;
+/**
+ * GIF图片控件。
+ *
+ *> 注意：GIF图片的尺寸大于控件大小时会自动缩小图片，但一般的嵌入式系统的硬件加速都不支持图片缩放，
+ *所以缩放图片会导致性能明显下降。如果性能不满意时，请确认一下GIF图片的尺寸是否小余控件大小。
+ *
+ *gif\_image\_t是[image\_base\_t](image_base_t.md)的子类控件，image\_base\_t的函数均适用于gif\_image\_t控件。
+ *
+ *在xml中使用"gif"标签创建GIF图片控件。如：
+ *
+ *```xml
+ *<gif image="bee"/>
+ *```
+ *
+ *>更多用法请参考：
+ *[gif
+ *image](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/gif_image.xml)
+ *
+ *在c代码中使用函数gif\_image\_create创建GIF图片控件。如：
+ *
+ *
+ *> 创建之后:
+ *>
+ *> 需要用widget\_set\_image设置图片名称。
+ *
+ *> 完整示例请参考：[gif image demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/gif_image.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景和边框等。如：
+ *
+ *```xml
+ *<gif>
+ *<style name="border">
+ *<normal border_color="#000000" bg_color="#e0e0e0" text_color="black"/>
+ *</style>
+ *</gif>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
+ *
+ */
+var TGifImage = /** @class */ (function (_super) {
+    __extends(TGifImage, _super);
+    function TGifImage(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建gif_image对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TGifImage.create = function (parent, x, y, w, h) {
+        return new TGifImage(gif_image_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为gif_image对象(供脚本语言使用)。
+     *
+     * @param widget gif_image对象。
+     *
+     * @returns gif_image对象。
+     */
+    TGifImage.cast = function (widget) {
+        return new TGifImage(gif_image_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TGifImage;
+}(TImageBase));
+exports.TGifImage = TGifImage;
+;
+/**
+ * 软键盘。
+ *
+ *软键盘是一个特殊的窗口，由编辑器通过输入法自动打开和关闭。
+ *
+ *这里介绍一下定制软键盘的方法：
+ *
+ *编辑器输入类型和软键盘UI资源文件的对应关系:
+ *
+ *| 输入类型       | 软键盘UI资源文件|
+ *|----------------|:---------------:|
+ *| INPUT\_PHONE    | kb\_phone.xml    |
+ *| INPUT\_INT      | kb\_int.xml      |
+ *| INPUT\_FLOAT    | kb\_float.xml    |
+ *| INPUT\_UINT     | kb\_uint.xml     |
+ *| INPUT\_UFLOAT   | kb\_ufloat.xml   |
+ *| INPUT\_HEX      | kb\_hex.xml      |
+ *| INPUT\_EMAIL    | kb\_ascii.xml    |
+ *| INPUT\_PASSWORD | kb\_ascii.xml    |
+ *| INPUT\_CUSTOM   | 使用自定义的键盘 |
+ *| 其它            | kb\_default.xml  |
+ *
+ *keyboard中按钮子控件的名称有些特殊要求：
+ *
+ *|  名称          | 功能            |
+ *|----------------|:---------------:|
+ *| return         | 回车键          |
+ *| action         | 定制按钮        |
+ *| backspace      | 删除键          |
+ *| tab            | tab键           |
+ *| space          | 空格键          |
+ *| close          | 关闭软键盘      |
+ *| 前缀key:        | 键值           |
+ *| 前缀hard_key:   | 模拟物理键盘    |
+ *| 前缀page:       | 切换到页面      |
+ *| 前缀opt:        | 多个字符选择一个，点击切换到下一个，超时提交字符(用于实现九宫格输入) |
+ *
+ *示例：
+ *
+ ** 按键"a"，提交输入法处理。
+ *
+ *```xml
+ *<button repeat="300" name="key:a" text="a"/>
+ *```
+ *
+ ** 字符"a"，直接提交到编辑器。
+ *
+ *```xml
+ *<button repeat="300" name="a" text="a"/>
+ *```
+ *
+ ** 模拟物理键盘数字"1"，触发key down/up事件（可以用来选择候选字）。
+ *
+ *```xml
+ *<button repeat="300" name="hard_key:1" text="1"/>
+ *```
+ *
+ ** 九宫格输入
+ *
+ *```xml
+ *<button repeat="300" name="opt:._@/#" text="._@/#"/>
+ *<button repeat="300" name="opt:abc" text="abc"/>
+ *<button repeat="300" name="opt:def" text="def"/>
+ *```
+ *
+ *
+ ** 输入语言切换
+ *
+ *有的输入法，同时支持输入多种语言。
+ *比如T9，可以同时支持中文和英文输入，配合软键盘随时切换输入的语言。
+ *
+ *可以在pages的页面里指定lang属性，切换到该页面时会设置输入法的语言。如：
+ *
+ *```xml
+ *<pages x="0" y="bottom" w="100%" h="-28" active="2">
+ *<view name="lower" lang="en_us"
+ *x="0" y="0" w="100%" h="100%" children_layout="default(r=4,c=4,s=2,m=2)">
+ *...
+ *</view>
+ *<view name="chinese" lang="zh_cn"
+ *x="0" y="0" w="100%" h="100%" children_layout="default(r=4,c=4,s=2,m=2)">
+ *...
+ *</view>
+ *</pages>
+ *```
+ *
+ *> 更多用法请参考：
+ *[kb_default](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/kb_default.xml)
+ *
+ */
+var TKeyboard = /** @class */ (function (_super) {
+    __extends(TKeyboard, _super);
+    function TKeyboard(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建keyboard对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TKeyboard.create = function (parent, x, y, w, h) {
+        return new TKeyboard(keyboard_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 转换为keyboard对象(供脚本语言使用)。
+     *
+     * @param widget keyboard对象。
+     *
+     * @returns keyboard对象。
+     */
+    TKeyboard.cast = function (widget) {
+        return new TKeyboard(keyboard_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TKeyboard;
+}(TWindowBase));
+exports.TKeyboard = TKeyboard;
+;
+/**
  * 图片控件。
  *
  *用来显示一张静态图片，目前支持bmp/png/jpg等格式。
@@ -19030,6 +18780,48 @@ var TImage = /** @class */ (function (_super) {
 exports.TImage = TImage;
 ;
 /**
+ * mutable图片控件。
+ *
+ *像摄像头和视频的图像是变化的，每一帧都不同，我们把这类图片称为mutable image。
+ *
+ *本控件辅助实现摄像头和视频的显示功能。
+ *
+ *mutable\_image\_t是[image\_base\_t](image_base_t.md)的子类控件，image\_base\_t的函数均适用于mutable\_image\_t控件。
+ *
+ *在xml中使用"mutable\_image"标签创建mutable图片控件。如：
+ *
+ *```xml
+ *<mutable_image w="100%" h="100%"/>
+ *```
+ *
+ *>更多用法请参考：
+ *[mutable
+ *image](https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/mutable_image.xml)
+ *
+ *在c代码中使用函数mutable\_image\_create创建mutable图片控件。如：
+ *
+ *
+ *> 创建之后:
+ *>
+ *> 需要用mutable\_image\_set\_create\_image设置创建图片的回调函数。
+ *> 需要用mutable\_image\_set\_prepare\_image设置准备图片的回调函数。
+ *
+ *> 完整示例请参考：[mutable image demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/mutable_image.c)
+ *
+ *一般不需通过style来设置控件的显示风格，如果在特殊情况下需要，可以参考其它控件。
+ *
+ */
+var TMutableImage = /** @class */ (function (_super) {
+    __extends(TMutableImage, _super);
+    function TMutableImage(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    return TMutableImage;
+}(TImageBase));
+exports.TMutableImage = TMutableImage;
+;
+/**
  * overlay窗口。
  *
  *overlay窗口有点类似于非模态的dialog，但是它位置和大小是完全自由的，窗口管理器不会对它做任何限制。
@@ -19099,6 +18891,110 @@ var TOverlay = /** @class */ (function (_super) {
     return TOverlay;
 }(TWindowBase));
 exports.TOverlay = TOverlay;
+;
+/**
+ * 原生窗口。
+ *
+ */
+var TNativeWindow = /** @class */ (function (_super) {
+    __extends(TNativeWindow, _super);
+    function TNativeWindow(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 移动窗口。
+     *
+     * @param x x坐标。
+     * @param y y坐标。
+     * @param force 无论是否shared都move。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.move = function (x, y, force) {
+        return native_window_move(this != null ? (this.nativeObj || this) : null, x, y, force);
+    };
+    /**
+     * 调整窗口大小。
+     *
+     * @param w 宽。
+     * @param h 高。
+     * @param force 无论是否shared都resize。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.resize = function (w, h, force) {
+        return native_window_resize(this != null ? (this.nativeObj || this) : null, w, h, force);
+    };
+    /**
+     * 最小化窗口。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.minimize = function () {
+        return native_window_minimize(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 最大化窗口。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.maximize = function () {
+        return native_window_maximize(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 恢复窗口大小。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.restore = function () {
+        return native_window_restore(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 窗口居中。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.center = function () {
+        return native_window_center(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 是否显示边框。
+     *
+     * @param show 是否显示。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.showBorder = function (show) {
+        return native_window_show_border(this != null ? (this.nativeObj || this) : null, show);
+    };
+    /**
+     * 是否全屏。
+     *
+     * @param fullscreen 是否全屏。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.setFullscreen = function (fullscreen) {
+        return native_window_set_fullscreen(this != null ? (this.nativeObj || this) : null, fullscreen);
+    };
+    /**
+     * 设置鼠标光标。
+     *
+     * @param name 鼠标光标的名称。
+     * @param img 鼠标光标的图片。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TNativeWindow.prototype.setCursor = function (name, img) {
+        return native_window_set_cursor(this != null ? (this.nativeObj || this) : null, name, img != null ? (img.nativeObj || img) : null);
+    };
+    return TNativeWindow;
+}(TObject));
+exports.TNativeWindow = TNativeWindow;
 ;
 /**
  * 弹出窗口。
@@ -19225,6 +19121,59 @@ var TPopup = /** @class */ (function (_super) {
     return TPopup;
 }(TWindowBase));
 exports.TPopup = TPopup;
+;
+/**
+ * 对象接口的缺省实现。
+ *
+ *内部使用有序数组保存所有属性，可以快速查找指定名称的属性。
+ *
+ */
+var TObjectDefault = /** @class */ (function (_super) {
+    __extends(TObjectDefault, _super);
+    function TObjectDefault(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建对象。
+     *
+     *
+     * @returns 返回object对象。
+     */
+    TObjectDefault.create = function () {
+        return new TObjectDefault(object_default_create());
+    };
+    /**
+     * for script gc
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TObjectDefault.prototype.unref = function () {
+        return object_default_unref(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 清除全部属性。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TObjectDefault.prototype.clearProps = function () {
+        return object_default_clear_props(this != null ? (this.nativeObj || this) : null);
+    };
+    Object.defineProperty(TObjectDefault.prototype, "propsSize", {
+        /**
+         * 属性个数。
+         *
+         */
+        get: function () {
+            return object_default_t_get_prop_props_size(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TObjectDefault;
+}(TObject));
+exports.TObjectDefault = TObjectDefault;
 ;
 /**
  * spinbox控件。
@@ -19387,6 +19336,190 @@ var TSystemBar = /** @class */ (function (_super) {
     return TSystemBar;
 }(TWindowBase));
 exports.TSystemBar = TSystemBar;
+;
+/**
+ * 简单的动态数组，内部存放value对象。
+ *
+ *访问时属性名称为：
+ *
+ ** "size"/"length" 用于获取数组的长度。
+ ** index 用于访问属性，-1可以用来追加新元素。
+ *
+ */
+var TObjectArray = /** @class */ (function (_super) {
+    __extends(TObjectArray, _super);
+    function TObjectArray(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建对象。
+     *
+     *
+     * @returns 返回object对象。
+     */
+    TObjectArray.create = function () {
+        return new TObjectArray(object_array_create());
+    };
+    /**
+     * for script gc
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TObjectArray.prototype.unref = function () {
+        return object_array_unref(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
+     * 清除全部属性。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TObjectArray.prototype.clearProps = function () {
+        return object_array_clear_props(this != null ? (this.nativeObj || this) : null);
+    };
+    Object.defineProperty(TObjectArray.prototype, "propsSize", {
+        /**
+         * 属性个数。
+         *
+         */
+        get: function () {
+            return object_array_t_get_prop_props_size(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TObjectArray;
+}(TObject));
+exports.TObjectArray = TObjectArray;
+;
+/**
+ * SVG图片控件。
+ *
+ *svg\_image\_t是[image\_base\_t](image_base_t.md)的子类控件，image\_base\_t的函数均适用于svg\_image\_t控件。
+ *
+ *在xml中使用"svg"标签创建SVG图片控件。如：
+ *
+ *```xml
+ *<svg image="girl"/>
+ *```
+ *
+ *>更多用法请参考：[svg image](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/ui/svg_image.xml)
+ *
+ *在c代码中使用函数svg\_image\_create创建SVG图片控件。如：
+ *
+ *
+ *> 创建之后: 需要用widget\_set\_image设置图片名称。
+ *
+ *> 完整示例请参考：[svg image demo](
+ *https://github.com/zlgopen/awtk-c-demos/blob/master/demos/svg_image.c)
+ *
+ *可用通过style来设置控件的显示风格，如背景和边框等。如：
+ *
+ *```xml
+ *<svg>
+ *<style name="default">
+ *<normal border_color="green" fg_color="red" />
+ *</style>
+ *</svg>
+ *```
+ *
+ *> 更多用法请参考：[theme default](
+ *https://github.com/zlgopen/awtk/blob/master/demos/assets/default/raw/styles/default.xml)
+ *
+ */
+var TSvgImage = /** @class */ (function (_super) {
+    __extends(TSvgImage, _super);
+    function TSvgImage(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 创建svg_image对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TSvgImage.create = function (parent, x, y, w, h) {
+        return new TSvgImage(svg_image_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
+     * 设置控件的图片名称。
+     *
+     *> 如果需要显示文件系统中的图片，只需将图片名称换成实际的文件名，并加上"file://"前缀即可。
+     *
+     * @param name 图片名称，该图片必须存在于资源管理器。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TSvgImage.prototype.setImage = function (name) {
+        return svg_image_set_image(this != null ? (this.nativeObj || this) : null, name);
+    };
+    /**
+     * 转换为svg_image对象(供脚本语言使用)。
+     *
+     * @param widget svg_image对象。
+     *
+     * @returns svg_image对象。
+     */
+    TSvgImage.cast = function (widget) {
+        return new TSvgImage(svg_image_cast(widget != null ? (widget.nativeObj || widget) : null));
+    };
+    return TSvgImage;
+}(TImageBase));
+exports.TSvgImage = TSvgImage;
+;
+/**
+ * 单个idle的信息。
+ *
+ */
+var TIdleInfo = /** @class */ (function (_super) {
+    __extends(TIdleInfo, _super);
+    function TIdleInfo(nativeObj) {
+        return _super.call(this, nativeObj) || this;
+    }
+    /**
+     * 转换为idle_info对象(供脚本语言使用)。
+     *
+     * @param idle idle_info对象。
+     *
+     * @returns idle_info对象。
+     */
+    TIdleInfo.cast = function (idle) {
+        return new TIdleInfo(idle_info_cast(idle != null ? (idle.nativeObj || idle) : null));
+    };
+    Object.defineProperty(TIdleInfo.prototype, "ctx", {
+        /**
+         * idle回调函数上下文。
+         *
+         */
+        get: function () {
+            return idle_info_t_get_prop_ctx(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TIdleInfo.prototype, "id", {
+        /**
+         * idle的ID
+         *
+         *> 为TK\_INVALID\_ID时表示无效idle。
+         *
+         */
+        get: function () {
+            return idle_info_t_get_prop_id(this.nativeObj);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return TIdleInfo;
+}(TObject));
+exports.TIdleInfo = TIdleInfo;
 ;
 /**
  * 对话框。 对话框是一种特殊的窗口，大小和位置可以自由设置。
