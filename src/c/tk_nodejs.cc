@@ -4185,9 +4185,24 @@ static void wrap_idle_remove(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   (void)argc;(void)ctx;
 }
 
+static void wrap_idle_remove_all_by_ctx(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  ret_t ret = (ret_t)0;
+  void* ctx =  NULL;
+  ret = (ret_t)idle_remove_all_by_ctx(ctx);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 ret_t idle_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "idle_add", wrap_idle_add);
   Nan::Export(ctx, "idle_remove", wrap_idle_remove);
+  Nan::Export(ctx, "idle_remove_all_by_ctx", wrap_idle_remove_all_by_ctx);
 
  return RET_OK;
 }
@@ -4366,6 +4381,14 @@ static void get_INPUT_CUSTOM_PASSWORD(const Nan::FunctionCallbackInfo<v8::Value>
   (void)argc;(void)ctx;
 }
 
+static void get_INPUT_ASCII(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)INPUT_ASCII);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 ret_t input_type_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "INPUT_TEXT", get_INPUT_TEXT);
   Nan::Export(ctx, "INPUT_INT", get_INPUT_INT);
@@ -4382,6 +4405,7 @@ ret_t input_type_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "INPUT_TIME_FULL", get_INPUT_TIME_FULL);
   Nan::Export(ctx, "INPUT_CUSTOM", get_INPUT_CUSTOM);
   Nan::Export(ctx, "INPUT_CUSTOM_PASSWORD", get_INPUT_CUSTOM_PASSWORD);
+  Nan::Export(ctx, "INPUT_ASCII", get_INPUT_ASCII);
 
  return RET_OK;
 }
@@ -5582,6 +5606,14 @@ static void get_TK_KEY_CANCEL(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
   (void)argc;(void)ctx;
 }
 
+static void get_TK_KEY_WHEEL(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)TK_KEY_WHEEL);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 ret_t key_code_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "TK_KEY_RETURN", get_TK_KEY_RETURN);
   Nan::Export(ctx, "TK_KEY_ESCAPE", get_TK_KEY_ESCAPE);
@@ -5714,6 +5746,7 @@ ret_t key_code_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "TK_KEY_COMMAND", get_TK_KEY_COMMAND);
   Nan::Export(ctx, "TK_KEY_BACK", get_TK_KEY_BACK);
   Nan::Export(ctx, "TK_KEY_CANCEL", get_TK_KEY_CANCEL);
+  Nan::Export(ctx, "TK_KEY_WHEEL", get_TK_KEY_WHEEL);
 
  return RET_OK;
 }
@@ -6400,6 +6433,20 @@ static void wrap_timer_remove(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
   (void)argc;(void)ctx;
 }
 
+static void wrap_timer_remove_all_by_ctx(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  ret_t ret = (ret_t)0;
+  void* ctx =  NULL;
+  ret = (ret_t)timer_remove_all_by_ctx(ctx);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_timer_reset(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -6460,6 +6507,7 @@ static void wrap_timer_modify(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
 ret_t timer_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "timer_add", wrap_timer_add);
   Nan::Export(ctx, "timer_remove", wrap_timer_remove);
+  Nan::Export(ctx, "timer_remove_all_by_ctx", wrap_timer_remove_all_by_ctx);
   Nan::Export(ctx, "timer_reset", wrap_timer_reset);
   Nan::Export(ctx, "timer_suspend", wrap_timer_suspend);
   Nan::Export(ctx, "timer_resume", wrap_timer_resume);
@@ -18535,6 +18583,22 @@ static void wrap_progress_circle_set_max(const Nan::FunctionCallbackInfo<v8::Val
   (void)argc;(void)ctx;
 }
 
+static void wrap_progress_circle_set_format(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  const char* format = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
+  ret = (ret_t)progress_circle_set_format(widget, format);
+  jsvalue_free_str(ctx, format);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_progress_circle_set_line_width(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -18558,22 +18622,6 @@ static void wrap_progress_circle_set_start_angle(const Nan::FunctionCallbackInfo
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
   int32_t start_angle = (int32_t)jsvalue_get_int_value(ctx, argv[1]);
   ret = (ret_t)progress_circle_set_start_angle(widget, start_angle);
-
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
-  argv.GetReturnValue().Set(jret);
-  }
-  (void)argc;(void)ctx;
-}
-
-static void wrap_progress_circle_set_unit(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  if(argc >= 2) {
-  ret_t ret = (ret_t)0;
-  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
-  const char* unit = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
-  ret = (ret_t)progress_circle_set_unit(widget, unit);
-  jsvalue_free_str(ctx, unit);
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
   argv.GetReturnValue().Set(jret);
@@ -18647,6 +18695,18 @@ static void wrap_progress_circle_t_get_prop_max(const Nan::FunctionCallbackInfo<
   (void)argc;(void)ctx;
 }
 
+static void wrap_progress_circle_t_get_prop_format(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  progress_circle_t* obj = (progress_circle_t*)jsvalue_get_pointer(ctx, argv[0], "progress_circle_t*");
+
+  const char* str_temp = obj->format;
+  str_temp = (str_temp != NULL) ? str_temp : "";
+  v8::Local<v8::String> jret= Nan::New((const char*)(str_temp)).ToLocalChecked();
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 static void wrap_progress_circle_t_get_prop_start_angle(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -18663,18 +18723,6 @@ static void wrap_progress_circle_t_get_prop_line_width(const Nan::FunctionCallba
   progress_circle_t* obj = (progress_circle_t*)jsvalue_get_pointer(ctx, argv[0], "progress_circle_t*");
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(obj->line_width));
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void wrap_progress_circle_t_get_prop_unit(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  progress_circle_t* obj = (progress_circle_t*)jsvalue_get_pointer(ctx, argv[0], "progress_circle_t*");
-
-  const char* str_temp = obj->unit;
-  str_temp = (str_temp != NULL) ? str_temp : "";
-  v8::Local<v8::String> jret= Nan::New((const char*)(str_temp)).ToLocalChecked();
   argv.GetReturnValue().Set(jret);
   (void)argc;(void)ctx;
 }
@@ -18716,17 +18764,17 @@ ret_t progress_circle_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "progress_circle_cast", wrap_progress_circle_cast);
   Nan::Export(ctx, "progress_circle_set_value", wrap_progress_circle_set_value);
   Nan::Export(ctx, "progress_circle_set_max", wrap_progress_circle_set_max);
+  Nan::Export(ctx, "progress_circle_set_format", wrap_progress_circle_set_format);
   Nan::Export(ctx, "progress_circle_set_line_width", wrap_progress_circle_set_line_width);
   Nan::Export(ctx, "progress_circle_set_start_angle", wrap_progress_circle_set_start_angle);
-  Nan::Export(ctx, "progress_circle_set_unit", wrap_progress_circle_set_unit);
   Nan::Export(ctx, "progress_circle_set_line_cap", wrap_progress_circle_set_line_cap);
   Nan::Export(ctx, "progress_circle_set_show_text", wrap_progress_circle_set_show_text);
   Nan::Export(ctx, "progress_circle_set_counter_clock_wise", wrap_progress_circle_set_counter_clock_wise);
   Nan::Export(ctx, "progress_circle_t_get_prop_value", wrap_progress_circle_t_get_prop_value);
   Nan::Export(ctx, "progress_circle_t_get_prop_max", wrap_progress_circle_t_get_prop_max);
+  Nan::Export(ctx, "progress_circle_t_get_prop_format", wrap_progress_circle_t_get_prop_format);
   Nan::Export(ctx, "progress_circle_t_get_prop_start_angle", wrap_progress_circle_t_get_prop_start_angle);
   Nan::Export(ctx, "progress_circle_t_get_prop_line_width", wrap_progress_circle_t_get_prop_line_width);
-  Nan::Export(ctx, "progress_circle_t_get_prop_unit", wrap_progress_circle_t_get_prop_unit);
   Nan::Export(ctx, "progress_circle_t_get_prop_line_cap", wrap_progress_circle_t_get_prop_line_cap);
   Nan::Export(ctx, "progress_circle_t_get_prop_counter_clock_wise", wrap_progress_circle_t_get_prop_counter_clock_wise);
   Nan::Export(ctx, "progress_circle_t_get_prop_show_text", wrap_progress_circle_t_get_prop_show_text);
@@ -23485,6 +23533,22 @@ static void wrap_progress_bar_set_max(const Nan::FunctionCallbackInfo<v8::Value>
   (void)argc;(void)ctx;
 }
 
+static void wrap_progress_bar_set_format(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  const char* format = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
+  ret = (ret_t)progress_bar_set_format(widget, format);
+  jsvalue_free_str(ctx, format);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_progress_bar_set_vertical(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -23564,6 +23628,18 @@ static void wrap_progress_bar_t_get_prop_max(const Nan::FunctionCallbackInfo<v8:
   (void)argc;(void)ctx;
 }
 
+static void wrap_progress_bar_t_get_prop_format(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  progress_bar_t* obj = (progress_bar_t*)jsvalue_get_pointer(ctx, argv[0], "progress_bar_t*");
+
+  const char* str_temp = obj->format;
+  str_temp = (str_temp != NULL) ? str_temp : "";
+  v8::Local<v8::String> jret= Nan::New((const char*)(str_temp)).ToLocalChecked();
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 static void wrap_progress_bar_t_get_prop_vertical(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -23599,12 +23675,14 @@ ret_t progress_bar_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "progress_bar_cast", wrap_progress_bar_cast);
   Nan::Export(ctx, "progress_bar_set_value", wrap_progress_bar_set_value);
   Nan::Export(ctx, "progress_bar_set_max", wrap_progress_bar_set_max);
+  Nan::Export(ctx, "progress_bar_set_format", wrap_progress_bar_set_format);
   Nan::Export(ctx, "progress_bar_set_vertical", wrap_progress_bar_set_vertical);
   Nan::Export(ctx, "progress_bar_set_show_text", wrap_progress_bar_set_show_text);
   Nan::Export(ctx, "progress_bar_set_reverse", wrap_progress_bar_set_reverse);
   Nan::Export(ctx, "progress_bar_get_percent", wrap_progress_bar_get_percent);
   Nan::Export(ctx, "progress_bar_t_get_prop_value", wrap_progress_bar_t_get_prop_value);
   Nan::Export(ctx, "progress_bar_t_get_prop_max", wrap_progress_bar_t_get_prop_max);
+  Nan::Export(ctx, "progress_bar_t_get_prop_format", wrap_progress_bar_t_get_prop_format);
   Nan::Export(ctx, "progress_bar_t_get_prop_vertical", wrap_progress_bar_t_get_prop_vertical);
   Nan::Export(ctx, "progress_bar_t_get_prop_show_text", wrap_progress_bar_t_get_prop_show_text);
   Nan::Export(ctx, "progress_bar_t_get_prop_reverse", wrap_progress_bar_t_get_prop_reverse);
