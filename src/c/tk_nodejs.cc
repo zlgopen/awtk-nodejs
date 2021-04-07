@@ -53,8 +53,8 @@
 #include "features/draggable.h"
 #include "file_browser/file_browser_view.h"
 #include "file_browser/file_chooser.h"
-#include "guage/guage_pointer.h"
-#include "guage/guage.h"
+#include "gauge/gauge_pointer.h"
+#include "gauge/gauge.h"
 #include "image_animation/image_animation.h"
 #include "image_value/image_value.h"
 #include "keyboard/candidates.h"
@@ -17183,7 +17183,7 @@ ret_t file_chooser_t_init(v8::Local<v8::Object> ctx) {
  return RET_OK;
 }
 
-static void wrap_guage_pointer_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 5) {
@@ -17193,7 +17193,7 @@ static void wrap_guage_pointer_create(const Nan::FunctionCallbackInfo<v8::Value>
   xy_t y = (xy_t)jsvalue_get_int_value(ctx, argv[2]);
   wh_t w = (wh_t)jsvalue_get_int_value(ctx, argv[3]);
   wh_t h = (wh_t)jsvalue_get_int_value(ctx, argv[4]);
-  ret = (widget_t*)guage_pointer_create(parent, x, y, w, h);
+  ret = (widget_t*)gauge_pointer_create(parent, x, y, w, h);
 
   v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
   argv.GetReturnValue().Set(jret);
@@ -17201,13 +17201,13 @@ static void wrap_guage_pointer_create(const Nan::FunctionCallbackInfo<v8::Value>
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 1) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
-  ret = (widget_t*)guage_pointer_cast(widget);
+  ret = (widget_t*)gauge_pointer_cast(widget);
 
   v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
   argv.GetReturnValue().Set(jret);
@@ -17215,14 +17215,14 @@ static void wrap_guage_pointer_cast(const Nan::FunctionCallbackInfo<v8::Value>& 
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_set_angle(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_set_angle(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 2) {
   ret_t ret = (ret_t)0;
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
   int32_t angle = (int32_t)jsvalue_get_int_value(ctx, argv[1]);
-  ret = (ret_t)guage_pointer_set_angle(widget, angle);
+  ret = (ret_t)gauge_pointer_set_angle(widget, angle);
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
   argv.GetReturnValue().Set(jret);
@@ -17230,14 +17230,14 @@ static void wrap_guage_pointer_set_angle(const Nan::FunctionCallbackInfo<v8::Val
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_set_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_set_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 2) {
   ret_t ret = (ret_t)0;
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
   const char* image = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
-  ret = (ret_t)guage_pointer_set_image(widget, image);
+  ret = (ret_t)gauge_pointer_set_image(widget, image);
   jsvalue_free_str(ctx, image);
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
@@ -17246,7 +17246,7 @@ static void wrap_guage_pointer_set_image(const Nan::FunctionCallbackInfo<v8::Val
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_set_anchor(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_set_anchor(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 3) {
@@ -17254,7 +17254,7 @@ static void wrap_guage_pointer_set_anchor(const Nan::FunctionCallbackInfo<v8::Va
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
   const char* anchor_x = (const char*)jsvalue_get_utf8_string(ctx, argv[1]);
   const char* anchor_y = (const char*)jsvalue_get_utf8_string(ctx, argv[2]);
-  ret = (ret_t)guage_pointer_set_anchor(widget, anchor_x, anchor_y);
+  ret = (ret_t)gauge_pointer_set_anchor(widget, anchor_x, anchor_y);
   jsvalue_free_str(ctx, anchor_x);
   jsvalue_free_str(ctx, anchor_y);
 
@@ -17264,20 +17264,20 @@ static void wrap_guage_pointer_set_anchor(const Nan::FunctionCallbackInfo<v8::Va
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_t_get_prop_angle(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_t_get_prop_angle(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  guage_pointer_t* obj = (guage_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "guage_pointer_t*");
+  gauge_pointer_t* obj = (gauge_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "gauge_pointer_t*");
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(obj->angle));
   argv.GetReturnValue().Set(jret);
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_t_get_prop_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_t_get_prop_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  guage_pointer_t* obj = (guage_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "guage_pointer_t*");
+  gauge_pointer_t* obj = (gauge_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "gauge_pointer_t*");
 
   const char* str_temp = obj->image;
   str_temp = (str_temp != NULL) ? str_temp : "";
@@ -17286,10 +17286,10 @@ static void wrap_guage_pointer_t_get_prop_image(const Nan::FunctionCallbackInfo<
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_t_get_prop_anchor_x(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_t_get_prop_anchor_x(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  guage_pointer_t* obj = (guage_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "guage_pointer_t*");
+  gauge_pointer_t* obj = (gauge_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "gauge_pointer_t*");
 
   const char* str_temp = obj->anchor_x;
   str_temp = (str_temp != NULL) ? str_temp : "";
@@ -17298,10 +17298,10 @@ static void wrap_guage_pointer_t_get_prop_anchor_x(const Nan::FunctionCallbackIn
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_pointer_t_get_prop_anchor_y(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_pointer_t_get_prop_anchor_y(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  guage_pointer_t* obj = (guage_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "guage_pointer_t*");
+  gauge_pointer_t* obj = (gauge_pointer_t*)jsvalue_get_pointer(ctx, argv[0], "gauge_pointer_t*");
 
   const char* str_temp = obj->anchor_y;
   str_temp = (str_temp != NULL) ? str_temp : "";
@@ -17310,21 +17310,21 @@ static void wrap_guage_pointer_t_get_prop_anchor_y(const Nan::FunctionCallbackIn
   (void)argc;(void)ctx;
 }
 
-ret_t guage_pointer_t_init(v8::Local<v8::Object> ctx) {
-  Nan::Export(ctx, "guage_pointer_create", wrap_guage_pointer_create);
-  Nan::Export(ctx, "guage_pointer_cast", wrap_guage_pointer_cast);
-  Nan::Export(ctx, "guage_pointer_set_angle", wrap_guage_pointer_set_angle);
-  Nan::Export(ctx, "guage_pointer_set_image", wrap_guage_pointer_set_image);
-  Nan::Export(ctx, "guage_pointer_set_anchor", wrap_guage_pointer_set_anchor);
-  Nan::Export(ctx, "guage_pointer_t_get_prop_angle", wrap_guage_pointer_t_get_prop_angle);
-  Nan::Export(ctx, "guage_pointer_t_get_prop_image", wrap_guage_pointer_t_get_prop_image);
-  Nan::Export(ctx, "guage_pointer_t_get_prop_anchor_x", wrap_guage_pointer_t_get_prop_anchor_x);
-  Nan::Export(ctx, "guage_pointer_t_get_prop_anchor_y", wrap_guage_pointer_t_get_prop_anchor_y);
+ret_t gauge_pointer_t_init(v8::Local<v8::Object> ctx) {
+  Nan::Export(ctx, "gauge_pointer_create", wrap_gauge_pointer_create);
+  Nan::Export(ctx, "gauge_pointer_cast", wrap_gauge_pointer_cast);
+  Nan::Export(ctx, "gauge_pointer_set_angle", wrap_gauge_pointer_set_angle);
+  Nan::Export(ctx, "gauge_pointer_set_image", wrap_gauge_pointer_set_image);
+  Nan::Export(ctx, "gauge_pointer_set_anchor", wrap_gauge_pointer_set_anchor);
+  Nan::Export(ctx, "gauge_pointer_t_get_prop_angle", wrap_gauge_pointer_t_get_prop_angle);
+  Nan::Export(ctx, "gauge_pointer_t_get_prop_image", wrap_gauge_pointer_t_get_prop_image);
+  Nan::Export(ctx, "gauge_pointer_t_get_prop_anchor_x", wrap_gauge_pointer_t_get_prop_anchor_x);
+  Nan::Export(ctx, "gauge_pointer_t_get_prop_anchor_y", wrap_gauge_pointer_t_get_prop_anchor_y);
 
  return RET_OK;
 }
 
-static void wrap_guage_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 5) {
@@ -17334,7 +17334,7 @@ static void wrap_guage_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
   xy_t y = (xy_t)jsvalue_get_int_value(ctx, argv[2]);
   wh_t w = (wh_t)jsvalue_get_int_value(ctx, argv[3]);
   wh_t h = (wh_t)jsvalue_get_int_value(ctx, argv[4]);
-  ret = (widget_t*)guage_create(parent, x, y, w, h);
+  ret = (widget_t*)gauge_create(parent, x, y, w, h);
 
   v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
   argv.GetReturnValue().Set(jret);
@@ -17342,13 +17342,13 @@ static void wrap_guage_create(const Nan::FunctionCallbackInfo<v8::Value>& argv) 
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 1) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
-  ret = (widget_t*)guage_cast(widget);
+  ret = (widget_t*)gauge_cast(widget);
 
   v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
   argv.GetReturnValue().Set(jret);
@@ -17356,14 +17356,14 @@ static void wrap_guage_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_set_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_set_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 2) {
   ret_t ret = (ret_t)0;
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
   char* name = (char*)jsvalue_get_utf8_string(ctx, argv[1]);
-  ret = (ret_t)guage_set_image(widget, name);
+  ret = (ret_t)gauge_set_image(widget, name);
   jsvalue_free_str(ctx, name);
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
@@ -17372,14 +17372,14 @@ static void wrap_guage_set_image(const Nan::FunctionCallbackInfo<v8::Value>& arg
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_set_draw_type(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_set_draw_type(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 2) {
   ret_t ret = (ret_t)0;
   widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
   image_draw_type_t draw_type = (image_draw_type_t)jsvalue_get_int_value(ctx, argv[1]);
-  ret = (ret_t)guage_set_draw_type(widget, draw_type);
+  ret = (ret_t)gauge_set_draw_type(widget, draw_type);
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
   argv.GetReturnValue().Set(jret);
@@ -17387,10 +17387,10 @@ static void wrap_guage_set_draw_type(const Nan::FunctionCallbackInfo<v8::Value>&
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_t_get_prop_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_t_get_prop_image(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  guage_t* obj = (guage_t*)jsvalue_get_pointer(ctx, argv[0], "guage_t*");
+  gauge_t* obj = (gauge_t*)jsvalue_get_pointer(ctx, argv[0], "gauge_t*");
 
   const char* str_temp = obj->image;
   str_temp = (str_temp != NULL) ? str_temp : "";
@@ -17399,23 +17399,23 @@ static void wrap_guage_t_get_prop_image(const Nan::FunctionCallbackInfo<v8::Valu
   (void)argc;(void)ctx;
 }
 
-static void wrap_guage_t_get_prop_draw_type(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_gauge_t_get_prop_draw_type(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  guage_t* obj = (guage_t*)jsvalue_get_pointer(ctx, argv[0], "guage_t*");
+  gauge_t* obj = (gauge_t*)jsvalue_get_pointer(ctx, argv[0], "gauge_t*");
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(obj->draw_type));
   argv.GetReturnValue().Set(jret);
   (void)argc;(void)ctx;
 }
 
-ret_t guage_t_init(v8::Local<v8::Object> ctx) {
-  Nan::Export(ctx, "guage_create", wrap_guage_create);
-  Nan::Export(ctx, "guage_cast", wrap_guage_cast);
-  Nan::Export(ctx, "guage_set_image", wrap_guage_set_image);
-  Nan::Export(ctx, "guage_set_draw_type", wrap_guage_set_draw_type);
-  Nan::Export(ctx, "guage_t_get_prop_image", wrap_guage_t_get_prop_image);
-  Nan::Export(ctx, "guage_t_get_prop_draw_type", wrap_guage_t_get_prop_draw_type);
+ret_t gauge_t_init(v8::Local<v8::Object> ctx) {
+  Nan::Export(ctx, "gauge_create", wrap_gauge_create);
+  Nan::Export(ctx, "gauge_cast", wrap_gauge_cast);
+  Nan::Export(ctx, "gauge_set_image", wrap_gauge_set_image);
+  Nan::Export(ctx, "gauge_set_draw_type", wrap_gauge_set_draw_type);
+  Nan::Export(ctx, "gauge_t_get_prop_image", wrap_gauge_t_get_prop_image);
+  Nan::Export(ctx, "gauge_t_get_prop_draw_type", wrap_gauge_t_get_prop_draw_type);
 
  return RET_OK;
 }
@@ -17633,6 +17633,36 @@ static void wrap_image_animation_set_unload_after_paint(const Nan::FunctionCallb
   (void)argc;(void)ctx;
 }
 
+static void wrap_image_animation_set_reverse(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  bool_t reverse = (bool_t)jsvalue_get_boolean_value(ctx, argv[1]);
+  ret = (ret_t)image_animation_set_reverse(widget, reverse);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
+static void wrap_image_animation_set_show_when_done(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  bool_t show_when_done = (bool_t)jsvalue_get_boolean_value(ctx, argv[1]);
+  ret = (ret_t)image_animation_set_show_when_done(widget, show_when_done);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_image_animation_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -17705,6 +17735,16 @@ static void wrap_image_animation_t_get_prop_end_index(const Nan::FunctionCallbac
   (void)argc;(void)ctx;
 }
 
+static void wrap_image_animation_t_get_prop_reverse(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  image_animation_t* obj = (image_animation_t*)jsvalue_get_pointer(ctx, argv[0], "image_animation_t*");
+
+  v8::Local<v8::Boolean> jret= Nan::New((bool)(obj->reverse));
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 static void wrap_image_animation_t_get_prop_loop(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -17767,6 +17807,16 @@ static void wrap_image_animation_t_get_prop_delay(const Nan::FunctionCallbackInf
   (void)argc;(void)ctx;
 }
 
+static void wrap_image_animation_t_get_prop_show_when_done(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  image_animation_t* obj = (image_animation_t*)jsvalue_get_pointer(ctx, argv[0], "image_animation_t*");
+
+  v8::Local<v8::Boolean> jret= Nan::New((bool)(obj->show_when_done));
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 ret_t image_animation_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "image_animation_create", wrap_image_animation_create);
   Nan::Export(ctx, "image_animation_set_loop", wrap_image_animation_set_loop);
@@ -17782,18 +17832,22 @@ ret_t image_animation_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "image_animation_next", wrap_image_animation_next);
   Nan::Export(ctx, "image_animation_set_format", wrap_image_animation_set_format);
   Nan::Export(ctx, "image_animation_set_unload_after_paint", wrap_image_animation_set_unload_after_paint);
+  Nan::Export(ctx, "image_animation_set_reverse", wrap_image_animation_set_reverse);
+  Nan::Export(ctx, "image_animation_set_show_when_done", wrap_image_animation_set_show_when_done);
   Nan::Export(ctx, "image_animation_cast", wrap_image_animation_cast);
   Nan::Export(ctx, "image_animation_is_playing", wrap_image_animation_is_playing);
   Nan::Export(ctx, "image_animation_t_get_prop_image", wrap_image_animation_t_get_prop_image);
   Nan::Export(ctx, "image_animation_t_get_prop_sequence", wrap_image_animation_t_get_prop_sequence);
   Nan::Export(ctx, "image_animation_t_get_prop_start_index", wrap_image_animation_t_get_prop_start_index);
   Nan::Export(ctx, "image_animation_t_get_prop_end_index", wrap_image_animation_t_get_prop_end_index);
+  Nan::Export(ctx, "image_animation_t_get_prop_reverse", wrap_image_animation_t_get_prop_reverse);
   Nan::Export(ctx, "image_animation_t_get_prop_loop", wrap_image_animation_t_get_prop_loop);
   Nan::Export(ctx, "image_animation_t_get_prop_auto_play", wrap_image_animation_t_get_prop_auto_play);
   Nan::Export(ctx, "image_animation_t_get_prop_unload_after_paint", wrap_image_animation_t_get_prop_unload_after_paint);
   Nan::Export(ctx, "image_animation_t_get_prop_format", wrap_image_animation_t_get_prop_format);
   Nan::Export(ctx, "image_animation_t_get_prop_interval", wrap_image_animation_t_get_prop_interval);
   Nan::Export(ctx, "image_animation_t_get_prop_delay", wrap_image_animation_t_get_prop_delay);
+  Nan::Export(ctx, "image_animation_t_get_prop_show_when_done", wrap_image_animation_t_get_prop_show_when_done);
 
  return RET_OK;
 }
@@ -26232,8 +26286,8 @@ ret_t awtk_js_init(v8::Local<v8::Object> ctx) {
   draggable_t_init(ctx);
   file_browser_view_t_init(ctx);
   file_chooser_t_init(ctx);
-  guage_pointer_t_init(ctx);
-  guage_t_init(ctx);
+  gauge_pointer_t_init(ctx);
+  gauge_t_init(ctx);
   image_animation_t_init(ctx);
   image_value_t_init(ctx);
   candidates_t_init(ctx);
