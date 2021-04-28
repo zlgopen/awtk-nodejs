@@ -155,6 +155,8 @@ static void wrap_widget_on(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
 
   if (argc >= 4) {
     widget_t *widget = WIDGET(jsvalue_get_pointer(NULL, argv[0], NULL));
+    return_if_fail(widget != NULL);
+
     uint32_t type = jsvalue_get_int_value(NULL, argv[1]);
     auto cb = v8::Local<v8::Function>::Cast(argv[2]);
     void *ctx = jsvalue_get_pointer(NULL, argv[3], NULL);
@@ -231,9 +233,15 @@ wrap_awtk_main_loop_step(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
   if (loop != NULL) {
     main_loop_step(loop);
 
-    ret = !(loop->app_quited);
-    if (loop->app_quited) {
+    if (loop->quit_num) {
+      --loop->quit_num;
+      --loop->running;
+    }
+
+    if (loop->app_quited || loop->running == 0) {
       tk_exit();
+    } else {
+      ret = TRUE;
     }
   }
 
