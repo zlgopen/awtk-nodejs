@@ -3,7 +3,6 @@ for(key in awtk)  global[key] = awtk[key];
 
 function application_init() {
   var win = TWindow.open("basic");
-  console.log(win)
 
   win.lookup("inc_value", true).on(TEventType.CLICK, function(evt) { 
     win.child("bar1").addValue(10);
