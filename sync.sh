@@ -1,5 +1,6 @@
 cp -fv ../awtk-binding/tools/code_gen/js/output/tk_nodejs.cc src/c/
-cp -fv ../awtk-binding/tools/code_gen/js/output/awtk.js src/js
+cp -fv ../awtk-binding/tools/code_gen/js/output/awtk.js* src/js
+cp -vf ../awtk-binding/tools/code_gen/js/output/awtk.d.ts src/js
 
 for f in ../awtk-binding/demos/js/*.js
 do

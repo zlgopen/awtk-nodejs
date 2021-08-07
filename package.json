@@ -2,7 +2,7 @@
   "name": "awtk-nodejs",
   "version": "1.0.0",
   "description": "awtk on nodejs",
-  "main": "awtk.js",
+  "main": "src/js/awtk.js",
   "scripts": {
     "rebuild": "node-gyp clean;node-gyp configure;node-gyp --verbose build",
     "config": "node-gyp configure",
