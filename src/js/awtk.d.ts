@@ -1,3 +1,4 @@
+export declare function init(w: number, h: number, name: string): any;
 /**
  * 事件分发器, 用于实现观察者模式。
  *
@@ -7013,8 +7014,6 @@ export declare class TAppConf {
  *
  */
 export declare class TExtWidgets {
-    nativeObj: any;
-    constructor(nativeObj: any);
     /**
      * 初始化AWTK扩展控件。
      *
@@ -9492,6 +9491,18 @@ export declare class TColorComponent extends TWidget {
     nativeObj: any;
     constructor(nativeObj: any);
     /**
+     * 创建color_component对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    static create(parent: TWidget, x: number, y: number, w: number, h: number): TColorComponent;
+    /**
      * 转换为color_component对象(供脚本语言使用)。
      *
      * @param widget color_component对象。
@@ -10617,6 +10628,18 @@ export declare class TImageValue extends TWidget {
 export declare class TCandidates extends TWidget {
     nativeObj: any;
     constructor(nativeObj: any);
+    /**
+     * 创建candidates对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    static create(parent: TWidget, x: number, y: number, w: number, h: number): TCandidates;
     /**
      * 转换为candidates对象(供脚本语言使用)。
      *
@@ -13030,6 +13053,14 @@ export declare class TTextSelector extends TWidget {
      */
     setAnimatingTime(animating_time: number): TRet;
     /**
+     * 设置是否修改值时启用动画。
+     *
+     * @param enable_value_animator 是否修改值时启用动画
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    setEnableValueAnimator(enable_value_animator: boolean): TRet;
+    /**
      * 可见的选项数量(只能是1或者3或者5，缺省为5)。
      *
      */
@@ -13073,6 +13104,12 @@ export declare class TTextSelector extends TWidget {
      */
     get loopOptions(): boolean;
     set loopOptions(v: boolean);
+    /**
+     * 是否修改值时启用动画。
+     *
+     */
+    get enableValueAnimator(): boolean;
+    set enableValueAnimator(v: boolean);
 }
 /**
  * 模拟时钟控件。
@@ -16463,6 +16500,18 @@ export declare class TKeyboard extends TWindowBase {
 export declare class TMutableImage extends TImageBase {
     nativeObj: any;
     constructor(nativeObj: any);
+    /**
+     * 创建mutable_image对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    static create(parent: TWidget, x: number, y: number, w: number, h: number): TMutableImage;
 }
 /**
  * SVG图片控件。
@@ -16755,6 +16804,18 @@ export declare class TTimerInfo extends TObject {
 export declare class TCalibrationWin extends TWindowBase {
     nativeObj: any;
     constructor(nativeObj: any);
+    /**
+     * 创建calibration_win对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    static create(parent: TWidget, x: number, y: number, w: number, h: number): TCalibrationWin;
     /**
      * 转换为calibration_win对象(供脚本语言使用)。
      *

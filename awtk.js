@@ -8312,8 +8312,7 @@ exports.TAppConf = TAppConf;
  *
  */
 var TExtWidgets = /** @class */ (function () {
-    function TExtWidgets(nativeObj) {
-        this.nativeObj = nativeObj;
+    function TExtWidgets() {
     }
     /**
      * 初始化AWTK扩展控件。
@@ -11582,6 +11581,20 @@ var TColorComponent = /** @class */ (function (_super) {
         return _super.call(this, nativeObj) || this;
     }
     /**
+     * 创建color_component对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TColorComponent.create = function (parent, x, y, w, h) {
+        return new TColorComponent(color_component_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
+    /**
      * 转换为color_component对象(供脚本语言使用)。
      *
      * @param widget color_component对象。
@@ -13198,6 +13211,20 @@ var TCandidates = /** @class */ (function (_super) {
     function TCandidates(nativeObj) {
         return _super.call(this, nativeObj) || this;
     }
+    /**
+     * 创建candidates对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TCandidates.create = function (parent, x, y, w, h) {
+        return new TCandidates(candidates_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
     /**
      * 转换为candidates对象(供脚本语言使用)。
      *
@@ -16575,6 +16602,16 @@ var TTextSelector = /** @class */ (function (_super) {
     TTextSelector.prototype.setAnimatingTime = function (animating_time) {
         return text_selector_set_animating_time(this != null ? (this.nativeObj || this) : null, animating_time);
     };
+    /**
+     * 设置是否修改值时启用动画。
+     *
+     * @param enable_value_animator 是否修改值时启用动画
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TTextSelector.prototype.setEnableValueAnimator = function (enable_value_animator) {
+        return text_selector_set_enable_value_animator(this != null ? (this.nativeObj || this) : null, enable_value_animator);
+    };
     Object.defineProperty(TTextSelector.prototype, "visibleNr", {
         /**
          * 可见的选项数量(只能是1或者3或者5，缺省为5)。
@@ -16671,6 +16708,20 @@ var TTextSelector = /** @class */ (function (_super) {
         },
         set: function (v) {
             this.setLoopOptions(v);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(TTextSelector.prototype, "enableValueAnimator", {
+        /**
+         * 是否修改值时启用动画。
+         *
+         */
+        get: function () {
+            return text_selector_t_get_prop_enable_value_animator(this.nativeObj);
+        },
+        set: function (v) {
+            this.setEnableValueAnimator(v);
         },
         enumerable: false,
         configurable: true
@@ -21213,6 +21264,20 @@ var TMutableImage = /** @class */ (function (_super) {
     function TMutableImage(nativeObj) {
         return _super.call(this, nativeObj) || this;
     }
+    /**
+     * 创建mutable_image对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TMutableImage.create = function (parent, x, y, w, h) {
+        return new TMutableImage(mutable_image_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
     return TMutableImage;
 }(TImageBase));
 exports.TMutableImage = TMutableImage;
@@ -21623,6 +21688,20 @@ var TCalibrationWin = /** @class */ (function (_super) {
     function TCalibrationWin(nativeObj) {
         return _super.call(this, nativeObj) || this;
     }
+    /**
+     * 创建calibration_win对象
+     *
+     * @param parent 父控件
+     * @param x x坐标
+     * @param y y坐标
+     * @param w 宽度
+     * @param h 高度
+     *
+     * @returns 对象。
+     */
+    TCalibrationWin.create = function (parent, x, y, w, h) {
+        return new TCalibrationWin(calibration_win_create(parent != null ? (parent.nativeObj || parent) : null, x, y, w, h));
+    };
     /**
      * 转换为calibration_win对象(供脚本语言使用)。
      *
