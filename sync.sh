@@ -10,3 +10,4 @@ do
 done
 
 cat src/js/begin.js src/js/awtk.js src/js/end.js >awtk.js
+cp -vf ../awtk-binding/tools/code_gen/js/output/awtk.d.ts .
