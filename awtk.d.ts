@@ -1,3 +1,4 @@
+export declare function print(str: any): any;
 export declare function init(w: number, h: number, name: string): any;
 /**
  * 事件分发器, 用于实现观察者模式。
@@ -5816,6 +5817,13 @@ export declare class TWidget {
      * @returns 返回RET_OK表示成功，否则表示失败。
      */
     closeWindow(): TRet;
+    /**
+     * 关闭控件所在的窗口。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    closeWindowForce(): TRet;
     /**
      * 请求返回到前一个窗口。
      *

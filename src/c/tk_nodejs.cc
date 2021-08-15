@@ -10290,6 +10290,20 @@ static void wrap_widget_close_window(const Nan::FunctionCallbackInfo<v8::Value>&
   (void)argc;(void)ctx;
 }
 
+static void wrap_widget_close_window_force(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  ret = (ret_t)widget_close_window_force(widget);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_widget_back(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -12169,6 +12183,7 @@ ret_t widget_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "widget_get_native_window", wrap_widget_get_native_window);
   Nan::Export(ctx, "widget_index_of", wrap_widget_index_of);
   Nan::Export(ctx, "widget_close_window", wrap_widget_close_window);
+  Nan::Export(ctx, "widget_close_window_force", wrap_widget_close_window_force);
   Nan::Export(ctx, "widget_back", wrap_widget_back);
   Nan::Export(ctx, "widget_back_to_home", wrap_widget_back_to_home);
   Nan::Export(ctx, "widget_move", wrap_widget_move);

@@ -6716,6 +6716,15 @@ var TWidget = /** @class */ (function () {
         return widget_close_window(this != null ? (this.nativeObj || this) : null);
     };
     /**
+     * 关闭控件所在的窗口。
+     *
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    TWidget.prototype.closeWindowForce = function () {
+        return widget_close_window_force(this != null ? (this.nativeObj || this) : null);
+    };
+    /**
      * 请求返回到前一个窗口。
      *
      *
