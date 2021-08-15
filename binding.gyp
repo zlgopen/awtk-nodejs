@@ -11,11 +11,11 @@
             ],
             "include_dirs": [
                 "./",
-                "../awtk",
-                "../awtk/src",
-                "../awtk/3rd",
-                "../awtk/src/ext_widgets",
-                './node_modules/nan',
+                "<(module_root_dir)/../awtk",
+                "<(module_root_dir)/../awtk/src",
+                "<(module_root_dir)/../awtk/3rd",
+                "<(module_root_dir)/../awtk/src/ext_widgets",
+                '<(module_root_dir)/node_modules/nan',
                 '<!(node -e \'require("nan")\')'
             ],
             "link_settings": {
