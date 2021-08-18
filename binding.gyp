@@ -28,16 +28,21 @@
             },
             "conditions": [[
                 'OS=="mac"', {
-                    "copies": [
-                        {
-                            'destination': './build/Release',
-                            'files': [
-                                '../awtk/bin/libawtk.dynlib'
-                            ]
-                        }
-                    ],
                     "libraries": [
-                        "-lawtk",
+                        "-lawtk_global",
+                        "-lextwidgets",
+                        "-lwidgets",
+                        "-lbase",
+                        "-lconf_io",
+                        "-lubjson",
+                        "-lstreams",
+                        "-lnanovg",
+                        "-lglad",
+                        "-lgpinyin",
+                        "-ltkc_static",
+                        "-lfribidi",
+                        "-llinebreak",
+                        "-lSDL2",
                         "-lstdc++",
                         "-lpthread",
                         "-lm",
@@ -59,7 +64,6 @@
                     ],
                     "libraries": [
                         "-lawtk",
-                        "-lSDL2",
                         "-lgdi32",
                         "-luser32",
                         "-lwinmm",
@@ -78,16 +82,21 @@
             ],
                 [
                 'OS=="linux"', {
-                    "copies": [
-                        {
-                            'destination': './build/Release',
-                            'files': [
-                                '../awtk/bin/libawtk.so'
-                            ]
-                        }
-                    ],
                     "libraries": [
-                        "-lawtk",
+                        "-lawtk_global",
+                        "-lextwidgets",
+                        "-lwidgets",
+                        "-lbase",
+                        "-lconf_io",
+                        "-lubjson",
+                        "-lstreams",
+                        "-lnanovg",
+                        "-lglad",
+                        "-lgpinyin",
+                        "-ltkc_static",
+                        "-lfribidi",
+                        "-llinebreak",
+                        "-lSDL2",
                         "-lGL",
                         "-lgtk-3",
                         "-lgdk-3",
