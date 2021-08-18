@@ -22,26 +22,22 @@
                 "libraries": [
                 ],
                 "library_dirs": [
+                    "<(module_root_dir)/../awtk/bin",
                     "<(module_root_dir)/../awtk/lib"
                 ]
             },
             "conditions": [[
                 'OS=="mac"', {
+                    "copies": [
+                        {
+                            'destination': './build/Release',
+                            'files': [
+                                '../awtk/bin/libawtk.dynlib'
+                            ]
+                        }
+                    ],
                     "libraries": [
-                        "-lawtk_global",
-                        "-lextwidgets",
-                        "-lwidgets",
-                        "-lbase",
-                        "-lconf_io",
-                        "-lubjson",
-                        "-lstreams",
-                        "-lnanovg",
-                        "-lglad",
-                        "-lgpinyin",
-                        "-ltkc_static",
-                        "-lfribidi",
-                        "-llinebreak",
-                        "-lSDL2",
+                        "-lawtk",
                         "-lstdc++",
                         "-lpthread",
                         "-lm",
@@ -53,20 +49,16 @@
             ],
                 [
                 'OS=="win"', {
+                    "copies": [
+                        {
+                            'destination': './build/Release',
+                            'files': [
+                                '../awtk/bin/awtk.dll'
+                            ]
+                        }
+                    ],
                     "libraries": [
-                        "-lawtk_global",
-                        "-lextwidgets",
-                        "-lwidgets",
-                        "-lbase",
-                        "-lconf_io",
-                        "-lubjson",
-                        "-lstreams",
-                        "-lnanovg",
-                        "-lglad",
-                        "-lgpinyin",
-                        "-ltkc_static",
-                        "-lfribidi",
-                        "-llinebreak",
+                        "-lawtk",
                         "-lSDL2",
                         "-lgdi32",
                         "-luser32",
@@ -86,21 +78,16 @@
             ],
                 [
                 'OS=="linux"', {
+                    "copies": [
+                        {
+                            'destination': './build/Release',
+                            'files': [
+                                '../awtk/bin/libawtk.so'
+                            ]
+                        }
+                    ],
                     "libraries": [
-                        "-lawtk_global",
-                        "-lextwidgets",
-                        "-lwidgets",
-                        "-lbase",
-                        "-lconf_io",
-                        "-lubjson",
-                        "-lstreams",
-                        "-lnanovg",
-                        "-lglad",
-                        "-lgpinyin",
-                        "-ltkc_static",
-                        "-lfribidi",
-                        "-llinebreak",
-                        "-lSDL2",
+                        "-lawtk",
                         "-lGL",
                         "-lgtk-3",
                         "-lgdk-3",
