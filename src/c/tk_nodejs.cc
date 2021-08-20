@@ -8208,6 +8208,14 @@ static void get_WIDGET_PROP_VALUE(const Nan::FunctionCallbackInfo<v8::Value>& ar
   (void)argc;(void)ctx;
 }
 
+static void get_WIDGET_PROP_RADIO(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::String> jret= Nan::New((const char*)WIDGET_PROP_RADIO).ToLocalChecked();
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 static void get_WIDGET_PROP_REVERSE(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -9178,6 +9186,7 @@ ret_t widget_prop_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "WIDGET_PROP_CLOSABLE", get_WIDGET_PROP_CLOSABLE);
   Nan::Export(ctx, "WIDGET_PROP_POINTER_CURSOR", get_WIDGET_PROP_POINTER_CURSOR);
   Nan::Export(ctx, "WIDGET_PROP_VALUE", get_WIDGET_PROP_VALUE);
+  Nan::Export(ctx, "WIDGET_PROP_RADIO", get_WIDGET_PROP_RADIO);
   Nan::Export(ctx, "WIDGET_PROP_REVERSE", get_WIDGET_PROP_REVERSE);
   Nan::Export(ctx, "WIDGET_PROP_LENGTH", get_WIDGET_PROP_LENGTH);
   Nan::Export(ctx, "WIDGET_PROP_LINE_WRAP", get_WIDGET_PROP_LINE_WRAP);
