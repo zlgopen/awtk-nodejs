@@ -15398,9 +15398,20 @@ static void wrap_orientation_event_t_get_prop_orientation(const Nan::FunctionCal
   (void)argc;(void)ctx;
 }
 
+static void wrap_orientation_event_t_get_prop_old_orientation(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  orientation_event_t* obj = (orientation_event_t*)jsvalue_get_pointer(ctx, argv[0], "orientation_event_t*");
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(obj->old_orientation));
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 ret_t orientation_event_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "orientation_event_cast", wrap_orientation_event_cast);
   Nan::Export(ctx, "orientation_event_t_get_prop_orientation", wrap_orientation_event_t_get_prop_orientation);
+  Nan::Export(ctx, "orientation_event_t_get_prop_old_orientation", wrap_orientation_event_t_get_prop_old_orientation);
 
  return RET_OK;
 }
@@ -25608,6 +25619,22 @@ static void wrap_native_window_resize(const Nan::FunctionCallbackInfo<v8::Value>
   (void)argc;(void)ctx;
 }
 
+static void wrap_native_window_set_orientation(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 3) {
+  ret_t ret = (ret_t)0;
+  native_window_t* win = (native_window_t*)jsvalue_get_pointer(ctx, argv[0], "native_window_t*");
+  lcd_orientation_t old_orientation = (lcd_orientation_t)jsvalue_get_int_value(ctx, argv[1]);
+  lcd_orientation_t new_orientation = (lcd_orientation_t)jsvalue_get_int_value(ctx, argv[2]);
+  ret = (ret_t)native_window_set_orientation(win, old_orientation, new_orientation);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_native_window_minimize(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -25714,6 +25741,7 @@ static void wrap_native_window_set_cursor(const Nan::FunctionCallbackInfo<v8::Va
 ret_t native_window_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "native_window_move", wrap_native_window_move);
   Nan::Export(ctx, "native_window_resize", wrap_native_window_resize);
+  Nan::Export(ctx, "native_window_set_orientation", wrap_native_window_set_orientation);
   Nan::Export(ctx, "native_window_minimize", wrap_native_window_minimize);
   Nan::Export(ctx, "native_window_maximize", wrap_native_window_maximize);
   Nan::Export(ctx, "native_window_restore", wrap_native_window_restore);
@@ -26311,20 +26339,9 @@ static void wrap_object_default_clear_props(const Nan::FunctionCallbackInfo<v8::
   (void)argc;(void)ctx;
 }
 
-static void wrap_object_default_t_get_prop_props_size(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  object_default_t* obj = (object_default_t*)jsvalue_get_pointer(ctx, argv[0], "object_default_t*");
-
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)(obj->props_size));
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
 ret_t object_default_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "object_default_create", wrap_object_default_create);
   Nan::Export(ctx, "object_default_clear_props", wrap_object_default_clear_props);
-  Nan::Export(ctx, "object_default_t_get_prop_props_size", wrap_object_default_t_get_prop_props_size);
 
  return RET_OK;
 }
