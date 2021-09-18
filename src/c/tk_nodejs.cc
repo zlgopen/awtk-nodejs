@@ -15195,6 +15195,14 @@ static void get_VALUE_TYPE_TOKEN(const Nan::FunctionCallbackInfo<v8::Value>& arg
   (void)argc;(void)ctx;
 }
 
+static void get_VALUE_TYPE_GRADIENT(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)VALUE_TYPE_GRADIENT);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 ret_t value_type_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "VALUE_TYPE_INVALID", get_VALUE_TYPE_INVALID);
   Nan::Export(ctx, "VALUE_TYPE_BOOL", get_VALUE_TYPE_BOOL);
@@ -15217,6 +15225,7 @@ ret_t value_type_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "VALUE_TYPE_BINARY", get_VALUE_TYPE_BINARY);
   Nan::Export(ctx, "VALUE_TYPE_UBJSON", get_VALUE_TYPE_UBJSON);
   Nan::Export(ctx, "VALUE_TYPE_TOKEN", get_VALUE_TYPE_TOKEN);
+  Nan::Export(ctx, "VALUE_TYPE_GRADIENT", get_VALUE_TYPE_GRADIENT);
 
  return RET_OK;
 }
@@ -18850,6 +18859,21 @@ static void wrap_mledit_set_wrap_word(const Nan::FunctionCallbackInfo<v8::Value>
   (void)argc;(void)ctx;
 }
 
+static void wrap_mledit_set_overwrite(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  bool_t overwrite = (bool_t)jsvalue_get_boolean_value(ctx, argv[1]);
+  ret = (ret_t)mledit_set_overwrite(widget, overwrite);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_mledit_set_max_lines(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -19049,6 +19073,23 @@ static void wrap_mledit_get_selected_text(const Nan::FunctionCallbackInfo<v8::Va
   (void)argc;(void)ctx;
 }
 
+static void wrap_mledit_insert_text(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 3) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  uint32_t offset = (uint32_t)jsvalue_get_int_value(ctx, argv[1]);
+  const char* text = (const char*)jsvalue_get_utf8_string(ctx, argv[2]);
+  ret = (ret_t)mledit_insert_text(widget, offset, text);
+  jsvalue_free_str(ctx, text);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_mledit_cast(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -19119,22 +19160,32 @@ static void wrap_mledit_t_get_prop_max_chars(const Nan::FunctionCallbackInfo<v8:
   (void)argc;(void)ctx;
 }
 
-static void wrap_mledit_t_get_prop_wrap_word(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  mledit_t* obj = (mledit_t*)jsvalue_get_pointer(ctx, argv[0], "mledit_t*");
-
-  v8::Local<v8::Boolean> jret= Nan::New((bool)(obj->wrap_word));
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
 static void wrap_mledit_t_get_prop_scroll_line(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   mledit_t* obj = (mledit_t*)jsvalue_get_pointer(ctx, argv[0], "mledit_t*");
 
   v8::Local<v8::Int32> jret= Nan::New((int32_t)(obj->scroll_line));
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void wrap_mledit_t_get_prop_overwrite(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  mledit_t* obj = (mledit_t*)jsvalue_get_pointer(ctx, argv[0], "mledit_t*");
+
+  v8::Local<v8::Boolean> jret= Nan::New((bool)(obj->overwrite));
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void wrap_mledit_t_get_prop_wrap_word(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  mledit_t* obj = (mledit_t*)jsvalue_get_pointer(ctx, argv[0], "mledit_t*");
+
+  v8::Local<v8::Boolean> jret= Nan::New((bool)(obj->wrap_word));
   argv.GetReturnValue().Set(jret);
   (void)argc;(void)ctx;
 }
@@ -19185,6 +19236,7 @@ ret_t mledit_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "mledit_set_cancelable", wrap_mledit_set_cancelable);
   Nan::Export(ctx, "mledit_set_focus", wrap_mledit_set_focus);
   Nan::Export(ctx, "mledit_set_wrap_word", wrap_mledit_set_wrap_word);
+  Nan::Export(ctx, "mledit_set_overwrite", wrap_mledit_set_overwrite);
   Nan::Export(ctx, "mledit_set_max_lines", wrap_mledit_set_max_lines);
   Nan::Export(ctx, "mledit_set_max_chars", wrap_mledit_set_max_chars);
   Nan::Export(ctx, "mledit_set_tips", wrap_mledit_set_tips);
@@ -19198,14 +19250,16 @@ ret_t mledit_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "mledit_set_close_im_when_blured", wrap_mledit_set_close_im_when_blured);
   Nan::Export(ctx, "mledit_set_select", wrap_mledit_set_select);
   Nan::Export(ctx, "mledit_get_selected_text", wrap_mledit_get_selected_text);
+  Nan::Export(ctx, "mledit_insert_text", wrap_mledit_insert_text);
   Nan::Export(ctx, "mledit_cast", wrap_mledit_cast);
   Nan::Export(ctx, "mledit_t_get_prop_tips", wrap_mledit_t_get_prop_tips);
   Nan::Export(ctx, "mledit_t_get_prop_tr_tips", wrap_mledit_t_get_prop_tr_tips);
   Nan::Export(ctx, "mledit_t_get_prop_keyboard", wrap_mledit_t_get_prop_keyboard);
   Nan::Export(ctx, "mledit_t_get_prop_max_lines", wrap_mledit_t_get_prop_max_lines);
   Nan::Export(ctx, "mledit_t_get_prop_max_chars", wrap_mledit_t_get_prop_max_chars);
-  Nan::Export(ctx, "mledit_t_get_prop_wrap_word", wrap_mledit_t_get_prop_wrap_word);
   Nan::Export(ctx, "mledit_t_get_prop_scroll_line", wrap_mledit_t_get_prop_scroll_line);
+  Nan::Export(ctx, "mledit_t_get_prop_overwrite", wrap_mledit_t_get_prop_overwrite);
+  Nan::Export(ctx, "mledit_t_get_prop_wrap_word", wrap_mledit_t_get_prop_wrap_word);
   Nan::Export(ctx, "mledit_t_get_prop_readonly", wrap_mledit_t_get_prop_readonly);
   Nan::Export(ctx, "mledit_t_get_prop_cancelable", wrap_mledit_t_get_prop_cancelable);
   Nan::Export(ctx, "mledit_t_get_prop_open_im_when_focused", wrap_mledit_t_get_prop_open_im_when_focused);
@@ -26325,6 +26379,20 @@ static void wrap_object_default_create(const Nan::FunctionCallbackInfo<v8::Value
   (void)argc;(void)ctx;
 }
 
+static void wrap_object_default_create_ex(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 1) {
+  object_t* ret = NULL;
+  bool_t enable_path = (bool_t)jsvalue_get_boolean_value(ctx, argv[0]);
+  ret = (object_t*)object_default_create_ex(enable_path);
+
+  v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(ret)));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_object_default_clear_props(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -26341,6 +26409,7 @@ static void wrap_object_default_clear_props(const Nan::FunctionCallbackInfo<v8::
 
 ret_t object_default_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "object_default_create", wrap_object_default_create);
+  Nan::Export(ctx, "object_default_create_ex", wrap_object_default_create_ex);
   Nan::Export(ctx, "object_default_clear_props", wrap_object_default_clear_props);
 
  return RET_OK;
