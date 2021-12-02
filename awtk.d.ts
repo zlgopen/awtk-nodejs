@@ -1341,6 +1341,14 @@ export declare class TCanvas {
      */
     getHeight(): number;
     /**
+     * 获取裁剪区。
+     *
+     * @param r rect对象。
+     *
+     * @returns 返回RET_OK表示成功，否则表示失败。
+     */
+    getClipRect(r: TRect): TRet;
+    /**
      * 设置裁剪区。
      *
      * @param r rect对象。
@@ -3468,7 +3476,7 @@ export declare enum TStyleId {
      * 左上角圆角半径(仅在WITH_VGCANVAS定义时生效)。
      *
      */
-    ROUND_RADIUS_TOP_LETF,
+    ROUND_RADIUS_TOP_LEFT,
     /**
      * 右上角圆角半径(仅在WITH_VGCANVAS定义时生效)。
      *
@@ -3478,7 +3486,7 @@ export declare enum TStyleId {
      * 左下角圆角半径(仅在WITH_VGCANVAS定义时生效)。
      *
      */
-    ROUND_RADIUS_BOTTOM_LETF,
+    ROUND_RADIUS_BOTTOM_LEFT,
     /**
      * 右下角圆角半径(仅在WITH_VGCANVAS定义时生效)。
      *
@@ -4119,7 +4127,7 @@ export declare class TVgcanvas {
      *
      * @returns 返回 TURE 则在区域中，返回 FALSE 则不在区域中。
      */
-    isRectfIntClipRect(left: number, top: number, right: number, bottom: number): boolean;
+    isRectfInClipRect(left: number, top: number, right: number, bottom: number): boolean;
     /**
      * 设置一个与前一个裁剪区做交集的矩形裁剪区。
      *如果下面这种情况，则不能直接调用 rect_intersect 函数来做矩形交集和 vgcanvas_clip_rect 函数设置裁剪区，而采用本函数做交集。
@@ -8625,7 +8633,7 @@ export declare enum TValueType {
      */
     WSTRING,
     /**
-     * object_t*类型。
+     * tk_object_t*类型。
      *
      */
     OBJECT,
@@ -15315,7 +15323,7 @@ export declare class TPages extends TWidget {
      */
     setActiveByName(name: string): TRet;
     /**
-     * 当前活跃的page。
+     * 当前活跃的page。(需要用到 MVVM 数据绑定请设置 value 属性)
      *
      */
     get active(): number;

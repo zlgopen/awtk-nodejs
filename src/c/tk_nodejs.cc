@@ -2527,6 +2527,21 @@ static void wrap_canvas_get_height(const Nan::FunctionCallbackInfo<v8::Value>& a
   (void)argc;(void)ctx;
 }
 
+static void wrap_canvas_get_clip_rect(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  canvas_t* c = (canvas_t*)jsvalue_get_pointer(ctx, argv[0], "canvas_t*");
+  rect_t* r = (rect_t*)jsvalue_get_pointer(ctx, argv[1], "rect_t*");
+  ret = (ret_t)canvas_get_clip_rect(c, r);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_canvas_set_clip_rect(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -2975,6 +2990,7 @@ static void wrap_canvas_t_get_prop_global_alpha(const Nan::FunctionCallbackInfo<
 ret_t canvas_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "canvas_get_width", wrap_canvas_get_width);
   Nan::Export(ctx, "canvas_get_height", wrap_canvas_get_height);
+  Nan::Export(ctx, "canvas_get_clip_rect", wrap_canvas_get_clip_rect);
   Nan::Export(ctx, "canvas_set_clip_rect", wrap_canvas_set_clip_rect);
   Nan::Export(ctx, "canvas_set_clip_rect_ex", wrap_canvas_set_clip_rect_ex);
   Nan::Export(ctx, "canvas_set_fill_color_str", wrap_canvas_set_fill_color_str);
@@ -6188,10 +6204,10 @@ static void get_STYLE_ID_ROUND_RADIUS(const Nan::FunctionCallbackInfo<v8::Value>
   (void)argc;(void)ctx;
 }
 
-static void get_STYLE_ID_ROUND_RADIUS_TOP_LETF(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void get_STYLE_ID_ROUND_RADIUS_TOP_LEFT(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::String> jret= Nan::New((const char*)STYLE_ID_ROUND_RADIUS_TOP_LETF).ToLocalChecked();
+  v8::Local<v8::String> jret= Nan::New((const char*)STYLE_ID_ROUND_RADIUS_TOP_LEFT).ToLocalChecked();
   argv.GetReturnValue().Set(jret);
   (void)argc;(void)ctx;
 }
@@ -6204,10 +6220,10 @@ static void get_STYLE_ID_ROUND_RADIUS_TOP_RIGHT(const Nan::FunctionCallbackInfo<
   (void)argc;(void)ctx;
 }
 
-static void get_STYLE_ID_ROUND_RADIUS_BOTTOM_LETF(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void get_STYLE_ID_ROUND_RADIUS_BOTTOM_LEFT(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::String> jret= Nan::New((const char*)STYLE_ID_ROUND_RADIUS_BOTTOM_LETF).ToLocalChecked();
+  v8::Local<v8::String> jret= Nan::New((const char*)STYLE_ID_ROUND_RADIUS_BOTTOM_LEFT).ToLocalChecked();
   argv.GetReturnValue().Set(jret);
   (void)argc;(void)ctx;
 }
@@ -6288,9 +6304,9 @@ ret_t style_id_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "STYLE_ID_SELECTED_FG_COLOR", get_STYLE_ID_SELECTED_FG_COLOR);
   Nan::Export(ctx, "STYLE_ID_SELECTED_TEXT_COLOR", get_STYLE_ID_SELECTED_TEXT_COLOR);
   Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS", get_STYLE_ID_ROUND_RADIUS);
-  Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS_TOP_LETF", get_STYLE_ID_ROUND_RADIUS_TOP_LETF);
+  Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS_TOP_LEFT", get_STYLE_ID_ROUND_RADIUS_TOP_LEFT);
   Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS_TOP_RIGHT", get_STYLE_ID_ROUND_RADIUS_TOP_RIGHT);
-  Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS_BOTTOM_LETF", get_STYLE_ID_ROUND_RADIUS_BOTTOM_LETF);
+  Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS_BOTTOM_LEFT", get_STYLE_ID_ROUND_RADIUS_BOTTOM_LEFT);
   Nan::Export(ctx, "STYLE_ID_ROUND_RADIUS_BOTTOM_RIGHT", get_STYLE_ID_ROUND_RADIUS_BOTTOM_RIGHT);
   Nan::Export(ctx, "STYLE_ID_CHILDREN_LAYOUT", get_STYLE_ID_CHILDREN_LAYOUT);
   Nan::Export(ctx, "STYLE_ID_SELF_LAYOUT", get_STYLE_ID_SELF_LAYOUT);
@@ -7247,7 +7263,7 @@ static void wrap_vgcanvas_clip_rect(const Nan::FunctionCallbackInfo<v8::Value>& 
   (void)argc;(void)ctx;
 }
 
-static void wrap_vgcanvas_is_rectf_int_clip_rect(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+static void wrap_vgcanvas_is_rectf_in_clip_rect(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   if(argc >= 5) {
@@ -7257,7 +7273,7 @@ static void wrap_vgcanvas_is_rectf_int_clip_rect(const Nan::FunctionCallbackInfo
   float_t top = (float_t)jsvalue_get_number_value(ctx, argv[2]);
   float_t right = (float_t)jsvalue_get_number_value(ctx, argv[3]);
   float_t bottom = (float_t)jsvalue_get_number_value(ctx, argv[4]);
-  ret = (bool_t)vgcanvas_is_rectf_int_clip_rect(vg, left, top, right, bottom);
+  ret = (bool_t)vgcanvas_is_rectf_in_clip_rect(vg, left, top, right, bottom);
 
   v8::Local<v8::Boolean> jret= Nan::New((bool)(ret));
   argv.GetReturnValue().Set(jret);
@@ -7821,7 +7837,7 @@ ret_t vgcanvas_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "vgcanvas_set_transform", wrap_vgcanvas_set_transform);
   Nan::Export(ctx, "vgcanvas_clip_path", wrap_vgcanvas_clip_path);
   Nan::Export(ctx, "vgcanvas_clip_rect", wrap_vgcanvas_clip_rect);
-  Nan::Export(ctx, "vgcanvas_is_rectf_int_clip_rect", wrap_vgcanvas_is_rectf_int_clip_rect);
+  Nan::Export(ctx, "vgcanvas_is_rectf_in_clip_rect", wrap_vgcanvas_is_rectf_in_clip_rect);
   Nan::Export(ctx, "vgcanvas_intersect_clip_rect", wrap_vgcanvas_intersect_clip_rect);
   Nan::Export(ctx, "vgcanvas_fill", wrap_vgcanvas_fill);
   Nan::Export(ctx, "vgcanvas_stroke", wrap_vgcanvas_stroke);
