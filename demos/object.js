@@ -4,9 +4,9 @@ for(key in awtk)  global[key] = awtk[key];
 function application_init() {
   var obj = TObjectDefault.create();
   var v = TValue.create();
-  var e = TEvent.create(TEventBaseType.PROP_CHANGED, null);
+  var e = TEvent.create(TEventType.PROP_CHANGED, null);
 
-  obj.on(TEventBaseType.PROP_CHANGED, function(e) {
+  obj.on(TEventType.PROP_CHANGED, function(e) {
     var evt = TPropChangeEvent.cast(e);
     console.log(evt.type);
     console.log(evt.name);
