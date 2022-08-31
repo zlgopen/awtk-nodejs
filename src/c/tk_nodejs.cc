@@ -22086,36 +22086,6 @@ static void wrap_serial_widget_t_get_prop_flowcontrol(const Nan::FunctionCallbac
   (void)argc;(void)ctx;
 }
 
-static void wrap_serial_widget_t_get_prop_istream(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  serial_widget_t* obj = (serial_widget_t*)jsvalue_get_pointer(ctx, argv[0], "serial_widget_t*");
-
-  v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(obj->istream)));
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void wrap_serial_widget_t_get_prop_ostream(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  serial_widget_t* obj = (serial_widget_t*)jsvalue_get_pointer(ctx, argv[0], "serial_widget_t*");
-
-  v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(obj->ostream)));
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void wrap_serial_widget_t_get_prop_iostream(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  serial_widget_t* obj = (serial_widget_t*)jsvalue_get_pointer(ctx, argv[0], "serial_widget_t*");
-
-  v8::Local<v8::Number> jret= Nan::New((double)((int64_t)(obj->iostream)));
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
 static void wrap_serial_widget_t_get_prop_check_interval(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -22142,9 +22112,6 @@ ret_t serial_widget_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "serial_widget_t_get_prop_parity", wrap_serial_widget_t_get_prop_parity);
   Nan::Export(ctx, "serial_widget_t_get_prop_stopbits", wrap_serial_widget_t_get_prop_stopbits);
   Nan::Export(ctx, "serial_widget_t_get_prop_flowcontrol", wrap_serial_widget_t_get_prop_flowcontrol);
-  Nan::Export(ctx, "serial_widget_t_get_prop_istream", wrap_serial_widget_t_get_prop_istream);
-  Nan::Export(ctx, "serial_widget_t_get_prop_ostream", wrap_serial_widget_t_get_prop_ostream);
-  Nan::Export(ctx, "serial_widget_t_get_prop_iostream", wrap_serial_widget_t_get_prop_iostream);
   Nan::Export(ctx, "serial_widget_t_get_prop_check_interval", wrap_serial_widget_t_get_prop_check_interval);
 
  return RET_OK;
