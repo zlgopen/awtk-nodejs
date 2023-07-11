@@ -23,6 +23,6 @@
     "nan": "^2.14.0"
   },
   "devDependencies": {
-    "node-gyp": "^8.1.0"
+    "node-gyp": "^8.4.1"
   }
 }
