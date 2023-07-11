@@ -1,4 +1,5 @@
 ﻿/*XXX: GENERATED CODE, DONT EDIT IT.*/
+#include "v8.h"
 #include "nan.h"
 #include "tkc/utf8.h"
 #include "tkc/mem.h"

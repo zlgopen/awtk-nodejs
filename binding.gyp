@@ -51,6 +51,9 @@
                         "-lm",
                         "-ldl"
                     ],
+                    "library_dirs": [
+                      "/opt/homebrew/Cellar/sdl2/2.28.0/lib"
+                    ],
                     "include_dirs": [
                     ]
                 }

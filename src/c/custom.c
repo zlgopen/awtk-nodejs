@@ -248,3 +248,7 @@ wrap_awtk_main_loop_step(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
 
   argv.GetReturnValue().Set(ret);
 }
+
+static void wrap_locale_infos_on(const Nan::FunctionCallbackInfo<v8::Value> &argv) {
+  assert(!"not supported");
+}
