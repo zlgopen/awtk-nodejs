@@ -25,7 +25,7 @@ cd awtk-nodejs
 如果没有安装node-gyp，请用下列命令安装：
 
 ```
-npm install -g node-gyp
+npm install -g node-gyp nan
 node-gyp configure
 ```
 

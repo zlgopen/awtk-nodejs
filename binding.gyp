@@ -28,31 +28,23 @@
             },
             "conditions": [[
                 'OS=="mac"', {
+                    "copies": [
+                        {
+                            'destination': 'bin/',
+                            'files': [
+                                '../awtk/bin/libawtk.dylib'
+                            ]
+                        }
+                    ],
                     "libraries": [
-                        "-lawtk_global",
-                        "-lextwidgets",
-                        "-lwidgets",
-                        "-lbase",
-                        "-lconf_io",
-                        "-lubjson",
-                        "-lstreams",
-                        "-lnanovg",
-                        "-lglad",
-                        "-lgpinyin",
-                        "-ltkc_core",
-                        "-lxml",
-                        "-lcharset",
-                        "-lfscript_ext",
-                        "-lfribidi",
-                        "-llinebreak",
-                        "-lSDL2",
+                        "-lawtk",
                         "-lstdc++",
                         "-lpthread",
                         "-lm",
                         "-ldl"
                     ],
                     "library_dirs": [
-                      "/opt/homebrew/Cellar/sdl2/2.28.0/lib"
+                      "/opt/homebrew/Cellar/sdl2/2.30.6/lib"
                     ],
                     "include_dirs": [
                     ]
@@ -88,24 +80,16 @@
             ],
                 [
                 'OS=="linux"', {
+                    "copies": [
+                        {
+                            'destination': './build/Release',
+                            'files': [
+                                '../awtk/bin/libawtk.so'
+                            ]
+                        }
+                    ],
                     "libraries": [
-                        "-lawtk_global",
-                        "-lextwidgets",
-                        "-lwidgets",
-                        "-lbase",
-                        "-lconf_io",
-                        "-lubjson",
-                        "-lstreams",
-                        "-lnanovg",
-                        "-lglad",
-                        "-lgpinyin",
-                        "-ltkc_core",
-                        "-lxml",
-                        "-lcharset",
-                        "-lfscript_ext",
-                        "-lfribidi",
-                        "-llinebreak",
-                        "-lSDL2",
+                        "-lawtk",
                         "-lGL",
                         "-lgtk-3",
                         "-lgdk-3",
