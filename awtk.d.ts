@@ -228,33 +228,6 @@ export declare class TBitmap {
      */
     static createEx(w: number, h: number, line_length: number, format: TBitmapFormat): TBitmap;
     /**
-     * 创建图片对象。
-     *
-     * @param w 宽度。
-     * @param h 高度。
-     * @param line_length line_length。
-     * @param format 格式。
-     * @param data 图像数据。
-     * @param should_free_data 是否释放数据。
-     *
-     * @returns 返回bitmap对象。
-     */
-    static createEx2(w: number, h: number, line_length: number, format: TBitmapFormat, data: number, should_free_data: boolean): TBitmap;
-    /**
-     * 创建图片对象。
-     *
-     * @param w 宽度。
-     * @param h 高度。
-     * @param line_length line_length。
-     * @param format 格式。
-     * @param data 图像数据。
-     * @param physical_data_addr 物理地址(部分硬件加速需要)。
-     * @param should_free_data 是否释放数据。
-     *
-     * @returns 返回bitmap对象。
-     */
-    static createEx3(w: number, h: number, line_length: number, format: TBitmapFormat, data: number, physical_data_addr: number, should_free_data: boolean): TBitmap;
-    /**
      * 获取图片一个像素占用的字节数。
      *
      *
@@ -2570,14 +2543,6 @@ export declare class TIdle {
      * @returns 返回RET_OK表示成功，否则表示失败。
      */
     static remove(idle_id: number): TRet;
-    /**
-     * 根据上下文删除所有对应的idle。
-     *
-     * @param ctx idle回调函数的上下文
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    static removeAllByCtx(ctx: any): TRet;
 }
 /**
  * 图片管理器。负责加载，解码和缓存图片。
@@ -4054,14 +4019,6 @@ export declare class TTimer {
      * @returns 返回RET_OK表示成功，否则表示失败。
      */
     static remove(timer_id: number): TRet;
-    /**
-     * 根据上下文删除所有对应的timer。
-     *
-     * @param ctx timer回调函数的上下文。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    static removeAllByCtx(ctx: any): TRet;
     /**
      * 重置指定的timer，重置之后定时器重新开始计时。
      *
@@ -7191,15 +7148,6 @@ export declare class TWidget {
      * @returns 返回属性的值。
      */
     getPropStr(name: string, defval: string): string;
-    /**
-     * 设置指针格式的属性。
-     *
-     * @param name 属性的名称。
-     * @param v 属性的值。
-     *
-     * @returns 返回RET_OK表示成功，否则表示失败。
-     */
-    setPropPointer(name: string, v: any): TRet;
     /**
      * 获取指针格式的属性。
      *

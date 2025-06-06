@@ -18,11 +18,9 @@
   ],
   "author": "xianjimli@hotmail.com",
   "license": "LGPL-2.1",
-  "dependencies": {
-    "bindings": "^1.5.0",
-    "nan": "^2.20.0"
-  },
   "devDependencies": {
-    "node-gyp": "^10"
+    "bindings": "^1.5.0",
+    "nan": "^2.22.2",
+    "node-gyp": "^11.2.0"
   }
 }
