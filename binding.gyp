@@ -30,7 +30,7 @@
                 'OS=="mac"', {
                     "copies": [
                         {
-                            'destination': 'bin/',
+                            'destination': './build/Release',
                             'files': [
                                 '../awtk/bin/libawtk.dylib'
                             ]
@@ -43,9 +43,11 @@
                         "-lm",
                         "-ldl"
                     ],
-                    "library_dirs": [
-                      "/opt/homebrew/Cellar/sdl2/2.30.6/lib"
-                    ],
+                    "xcode_settings": {
+                        "LD_RUNPATH_SEARCH_PATHS": [
+                            "@loader_path"
+                        ]
+                    },
                     "include_dirs": [
                     ]
                 }

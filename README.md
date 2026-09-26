@@ -84,23 +84,7 @@ node demos/demoui.js
 * error
 
 ```
-/home/lixianjing/work/awtk-root/awtk-nodejs/node_modules/bindings/bindings.js:121
-        throw e;
-        ^
-
 Error: libawtk.so: cannot open shared object file: No such file or directory
-    at Module._extensions..node (node:internal/modules/cjs/loader:1319:18)
-    at Module.load (node:internal/modules/cjs/loader:1091:32)
-    at Module._load (node:internal/modules/cjs/loader:938:12)
-    at Module.require (node:internal/modules/cjs/loader:1115:19)
-    at require (node:internal/modules/helpers:119:18)
-    at bindings (/home/lixianjing/work/awtk-root/awtk-nodejs/node_modules/bindings/bindings.js:112:48)
-    at Object.<anonymous> (/home/lixianjing/work/awtk-root/awtk-nodejs/awtk.js:1:31)
-    at Module._compile (node:internal/modules/cjs/loader:1233:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1287:10)
-    at Module.load (node:internal/modules/cjs/loader:1091:32) {
-  code: 'ERR_DLOPEN_FAILED'
-}
 ```
 
 * fix:
@@ -109,5 +93,22 @@ Error: libawtk.so: cannot open shared object file: No such file or directory
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./build/Release/
 ```
 
+### 2. macOS
+
+* error
+
+```
+Error: dlopen(.../build/Release/awtk.node, ...): Library not loaded: @rpath/libawtk.dylib
+  Reason: no LC_RPATH's found
+```
+
+* fix: 重新编译（`npm run build`）。构建会把 `libawtk.dylib` 拷到 `build/Release/`，并为 `awtk.node` 设置 `@loader_path` rpath。
+
+临时绕过（未重建时）：
+
+```
+cp ../awtk/bin/libawtk.dylib build/Release/
+install_name_tool -add_rpath @loader_path build/Release/awtk.node
+```
 
 

@@ -1,3 +1,4 @@
+#!/bin/bash
 
 npm install -g node-gyp nan
 node-gyp configure

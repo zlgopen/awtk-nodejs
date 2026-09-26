@@ -8,7 +8,6 @@
 #include "tkc/object.h"
 #include "tkc/value.h"
 #include "src/awtk_global.h"
-#include "base/bidi.h"
 #include "base/canvas_offline.h"
 #include "base/canvas.h"
 #include "base/clip_board.h"
@@ -2422,74 +2421,6 @@ ret_t global_t_init(v8::Local<v8::Object> ctx) {
  return RET_OK;
 }
 
-static void get_BIDI_TYPE_AUTO(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)BIDI_TYPE_AUTO);
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void get_BIDI_TYPE_LTR(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)BIDI_TYPE_LTR);
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void get_BIDI_TYPE_RTL(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)BIDI_TYPE_RTL);
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void get_BIDI_TYPE_LRO(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)BIDI_TYPE_LRO);
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void get_BIDI_TYPE_RLO(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)BIDI_TYPE_RLO);
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void get_BIDI_TYPE_WLTR(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)BIDI_TYPE_WLTR);
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-static void get_BIDI_TYPE_WRTL(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
-  JSContext* ctx = NULL; 
-  int32_t argc = (int32_t)(argv.Length()); 
-  v8::Local<v8::Int32> jret= Nan::New((int32_t)BIDI_TYPE_WRTL);
-  argv.GetReturnValue().Set(jret);
-  (void)argc;(void)ctx;
-}
-
-ret_t bidi_type_t_init(v8::Local<v8::Object> ctx) {
-  Nan::Export(ctx, "BIDI_TYPE_AUTO", get_BIDI_TYPE_AUTO);
-  Nan::Export(ctx, "BIDI_TYPE_LTR", get_BIDI_TYPE_LTR);
-  Nan::Export(ctx, "BIDI_TYPE_RTL", get_BIDI_TYPE_RTL);
-  Nan::Export(ctx, "BIDI_TYPE_LRO", get_BIDI_TYPE_LRO);
-  Nan::Export(ctx, "BIDI_TYPE_RLO", get_BIDI_TYPE_RLO);
-  Nan::Export(ctx, "BIDI_TYPE_WLTR", get_BIDI_TYPE_WLTR);
-  Nan::Export(ctx, "BIDI_TYPE_WRTL", get_BIDI_TYPE_WRTL);
-
- return RET_OK;
-}
-
 static void get_IMAGE_DRAW_DEFAULT(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -4605,6 +4536,74 @@ ret_t event_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "event_t_get_prop_size", wrap_event_t_get_prop_size);
   Nan::Export(ctx, "event_t_get_prop_time", wrap_event_t_get_prop_time);
   Nan::Export(ctx, "event_t_get_prop_target", wrap_event_t_get_prop_target);
+
+ return RET_OK;
+}
+
+static void get_FONT_BIDI_TYPE_AUTO(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)FONT_BIDI_TYPE_AUTO);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void get_FONT_BIDI_TYPE_LTR(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)FONT_BIDI_TYPE_LTR);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void get_FONT_BIDI_TYPE_RTL(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)FONT_BIDI_TYPE_RTL);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void get_FONT_BIDI_TYPE_LRO(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)FONT_BIDI_TYPE_LRO);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void get_FONT_BIDI_TYPE_RLO(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)FONT_BIDI_TYPE_RLO);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void get_FONT_BIDI_TYPE_WLTR(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)FONT_BIDI_TYPE_WLTR);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void get_FONT_BIDI_TYPE_WRTL(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)FONT_BIDI_TYPE_WRTL);
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+ret_t font_bidi_type_t_init(v8::Local<v8::Object> ctx) {
+  Nan::Export(ctx, "FONT_BIDI_TYPE_AUTO", get_FONT_BIDI_TYPE_AUTO);
+  Nan::Export(ctx, "FONT_BIDI_TYPE_LTR", get_FONT_BIDI_TYPE_LTR);
+  Nan::Export(ctx, "FONT_BIDI_TYPE_RTL", get_FONT_BIDI_TYPE_RTL);
+  Nan::Export(ctx, "FONT_BIDI_TYPE_LRO", get_FONT_BIDI_TYPE_LRO);
+  Nan::Export(ctx, "FONT_BIDI_TYPE_RLO", get_FONT_BIDI_TYPE_RLO);
+  Nan::Export(ctx, "FONT_BIDI_TYPE_WLTR", get_FONT_BIDI_TYPE_WLTR);
+  Nan::Export(ctx, "FONT_BIDI_TYPE_WRTL", get_FONT_BIDI_TYPE_WRTL);
 
  return RET_OK;
 }
@@ -8184,6 +8183,26 @@ static void wrap_vgcanvas_fill_text(const Nan::FunctionCallbackInfo<v8::Value>& 
   (void)argc;(void)ctx;
 }
 
+static void wrap_vgcanvas_fill_text_by_glyphs(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 7) {
+  ret_t ret = (ret_t)0;
+  vgcanvas_t* vg = (vgcanvas_t*)jsvalue_get_pointer(ctx, argv[0], "vgcanvas_t*");
+  glyphs_t* glyphs = (glyphs_t*)jsvalue_get_pointer(ctx, argv[1], "glyphs_t*");
+  uint32_t start = (uint32_t)jsvalue_get_int_value(ctx, argv[2]);
+  uint32_t len = (uint32_t)jsvalue_get_int_value(ctx, argv[3]);
+  xy_t x = (xy_t)jsvalue_get_int_value(ctx, argv[4]);
+  xy_t y = (xy_t)jsvalue_get_int_value(ctx, argv[5]);
+  float_t max_width = (float_t)jsvalue_get_number_value(ctx, argv[6]);
+  ret = (ret_t)vgcanvas_fill_text_by_glyphs(vg, glyphs, start, len, x, y, max_width);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_vgcanvas_measure_text(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -8606,6 +8625,7 @@ ret_t vgcanvas_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "vgcanvas_set_text_align", wrap_vgcanvas_set_text_align);
   Nan::Export(ctx, "vgcanvas_set_text_baseline", wrap_vgcanvas_set_text_baseline);
   Nan::Export(ctx, "vgcanvas_fill_text", wrap_vgcanvas_fill_text);
+  Nan::Export(ctx, "vgcanvas_fill_text_by_glyphs", wrap_vgcanvas_fill_text_by_glyphs);
   Nan::Export(ctx, "vgcanvas_measure_text", wrap_vgcanvas_measure_text);
   Nan::Export(ctx, "vgcanvas_draw_image", wrap_vgcanvas_draw_image);
   Nan::Export(ctx, "vgcanvas_draw_image_repeat", wrap_vgcanvas_draw_image_repeat);
@@ -8850,6 +8870,14 @@ static void get_WIDGET_PROP_BIDI(const Nan::FunctionCallbackInfo<v8::Value>& arg
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
   v8::Local<v8::String> jret= Nan::New((const char*)WIDGET_PROP_BIDI).ToLocalChecked();
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
+static void get_WIDGET_PROP_SHAPING(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  v8::Local<v8::String> jret= Nan::New((const char*)WIDGET_PROP_SHAPING).ToLocalChecked();
   argv.GetReturnValue().Set(jret);
   (void)argc;(void)ctx;
 }
@@ -10218,6 +10246,7 @@ ret_t widget_prop_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "WIDGET_PROP_LINE_HEIGHT", get_WIDGET_PROP_LINE_HEIGHT);
   Nan::Export(ctx, "WIDGET_PROP_DIRTY_RECT_TOLERANCE", get_WIDGET_PROP_DIRTY_RECT_TOLERANCE);
   Nan::Export(ctx, "WIDGET_PROP_BIDI", get_WIDGET_PROP_BIDI);
+  Nan::Export(ctx, "WIDGET_PROP_SHAPING", get_WIDGET_PROP_SHAPING);
   Nan::Export(ctx, "WIDGET_PROP_CANVAS", get_WIDGET_PROP_CANVAS);
   Nan::Export(ctx, "WIDGET_PROP_LOCALIZE_OPTIONS", get_WIDGET_PROP_LOCALIZE_OPTIONS);
   Nan::Export(ctx, "WIDGET_PROP_NATIVE_WINDOW", get_WIDGET_PROP_NATIVE_WINDOW);
@@ -25132,6 +25161,16 @@ static void wrap_slide_view_t_get_prop_animating_time(const Nan::FunctionCallbac
   (void)argc;(void)ctx;
 }
 
+static void wrap_slide_view_t_get_prop_active(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  slide_view_t* obj = (slide_view_t*)jsvalue_get_pointer(ctx, argv[0], "slide_view_t*");
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(obj->active));
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 ret_t slide_view_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "slide_view_create", wrap_slide_view_create);
   Nan::Export(ctx, "slide_view_cast", wrap_slide_view_cast);
@@ -25150,6 +25189,7 @@ ret_t slide_view_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "slide_view_t_get_prop_anim_hint", wrap_slide_view_t_get_prop_anim_hint);
   Nan::Export(ctx, "slide_view_t_get_prop_drag_threshold", wrap_slide_view_t_get_prop_drag_threshold);
   Nan::Export(ctx, "slide_view_t_get_prop_animating_time", wrap_slide_view_t_get_prop_animating_time);
+  Nan::Export(ctx, "slide_view_t_get_prop_active", wrap_slide_view_t_get_prop_active);
 
  return RET_OK;
 }
@@ -28241,6 +28281,21 @@ static void wrap_edit_set_focus_next_when_enter(const Nan::FunctionCallbackInfo<
   (void)argc;(void)ctx;
 }
 
+static void wrap_edit_set_scroll_to_begin_on_blur(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  if(argc >= 2) {
+  ret_t ret = (ret_t)0;
+  widget_t* widget = (widget_t*)jsvalue_get_pointer(ctx, argv[0], "widget_t*");
+  bool_t scroll_to_begin_on_blur = (bool_t)jsvalue_get_boolean_value(ctx, argv[1]);
+  ret = (ret_t)edit_set_scroll_to_begin_on_blur(widget, scroll_to_begin_on_blur);
+
+  v8::Local<v8::Int32> jret= Nan::New((int32_t)(ret));
+  argv.GetReturnValue().Set(jret);
+  }
+  (void)argc;(void)ctx;
+}
+
 static void wrap_edit_t_get_prop_tips(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
   JSContext* ctx = NULL; 
   int32_t argc = (int32_t)(argv.Length()); 
@@ -28421,6 +28476,16 @@ static void wrap_edit_t_get_prop_focus_next_when_enter(const Nan::FunctionCallba
   (void)argc;(void)ctx;
 }
 
+static void wrap_edit_t_get_prop_scroll_to_begin_on_blur(const Nan::FunctionCallbackInfo<v8::Value>& argv) {
+  JSContext* ctx = NULL; 
+  int32_t argc = (int32_t)(argv.Length()); 
+  edit_t* obj = (edit_t*)jsvalue_get_pointer(ctx, argv[0], "edit_t*");
+
+  v8::Local<v8::Boolean> jret= Nan::New((bool)(obj->scroll_to_begin_on_blur));
+  argv.GetReturnValue().Set(jret);
+  (void)argc;(void)ctx;
+}
+
 ret_t edit_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "edit_create", wrap_edit_create);
   Nan::Export(ctx, "edit_cast", wrap_edit_cast);
@@ -28451,6 +28516,7 @@ ret_t edit_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "edit_set_select", wrap_edit_set_select);
   Nan::Export(ctx, "edit_get_selected_text", wrap_edit_get_selected_text);
   Nan::Export(ctx, "edit_set_focus_next_when_enter", wrap_edit_set_focus_next_when_enter);
+  Nan::Export(ctx, "edit_set_scroll_to_begin_on_blur", wrap_edit_set_scroll_to_begin_on_blur);
   Nan::Export(ctx, "edit_t_get_prop_tips", wrap_edit_t_get_prop_tips);
   Nan::Export(ctx, "edit_t_get_prop_tr_tips", wrap_edit_t_get_prop_tr_tips);
   Nan::Export(ctx, "edit_t_get_prop_action_text", wrap_edit_t_get_prop_action_text);
@@ -28468,6 +28534,7 @@ ret_t edit_t_init(v8::Local<v8::Object> ctx) {
   Nan::Export(ctx, "edit_t_get_prop_close_im_when_blured", wrap_edit_t_get_prop_close_im_when_blured);
   Nan::Export(ctx, "edit_t_get_prop_cancelable", wrap_edit_t_get_prop_cancelable);
   Nan::Export(ctx, "edit_t_get_prop_focus_next_when_enter", wrap_edit_t_get_prop_focus_next_when_enter);
+  Nan::Export(ctx, "edit_t_get_prop_scroll_to_begin_on_blur", wrap_edit_t_get_prop_scroll_to_begin_on_blur);
 
  return RET_OK;
 }
@@ -32609,7 +32676,6 @@ ret_t awtk_js_init(v8::Local<v8::Object> ctx) {
   object_t_init(ctx);
   value_t_init(ctx);
   global_t_init(ctx);
-  bidi_type_t_init(ctx);
   image_draw_type_t_init(ctx);
   canvas_offline_t_init(ctx);
   canvas_t_init(ctx);
@@ -32618,6 +32684,7 @@ ret_t awtk_js_init(v8::Local<v8::Object> ctx) {
   dialog_quit_code_t_init(ctx);
   event_type_t_init(ctx);
   event_t_init(ctx);
+  font_bidi_type_t_init(ctx);
   glyph_format_t_init(ctx);
   idle_t_init(ctx);
   image_manager_t_init(ctx);
